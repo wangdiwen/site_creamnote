@@ -1,0 +1,139 @@
+<?php if (! defined('BASEPATH')) exit('No direct script access allowed.');
+
+class WXM_User extends CI_Model
+{
+    var $wx_table = 'wx_user';
+
+/*****************************************************************************/
+    public function __construct()
+    {
+        $this->load->database();
+    }
+/*****************************************************************************/
+    public function stat_register_count($start_time = '', $end_time = '')
+    {
+        if ($start_time && $end_time) {
+            # time format: 2013-06-06 00:00:00
+            $table = $this->wx_table;
+            $where = array(
+                'user_register_time >=' => $start_time,
+                'user_register_time <=' => $end_time
+                );
+            $this->db->select('user_id')->from($table)->where($where);
+            $query = $this->db->get();
+            $count = $query->num_rows();
+            return $count;
+        }
+    }
+/*****************************************************************************/
+    public function get_any_time_users($start_time = '', $end_time = '') {
+        if ($start_time && $end_time) {
+            # time format: 2013-06-06 00:00:00
+            $table = $this->wx_table;
+            $where = array(
+                'user_register_time >=' => $start_time,
+                'user_register_time <=' => $end_time
+                );
+            $this->db->select('user_id, user_name, user_email, user_register_time')->from($table)->where($where);
+            $query = $this->db->get();
+            return $query->result_array();
+        }
+    }
+/*****************************************************************************/
+    public function enable_user($user_email = '')
+    {
+        if ($user_email) {
+            $has_user = $this->has_such_user($user_email);
+            if ($has_user) {
+                $table = $this->wx_table;
+                $data = array(
+                    'user_status' => 'true'
+                    );
+                $this->db->where('user_email', $user_email);
+                $this->db->update($table, $data);
+                return true;
+            }
+        }
+        return false;
+    }
+/*****************************************************************************/
+    public function disable_user($user_email = '')
+    {
+        if ($user_email) {
+            $has_user = $this->has_such_user($user_email);
+            if ($has_user) {
+                $table = $this->wx_table;
+                $data = array(
+                    'user_status' => 'false'
+                    );
+                $this->db->where('user_email', $user_email);
+                $this->db->update($table, $data);
+                return true;
+            }
+        }
+        return false;
+    }
+/*****************************************************************************/
+    public function has_such_user($user_email = '')
+    {
+        if ($user_email) {
+            $table = $this->wx_table;
+            $this->db->select('user_id')->from($table)->where('user_email', $user_email)->limit(1);
+            $query = $this->db->get();
+            $count = $query->num_rows();
+            if ($count)
+                return true;
+        }
+        return false;
+    }
+/*****************************************************************************/
+    public function register_user_count()
+    {
+        $table = $this->wx_table;
+        $count = $this->db->count_all($table);
+        return $count;
+    }
+/*****************************************************************************/
+    public function base_info($user_email_or_name = '')
+    {
+        if ($user_email_or_name) {
+            $table = $this->wx_table;
+            $this->db->select('user_id, user_name, user_email, user_hobby, user_period, user_register_time, user_status')->from($table)->where('user_email', $user_email_or_name)->or_where('user_name', $user_email_or_name)->limit(1);
+            $query = $this->db->get();
+            $data = $query->row_array();
+            if ($data) {
+                return $data;
+            }
+        }
+    }
+/*****************************************************************************/
+    public function get_user_detail($user_email = '')
+    {
+        if ($user_email) {
+            $table = $this->wx_table;
+            $this->db->select('user_id, user_name, user_email, user_hobby, user_period, user_register_time, user_status, user_account_name, user_account_type, user_account_active, user_account_money, user_phone, user_qq_nicename, user_weibo_nicename, user_renren_nicename')->from($table)->where('user_email', $user_email)->limit(1);
+            $query = $this->db->get();
+            return $query->row_array();
+        }
+    }
+/*****************************************************************************/
+    public function get_user_name_email($user_id = 0) {
+        if ($user_id > 0) {
+            $table = $this->wx_table;
+            $this->db->select('user_id, user_name, user_email')->from($table)->where('user_id', $user_id)->limit(1);
+            $query = $this->db->get();
+            return $query->row_array();
+        }
+    }
+/*****************************************************************************/
+    public function get_all_user_email() {
+        $table = $this->wx_table;
+        $this->db->select('user_id, user_email')->from($table);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+/*****************************************************************************/
+}
+
+/* End of file wxm_admin_user.php */
+/* Location: /application/backend/models/wxm_admin_user.php */

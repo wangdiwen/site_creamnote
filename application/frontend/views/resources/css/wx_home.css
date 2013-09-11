@@ -1,0 +1,1215 @@
+@font-face {
+    font-family: 'BebasNeueRegular';
+    src: url('fonts/BebasNeue-webfont.eot');
+    src: url('fonts/BebasNeue-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/BebasNeue-webfont.woff') format('woff'),
+         url('fonts/BebasNeue-webfont.ttf') format('truetype'),
+         url('fonts/BebasNeue-webfont.svg#BebasNeueRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+*{
+	font-family: "Hiragino Sans GB", "WenQuanYi Micro Hei", "微软雅黑", Verdana, Arial;
+}
+body {
+  	height: auto;
+   	background: #e0e3ec url(../images/version/creamnote_bg.png) repeat top left;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: normal;
+}
+.pointer{
+	cursor: pointer;
+}
+a{
+	text-decoration:none;
+	color: rgb(76, 118, 172);
+}
+#choose-box-wrapper{
+		width: 652px;
+		background-color:#000;
+		filter:alpha(opacity=50);
+		background-color: rgba(0, 0, 0, 0.5);
+		padding:10px;
+		border-radius:5px;
+		display:none;
+	}
+	#choose-box{
+		border: 1px solid #005EAC;
+		width:650px;
+		background-color:white;
+	}
+	#choose-box-title{
+		background:#3777BC;
+		color: white;
+		padding: 4px 10px 5px;
+		font-size: 14px;
+		font-weight: 700;
+		margin: 0;
+	}
+	#choose-box-title span{
+		font-family: Tahoma, Verdana, STHeiTi, simsun, sans-serif;
+	}
+
+	#choose-a-province, #choose-a-school{
+		margin:5px 8px 10px 8px;
+		border: 1px solid #C3C3C3;
+	}
+	#choose-a-province a{
+		display:inline-block;
+		height: 18px;
+		line-height: 18px;
+		color:#005EAC;
+		text-decoration: none;
+		font-size: 9pt;
+		font-family: Tahoma, Verdana, STHeiTi, simsun, sans-serif;
+		margin:2px 5px;
+		padding: 1px;
+		text-align: center;
+	}
+	#choose-a-province a:hover{
+		text-decoration:underline;
+		cursor:pointer;
+	}
+	#choose-a-province .choosen{
+		background-color: #005EAC;
+		color:white;
+	}
+
+	#choose-a-school{
+		overflow-x: hidden;
+		overflow-y: auto;
+		height: 200px;
+	}
+	#choose-a-school a{
+		height: 18px;
+		line-height: 18px;
+		color:#005EAC;
+		text-decoration: none;
+		font-size: 9pt;
+		font-family: Tahoma, Verdana, STHeiTi, simsun, sans-serif;
+		float: left;
+		width: 160px;
+		margin: 4px 12px;
+		padding-left:10px;
+		background:url(http://pic002.cnblogs.com/images/2012/70278/2012072500060712.gif) no-repeat 0 9px;
+	}
+	#choose-a-school a:hover{
+		background-color:#005EAC;
+		color:white;
+		cursor:pointer;
+	}
+
+	#choose-box-bottom{
+		background: #F0F5F8;
+		padding: 8px;
+		text-align: right;
+		border-top: 1px solid #CCC;
+		height:40px;
+	}
+	#choose-box-bottom input{
+		vertical-align: middle;
+		text-align: center;
+		background-color:#005EAC;
+		color:white;
+		border-top: 1px solid #B8D4E8;
+		border-left: 1px solid #B8D4E8;
+		border-right: 1px solid #114680;
+		border-bottom: 1px solid #114680;
+		cursor: pointer;
+		width: 60px;
+		height: 25px;
+		margin-top: 6px;
+		margin-right: 6px;
+	}
+
+
+/* feedback*/
+.feed_back_wrap{
+	min-width: 690px;
+	width: 690px;
+	margin: auto;
+	min-height: 500px;
+}
+
+.feed_back_title{
+	text-align: center;
+	padding-bottom: 10px;
+	margin-bottom: 15px;
+	border-bottom: dashed 1px #ccc;
+}
+
+.feed_back_title h1{
+	font-size: 40px;
+	color:#a5612d;
+}
+
+.feed_back_title h2{
+	font-size: 24px;
+	color:#666;
+}
+
+.feed_back_form{
+	padding-bottom: 10px;
+	border-bottom: dashed 1px #ccc;
+	margin-bottom: 20px;
+	width: 690px;
+}
+
+.feed_back_form textarea{
+	background-color:#fcfcfc;
+	cursor: auto;
+	white-space: pre-wrap;
+	word-wrap: break-word;
+	resize:none;
+	height: 80px !important;
+	border:solid 1px #ccc;
+	width: 100%;
+	padding:10px;
+	overflow: hidden;
+	vertical-align: bottom;
+	font-family: tahoma;
+	font-size:14px;
+	line-height: 1.3;
+	-webkit-transition: all .1s;
+}
+
+
+.feed_back_form_btn{
+	float: right;
+}
+
+.feed_back_item{
+	width: 100%;
+	min-width: 600px;
+	border-bottom: solid 1px #ccc;
+	padding-bottom: 8px;
+	margin-top: 16px;
+}
+
+.feed_back_item_avator{
+	float:left;
+	width: 10%;
+}
+
+.feed_back_item_avator img{
+	display: block;
+	width: 48px;
+	height: 48px;
+	max-width: 100%;
+	max-height: 100%;
+	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.22);
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
+.feed_back_item_body{
+	width:90%;
+}
+
+.feed_back_item_head{
+	font-size: 14px;
+	color:#a5612d;
+}
+
+.feed_back_content{
+	font-size: 14px;
+	color:black;
+	margin-top: 5px;
+	padding-left: 68px;
+	margin-bottom: 4px;
+}
+
+.feed_back_item_bottom{
+	padding-left: 68px;
+	margin-top: 8px;
+	margin-bottom: 14px;
+	clear: both;
+}
+
+.feed_back_reply_btn{
+	margin-left: 20px;
+}
+
+.feed_back_comment_list{
+	margin-top: 6px;
+	margin-left: 68px;
+}
+
+.feed_back_comment{
+	border-bottom: dashed 1px #ccc;
+	margin-bottom: 10px;
+	padding-bottom: 1px;
+	clear:both;
+}
+
+.feed_back_comment img{
+	float:left;
+	display: block;
+	width: 30px;
+	height: 30px;
+	max-width: 100%;
+	max-height: 100%;
+	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.22);
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
+.feed_back_comment_content{
+	padding-top: 6px;
+	margin-left: 40px;
+}
+
+.feed_back_comment_content_input{
+	background-color:#fcfcfc;
+	cursor: auto;
+	white-space: pre-wrap;
+	word-wrap: break-word;
+	resize:none;
+	height: 26px !important;
+	border:solid 1px #ccc;
+	width: 85%;
+	padding:2px;
+	padding-left: 6px;
+	overflow: hidden;
+	vertical-align: bottom;
+	font-family: tahoma;
+	font-size:14px;
+	line-height: 1.3;
+	-webkit-transition: all .1s;
+}
+/*-------------------滚动至顶部----------------------*/
+#updown{
+	_top: expression(eval((document.compatMode&&document.compatMode=="CSS1Compat")?documentElement.scrollTop+documentElement.clientHeight-this.clientHeight-1:document.body.scrollTop+document.body.clientHeight-this.clientHeight-1));
+	position: fixed;
+	_position: absolute;
+	top: 200px;
+	right: 30px;
+	display: none;
+}
+#updown span{
+	cursor:pointer;
+	width:48px;
+	height:50px;
+	display:block;
+}
+#updown .up{
+	background:url(../images/updown.png) no-repeat;
+}
+#updown .up:hover{
+	background:url(../images/updown.png) top right no-repeat;
+}
+#updown .down{
+	background:url(../images/updown.png) bottom left no-repeat;
+}
+#updown .down:hover{
+	background:url(../images/updown.png) bottom right no-repeat;
+}
+
+
+
+/* ---------------------new version ----------------------*/
+.transition{
+	-webkit-transition: all .3s ease-out;
+	-moz-transition: all .3s ease-out;
+	-ms-transition: all .3s ease-out;
+	-o-transition: all .3s ease-out;
+	transition: all .3s ease-out;
+}
+.fl{
+	float: left;
+}
+.fr{
+	float: right;
+}
+.head{
+	border-top: solid 1px #FFFFFF;
+	height: 107px;
+	min-width: 1066px;
+}
+.head_center {
+	width: 1066px;
+	margin-right: auto;
+	margin-left: auto;
+	overflow: hidden;
+	margin-top:35px;
+	height: 72px
+}
+.brand{
+	float: left;
+	background-image: url(../images/version/creamnote_brand.png);
+	background-repeat: no-repeat;
+	display: block;
+	width: 176px;
+	height: 32px;
+}
+.brand:hover{
+	filter:alpha(opacity=50); /*IE滤镜，透明度50%*/
+	-moz-opacity:0.5; /*Firefox私有，透明度50%*/
+	opacity:0.5;/*其他，透明度50%*/
+}
+.body{
+	background-color: #c3d5e6;
+	background-image: -webkit-radial-gradient(center, #ebebec, #c3d5e6);
+	background-image: -moz-radial-gradient(center, #ebebec, #c3d5e6);
+	background-image: radial-gradient(center, #ebebec, #c3d5e6);
+	background-repeat: repeat-y;
+	margin-left: auto;
+	margin-right: auto;
+	width: 1066px;
+	min-height: 1094px;
+
+}
+.login{
+	background-image: url(../images/version/creamnote_login.png);
+	background-repeat: no-repeat;
+	display: block;
+	width: 126px;
+	height: 32px;
+	margin-right: 30px;
+	cursor:pointer;
+}
+.login:hover{
+	background-image: url(../images/version/creamnote_login_flash.png);
+}
+.register{
+	background-image: url(../images/version/creamnote_reg.png);
+	background-repeat: no-repeat;
+	display: block;
+	width: 126px;
+	height: 32px;
+	cursor:pointer;
+}
+.register:hover{
+	background-image: url(../images/version/creamnote_register_flash.png);
+}
+.creamnote_search_input{
+	width: 510px;
+	height: 36px;
+	background: transparent;
+	border: 0;
+	padding: 0 4px;
+	font-size: 16px;
+	outline: medium;
+	border-top:1px solid #FFFFFF;
+	border-bottom:1px solid #FFFFFF;
+	border-left:1px solid #FFFFFF;
+}
+.creamnote_search_input:focus{
+	border-top:1px solid #a3b1d1;
+	border-bottom:1px solid #a3b1d1;
+	border-left:1px solid #a3b1d1;
+}
+.creamnote_search{
+	background-image: url(../images/version/creamnote_search.png);
+	background-repeat: no-repeat;
+}
+.creamnote_search_button{
+	background-image: url(../images/version/creamnote_search_button.png);
+	background-repeat: no-repeat;
+	width: 124px;
+	height: 37px;
+	cursor:pointer;
+	border-top:1px solid #FFFFFF;
+	border-bottom:1px solid #FFFFFF;
+	border-right:1px solid #FFFFFF;
+}
+.creamnote_cnzz{
+	margin-top: 200px;
+	width: 800px;
+	padding-left: 250px;
+	padding-bottom: 3px;
+	position: absolute;
+	font-size: 11px;
+}
+.login_user{
+	background-image: url(../images/version/creamnote_user.png);
+	background-repeat: no-repeat;
+	display: block;
+	width: 126px;
+	height: 32px;
+	margin-right: 30px;
+	cursor:pointer;
+	text-align: center;
+	color: white;
+	padding-top: 4px;
+}
+.login_user:hover{
+	filter:alpha(opacity=50); /*IE滤镜，透明度50%*/
+	-moz-opacity:0.5; /*Firefox私有，透明度50%*/
+	opacity:0.5;/*其他，透明度50%*/
+}
+.login_user_icon{
+	width: 90px;
+	overflow: hidden;
+	padding-left: 30px;
+	background: url(../images/version/creamnote_user_icon.png) no-repeat 10px 2px;
+}
+.temp_login_user_icon{
+	background: url(../images/version/Tencent_QQ.png) no-repeat 10px 2px;
+}
+.logout{
+	background-image: url(../images/version/creamnote_user.png);
+	background-repeat: no-repeat;
+	display: block;
+	width: 126px;
+	height: 32px;
+	cursor:pointer;
+	text-align: center;
+	color: white;
+	padding-top: 4px;
+}
+.logout:hover{
+	filter:alpha(opacity=50); /*IE滤镜，透明度50%*/
+	-moz-opacity:0.5; /*Firefox私有，透明度50%*/
+	opacity:0.5;/*其他，透明度50%*/
+}
+.logout_icon{
+	background: url(../images/version/creamnote_logout.png) no-repeat 20px 2px;
+}
+/* ---------------------登录窗口 ----------------------*/
+.login_win_base{
+	position: absolute;
+	filter:Alpha(opacity=100);
+	background:#000000;
+	top: 68px;
+	width: 312px;
+	height: 284px;
+	border-radius: 10px;
+	background-color: rgba(0, 0, 0, 0.3);
+	z-index: 100;
+	display: block;
+	margin-left: 730px
+}
+.login_win_box{
+	position: absolute;
+	top: 9px;
+	bottom: 10px;
+	left: 10px;
+	right: 10px;
+	background-color: rgb(255, 255, 255);
+	background-image: url(../images/version/creamnote_win_box.png);
+}
+.login_win_un{
+	margin: 0px 15px 9px;
+	display: block;
+	position: relative;
+}
+.login_win_un_input{
+	display: block;
+	width: 242px !important;
+	height: 19px;
+	padding: 5px 10px;
+	border-radius: 5px;
+	background-color: rgb(240, 240, 240);
+	border: none;
+	box-shadow: inset 0 1px 1px 0px rgb(204, 204, 204);
+	font-size: 14px;
+	font-weight: bold;
+	color: rgb(81, 81, 81);
+}
+.login_win_un_input:focus{
+	box-shadow: 0 0 0 2px rgb(131,154,205);
+	outline: none;
+	background-color:rgb(255, 255, 255);
+	color:#000000;
+
+}
+.login_win_base h1{
+	width: 100%;
+	margin: 15px auto;
+	font-size: 12px;
+	font-family: "KnowReSans";
+	font-weight: normal;
+	color: rgb(51, 51, 51);
+	text-align: center;
+}
+.login_win_orWrapper{
+	width: 262px;
+	height: 30px;
+	line-height: 10px;
+	margin: 0 15px;
+}
+.login_win_orWrapper .bar{
+	display: inline-block;
+	vertical-align: middle;
+	width: 110px;
+	height: 1px;
+	background-color: rgb(230, 230, 230);
+}
+.login_win_orWrapper .or{
+	display: inline-block;
+	vertical-align: middle;
+	width: 30px;
+	font-size: 12px;
+	font-family: "KnowReSans";
+	color: rgb(51, 51, 51);
+	text-align: center;
+}
+.login_win_sub{
+	width: 262px;
+	height: 31px;
+	line-height: 31px;
+	margin: 0 15px 8px;
+}
+.login_win_sub .button{
+	display: inline-block;
+	vertical-align: middle;
+	width: 65px;
+	height: 26px;
+	font-size: 14px;
+	position: relative;
+	top: -5px;
+	border-radius: 5px;
+	font-family: "KnowReLato";
+	font-size: 14px;
+	font-weight: bold;
+	border: none;
+	padding: 0;
+	background-color: rgb(131,154,205);
+	color: rgb(255, 255, 255);
+	box-shadow: 0px 5px 0px 0px rgb(101, 117, 182), 0px 7px 0px 2px rgba(0, 0, 0, 0.1);
+	cursor: pointer;
+	background: #39d url('../images/login/bg-btn-blue.png') repeat-x scroll 0 0;
+}
+#signin_submit:hover, #signin_submit:focus {
+	background-position:0 -5px;
+	cursor:pointer;
+}
+.login_win_sub .checkbox{
+	display: inline-block;
+	vertical-align: middle;
+	margin: 0 8px;
+	line-height: 20px;
+}
+.login_win_sub .rem{
+	display: inline-block;
+	vertical-align: middle;
+	width: 150px;
+	font-family: "KnowReSans";
+	font-size: 12px;
+	color: rgb(51, 51, 51);
+}
+.login_win_forgot{
+	width: 262px;
+	height: 20px;
+	margin: 0 15px;
+	padding-top: 5px;
+	border-top: 1px solid rgb(230, 230, 230);
+	font-family: "KnowReSans";
+	font-size: 12px;
+	color: rgb(131,154,205);
+	text-align: center;
+	cursor: pointer;
+}
+.login_win_box .qq{
+	background-image: url(../images/version/Tencent_QQ.png);
+	position: absolute;
+	width: 40px;
+	height: 40px;
+	margin-left: 15px;
+	background-repeat: no-repeat;
+	top:-5px;
+	left: 37px;
+	cursor: pointer;
+}
+.login_win_box .renren{
+	background-image: url(../images/version/renren.png);
+	position: absolute;
+	width: 40px;
+	height: 40px;
+	margin-left: 15px;
+	background-repeat: no-repeat;
+	top:-5px;
+	left: 111px;
+	cursor: pointer;
+}
+.login_win_box .weibo{
+	background-image: url(../images/version/weibo.png);
+	position: absolute;
+	width: 40px;
+	height: 40px;
+	margin-left: 15px;
+	background-repeat: no-repeat;
+	top:-5px;
+	left: 185px;
+	cursor: pointer;
+
+}
+.img_shadow{
+	-webkit-box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.2);
+	box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.2);
+	-webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    border-radius: 8px;
+}
+.login_win_base .arr{
+	position: absolute;
+	right: 200px;
+	top: -15px;
+	width: 28px;
+	height: 24px;
+	background-image: url(../images/version/creamnote_win_arr.png);
+
+}
+/* ---------------------creamnote card ----------------------*/
+.card_frame{
+	width: 644px;
+	padding-left: 47px;
+	float: left;
+	min-height: 390px;
+}
+.card_frame_section{
+	border-bottom: 1px solid #a3b1d1;
+	border-top: none;
+	padding: 0 0 10px;
+	margin: 1.2em 0 1.2em;
+}
+.card_items{
+	margin: -34px 0 0 -13px;
+	position: absolute;
+	width: 1610px;
+}
+.card_item{
+	display: inline-block;
+	padding: 10px;
+	margin: 22px 0 0 15px;
+	min-height: 188px;
+	width: 126px;
+	position: relative;
+	color: #707072;
+	vertical-align: top;
+	padding-bottom: 0;
+	background: #fbfcfc none;
+	font-size: 12px;
+}
+.card_item_panel{
+	-webkit-box-shadow: 0px 4px 14px 4px rgba(0, 0, 0, 0.05);
+	box-shadow: 0px 4px 14px 4px rgba(0, 0, 0, 0.05);
+	background: url(../images/version/creamnote_card_panel.png) left bottom repeat-x #fefefe;
+	border: 1px solid #d2dbdd;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+.card_item:hover{
+	background: rgb(223, 238, 247);
+}
+.card_total{
+	width: 638px;
+	overflow: hidden;
+	position: relative;
+	padding-top: 10px;
+	padding-bottom: 6px;
+	height: 196px;
+}
+.card_total_common{
+	width: 644px;
+	overflow: hidden;
+	padding-top: 10px;
+}
+.card_items_common{
+	margin: -34px 0 0 -13px;
+}
+.card_delete{
+	position: absolute;
+	top: 4px;
+	right: 4px;
+	cursor: pointer;
+	width: 14px;
+	height: 14px;
+	background: url(../images/version/creamnote_card_delete.png) no-repeat;
+}
+.card_edit{
+	position: absolute;
+	top: 4px;
+	right: 25px;
+	cursor: pointer;
+	width: 14px;
+	height: 14px;
+	background: url(../images/version/creamnote_card_edit.png) no-repeat;
+}
+.card_arrow{
+	margin: -150px 0 0 -8px;
+	width: 656px;
+	position: absolute;
+	height: 60px;
+	display: none;
+}
+.card_arrow_left{
+	display: none;
+	position: absolute;
+	margin-top: 71px;
+	float: left;
+	width: 50px;
+	height: 50px;
+	background: url(../images/version/left_grey_trans.png) no-repeat;
+	cursor: pointer;
+}
+.card_arrow_left:hover{
+	background: url(../images/version/left_grey.png) no-repeat;
+}
+.card_arrow_right{
+	display: none;
+	position: absolute;
+	margin-top: 71px;
+	margin-left: 590px;
+	float: right;
+	width: 50px;
+	height: 50px;
+	background: url(../images/version/right_grey_trans.png) no-repeat;
+	cursor: pointer;
+}
+.card_arrow_right:hover{
+	background: url(../images/version/right_grey.png) no-repeat;
+}
+.card_head{
+	height: 36px;
+	overflow: hidden;
+	border-bottom: 1px solid #a3b1d1;
+	line-height: 18px;
+	font-size: 14px;
+	padding-top: 5px;
+}
+.card_padding{
+	padding-top: 3px;
+}
+.card_star{
+	width: 100px;
+	padding-top: 3px;
+	height: 20px;
+	background: url(../images/version/card_star.png) repeat-x;
+}
+.card_star_blod{
+	margin-top: -3px;
+	padding-top: 0px;
+	height: 20px;
+	background: url(../images/version/card_star_blod.png) repeat-x;
+}
+.card_cate{
+	height: 34px;
+	overflow: hidden;
+	border-bottom: 1px dotted #a3b1d1;
+}
+.card_footer{
+	height: 30px;
+	padding-top: 8px;
+	background: url(../images/version/card_footer.png) no-repeat 0 0;
+	margin: 0 -10px;
+	position: relative;
+	text-align: left;
+	bottom: 0;
+	margin-top: 3px;
+}
+.card_footer .foot_content_down{
+	width: 24px;
+	height: 24px;
+	background: url(../images/version/dy_card_hover_down.png) no-repeat 0 0;
+	float: left;
+	margin-left: 8px;
+}
+.card_footer .foot_content_heart{
+	width: 60px;
+	height: 24px;
+	background: url(../images/version/heart_icon.png) no-repeat 0 0;
+	position: absolute;
+}
+.card_footer .foot_content_success{
+	width: 60px;
+	height: 24px;
+	background: url(../images/version/collect_success.png) no-repeat 0 0;
+	position: absolute;
+}
+.foot_content_price{
+	height: 24px;
+	padding: 0 20px;
+	font-size: 14px;
+	line-height: 22px;
+	background-color: #c7d4d9;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	color: #307083 !important;
+	text-shadow: #fff 1px 1px 0;
+}
+
+.card_head img{
+	height: 32px;
+	width: 32px;
+	-webkit-box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.2);
+	box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.2);
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+.user_head{
+	width: 83px;
+	padding-left: 10px;
+	position: absolute;
+	overflow: hidden;
+	word-wrap: break-word;
+	word-break: normal;
+}
+.card_padding .mail{
+	width: 120px;
+}
+.card_padding .content{
+	width: 125px;
+	overflow: hidden;
+}
+.user_sm{
+	height: 17px;
+	white-space:nowrap;
+	padding-top: 4px;
+}
+/* ---------------------公共栏 ----------------------*/
+.right_notice{
+	width: 300px;
+	padding-left: 45px;
+	padding-right: 30px;
+	float: right;
+	min-height: 400px;
+}
+.right_notice_section{
+	border-bottom: 1px solid #a3b1d1;
+	border-top: none;
+	padding: 0 0 18px;
+	margin: 1.2em 0 1.2em;
+}
+.right_notice_item{
+	margin-bottom:10px;
+}
+/* -------------------页脚 ----------------------*/
+.footer{
+	height: 223px;
+	min-width: 1066px;
+}
+.footer_center{
+	width: 1066px;
+	margin-right: auto;
+	margin-left: auto;
+	overflow: hidden;
+	height: 223px;
+	background-image: url(../images/new_version/dy_foot_bg.png);
+	background-repeat: repeat-x;
+}
+.foot_brand{
+	background-image: url(../images/new_version/creamnote_foot_brand.png);
+	background-repeat: no-repeat;
+	display: block;
+	width: 198px;
+	height: 49px;
+	margin-left:47px;
+	margin-top:90px;
+}
+.foot_list{
+	background-repeat: no-repeat;
+	display: block;
+	width: 710px;
+	height: 223px;
+	color: rgb(230,230,230);
+	font-size: 14px;
+}
+.foot_list a{
+	color: rgb(230,230,230);
+}
+.foot_list_one{
+	width: 130px;
+	position: relative;
+	height: 150px;
+	margin-top: 30px;
+	text-align: left;
+}
+.foot_content{
+	font-size: 14px;
+	margin: 6px auto;
+}
+.foot_content:hover{
+	color:rgb(76, 118, 172)!important;
+}
+.foot_title{
+	color: #fff!important;
+
+}
+/* -------------------反馈快捷键----------------------*/
+.feedback{
+	background: url(../images/version/creamnote_feedback.png) no-repeat;
+	position: fixed;
+	right: 0;
+	top:170px;
+	width: 39px;
+	height: 129px;
+}
+.feedback:hover{
+	background: url(../images/version/creamnote_feedback_flash.png) no-repeat;
+}
+
+/* -----------列表--------------------------- */
+
+ol{
+	counter-reset: li;
+	list-style: none;
+	*list-style: decimal;
+	font: 15px 'trebuchet MS', 'lucida sans';
+	padding: 0;
+	margin-bottom: 1em;
+	text-shadow: 0 1px 0 rgba(255,255,255,.5);
+	font-size: 14px;
+	overflow: hidden;
+}
+
+ol ol{
+	margin: 0 0 0 2em;
+}
+
+.rounded-list a{
+	font-size: 15px;
+	white-space: nowrap;
+	position: relative;
+	display: block;
+	padding: .4em .3em .0em 1.8em;
+	margin: .5em 0;
+	background: #ddd;
+	color: #444;
+	text-decoration: none;
+	-moz-border-radius: .3em;
+	-webkit-border-radius: .3em;
+	border-radius: .3em;
+	-webkit-transition: all .3s ease-out;
+	-moz-transition: all .3s ease-out;
+	-ms-transition: all .3s ease-out;
+	-o-transition: all .3s ease-out;
+	transition: all .3s ease-out;
+	height: 32px;
+}
+
+.rounded-list a:hover{
+	background: #eee;
+	cursor: pointer;
+}
+
+.rounded-list a:hover:before{
+	-moz-transform: rotate(360deg);
+  	-webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+    background: rgb(30, 168, 224);
+    border: .3em solid rgb(236, 236, 236);
+    cursor: pointer;
+}
+
+.rounded-list a:before{
+	content: counter(li);
+	counter-increment: li;
+	position: absolute;
+	left: -1.3em;
+	top: 50%;
+	margin-top: -1.3em;
+	background: #87ceeb;
+	height: 2em;
+	width: 2em;
+	line-height: 2em;
+	border: .3em solid #fff;
+	text-align: center;
+	font-weight: bold;
+	-moz-border-radius: 2em;
+	-webkit-border-radius: 2em;
+	border-radius: 2em;
+	-webkit-transition: all .3s ease-out;
+	-moz-transition: all .3s ease-out;
+	-ms-transition: all .3s ease-out;
+	-o-transition: all .3s ease-out;
+	transition: all .3s ease-out;
+}
+.rounded-list span{
+	overflow: hidden;
+	position: absolute;
+	width: 238px;
+	text-overflow: ellipsis;
+}
+/* -------------card 一些弹出提示卡片------------------------- */
+.creamnote_tips{
+	position: inherit;
+	z-index: 9999;
+	-webkit-animation-duration: .05s;
+	-moz-animation-duration: .05s;
+	-o-animation-duration: .05s;
+	animation-duration: .05s;
+	-webkit-animation-fill-mode: both;
+	-moz-animation-fill-mode: both;
+	-o-animation-fill-mode: both;
+	animation-fill-mode: both;
+	-webkit-animation-timing-function: ease-in;
+	-moz-animation-timing-function: ease-in;
+	-o-animation-timing-function: ease-in;
+	animation-timing-function: ease-in;
+	margin-top: -54px;
+}
+.tip_card{
+	font-size: 13px;
+	color: rgb(76, 118, 172);
+	padding: 4px;
+	width: 280px;
+	overflow: hidden;
+	border: solid 4px #c2e1f5;
+	background: #88b7d5;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+.tip_arrow1{
+	left: 50%;
+	margin-left: -13px;
+	border-left: 18px solid transparent;
+	border-right: 18px solid transparent;
+	border-top: 18px solid #c2e1f5;
+	position: absolute;
+}
+.tip_arrow2{
+	bottom: -11px;
+	left: 50%;
+	margin-left: -10px;
+	border-left: 15px solid transparent;
+	border-right: 15px solid transparent;
+	border-top: 15px solid #88b7d5;
+	position: absolute;
+}
+.tipforfix{
+	width: 280px;
+}
+.tip_content{
+	padding: 10px;
+}
+.tip_content img{
+	padding-top: 5px;
+}
+.tip_right{
+	width: 200px;
+	padding-left:10px;
+}
+.tip_right .co{
+	width: 198px
+}
+.tip_right .name{
+	color: #bdd319;
+}
+.tip_bottom{
+	padding-top: 60px;
+}
+.tip_center{
+	text-align: center;
+}
+/* -------------注册页面------------------------- */
+.reg_frame{
+	width: 500px;
+	margin: 0px auto;
+	padding: 30px;
+	background: #ececec;
+	text-align: center;
+	filter: Alpha(opacity=95);
+	opacity: 0.95;
+	-webkit-border-radius: 0.71em;
+	-moz-border-radius: 0.71em;
+	border-radius: 0.71em;
+	-webkit-box-shadow: 0 0.35em 8px #839acd;
+	-moz-box-shadow: 0 0.35em 8px #839acd;
+	box-shadow: 0 0.35em 8px #839acd;
+	color: #839acd;
+}
+.reg_frame h1{
+	text-align: center;
+	margin-bottom: 0;
+}
+.reg_put{
+	margin: 10px auto;
+	text-align: left;
+	padding-left: 40px;
+}
+.reg_co{
+	border-bottom: 2px dotted #A3B1D1;
+	height: 50px;
+}
+.reg_co img{
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+.reg_error{
+	color: rgb(240, 68, 68);
+}
+.reg_code{
+	color: #3EB917;
+	font-size: 14px;
+}
+
+/* -------------文章（content）------------------------- */
+.article_body{
+	min-height: 680px;
+	overflow: hidden;
+	background-color: rgb(239, 246, 255)!important;
+	background-image: none !important;
+}
+.article_content{
+	padding: 20px 100px;
+	line-height: 26px;
+}
+.article_content h2{
+	font-size: 28px;
+	text-align: center;
+}
+.article_author{
+	padding: 10px 0px;
+}
+.article_note{
+	float: right;
+	color: #839acd;
+	margin-bottom: 20px;
+}
+//分页
+.pagination a.number{
+	-moz-border-radius: 4px!important;
+	-webkit-border-radius: 4px!important;
+	border-radius: 4px!important;
+	border: 1px solid #ddd!important;
+}
+.pagination a{
+	margin: 0 5px 0 0;
+	padding: 3px 6px;
+	-moz-border-radius: 4px!important;
+	-webkit-border-radius: 4px!important;
+	border-radius: 4px!important;
+	border: 1px solid rgb(139, 137, 137)!important;
+}
+a.current{
+	background: rgb(73, 137, 187) top left repeat-x !important;
+	border-color: rgb(46, 115, 202) !important;
+	color: #fff !important;
+}
+.article_content a:hover{
+	color: rgb(4, 45, 97);
+}
+.article_title{
+	text-align: left !important;
+	background: #aaa;
+	margin: -5px -10px;
+	padding: 10px 5px;
+}
+.article_list{
+	border-bottom: 1px
+	solid #ccc;
+	padding-bottom: 0px;
+	padding-top: 8px;
+}
+.article_icon{
+	background: url(../images/version/article_icon.png) no-repeat;
+	width: 24px;
+	height: 24px;
+	float: left;
+}
+.article_icon_fire{
+	background: url(../images/version/fire_icon.png) no-repeat !important;
+}

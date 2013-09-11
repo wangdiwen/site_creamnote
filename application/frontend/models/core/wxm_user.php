@@ -1,0 +1,598 @@
+<?php if (! defined('BASEPATH')) exit('No direct script access allowed.');
+
+class WXM_User extends CI_Model
+{
+    var $wx_table = 'wx_user';
+/*****************************************************************************/
+    public function __construct()
+    {
+        $this->load->database();
+    }
+/*****************************************************************************/
+    public function record_renren_account($user_id = 0, $renren_open_id = '', $renren_nice_name = '')
+    {
+        if ($user_id > 0 && $renren_open_id && $renren_nice_name) {
+            $table = $this->wx_table;
+            $data = array(
+                'user_renren_openid' => $renren_open_id,
+                'user_renren_nicename' => $renren_nice_name
+                );
+            $this->db->where('user_id', $user_id);
+            $this->db->update($table, $data);
+        }
+    }
+/*****************************************************************************/
+    public function get_by_renren_openid($renren_open_id = '')
+    {
+        if ($renren_open_id) {
+            $table = $this->wx_table;
+            $this->db->select('user_id, user_name, user_email')->from($table)->where('user_renren_openid', $renren_open_id)->limit(1);
+            $query = $this->db->get();
+            return $query->row_array();
+        }
+    }
+/*****************************************************************************/
+    public function has_renren_account($renren_open_id = '')
+    {
+        if ($renren_open_id) {
+            $table = $this->wx_table;
+            $this->db->select('user_id, user_renren_openid')->from($table)->where('user_renren_openid', $renren_open_id)->limit(1);
+            $query = $this->db->get();
+            $count = $query->num_rows();
+            if ($count)
+                return true;
+        }
+        return false;
+    }
+/*****************************************************************************/
+    public function record_weibo_account($user_id = 0, $weibo_open_id = '', $weibo_nice_name = '')
+    {
+        if ($user_id > 0 && $weibo_open_id && $weibo_nice_name) {
+            $table = $this->wx_table;
+            $data = array(
+                'user_weibo_openid' => $weibo_open_id,
+                'user_weibo_nicename' => $weibo_nice_name
+                );
+            $this->db->where('user_id', $user_id);
+            $this->db->update($table, $data);
+        }
+    }
+/*****************************************************************************/
+    public function get_by_weibo_openid($weibo_open_id = '')
+    {
+        if ($weibo_open_id) {
+            $table = $this->wx_table;
+            $this->db->select('user_id, user_name, user_email')->from($table)->where('user_weibo_openid', $weibo_open_id)->limit(1);
+            $query = $this->db->get();
+            return $query->row_array();
+        }
+    }
+/*****************************************************************************/
+    public function has_weibo_account($weibo_open_id = '')
+    {
+        if ($weibo_open_id) {
+            $table = $this->wx_table;
+            $this->db->select('user_id, user_weibo_openid')->from($table)->where('user_weibo_openid', $weibo_open_id)->limit(1);
+            $query = $this->db->get();
+            $count = $query->num_rows();
+            if ($count)
+                return true;
+        }
+        return false;
+    }
+/*****************************************************************************/
+    public function get_by_qq_openid($qq_open_id = '')
+    {
+        if ($qq_open_id) {
+            $table = $this->wx_table;
+            $this->db->select('user_id, user_name, user_email')->from($table)->where('user_qq_openid', $qq_open_id)->limit(1);
+            $query = $this->db->get();
+            return $query->row_array();
+        }
+    }
+/*****************************************************************************/
+    public function get_third_party_account($user_id = 0)
+    {
+        if ($user_id > 0) {
+            $table = $this->wx_table;
+            $this->db->select('user_id, user_qq_openid, user_qq_nicename, user_weibo_openid, user_weibo_nicename, user_renren_openid, user_renren_nicename')->from($table)->where('user_id', $user_id)->limit(1);
+            $query = $this->db->get();
+            return $query->row_array();
+        }
+    }
+/*****************************************************************************/
+    public function del_bind_third_party($user_id = 0, $third_type = '')
+    {
+        if ($user_id > 0 && $third_type) {
+            $data = array();
+            if ($third_type == 'qq') {
+                $data['user_qq_openid'] = '';
+                $data['user_qq_nicename'] = '';
+            }
+            elseif ($third_type == 'weibo') {
+                $data['user_weibo_openid'] = '';
+                $data['user_weibo_nicename'] = '';
+            }
+            elseif ($third_type == 'renren') {
+                $data['user_renren_openid'] = '';
+                $data['user_renren_nicename'] = '';
+            }
+
+            if ($data) {
+                $table = $this->wx_table;
+                $this->db->where('user_id', $user_id);
+                $this->db->update($table, $data);
+            }
+        }
+    }
+/*****************************************************************************/
+    public function record_qq_account($user_id = 0, $qq_open_id = '', $qq_nice_name = '')
+    {
+        if ($user_id > 0 && $qq_open_id && $qq_nice_name) {
+            $table = $this->wx_table;
+            $data = array(
+                'user_qq_openid' => $qq_open_id,
+                'user_qq_nicename' => $qq_nice_name
+                );
+            $this->db->where('user_id', $user_id);
+            $this->db->update($table, $data);
+        }
+    }
+/*****************************************************************************/
+    public function has_qq_account($qq_open_id = '')
+    {
+        if ($qq_open_id) {
+            $table = $this->wx_table;
+            $this->db->select('user_id, user_qq_openid')->from($table)->where('user_qq_openid', $qq_open_id)->limit(1);
+            $query = $this->db->get();
+            $count = $query->num_rows();
+            if ($count)
+                return true;
+        }
+        return false;
+    }
+/*****************************************************************************/
+    public function get_email_by_id($user_id = 0)
+    {
+        if ($user_id > 0) {
+            $table = $this->wx_table;
+            $this->db->select('user_id, user_email')->from($table)->where('user_id', $user_id)->limit(1);
+            $query = $this->db->get();
+            return $query->row_array();
+        }
+    }
+/*****************************************************************************/
+    public function get_name_by_id($user_id = 0)
+    {
+        if ($user_id > 0) {
+            $table = $this->wx_table;
+            $this->db->select('user_id, user_name')->from($table)->where('user_id', $user_id)->limit(1);
+            $query = $this->db->get();
+            return $query->row_array();
+        }
+    }
+/*****************************************************************************/
+    public function get_by_id_list($user_id_list = array())
+    {
+        if ($user_id_list)
+        {
+            $table = $this->wx_table;
+            $this->db->select('user_id, user_name')->from($table)->where_in('user_id', $user_id_list);
+            $query = $this->db->get();
+            return $query->result_array();
+        }
+    }
+/*****************************************************************************/
+    public function get_user_account($user_id = 0)
+    {
+        if ($user_id > 0)
+        {
+            $table = $this->wx_table;
+            $this->db->select('user_account_name, user_account_type, user_account_active, user_account_money')->from($table)->where('user_id', $user_id)->limit(1);
+            $query = $this->db->get();
+            return $query->row_array();
+        }
+        return array();
+    }
+/*****************************************************************************/
+    public function update_account_name($user_id = 0, $user_account_name = '')
+    {
+        if ($user_id > 0 && $user_account_name)
+        {
+            $data = array(
+                'user_account_name' => $user_account_name
+                );
+            $table = $this->wx_table;
+            $this->db->where('user_id', $user_id);
+            $this->db->update($table, $data);
+        }
+    }
+/*****************************************************************************/
+    public function get_base_info($user_id = 0)
+    {
+        if ($user_id > 0)
+        {
+            $table = $this->wx_table;
+            $this->db->select('user_name, user_email, user_hobby, user_period, user_phone')->from($table)->where('user_id', $user_id)->limit(1);
+            $query = $this->db->get();
+            return $query->row_array();
+        }
+    }
+/*****************************************************************************/
+    public function update_base_info($info)
+    {
+        if ($info)
+        {
+            $user_id = $info['user_id'];
+            $user_name = $info['user_name'];
+            $user_hobby = $info['user_hobby'];
+            $user_period = $info['user_period'];
+            $user_phone = $info['user_phone'];
+            if ($user_id > 0)
+            {
+                $data = array(
+                    'user_name' => $user_name,
+                    'user_hobby' => $user_hobby,
+                    'user_period' => $user_period,
+                    'user_phone' => $user_phone
+                    );
+                $table = $this->wx_table;
+                $this->db->where('user_id', $user_id);
+                $this->db->update($table, $data);
+            }
+        }
+    }
+/*****************************************************************************/
+
+/*****************************************************************************/
+    // 用户的所有信息
+    public function user_info($user_id = 0)
+    {
+        if ($user_id > 0)
+        {
+            $table = 'wx_user';
+            $this->db->select('user_name, user_email, user_hobby, user_period, user_phone, user_account_name, user_account_type, user_account_active, user_account_money, user_register_time')
+                     ->from($table)->where('user_id', $user_id)->limit(1);
+            $query = $this->db->get();
+
+            return $query->row();
+        }
+        else
+        {
+            return array();
+        }
+    }
+/*****************************************************************/
+    // Delete the user by e-mail
+    public function delete_user($email = '')
+    {
+        // Check the e-mail
+        if ($email == '')
+        {
+            return false;
+        }
+
+        // Has the user account or not
+        $has_user = $this->has_user($email);
+        if (!$has_user)
+        {
+            return false;
+        }
+
+        // Delete the user account
+        $this->db->where('user_email', $email);
+        $this->db->delete('wx_user');
+
+        // Query the delete operation success or failed
+        $this->db->select('user_id, user_name')->from('wx_user')->where('user_email', $email);
+        $query = $this->db->get();
+
+        $rows = $query->num_rows();
+        if ($rows <= 0)  // Delete success
+        {
+            return true;
+        }
+        else             // Delete failed
+        {
+            return false;
+        }
+    }
+/*****************************************************************/
+    // Get the user's session data, like id, name, by user's e-mail
+    public function get_id_name($email = '')
+    {
+        $this->db->select('user_id, user_name')->from('wx_user')->where('user_email', $email);
+        $query = $this->db->get();
+        $row = $query->row();
+        return $row;  // $row is a object
+    }
+/*****************************************************************/
+    public function get_id_name_by_user_id($user_id = 0) {
+        $this->db->select('user_id, user_name, user_email')->from('wx_user')->where('user_id', $user_id)->limit(1);
+        $query = $this->db->get();
+        return $query->row_array();
+    }
+/*****************************************************************/
+    public function check_password($user_id = 0, $password = '')
+    {
+        $this->load->library('encrypt');
+
+        if ($user_id > 0)
+        {
+            $table = $this->wx_table;
+            $this->db->select('user_password')->from($table)->where('user_id', $user_id);
+            $query = $this->db->get();
+            $row = $query->row_array();
+            if ($row)
+            {
+                $encrypt_passwd = $row['user_password'];
+                $old_password = $this->encrypt->decode($encrypt_passwd);
+                if ($old_password == $password)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+/*****************************************************************/
+    public function update_passwd_by_email($user_email = '', $passwd = '')
+    {
+        $this->load->library('encrypt');
+
+        if ($user_email && $passwd)
+        {
+            $encrypt_passwd = $this->encrypt->encode($passwd);
+            $data = array(
+                'user_password' => $encrypt_passwd
+                );
+            $this->db->where('user_email', $user_email);
+            $this->db->update('wx_user', $data);
+
+            // Check success or not
+            $this->db->select('user_password')->from('wx_user')->where('user_email', $user_email);
+            $query = $this->db->get();
+            $row = $query->row();
+            $user_password = $this->encrypt->decode($row->user_password);
+            if ($user_password == $passwd)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        return false;
+    }
+/*****************************************************************/
+    // Return: true/false
+    public function update_passwd($id = 0, $passwd = '')
+    {
+        $this->load->library('encrypt');
+
+        if ($id && $passwd)
+        {
+            $encrypt_passwd = $this->encrypt->encode($passwd);
+            $data = array('user_password' => $encrypt_passwd);
+            $this->db->where('user_id', $id);
+            $this->db->update('wx_user', $data);
+
+            // Check success or not
+            $this->db->select('user_password')->from('wx_user')->where('user_id', $id);
+            $query = $this->db->get();
+            $row = $query->row();
+            $user_password = $this->encrypt->decode($row->user_password);
+            if ($user_password == $passwd)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+    }
+/*****************************************************************/
+    // Return: true/false
+    public function update_name($id = 0, $name = '')
+    {
+        $data = array('user_name' => $name);
+
+        $this->db->where('user_id', $id);
+        $this->db->update('wx_user', $data);
+
+        // Check
+        $this->db->select('user_name')->from('wx_user')->where('user_id', $id);
+        $query = $this->db->get();
+        $row = $query->row();
+
+        $user_name = $row->user_name;
+        if ($user_name == $name)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+/*****************************************************************/
+    // Return: 'user_name'/'0'/'1'/'2'
+    public function login($email = '', $passwd = '')
+    {
+        // Encript lib, for md5 method
+        $this->load->library('encrypt');
+
+        $has_user = $this->has_user($email);  // Check user e-mail account
+        if ($has_user)
+        {
+            // Check user passwd
+            $this->db->select('user_name, user_email, user_password')->from('wx_user')->where('user_email', $email);
+            $query = $this->db->get();
+
+            $rows = $query->num_rows();
+            if ( $rows > 0 && $rows < 2)  // Must only one item account, rows=1
+            {
+                $first = $query->row();
+                $user_password = $first->user_password;
+                $user_name = $first->user_name;
+                $encrypt_passwd = $this->encrypt->decode($user_password);
+                if ($encrypt_passwd == $passwd)
+                {
+                    return $user_name;  // Successed, return name
+                }
+                else
+                {
+                    return '0';  // Passwd is wrong
+                }
+            }
+            else
+            {
+                return '2';  // Database exception
+            }
+        }
+        else
+        {
+            return '1';  // No such e-mail account
+        }
+    }
+/*****************************************************************/
+    // Return: '0'/'1'
+    public function register($name = '', $email = '', $passwd = '')
+    {
+        // Encript lib, for md5 method
+        $this->load->library('encrypt');
+
+        $has_name = $this->has_name($name);
+        $has_user = $this->has_user($email);  // Check if has e-mail account or not
+        if ($has_user)
+        {
+            return '1';     // Already has e-mail account
+        }
+        elseif ($has_name)
+        {
+            return '2';     // Already has the nice name
+        }
+        else
+        {
+            $encrypt_passwd = $this->encrypt->encode($passwd);
+            $register_time = date("Y-m-d H:i:s", time());
+
+            // Insert cur account to database
+            $data = array('user_name' => $name,
+                          'user_password' => $encrypt_passwd,
+                          'user_email' => $email,
+                          'user_register_time' => $register_time,
+                          'user_account_name' => '',
+                          'user_account_type' => '支付宝',
+                          'user_account_money' => 0.00,
+                          'user_account_active' => 'false'
+                          );
+            $this->db->insert('wx_user', $data);
+
+            return '0';  // Insert successfully
+        }
+    }
+/*****************************************************************/
+    public function has_name($name = '')
+    {
+        $this->db->select('user_id')->from('wx_user')->where('user_name', $name)->limit(1);
+        $query = $this->db->get();
+        $rows = $query->num_rows();
+
+        if ($rows > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+/*****************************************************************/
+    public function check_nice_name($user_id = 0, $user_name = '')
+    {
+        $table = $this->wx_table;
+        $where = array(
+            'user_name' => $user_name,
+            'user_id != ' => $user_id
+            );
+        $this->db->select('user_id')->from('wx_user')->where($where)->limit(1);
+        $query = $this->db->get();
+        $rows = $query->num_rows();
+        if ($rows > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+/*****************************************************************/
+    public function check_phone($user_id = 0, $phone = '')
+    {
+        $table = $this->wx_table;
+        $where = array(
+            'user_phone' => $phone,
+            'user_id != ' => $user_id
+            );
+        $this->db->select('user_id')->from('wx_user')->where($where)->limit(1);
+        $query = $this->db->get();
+        $rows = $query->num_rows();
+        if ($rows > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+/*****************************************************************/
+    // Return: true/false
+    public function has_user($user_email = '')
+    {
+        if ($user_email)
+        {
+            $table = $this->wx_table;
+            $where = array('user_email' => $user_email);
+            $this->db->select('user_id')->from($table)->where($where)->limit(1);
+            $query = $this->db->get();
+            $rows = $query->num_rows();
+            if ($rows > 0)
+            {
+                return true;  // Has e-mail account
+            }
+        }
+        return false;
+    }
+/*****************************************************************/
+    // Reconnect the db
+    public function reload_database()
+    {
+        $this->db->reconnect();
+    }
+/*****************************************************************/
+    // Close the db
+    public function close_database()
+    {
+        $this->db->close();
+    }
+/*****************************************************************/
+    // Return info of database
+    public function database_info()
+    {
+        $platform = $this->db->platform();
+        $version = $this->db->version();
+
+        $ret = array('platform' => $platform,
+                     'version' => $version);
+        return $ret;
+    }
+/*****************************************************************/
+}
+
+/* End of file wxm_user.php */
+/* Location: ./application/models/core/wxm_user.php */

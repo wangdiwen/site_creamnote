@@ -1,0 +1,434 @@
+._brand {
+    float: left;
+    background-image: url(../images/new_version/dy_head_logo.png);
+    background-repeat: no-repeat;
+    display: block;
+    width: 176px;
+    height: 32px;
+}
+._brand:hover{
+    filter:alpha(opacity=50); /*IE滤镜，透明度50%*/
+    -moz-opacity:0.5; /*Firefox私有，透明度50%*/
+    opacity:0.5;/*其他，透明度50%*/
+}
+._head {
+    border-top: solid 1px #FFFFFF;
+    height: 65px;
+    min-width: 1066px;
+    background: #3C424C url(../images/version/creamnote_bg.png) repeat left top;
+}
+._head_center {
+    width: 1046px;
+    margin-right: auto;
+    margin-left: auto;
+    overflow: hidden;
+    margin-top: 15px;
+    height: 50px;
+}
+._body {
+    padding: 10px 10px 0px 10px;
+    width: 1046px;
+    min-height: 580px;
+    overflow: hidden;
+    /*background-color: #fff!important;*/
+    /*background-image: none!important;*/
+    background: #f4f4f4 url(../images/new_version/dy_backbg.png);
+}
+
+/* Sidebar */
+._sidebar {
+    float: left;
+    width: 220px;
+    background-color: #9d9d9d;
+}
+#head_pic{
+    padding: 0;
+}
+#head_pic img{
+    -webkit-box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0px 2px 2px rgba(0, 0, 0, 0.2);
+    display: block;
+    height: 150px;
+    width: 150px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+}
+._sidebar {
+    float: left;
+    width: 220px;
+    margin-top: 10px;
+}
+
+._sidebar ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    line-height: normal;
+    border: none;
+    font-size: 14px;
+}
+
+._sidebar li {
+    margin-bottom: 20px;
+    padding: 10px 35px 10px 35px;
+}
+
+._sidebar li ul {
+    margin: 0px 0px;
+    border: none;
+}
+
+._sidebar li li {
+    margin: 0;
+    padding: 15px 0px;
+}
+._nick_personal1{
+    background: url(../images/new_version/personal_nick.png) repeat-x  0px 49px;
+}
+._nick_personal2{
+    background: url(../images/new_version/personal_nick.png) repeat-x  0px 147px;
+}
+._word_break{
+    white-space: nowrap;
+    overflow: hidden;
+    width: 150px;
+    text-overflow: ellipsis;
+    padding: 4px 0;
+}
+
+._sidebar li li a {
+    font-weight: normal;
+    border: none;
+}
+
+._sidebar li li a:hover {
+    color: #666666;
+}
+
+._sidebar p {
+    margin: 0;
+    padding: 0px 14px;
+}
+
+._sidebar h2 {
+    padding: 45px 0 10px 0px;
+    text-transform: capitalize;
+    font-size: 18px;
+    font-weight: normal;
+    color: #445877;
+    text-align: left;
+}
+._sidebar_step h1 {
+    padding: 45px 0 0px 0px;
+    text-transform: capitalize;
+    font-size: 18px;
+    font-weight: normal;
+    color: #445877;
+    text-align: center;
+    margin: 0;
+}
+._nomargin{
+    margin: 0;
+}
+
+._sidebar p {
+    line-height: 200%;
+}
+
+._sidebar a {
+    text-align: left;
+    text-decoration: none;
+    font-weight: bold;
+    color: #666666;
+}
+._personal_view{
+    height: 18px;
+    background: url(../images/new_version/dy_personal_view.png) no-repeat  0px 5px;
+    cursor: pointer;
+}
+._personal_view span{
+    padding-left: 25px;
+}
+._personal_store{
+    height: 18px;
+    background: url(../images/new_version/dy_personal_store.png) no-repeat  0px 3px;
+    cursor: pointer;
+}
+._personal_store span{
+    padding-left: 25px;
+}
+._content{
+    float: right;
+    width: 821px;
+    background-color: #d6d6d6;
+    margin-top: 10px;
+    /*background-image: -webkit-radial-gradient(center, #fff, #d6d6d6);
+    background-image: -moz-radial-gradient(center, #fff, #d6d6d6);
+    background-image: radial-gradient(center, #fff, #d6d6d6);*/
+}
+
+#_sidebar,#_content {
+    padding-bottom:32767px!important;
+    margin-bottom:-32767px!important; 
+}
+
+._data_title {
+    height: 76px;
+    font-size: 18px;
+    font-weight: normal;
+    color: #445877;
+    background: url(../images/new_version/changdata_nick_bottom.png) no-repeat  0px 74px;
+}
+._grgh{
+    margin: 45px 0 10px 0px;
+    text-align: left;
+    float: left;
+}
+._post {
+    margin-bottom: 20px;
+    padding: 20px 20px;
+}
+
+
+._card_total_common {
+    width: 781px;
+    overflow: hidden;
+    padding-top: 25px;
+}
+._card_item_panel {
+-webkit-box-shadow: 0px 4px 14px 4px rgba(0, 0, 0, 0.05);
+box-shadow: 0px 4px 14px 4px rgba(0, 0, 0, 0.05);
+border: 1px solid #d2dbdd;
+-webkit-border-radius: 3px;
+-moz-border-radius: 3px;
+border-radius: 3px;
+background-color: #fff;
+}
+._card_item{
+    display: inline-block;
+    padding: 3px;
+    margin: 22px 0 0 3px;
+    min-height: 235px;
+    width: 185px;
+    position: relative;
+    color: #707072;
+    vertical-align: top;
+    padding-bottom: 0;
+    background: #fbfcfc none;
+    font-size: 12px;
+}
+._card_items_common {
+    margin: -34px 0 0 -3px;
+}
+._item_actual{
+    background-color: #f0f0f0;
+    margin-bottom: 45px;
+}
+._item_actual:hover{
+    background: rgb(223, 238, 247);
+}
+._card_delete {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    background: url(../images/new_version/dy_delete_bg.png) no-repeat;
+}
+._card_delete img{
+    margin: 3px 11px;
+}
+._card_content{
+    padding: 20px 20px 5px 20px;
+}
+._card_footer {
+    height: 32px;
+    background: url(../images/new_version/dy_card_hover_black.png) no-repeat 0 0;
+    position: absolute;
+    text-align: left;
+    bottom: 0;
+    margin-top: 3px;
+    margin-left: -20px;
+    bottom: 46px;
+    display: none;
+    width: 185px
+}
+._foot_content_down{
+    padding-left: 15px;
+    padding-top: 10px;
+}
+._card_edit{
+    padding-top: 10px;
+    margin-left: 50px;
+}
+._foot_content_price {
+    padding: 4px 15px;
+    font-size: 14px;
+    line-height: 22px;
+    color: #fff !important;
+}
+._card_bottom{
+    bottom: 15px;
+    width: 184px;
+    position: absolute;
+}
+._card_bottom img{
+    margin-top: -3px;
+}
+._card_bottom span{
+    padding-left: 8px;
+}
+
+._card_page{
+    padding-top: 10px;
+}
+._card_page img{
+    width: 25px;
+    height: 25px;
+}
+._card_page .fr{
+    padding-top: 8px;
+}
+._card_user{
+    padding-top: 5px;
+}
+._card_cate{
+    padding-bottom: 5px;
+}
+
+._changedata_nick{
+    background: url(../images/new_version/changdata_nickl.png) no-repeat 0px 4px;
+}
+/* ---------------------头部----------------------*/
+#check_login{
+    font-size: 16px;
+    color: #fff;
+}
+#check_login span{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+._user_name{
+    background: url(../images/new_version/dy_user_up_arrow.png) no-repeat 4px 18px;
+    width: 12px;
+    height: 12px;
+    padding: 10px;
+}
+._show_count:hover{
+    background-color: rgb(43, 64, 87);
+}
+._user_name_hover{
+    background: url(../images/new_version/dy_user_down_arrow.png) no-repeat 4px 18px!important;
+}
+._al_login{
+    background: url(../images/new_version/dy_user_bg.png) no-repeat 4px 18px!important;
+    width: 123px;
+    height: 143px;
+    position: absolute;
+    z-index: 1000;
+    top: 40px;
+    display: block;
+    margin-left: -18px;
+    color: #fff!important;
+    display: none;
+}
+._al_login a{
+    color: #fff!important;
+}
+._al_user{
+    background: url(../images/new_version/dy_user.png) no-repeat 12px 30px!important;
+    width: 120px;
+    padding-top: 25px;
+    padding-left: 40px;
+}
+._al_count{
+    background: url(../images/new_version/dy_user_count.png) no-repeat 12px 11px!important;
+    width: 120px;
+    padding-top: 8px;
+    padding-left: 40px;
+}
+._al_logout{
+    background: url(../images/new_version/dy_user_logout.png) no-repeat 11px 9px!important;
+    width: 120px;
+    padding-top: 8px;
+    padding-left: 40px;
+}
+._al_user:hover{
+    color: rgb(76, 118, 172)!important;
+}
+._al_count:hover{
+    color: rgb(76, 118, 172)!important;
+}
+._al_logout:hover{
+    color: rgb(76, 118, 172)!important;
+}
+
+/* ---------------------菜单----------------------*/
+
+._headShadow{
+    background-color: #fff;
+}
+#menu ._current_page_item a {
+    background-color: rgb(59, 76, 104);
+    color: #fff;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+#menu li :hover{
+    background-color: rgb(59, 76, 104)!important;
+    color: #fff;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+#menu a {
+    color: rgb(76, 118, 172);
+}
+#menu li {
+padding-left: 10px;
+}
+#menu .nick{
+    background: url(../images/new_version/dy_menu_nick.png) no-repeat 4px 17px;
+}
+._head_search{
+    background: url(../images/new_version/dy_search_input.png) no-repeat 4px 18px;
+    width: 200px;
+    height: 48px;
+    position: absolute;
+    top: 3px;
+    margin-left: 645px;
+}
+._head_search span{
+    background: url(../images/new_version/dy_search_button.png) no-repeat 4px 18px;
+    width: 34px;
+    height: 38px;
+    top: 4px;
+    position: absolute;
+    cursor: pointer;
+}
+._head_search input{
+    background: transparent;
+    border: none;
+    width: 139px;
+    margin-top: 21px;
+    margin-left: 11px;
+    cursor: initial;
+    outline: medium;
+    height: 14px;
+
+    -webkit-box-shadow: none!important;
+    -moz-box-shadow: none!important;
+    box-shadow: none!important;
+    -webkit-border-radius: none!important;
+    -moz-border-radius: none!important;
+    border-radius: none!important;
+}
+
+._sidebar_step {
+    float: left;
+    width: 220px;
+    margin-top: 10px;
+    background-color: #9d9d9d;
+}
