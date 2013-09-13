@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="/application/frontend/views/resources/css/uploadify.css" />
     <link rel="stylesheet" href="/application/frontend/views/resources/css/style.css" />
     <script type="text/javascript" src="/application/frontend/views/resources/js/jquery-1.8.3.js"></script>
-    <script type="text/javascript" src="/application/frontend/views/resources/js/jquery.uploadify.min.js"></script>
+
    	<script type="text/javascript" src="/application/frontend/views/resources/js/school.js"></script>
    	<script type="text/javascript" src="/application/frontend/views/resources/js/jquery-ui-1.10.3.custom.js"></script>
     <script type="text/javascript" src="/application/frontend/views/resources/js/jquery.blockUI.js"></script>
@@ -20,96 +20,6 @@ var step_one_success = 0;
 var step_two_success = 0;
 var step_three_success = 0;
 $(function() {
-    $('#file_upload').uploadify({
-    	'auto'     : false,//关闭自动上传
-    	'removeTimeout' : 1,//文件队列上传完成1秒后删除
-      //'debug' : true,
-        'swf'      : '/application/frontend/views/data/uploadify.swf',
-        'uploader' : '<?php echo site_url('data/wxc_image/upload_image');?>',
-        'formData': { 'PHPSESSID': '<?php echo session_id();?>'},
-        'method'   : 'post',//方法，服务端可以用$_POST数组获取数据
-		    'buttonText' : '选择图片',//设置按钮文本
-        'multi'    : true,//允许同时上传多张图片
-        'uploadLimit' : 10,//一次最多只允许上传10张图片
-        'fileTypeDesc' : 'Image Files',//只允许上传图像
-        'fileTypeExts' : '*.jpg; *.jpeg; *.png; *.gif',//限制允许上传的图片后缀
-        'fileSizeLimit' : '10000KB',//限制上传的图片不得超过200KB
-        'onSelect' : function(file) {
-			var fileName="" ;
-			var name = file.name.split(".");
-			for(i=0;i<name.length-1;i++){
-				fileName+=name[i]+".";
-				}
-			$('#dataname').val(fileName.substr(0, fileName.length-1));
-        },
-        'onUploadSuccess' : function(file, data, response) {//每次成功上传后执行的回调函数，从服务端返回数据到前端
-            if(data == "UNKNOWN"){
-                alert("图片有异常，请重新上传新的图片");
-           	 } else{
-            	var jsondata = $.parseJSON(data);
-                var str = "";
-                var i;
-                var str = "";
-                var i;
-                var close;
-                var width ;
-                var height ;
-                for(i in jsondata){
-
-                        if(jsondata[i]['width']<=550){
-                            width = jsondata[i]['width']+"px";
-                            height = jsondata[i]['height']+"px";
-                            close = (jsondata[i]['width']-10)+"px";
-                        }else{
-                            width = 550+"px";
-                            height = 550*(jsondata[i]['height']/jsondata[i]['width'])+"px";
-                            close = 540+"px";
-                        }
-
-                          var base_url = "<?php echo base_url(); ?>";
-                          str +="<div class='modules' title="+jsondata[i]['id']+">";
-                          str +=" <h3 class='m_title'>"+jsondata[i]['image'].split("/")[3]+"</h3>";
-                          str +="<a href='#' onclick='delete_image("+jsondata[i]['id']+")'><img src="+base_url+"application/frontend/views/resources/images/close.png"+"></a>";
-
-                          str +="<p><img onclick='original_image("+i+")' src=" + base_url + jsondata[i]['thumb_image'] + "></img></p>";
-                          str +="<div class='display_none' id="+i+"><p><img style='width:"+width+" ;height:"+height+"' src=" + base_url + jsondata[i]['image'] + "></img></p>";
-                          str +="<div class='fancy_close' onclick='unblock()' style='left:"+close+";'></div>";
-                          str += "<div class='image_title' style='width:"+width+"'>";
-                          str +="<table cellspacing='0' cellpadding='0' border='0'><tbody><tr><td id='fancy_title_left'></td><td id='fancy_title_main'>";
-                          str +="<div>"+jsondata[i]['image'].split("/")[3]+"</div></td><td id='fancy_title_right'></td></tr></tbody></table></div></div>";
-                          str += "</div>";
-        				//alert(jsondata[i]['thumb_image']);
-                   	}
-                var num1 = Math.round(i);
-                var num2 = Math.round(5);
-                var result = num1/num2;
-                var five = Math.floor(result);
-                var height = (five+1)*162+860+"px";
-                $(".body").css("min-height",height);
-                $("#module_list").html(str);
-                $("#module_list").css("display","block");
-             }
-
-        },
-        'onQueueComplete' : function(queueData) {//上传队列全部完成后执行的回调函数
-           // if(img_id_upload.length>0)
-           // alert('成功上传的文件有：'+encodeURIComponent(img_id_upload));
-           //第一步
-           $("#first_step").addClass("ca-menu_hover");
-            $("#first_step span").addClass("ca-menu_hover_ca-icon");
-            $("#first_step h2").addClass("ca-menu_hover_ca-main");
-            $("#first_step span").html(".");
-            step_one_success = 1;
-            //第二步
-          $("#second_step").addClass("ca-menu_hover");
-          $("#second_step span").addClass("ca-menu_hover_ca-icon");
-          $("#second_step h2").addClass("ca-menu_hover_ca-main");
-          $("#second_step span").html(".");
-          step_two_success = 1;
-          check_upload();
-        }
-        // Put your options here
-    });
 
     $("#filecontent").click(function(){
     //	alert("1");
@@ -251,7 +161,8 @@ $(document).ready(function(){
                         var five = Math.floor(result);
                         var height = (five+1)*162+860+"px";
                         $(".body").css("min-height",height);
-						//得到图片顺序id
+                        $(".body").css("overflow","hidden");
+						        //得到图片顺序id
 		                 var $list = $("#module_list");
 		                 var old_order = [];
 		                 $list.children(".modules").each(function() {
@@ -317,6 +228,7 @@ function delete_image(id){
                         var five = Math.floor(result);
                         var height = (five+1)*162+860+"px";
                         $(".body").css("min-height",height);
+                        $(".body").css("overflow","hidden");
     	                 	 $("#module_list").html(str);
                          if(str!=""){
                           $("#first_step").addClass("ca-menu_hover");
@@ -430,14 +342,17 @@ $(document).keydown(function(event){
 </head>
 
 
-<body class="">
+<body class="activity_pane">
+  <script  defer="defer">
+  $("._body").css("overflow","hidden")
+</script>
 	<?php include  'application/frontend/views/share/header.php';?>
 
     <?php $nav_param = "upload_image";?>
     <?php include  'application/frontend/views/share/navigation.php';?>
     <!-- end #header -->
-<div class="backcolor_body activity_pane">
-    <div class="body _body" style="min-height: 890px;">
+<div class="backcolor_body ">
+    <div class="body _body" style="min-height: 890px;overflow:hidden;">
 		<div id="_content" class="_content">
 
         <div class="post" style="padding: 0 20px ;width:781px;">
@@ -532,12 +447,120 @@ $(document).keydown(function(event){
                 <a href="">使用帮助</a>
             </div>
         </div>
+        <div style="clear: both;">&nbsp;</div>
 	</div><!-- end #content -->
-    <div class="clear" style="height:0;:clear:both;overflow:hidden"></div>
+
 	<!-- end #body -->
     <?php include  'application/frontend/views/share/footer.php';?>
     <!-- end #footer -->
 </div>
+<script type="text/javascript" src="/application/frontend/views/resources/js/jquery.uploadify.min.js"></script>
+<script type="text/javascript">
+$(function() {
+  $('#file_upload').uploadify({
+      'auto'     : false,//关闭自动上传
+      'removeTimeout' : 1,//文件队列上传完成1秒后删除
+      //'debug' : true,
+        'swf'      : '/application/frontend/views/data/uploadify.swf',
+        'uploader' : '<?php echo site_url('data/wxc_image/upload_image');?>',
+        'formData': { 'PHPSESSID': '<?php echo session_id();?>'},
+        'method'   : 'post',//方法，服务端可以用$_POST数组获取数据
+        'buttonText' : '选择图片',//设置按钮文本
+        'multi'    : true,//允许同时上传多张图片
+        'uploadLimit' : 10,//一次最多只允许上传10张图片
+        'fileTypeDesc' : 'Image Files',//只允许上传图像
+        'fileTypeExts' : '*.jpg; *.jpeg; *.png; *.gif',//限制允许上传的图片后缀
+        'fileSizeLimit' : '2000KB',//限制上传的图片不得超过2MB
+        'onSelect' : function(file) {
+      var fileName="" ;
+      var name = file.name.split(".");
+      for(i=0;i<name.length-1;i++){
+        fileName+=name[i]+".";
+        }
+      $('#dataname').val(fileName.substr(0, fileName.length-1));
+        },
+        'onUploadSuccess' : function(file, data, response) {//每次成功上传后执行的回调函数，从服务端返回数据到前端
+            if(data == "UNKNOWN"){
+                alert("图片有异常，请重新上传新的图片");
+             }else if(data == "image-size-overflow"){
+                alert("一次图片笔记中，最大只支持30幅图片，如果您的图片笔记未完成，建议您可以分开制作、分享!")
+             }else if(data == "image-count-overflow"){
+                alert("您上传的图片超过最大限制2M!")
+             } else{
+              var jsondata = $.parseJSON(data);
+                var str = "";
+                var i;
+                var str = "";
+                var i;
+                var close;
+                var width ;
+                var height ;
+                for(i in jsondata){
+                      if(i != 29){
+                        if(jsondata[i]['width']<=550){
+                          width = jsondata[i]['width']+"px";
+                          height = jsondata[i]['height']+"px";
+                          close = (jsondata[i]['width']-10)+"px";
+                        }else{
+                            width = 550+"px";
+                            height = 550*(jsondata[i]['height']/jsondata[i]['width'])+"px";
+                            close = 540+"px";
+                        }
+
+                        var base_url = "<?php echo base_url(); ?>";
+                        str +="<div class='modules' title="+jsondata[i]['id']+">";
+                        str +=" <h3 class='m_title'>"+jsondata[i]['image'].split("/")[3]+"</h3>";
+                        str +="<a href='#' onclick='delete_image("+jsondata[i]['id']+")'><img src="+base_url+"application/frontend/views/resources/images/close.png"+"></a>";
+
+                        str +="<p><img onclick='original_image("+i+")' src=" + base_url + jsondata[i]['thumb_image'] + "></img></p>";
+                        str +="<div class='display_none' id="+i+"><p><img style='width:"+width+" ;height:"+height+"' src=" + base_url + jsondata[i]['image'] + "></img></p>";
+                        str +="<div class='fancy_close' onclick='unblock()' style='left:"+close+";'></div>";
+                        str += "<div class='image_title' style='width:"+width+"'>";
+                        str +="<table cellspacing='0' cellpadding='0' border='0'><tbody><tr><td id='fancy_title_left'></td><td id='fancy_title_main'>";
+                        str +="<div>"+jsondata[i]['image'].split("/")[3]+"</div></td><td id='fancy_title_right'></td></tr></tbody></table></div></div>";
+                        str += "</div>";
+                      }
+
+                //alert(jsondata[i]['thumb_image']);
+                    }
+                    var num1 = Math.round(i);
+                    if(num1 == 29){
+                      alert("一次图片笔记中，最大只支持30幅图片，如果您的图片笔记未完成，建议您可以分开制作、分享")
+                    }else{
+                      var num2 = Math.round(5);
+                      var result = num1/num2;
+                      var five = Math.floor(result);
+                      var height = (five+1)*162+860+"px";
+                      $(".body").css("min-height",height);
+                      $(".body").css("overflow","hidden");
+                      $("#module_list").html(str);
+                      $("#module_list").css("display","block");
+                    }
+
+             }
+
+        },
+        'onQueueComplete' : function(queueData) {//上传队列全部完成后执行的回调函数
+           // if(img_id_upload.length>0)
+           // alert('成功上传的文件有：'+encodeURIComponent(img_id_upload));
+           //第一步
+           $("#first_step").addClass("ca-menu_hover");
+            $("#first_step span").addClass("ca-menu_hover_ca-icon");
+            $("#first_step h2").addClass("ca-menu_hover_ca-main");
+            $("#first_step span").html(".");
+            step_one_success = 1;
+            //第二步
+          $("#second_step").addClass("ca-menu_hover");
+          $("#second_step span").addClass("ca-menu_hover_ca-icon");
+          $("#second_step h2").addClass("ca-menu_hover_ca-main");
+          $("#second_step span").html(".");
+          step_two_success = 1;
+          check_upload();
+        }
+        // Put your options here
+    });
+});
+</script>
 </body>
 
 </html>

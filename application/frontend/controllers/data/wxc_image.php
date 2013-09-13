@@ -24,37 +24,43 @@ class WXC_Image extends CI_Controller
     {
         if (!(isset($_SESSION['wx_user_id']) && $_SESSION['wx_user_id']))
         {
-            echo "您与服务器通信中断，请重新登录 @_@";
-            return;
+            redirect('static/wxc_direct/sys_error');
+            return false;
         }
 
     	//在image路径下建立私有目录
-        $user_id = $_SESSION['wx_user_id'];
+        $user_id = isset($_SESSION['wx_user_id']) ? $_SESSION['wx_user_id'] : 0;
         $user_dir = 'upload/image/'.$user_id;
         if (! is_dir($user_dir))
         {
             if (! mkdir($user_dir, 0777))
             {
                 die('创建用户的临时图片目录失败！');
-                return;
+                return false;
             }
         }
 
         // 图片文件上传操作
-        if (!empty($_FILES))
+        if (! empty($_FILES))
         {
 
             if ($_FILES['Filedata']['error'] > 0)   // 错误
             {
-                echo '上传文件有错误！';
-                return;
+                die('上传文件有错误！');
+                return false;
             }
             else                                    // 正常
             {
                 $tmp_file_name = $_FILES['Filedata']['tmp_name'];       // 临时文件名称
-                $file_name = $_FILES['Filedata']['name'];               // 文件原名
+                $file_name = wx_trim_all($_FILES['Filedata']['name']);  // 文件原名
                 $file_type = $_FILES['Filedata']['type'];               // 文件类型
-                $file_size = $_FILES['Filedata']['size'];               // 文件大小
+                $file_size = $_FILES['Filedata']['size'];               // 文件大小，字节
+
+                // 限制单个上传图片的大小，不大于2M
+                if ($file_size >= 2000000) {
+                    echo 'image-size-overflow';
+                    return false;
+                }
 
                 $image_info = getimagesize($tmp_file_name);
                 $image_width = 0;
@@ -84,23 +90,28 @@ class WXC_Image extends CI_Controller
                 if ($type == 'UNKNOWN')
                 {
                     echo 'UNKNOWN';
-                    return;
+                    return false;
                 }
 
                 // 将上传的临时文件，写入vps
-                $save_file_name = $user_dir.'/'.$file_name;
+				$image_name = date('YmdHis').rand(100, 999);
+				$image_suffix = wx_get_suffix($file_name);
+                $save_file_name = $user_dir.'/'.$image_name.'.'.$image_suffix;
                 if (move_uploaded_file($tmp_file_name, $save_file_name))
                 {
                     // 生成缩略图
                     $ret = $this->wx_imageapi->thumb_image($save_file_name);
                     if ($ret)  // 上传缩略图成功
                     {
-                        $thumb_file_name = wx_get_filename($file_name);
-                        $thumb_file_suffix = wx_get_suffix($file_name);
-                        $thumb_image = $user_dir.'/'.$thumb_file_name.'_thumb.'.$thumb_file_suffix;
+                        $thumb_image = $user_dir.'/'.$image_name.'_thumb.'.$image_suffix;
 
                         $json_info = $this->add_image($user_id, $save_file_name, $thumb_image, $image_width, $image_height);
-                        echo $json_info;   // 返回json文本数据给ajax
+                        if (! $json_info) {
+                            echo 'image-count-overflow';  // 最多只能上传30张图片
+                        }
+                        else {
+                            echo $json_info;   // 返回json文本数据给ajax
+                        }
                     }
                 }
                 else
@@ -129,6 +140,12 @@ class WXC_Image extends CI_Controller
                     'width' => $width,
                     'height' => $height
                     );
+
+                // check if over 30 images
+                if ($id >= 30) {
+                    return '';
+                }
+
                 array_push($json, $info);
                 $image_json = json_encode($json);
 
@@ -147,7 +164,9 @@ class WXC_Image extends CI_Controller
                 $info = array(
                     'id' => 0,
                     'image' => $image,
-                    'thumb_image' => $thumb_image
+                    'thumb_image' => $thumb_image,
+                    'width' => $width,
+                    'height' => $height,
                     );
                 array_push($image_info, $info);
                 $image_json = json_encode($image_info);
@@ -161,14 +180,14 @@ class WXC_Image extends CI_Controller
                 return $image_json;
             }
         }
-
         return '';
     }
 /*****************************************************************************/
     public function delete_image()
     {
         $image_id = $this->input->post('image_id');
-        if ($image_id > -1)
+
+        if (is_numeric($image_id) && $image_id > -1)
         {
             $image_json = '';
             if (isset($_SESSION['wx_user_id']) && $_SESSION['wx_user_id'])
@@ -258,30 +277,28 @@ class WXC_Image extends CI_Controller
 
         if ($order == '')                           // 表示自然顺序，用户没有进行自定义排序
         {
-            // Todo...
             $new_json_obj = $json_obj;
         }
         else                                        //  用户变更了图片的顺序
         {
             $order_list = explode(',', $order);     // Like: {4, 1, 2, 3, 0, 5}
-            foreach ($order_list as $i => $list)
+            foreach ($order_list as $i => $order_id)
             {
-                $j = 0;
-                foreach ($json_obj as $obj)
+                foreach ($json_obj as $j => $obj)
                 {
                     $json_id = $obj['id'];
-                    if ($json_id == $list)
+                    if ($json_id == $order_id)
                     {
                         $tmp = array(
                             'id' => $i,
                             'image' => $obj['image'],
-                            'thumb_image' => $obj['thumb_image']
+                            'thumb_image' => $obj['thumb_image'],
+                            'width' => $obj['width'],
+                            'height' => $obj['height'],
                             );
-                        array_splice($json_obj, $j, 1);
-                        // loginfo($j);
+                        unset($json_obj[$j]);
                         array_push($new_json_obj, $tmp);
                     }
-                    $j++;
                 }
             }
         }
@@ -300,7 +317,7 @@ class WXC_Image extends CI_Controller
         else
         {
             echo 'no image';
-            return;
+            return false;
         }
 
         // 生成PDF文件
@@ -329,8 +346,7 @@ class WXC_Image extends CI_Controller
         fastcgi_finish_request();
 
         // 删除用户存放图片的临时目录
-        // loginfo('删除用户存放图片的临时目录');
-        $this->_del_user_image_dir($user_id);
+		$ret = $this->_del_user_image_dir($user_id);
 
         // 生成一条data资料数据，写入数据库表 wx_data
         // loginfo('生成一条data资料数据，写入数据库表 wx_data');
@@ -603,8 +619,9 @@ class WXC_Image extends CI_Controller
     {
         if ($user_id > 0)
         {
-            $user_image_dir = 'upload/image/'.$user_id;
-            wx_delete_dir($user_image_dir);
+            $user_image_dir = '/alidata/www/creamnote/upload/image/'.$user_id;
+            $ret = wx_delete_dir($user_image_dir);
+			return $ret;
         }
     }
 /*****************************************************************************/

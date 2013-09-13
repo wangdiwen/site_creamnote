@@ -29,7 +29,7 @@
     padding: 10px 10px 0px 10px;
     width: 1046px;
     min-height: 580px;
-    overflow: hidden;
+    overflow: hidden !important;
     /*background-color: #fff!important;*/
     /*background-image: none!important;*/
     background: #f4f4f4 url(../images/new_version/dy_backbg.png);
@@ -193,6 +193,7 @@
 
 
 ._card_total_common {
+    float: left;
     width: 781px;
     overflow: hidden;
     padding-top: 25px;

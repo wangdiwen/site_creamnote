@@ -34,7 +34,7 @@ $(function() {
         'uploadLimit' : 10,//一次最多只允许上传10张图片
         //'fileTypeDesc' : 'Image Files',//只允许上传图像
         'fileTypeExts' : '*.pdf; *.ppt; *.pptx ;*.docx;*.doc;*.wps;',//限制允许上传的图片后缀
-        'fileSizeLimit' : '10000KB',//限制上传的图片不得超过10M
+        'fileSizeLimit' : '4000KB',//限制上传的图片不得超过4M
         'onSelect' : function(file) {
 			var fileName="" ;
 			var name = file.name.split(".");
@@ -44,6 +44,9 @@ $(function() {
 			$('#dataname').val(fileName.substr(0, fileName.length-1));
         },
         'onUploadSuccess' : function(file, data, response) {//每次成功上传后执行的回调函数，从服务端返回数据到前端
+               if(data == "file-size-overflow"){
+                 alert("您上传的资料超过最大限制4M!")
+               }
                img_id_upload[i]=data;
                i++;
                $("#dataid").attr("value",data.split(",")[0]);
@@ -111,7 +114,7 @@ $(function() {
             'data_category_area_major':wx_category_area_major
             }),
         success: function(result)
-            {alert(result)
+            {
               if(result=='success'){
                // location.reload();
                     showLoading("文档正在努力上传当中,请稍等。。。");

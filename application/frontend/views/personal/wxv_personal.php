@@ -323,7 +323,7 @@ $(function() {
 });
 
 //关注
-function follow(user_id){
+function follow(the,user_id){
 	var url = '<?php echo site_url('core/wxc_user_manager/add_follow'); ?>';
 	var followed_user_id = user_id;
 	 $.ajax({
@@ -334,12 +334,11 @@ function follow(user_id){
 	        success: function(result)
 	            {
 	              if(result=='success'){
-
-		              //$("#commnet"+count).after(str);
-		             // $('blockquote').quovolver(500,600);
-			             var str="";
-			             str+="<input type='button' name='取消关注' id='unfollow'>";
-			            // $("#if_follow").html(str);
+                    $(the).html("已关注");
+                    $(the).parent(".op_follow_section").addClass('al_follow_section');
+                    $(the).parent(".op_follow_section").removeClass('op_follow_section');
+                    $(the).attr("onclick","");
+                    $("#like_count").html(Number($("#like_count").text())+1);
 	                }
 
 	            },
@@ -351,7 +350,7 @@ function follow(user_id){
 	        });
 }
 //取消关注
-function unfollow(user_id){
+function unfollow(the,user_id){
 	var url = '<?php echo site_url('core/wxc_user_manager/del_follow'); ?>';
 	var followed_user_id = user_id;
 	 $.ajax({
@@ -362,12 +361,8 @@ function unfollow(user_id){
         success: function(result)
             {
               if(result=='success'){
-
-	              //$("#commnet"+count).after(str);
-	             // $('blockquote').quovolver(500,600);
-            	  var str="";
-		          str+="<input type='button' name='关注' id='follow'>";
-		         // $("#if_follow").html(str);
+                  $("#unf_"+user_id).css("display","none");
+                  $("#like_count").html(Number($("#like_count").text())-1);
                 }
 
             },
@@ -403,9 +398,14 @@ function show_follow(direction){
               str ="";
               str +="<div class='_card_total_common'>";
 		        	for(i in result){
-    						str+="<div >";
-    						str+="<a href='javascript:void(0)'>"+result[i]['user_name']+"</a>==><a href='#' onclick='unfollow("+result[i]['follow_followed_user_id']+")'>取消关注</a>";
+                str+="<div id='unf_"+result[i]['follow_followed_user_id']+"'>"
+    						str+="<div class='follow_section fl'>";
+    						str+="<a href='javascript:void(0)'>"+result[i]['user_name']+"</a>";
     						str+="</div>";
+                str+="<div class='op_follow_section fl'>";
+                str+="<a href='javascript:void(0)' onclick='unfollow(this,"+result[i]['follow_followed_user_id']+")'>取消关注</a>";
+                str+="</div>";
+                str+="</div>";
     				  }
 				      str+="</div>";
 		        }else if(direction==2){
@@ -417,12 +417,19 @@ function show_follow(direction){
               str ="";
               str +="<div class='_card_total_common'>";
 		        	for(i in result){
-		        		str+="<div >";
+		        		str+="<div class='follow_section fl'>";
     						str+="<a href='javascript:void(0)'>"+result[i]['user_name']+"</a>";
+                str+="</div>";
     						if(result[i]['has_followed']==="false"){
-    							str+="==><a href='#' onclick='follow("+result[i]['follow_user_id']+")'>关注</a>";
-      					}
-  						  str+="</div>";
+                  str+="<div class='op_follow_section fl'>";
+                  str+="<a href='javascript:void(0)' onclick='follow(this,"+result[i]['follow_user_id']+")'>关注</a>";
+                  str+="</div>";
+      					}else{
+                  str+="<div class='al_follow_section fl'>";
+                  str+="<a href='javascript:void(0)' >已关注</a>";
+                  str+="</div>";
+                }
+
 				      }
 				      str+="</div>";
 				    }
@@ -973,7 +980,7 @@ function delete_data(dataid){
 							<li class="_nick_personal2">
                                 <div style="height:35px;">
                                     <div onclick="show_follow(2)" class="_personal_view fl" title="粉丝"><span><?php echo $liked_count?></span></div>
-                                    <div onclick="show_follow(1)" class="_personal_store fr" title="关注"><span><?php echo $like_count?></span></div>
+                                    <div onclick="show_follow(1)" class="_personal_store fr" title="关注"><span id="like_count"><?php echo $like_count?></span></div>
                                 </div>
                                 <div class="_word_break"><a ><?php echo "邮箱: &nbsp;".$user_info->user_email; ?></a></div>
                                 <div class="_word_break"><a ><?php  echo "注册: &nbsp;".substr($user_info->user_register_time,0,strlen($user_info->user_register_time)-3);   ?></a></div>

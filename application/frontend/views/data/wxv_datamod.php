@@ -385,7 +385,7 @@ $(function(){
         var wx_category_area_school = $("#wx_category_area_school").attr("value");
         var wx_category_area_major = $("#wx_category_area_major").attr("value");
         var wx_category_nature = $("#wx_category_nature").attr("value");
-        alert(data_id);
+        // alert(data_id);
         var url ='<?php echo site_url('data/wxc_data/upload_file_info'); ?>';
         $.ajax({
         type:"post",
@@ -407,6 +407,7 @@ $(function(){
               if(result=='success'){
                // location.reload();
             	  location.href='<?php echo site_url('home/personal'); ?>';
+                  alert("完善成功");
                 }
 
             },
@@ -422,6 +423,7 @@ $(function(){
 	   $('#showpdf').click(function(){
 	       $('#overlay').fadeIn('fast',function(){
 	           $('#box').animate({'top':'140px'},500);
+               $('#box').css('z-index',1000);
 	       });
 	   });
 	   $('#boxclose').click(function(){

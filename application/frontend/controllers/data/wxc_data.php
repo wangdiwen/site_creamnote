@@ -439,8 +439,8 @@ class WXC_Data extends CI_Controller
         {
             if ($_FILES["Filedata"]["error"] > 0)   // 错误
             {
-                echo '上传文件有错误！';
-                return;
+                die('上传文件有错误！');
+                return false;
             }
             else    // 正常
             {
@@ -448,6 +448,12 @@ class WXC_Data extends CI_Controller
                 $file_name = $_FILES["Filedata"]['name'];               // 文件原名
                 $file_type = $_FILES["Filedata"]['type'];               // 文件类型
                 $file_size = $_FILES["Filedata"]['size'];               // 文件大小
+
+                // 限制单个文档的大小，不大于4M
+                if ($file_size >= 4000000) {
+                    echo 'file-size-overflow';
+                    return false;
+                }
 
                 // 得到源文件的名称和后缀
                 $name = wx_get_filename($file_name);
@@ -514,7 +520,6 @@ class WXC_Data extends CI_Controller
                 }
                 else
                 {
-                    // echo $file_name . "上传失败！";
                     die($file_name . "上传失败！");
                 }
             }

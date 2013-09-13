@@ -773,6 +773,7 @@ a{
 	line-height: 18px;
 	font-size: 14px;
 	padding-top: 5px;
+	padding-left: 2px;
 }
 .card_padding{
 	padding-top: 3px;
@@ -852,6 +853,9 @@ a{
 	overflow: hidden;
 	word-wrap: break-word;
 	word-break: normal;
+	font-size: 16px;
+	height: 34px;
+	line-height: 16px;
 }
 .card_padding .mail{
 	width: 120px;

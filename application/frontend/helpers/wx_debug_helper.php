@@ -142,6 +142,15 @@ if (! function_exists('wx_get_tomorrow_time'))
     }
 }
 /*****************************************************************************/
+if (! function_exists('wx_trim_all')) {
+	function wx_trim_all($str = '') {
+		if ($str) {
+			return str_replace(array(" ","  ","\t","\n","\r"), array("","","","",""), $str);
+		}
+		return $str;
+	}
+}
+/*****************************************************************************/
 if (! function_exists('wx_get_filename')) {
     function wx_get_filename($file_name = '') {
         if ($file_name) {

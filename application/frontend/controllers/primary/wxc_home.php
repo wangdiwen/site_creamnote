@@ -1081,15 +1081,24 @@ class WXC_Home extends CI_Controller
 /*****************************************************************/
     public function test()
     {
+        $image_info = getimagesize('application/frontend/helpers/tcpdf/images/surface.jpg');
+        wx_echoxml($image_info);
+
+
         // chinese segment
         // $data = array(1,2,3,4);
         // unset($data[2]);
         // wx_echoxml($data);
-        $context = '南京工程学院study光纤081期末考试2013我的文档12345';
+        // $test = array(1,2,3,4);
+        // array_splice($test, 2, 1);
+        // wx_echoxml($test);
+
+
+        // $context = '南京工程学院study光纤081期末考试2013我的文档12345';
         // $context = '清华大学2008媒体通信工程期末考试';
-        $words = $this->wx_weibo_renren_api->get_word_segment($context);
-        if ($words)
-            wx_echoxml($words);
+        // $words = $this->wx_weibo_renren_api->get_word_segment($context);
+        // if ($words)
+        //     wx_echoxml($words);
 
         // $dir = '/alidata/www/creamnote/application/tmpdir';
         // $ret = wx_delete_dir($dir);

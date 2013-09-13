@@ -100,7 +100,7 @@
 			overlay_height = settings.overlayWidth;
 		}
 		else {
-			overlay_height = parseInt(jQuery(this).height()) + parseInt(jQuery(this).css('padding-top')) + parseInt(jQuery(this).css('padding-bottom')) -70;
+			overlay_height =  parseInt(jQuery(".body").css('padding-top')) + parseInt(jQuery(".body").css('padding-bottom')) + parseInt(jQuery(".body").css('min-height')) +340;
 		}
 
 
