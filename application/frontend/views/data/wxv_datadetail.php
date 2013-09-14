@@ -66,18 +66,18 @@ $(function() {
     $( "#box" ).draggable();
 //=========================================================评论滚动=========================================//
 var $slider = $('#card_items_data');
-var $slider_child_l = 10;
-var $slider_width = 163*3;
+var $slider_child_l = Math.round($("#commnet_count").val())/3+2;
+var $slider_width = 149*3;
 $slider.width($slider_child_l * $slider_width);
 var slider_count = 0;
 
-if ($slider_child_l < 5) {
+if ($slider_child_l < 3) {
   $('#btn-right').css({cursor: 'auto'});
   $('#btn-right').removeClass("dasabled");
 }
 
 $('#btn-right').click(function() {
-  if ($slider_child_l < 5 || slider_count >= $slider_child_l - 5) {
+  if ($slider_child_l < 3 || slider_count >= $slider_child_l - 3) {
     return false;
   }
 
@@ -97,11 +97,11 @@ $('#btn-left').click(function() {
 });
 
 function slider_pic() {
-  if (slider_count >= $slider_child_l - 5) {
+  if (slider_count >= $slider_child_l - 3) {
     $('#btn-right').css({cursor: 'auto'});
     $('#btn-right').addClass("dasabled");
   }
-  else if (slider_count > 0 && slider_count <= $slider_child_l - 5) {
+  else if (slider_count > 0 && slider_count <= $slider_child_l - 3) {
     $('#btn-left').css({cursor: 'pointer'});
     $('#btn-left').removeClass("dasabled");
     $('#btn-right').css({cursor: 'pointer'});
@@ -520,8 +520,8 @@ if(if_login!=""){
   	<?php include  'application/frontend/views/share/navigation.php';?>
 
 
-<div class="backcolor_body">
-	<div class="body" style="padding: 20px 20px 0px 20px;width:1026px" id="page">
+<div class="backcolor_body" style='padding-top: 20px;'>
+	<div class=" _detail_body" id="page">
 	<!------ 弹出消息 ------>
 	<div class="overlay" id="overlay" style="display:none;"></div>
 	<div class="box" id="box" style="z-index:1000;"> <a class="boxclose" id="boxclose"></a>
@@ -571,7 +571,7 @@ if(if_login!=""){
 			<div class="entry">
 				<p id="documentViewer" class="" style="background-color:#fff;margin: 0 auto;width:555px;height:730px;box-shadow: inset 0 0 10px rgb(150, 153, 167);z-index:10;"></p>
 				<p style="font-size: 20px;padding-left: 30px;margin: 0 auto;color:#337fe5;">打分</p>
-				<p>	<ul id="rating">
+				<p>	<ul id="ratings">
 					<li><a href="#" class="common_show_login_win" id="grade_bad">差(<?php echo $grade_bad_count;?>)</a><input type="hidden" id="grade_bad_hidden" value="<?php echo $grade_bad_count;?>"></li>
 					<li><a href="#" class="common_show_login_win" id="grade_well">良好(<?php echo $grade_well_count;?>)</a><input type="hidden" id="grade_well_hidden" value="<?php echo $grade_well_count;?>"></li>
 					<li><a href="#" class="common_show_login_win" id="grade_excellent">优秀(<?php echo $grade_excellent_count;?>)</a><input type="hidden" id="grade_excellent_hidden" value="<?php echo $grade_excellent_count;?>"></li>
@@ -581,39 +581,48 @@ if(if_login!=""){
 				 <input type="hidden" id="data_name" value="<?php echo $data_name;?>">
 				 <input type="hidden" id="data_user_id" value="<?php echo $user_id;?>">
 				 <input type="hidden" id="user_name" value="<?php echo $user_name;?>">
-        		<p><textarea style="width:530px;" placeholder="Write your comments here" id="comment_content"></textarea></p>
-        		<p><input type="button" class="button_c common_show_login_win" style="width:128px" name="comment_button" id="comment_button" value="提交你的评论"></p>
+        		<div class='fl'><textarea class='_detail_comment' placeholder="写些你对该份资料的意见建议" maxlength="200" id="comment_content"></textarea></div>
+        		<div class="_detail_buttonframe fl">
+                    <input type="button" class="button_c common_show_login_win" style="width:128px" name="comment_button" id="comment_button" value="提交评论">
+                </div>
 
-            <div class="card_total" style="width:966px;height:155px;">
+
+            <div class="card_total fl _detail_card" id="card_total_data" style="width: 436px;height:127px;">
               <div class="card_items" id="card_items_data">
                 <?php
+                  $commnet_count = 0;
                   if(isset($data_comment)&&$data_comment){
                     foreach ($data_comment as $key => $com) {
-                      echo "<div class='card_item card_item_panel'>";
+                      echo "<div class='_detail_card_item _detail_card_item_panel'>";
                       // echo "<div class='card_delete'></div>";
-                      echo "<p style='height: 100px;word-break: break-all;'>".$com['comment_content']."</p>";
-                      echo "<div class='card_footer' style='padding-top: 4px;height: 35px;'><p style='margin:0;'>";
+                      echo "<p style='margin-top: 0;height: 82px;word-break: break-all;'>".$com['comment_content']."</p>";
+                      echo "<div class='_detail_card_footer' style='padding-top: 4px;height: 35px;'><p style='margin:0;'>";
                       echo "<span style='color:#4c76ac;'>".$com['user_name']."</span></br><span>&nbsp;&nbsp;--".$com['comment_time'];
                       echo "</span></p></div>";
                       echo "</div>";
+                      $commnet_count++;
+
                     }
+                    echo "<input type='hidden' value='".$commnet_count."' id='commnet_count'>";
                   }else{
-                    echo "<div class='card_item card_item_panel'>";
+                    echo "<div class='_detail_card_item _detail_card_item_panel'>";
                       // echo "<div class='card_delete'></div>";
                       echo "<p>还没有评论</p>";
                       // echo
                       echo "</div>";
+                      echo "<input type='hidden' value='1' id='commnet_count'>";
                   }
                 ?>
 
               </div>
-            </div>
-            <?php if(isset($data_comment)&&$data_comment&&count($data_comment)>6){?>
-            <div class="card_arrow" style="width:982px;margin:-106px 0 0 -8px;">
-                <div class="card_arrow_left" id="btn-left"></div>
-                <div class="card_arrow_right" id="btn-right"></div>
-            </div>
+              <?php if(isset($data_comment)&&$data_comment&&count($data_comment)>3){?>
+                <div class="_detail_card_arrow" style="">
+                    <div class="card_arrow_left" style='margin-top: 38px;margin-left: 6px;' id="btn-left"></div>
+                    <div class="card_arrow_right" style='margin-top: 38px;margin-left: 398px;' id="btn-right"></div>
+                </div>
             <?php }?>
+            </div>
+
 			</div>
 		  </div>
 

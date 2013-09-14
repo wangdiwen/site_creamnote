@@ -90,7 +90,7 @@
     location.href='<?php echo site_url('home/index'); ?>';
   }
 //=========================================================登录登出=========================================//
-
+var loginname = '<?php if (isset($_SESSION["wx_user_name"]) && $_SESSION["wx_user_name"] != "") echo $_SESSION["wx_user_name"]; else echo ""; ?>';
     $(function(){
       var UA = navigator.userAgent.toLowerCase();
       if(UA.indexOf("msie 7.0")>=0||UA.indexOf("msie 8.0")>=0){

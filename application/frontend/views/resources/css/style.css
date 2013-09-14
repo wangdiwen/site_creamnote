@@ -4,7 +4,10 @@ Design by Free CSS Templates
 http://www.freecsstemplates.org
 Released for free under a Creative Commons Attribution 2.5 License
 */
-
+input, button, select, textarea {
+outline: none;
+resize: none;
+}
 body {
 	margin: 0px;
 	padding: 0;
@@ -915,9 +918,9 @@ input[type=search] {
 	-webkit-box-shadow: inset 0 2px 3px rgba(0,0,0,.1);
 	-moz-box-shadow: inset 0 2px 3px rgba(0,0,0,.1);
 	box-shadow: inset 0 2px 3px rgba(0,0,0,.1);
-	-webkit-border-radius: 5px;
+	/*-webkit-border-radius: 5px;
 	-moz-border-radius: 5px;
-	border-radius: 5px;
+	border-radius: 5px;*/
 	cursor: pointer;
 	/*-webkit-appearance: none;  reset webkit search style */
 }
@@ -1306,11 +1309,11 @@ ul.nav li a:hover {
 	border: 1px solid #e1e1e1;
 	cursor: pointer;
 	background: white;
-	border-radius: 5px;
+	/*border-radius: 5px;*/
 	border: 1px solid #a3a3a3;
 }
 .category_collect_fixed{
-	border: 2px solid #a3a3a3;
+	border: 1px solid #a3a3a3;
 }
 .category_collect span{
 	cursor: pointer;
@@ -1465,8 +1468,8 @@ z-index: 100;
 .button_c  {
 	width: 80px;
 	height: 28px;
-	-moz-border-radius:4px;
-	-webkit-border-radius:4px;
+	/*-moz-border-radius:4px;
+	-webkit-border-radius:4px;*/
 	background:#a3a3a3 url('../images/login/bg-btn-blue.png') repeat-x scroll 0 0;
 	border:1px solid #a3a3a3;
 	color:#fff;
@@ -1641,4 +1644,102 @@ z-index: 100;
 	margin: 5px 0;
 	min-width: 65px;
 	cursor: pointer;
+}
+
+/*资料detail*/
+._detail_comment{
+	border: 1px #a3a3a3 solid;
+	height: 80px;
+	width: 530px;
+}
+._detail_comment:focus{
+	background-color: #fff;
+	border: 1px #a3a3a3 solid;
+	box-shadow: none;
+}
+._detail_buttonframe{
+	width: 550px;
+	height: 30px;
+	line-height: 20px;
+	text-align: right;
+	padding: 10px 0;
+	background: #efefef;
+	border-left: 1px #a3a3a3 solid;
+	border-right: 1px #a3a3a3 solid;
+	border-bottom: 1px #a3a3a3 solid;
+	margin-bottom: 10px;
+}
+._detail_card{
+	position: absolute!important;
+	margin-left: 570px;
+}
+._detail_card_item_panel {
+	-webkit-box-shadow: 0px 4px 14px 4px rgba(0, 0, 0, 0.05);
+	box-shadow: 0px 4px 14px 4px rgba(0, 0, 0, 0.05);
+	background: url(../images/version/creamnote_card_panel.png) left bottom repeat-x #fefefe;
+	border: 1px solid #d2dbdd;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+._detail_card_item {
+	display: inline-block;
+	padding: 10px;
+	margin: 24px 0 0 17px;
+	height: 131px;
+	width: 110px;
+	position: relative;
+	color: #707072;
+	vertical-align: top;
+	padding-bottom: 0;
+	background: #fbfcfc none;
+	font-size: 12px;
+	border: 1px #a3a3a3 solid;
+}
+._detail_card_footer {
+	height: 30px;
+	padding-top: 8px;
+	background: url(../images/version/card_footer.png) no-repeat 0 0;
+	margin: 0 -10px;
+	position: relative;
+	text-align: left;
+	bottom: 0;
+	margin-top: -1px;
+	padding: 10px;
+}
+._detail_card_arrow {
+	margin: 0px 0 0 -8px;
+	width: 656px;
+	position: absolute;
+	height: 60px;
+}
+._detail_card_arrow_right {
+	position: absolute;
+	margin-top: 38px;
+	margin-left: 398px;
+	float: right;
+	width: 50px;
+	height: 50px;
+	background: url(../images/version/right_grey_trans.png) no-repeat;
+	cursor: pointer;
+}
+._detail_card_arrow_left {
+	position: absolute;
+	margin-top: 38px;
+	float: left;
+	width: 50px;
+	height: 50px;
+	background: url(../images/version/left_grey_trans.png) no-repeat;
+	cursor: pointer;
+	margin-left: 6px;
+}
+
+._detail_body{
+	padding: 20px 20px 0px 20px;
+	width: 1026px;
+	min-height: 580px;
+	overflow: hidden !important;
+	background: #d6d6d6 ;
+	margin-left: auto;
+	margin-right: auto;
 }

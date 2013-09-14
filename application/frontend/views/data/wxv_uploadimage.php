@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>上传页面</title>
+    <title>Creamnote(图片笔记)</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <link rel="stylesheet" href="/application/frontend/views/resources/css/wx_home.css" />
@@ -467,7 +467,7 @@ $(function() {
         'method'   : 'post',//方法，服务端可以用$_POST数组获取数据
         'buttonText' : '选择图片',//设置按钮文本
         'multi'    : true,//允许同时上传多张图片
-        'uploadLimit' : 10,//一次最多只允许上传10张图片
+        'uploadLimit' : 30,//一次最多只允许上传10张图片
         'fileTypeDesc' : 'Image Files',//只允许上传图像
         'fileTypeExts' : '*.jpg; *.jpeg; *.png; *.gif',//限制允许上传的图片后缀
         'fileSizeLimit' : '2000KB',//限制上传的图片不得超过2MB

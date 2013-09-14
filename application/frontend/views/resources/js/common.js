@@ -406,9 +406,9 @@ function show_all_collect(){
         str+="<a target='_blank' href='"+$("#baseUrl").val()+"data/wxc_data/data_view/"+retData[i]['data_id']+"'>"+retData[i]['data_name']+"</a>";
         str+="</div>";
         str+="<div class='collect_detail'>";
-        str+="<span class='card_star' >";
+        str+="<slice class='card_star fl' ><slice style='top: -3px;position: relative;' class='card_star_blod' >";
         str+="<input type='hidden' name='data_point' id='data_point' value='"+retData[i]['data_point']+"'>";
-        str+="</span>|";
+        str+="</slice></slice>|";
         str+="<span>"+retData[i]['data_price']+"</span>|<span>"+retData[i]['data_uploadtime']+"</span>|<span>共"+retData[i]['data_pagecount']+"页</span><span>作者:"+retData[i]['user_name']+"</span>";
         str+="</div>";
         str+="</div>";
@@ -429,8 +429,8 @@ function show_all_collect(){
     $("[name='data_point']").each(function(){
     var data_point = this.value;
     var star_width = data_point*10 +"px";
-    $(this).parent(".card_star").css("padding-left",star_width);
-    $(this).parent(".card_star").css("padding-right",star_width);
+    $(this).parent(".card_star_blod").css("padding-left",star_width);
+    $(this).parent(".card_star_blod").css("padding-right",star_width);
 });
 }
 

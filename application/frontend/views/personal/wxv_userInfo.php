@@ -411,8 +411,8 @@ function del_count(count_type){
     <?php $nav_param = "home";?>
   	<?php include  'application/frontend/views/share/navigation.php';?>
     <!-- end #header -->
-<div class="backcolor_body">
-    <div class="body" style="padding: 20px 20px 0px 20px;width:1026px;min-height: 640px;">
+<div class="backcolor_body" style='padding-top: 20px;'>
+    <div class="_detail_body" style="min-height: 640px;">
 
 		<div id="content" style="width: 700px;border-left:0">
             <h2 class="data_title" id="info_title">基本资料</h2>

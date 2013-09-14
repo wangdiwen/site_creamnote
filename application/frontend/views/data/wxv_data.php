@@ -413,7 +413,7 @@ function searchall(nature_id,area_name,area_id){
                   str += "</div></div></div>";
 
                 }
-                if(i == 0 ||!i){
+                if(i == -1 ||!i){
                   str ="<div style='margin: 14px 0 0 28px;color: red;'>对不起，未找到您要找资料！</div>";
                 }
                $("#card_items_data3").html(str);
@@ -489,6 +489,17 @@ function initSchool(provinceID)
 	}
 	//添加大学列表项的click事件
 	$('.school-item').bind('click', function(){
+    //=======重新选择学校是去除标签start=====//
+      $("#filter_t").css("display","none");
+      $("#filter_th").css("display","none");
+      $("#hiddenschool").attr("value","");
+      $("#school-name").attr("value","");
+
+      $("#partment").find("option").remove();
+      $("#partment").removeClass("chzn-done");
+      $("#partment_chzn").css("display","none");
+      $("#partment").chosen();
+    //=======重新选择学校是去除标签end=====//
 			var item=$(this);
 			var school = item.attr('school-id');
 			//更新选择大学文本框中的值
@@ -614,7 +625,7 @@ function user_hover(){
         </h2>
 
 				<div class="meta">
-				<div class="fl">学校 &nbsp</div><div class="fl"><input type="text" placeholder="点击选择学校" name="school" id="school-name" onclick="pop()" style="width: 200px;height:17px;"></div>
+				<div class="fl">学校 &nbsp</div><div class="fl"><input type="text" placeholder="点击选择学校" name="school" id="school-name" onclick="pop()" style="width: 175px;height:17px;"></div>
 						<input type="hidden" id="hiddenschool" name="wx_school">
             <input type="hidden" id="nature_id" name="nature_id">
 				<div class="fl" style="padding-left:5px;">专业 &nbsp</div><div class="fl"><select id='partment' name='partment' style='width: 200px;' class="chosen">  </select></div>

@@ -8,9 +8,9 @@
 	background: rgb(227, 227, 227)  top left no-repeat;
 	list-style: none;
 	overflow: visible;
-	-webkit-border-radius: 6px;
+	/*-webkit-border-radius: 6px;
 	-moz-border-radius: 6px;
-	border-radius: 6px;
+	border-radius: 6px;*/
 }
 .menu ul li a {
 	display:block;
@@ -44,9 +44,9 @@
 	margin-bottom: 4px;
 	padding-left: 0px;
 	background: rgb(245, 245, 245);
-	-webkit-border-radius: 0px 0px 6px 6px;
+	/*-webkit-border-radius: 0px 0px 6px 6px;
 	-moz-border-radius: 0px 0px 6px 6px;
-	border-radius: 0px 0px 6px 6px;
+	border-radius: 0px 0px 6px 6px;*/
 }
 .menu ul li ul li ul {
 	display: none;
@@ -54,9 +54,9 @@
 	margin-bottom: 4px;
 	padding-left: 0px;
 	background: rgb(207, 211, 218);
-	-webkit-border-radius: 0px 0px 6px 6px;
+	/*-webkit-border-radius: 0px 0px 6px 6px;
 	-moz-border-radius: 0px 0px 6px 6px;
-	border-radius: 0px 0px 6px 6px;
+	border-radius: 0px 0px 6px 6px;*/
 	width: 0px;
 }
 
