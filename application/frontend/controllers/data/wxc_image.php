@@ -142,7 +142,7 @@ class WXC_Image extends CI_Controller
                     );
 
                 // check if over 30 images
-                if ($id >= 30) {
+                if ($id >= 31) {
                     return '';
                 }
 

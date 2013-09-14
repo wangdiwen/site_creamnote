@@ -73,4 +73,4 @@ class WXC_Util extends CI_Controller
 }
 
 /* End of file wxc_util.php */
-/* Location: ./application/controllers/core/wxc_util.php */
+/* Location: /application/frontend/controllers/core/wxc_util.php */

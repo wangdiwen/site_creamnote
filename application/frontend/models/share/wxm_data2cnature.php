@@ -41,7 +41,7 @@ class WXM_Data2cnature extends CI_Model
         if ($nature_id > 0)
         {
             $table = $this->wx_table;
-            $this->db->select('data_id')->from($table)->where('cnature_id', $nature_id);
+            $this->db->select('data_id')->from($table)->where('cnature_id', $nature_id)->limit(20);
             $query = $this->db->get();
             return $query->result();  // Object array
         }

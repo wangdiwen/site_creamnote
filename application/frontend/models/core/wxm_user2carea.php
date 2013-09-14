@@ -53,27 +53,26 @@ class WXM_User2carea extends CI_Model
         }
     }
 /*****************************************************************************/
-        public function update_school_major($info)
+    public function update_school_major($info)
+    {
+        if ($info)
         {
-            if ($info)
+            $user_id = $info['user_id'];
+            $carea_id_major = $info['carea_id_major'];
+            $carea_id_school = $info['carea_id_school'];
+            if ($user_id > 0)
             {
-                $user_id = $info['user_id'];
-                $carea_id_major = $info['carea_id_major'];
-                $carea_id_school = $info['carea_id_school'];
-                if ($user_id > 0)
-                {
-                    $data = array(
-                        'carea_id_major' => $carea_id_major,
-                        'carea_id_school' => $carea_id_school
-                        );
-                    $table = $this->wx_table;
-                    $this->db->where('user_id', $user_id);
-                    $this->db->update($table, $data);
-                }
+                $data = array(
+                    'carea_id_major' => $carea_id_major,
+                    'carea_id_school' => $carea_id_school
+                    );
+                $table = $this->wx_table;
+                $this->db->where('user_id', $user_id);
+                $this->db->update($table, $data);
             }
         }
+    }
 /*****************************************************************************/
-
 /*****************************************************************************/
 }
 

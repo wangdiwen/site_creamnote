@@ -18,6 +18,9 @@ class WX_General
         $this->CI->load->model('share/wxm_data_activity');
         $this->CI->load->model('share/wxm_category_area');
         $this->CI->load->model('share/wxm_category_nature');
+
+        $this->CI->load->library('wx_util');
+        $this->CI->load->library('wx_weibo_renren_api');  // invoke taobao ip rest api
     }
 /*****************************************************************************/
     public function get_user_base_info()
@@ -198,6 +201,7 @@ class WX_General
             // echoxml($base_info);
             return $base_info;
         }
+        return false;
     }
 /*****************************************************************************/
     public function add_extend_base_info($base_info = array())
@@ -333,6 +337,149 @@ class WX_General
         }
 
         return $data;
+    }
+/*****************************************************************************/
+    public function guess_you_like() {
+        $cur_user_info = $this->CI->wx_util->get_user_session_info();
+        $cur_user_id = $cur_user_info['user_id'];
+        if ($cur_user_id > 0) {                     // aleady login
+            // filter user's school and major notes
+            $user_school_info = $this->CI->wxm_user2carea->get_by_user_id($cur_user_id);
+            if ($user_school_info) {
+                $major_id = $user_school_info['carea_id_major'];
+                $school_id = $user_school_info['carea_id_school'];
+            }
+
+            // 首先，按照用户的学校筛选笔记资料，然后把与用户的专业相同的放到前面
+            $data_id_list = array();
+            $major_relate = array();
+            $school_relate = array();
+
+            $collect_data_list = $this->get_user_collect_list();
+
+            $school_notes_50 = $this->CI->wxm_data2carea->get_by_school_50($school_id);
+            if ($school_notes_50) {
+                foreach ($school_notes_50 as $value) {
+                    $data_id_list[] = $value['data_id'];
+                }
+            }
+
+            if ($data_id_list) {
+                foreach ($data_id_list as $data_id) {
+                    $data_info = $this->get_data_card($data_id);
+                    if ($data_info) {
+                        // flag user collect note
+                        if ($collect_data_list && in_array($data_id, $collect_data_list)) {
+                            $data_info['collect'] = 'true';
+                        }
+                        else {
+                            $data_info['collect'] = 'false';
+                        }
+                        // major notes order forword
+                        if ($data_info['data_area_id_major'] == $major_id) {
+                            $major_relate[] = $data_info;
+                        }
+                        else {
+                            $school_relate[] = $data_info;
+                        }
+                    }
+                }
+            }
+
+            // 在平台初期，数据比较少，可能找不到与用户学校专业相关的笔记资料
+            // 那么，在查找地区相关的笔记资料
+            if (! $major_relate && ! $school_relate) {
+                // 首先，定位用户所在地区（省市地区），按照数据库中的地区（1级）
+                // 找到对应的学校（2级），然后，根据笔记的排名（热门程度），选出
+                // 并且是所在地区的所有学校的笔记资料
+                $login_ip = $this->CI->wx_util->get_login_addr();
+                $school_id_list = array();
+                $result = array();
+
+                if ($login_ip != 'unknow') {
+                    $taobao_ip_info = $this->CI->wx_weibo_renren_api->get_taobao_ip_info($login_ip);
+                    if ($taobao_ip_info) {
+                        $region = $taobao_ip_info['data']['region'];
+                        $login_region = str_replace(
+                                            array('省','市','自治区','直辖市','特别行政区'),
+                                            array('','','','',''),
+                                            $region);  // like: 江苏、上海等
+                        // filter all school in login region location
+                        $school_area_id_info = $this->CI->wxm_category_area->get_all_school_by_region($login_region);
+                        if ($school_area_id_info) {
+                            foreach ($school_area_id_info as $key => $value) {
+                                $school_id_list[] = $value['carea_id'];
+                            }
+                        }
+                    }
+                }
+
+                if ($school_id_list) {
+                    $hot_top_100_notes = $this->CI->wxm_data->hot_top_100();
+                    if ($hot_top_100_notes) {
+                        foreach ($hot_top_100_notes as $value) {
+                            $data_info = $this->add_extend_base_info($value);
+                            if ($data_info) {
+                                $data_info['collect'] = 'false';
+                                $data_area_id_school = $data_info['data_area_id_school'];
+                                if ($data_area_id_school == 0  // 公共类的笔记资料
+                                    || in_array($data_area_id_school, $school_id_list)) {
+                                    $result[] = $data_info;
+                                }
+                            }
+                        }
+                    }
+                }
+                return $result;
+            }
+            else {
+                return array_merge($major_relate, $school_relate);
+            }
+        }
+        else {  // not login
+            // 首先，定位用户所在地区（省市地区），按照数据库中的地区（1级）
+            // 找到对应的学校（2级），然后，根据笔记的排名（热门程度），选出
+            // 并且是所在地区的所有学校的笔记资料
+            $login_ip = $this->CI->wx_util->get_login_addr();
+            $school_id_list = array();
+            $result = array();
+
+            if ($login_ip != 'unknow') {
+                $taobao_ip_info = $this->CI->wx_weibo_renren_api->get_taobao_ip_info($login_ip);
+                if ($taobao_ip_info) {
+                    $region = $taobao_ip_info['data']['region'];
+                    $login_region = str_replace(
+                                        array('省','市','自治区','直辖市','特别行政区'),
+                                        array('','','','',''),
+                                        $region);  // like: 江苏、上海等
+                    // filter all school in login region location
+                    $school_area_id_info = $this->CI->wxm_category_area->get_all_school_by_region($login_region);
+                    if ($school_area_id_info) {
+                        foreach ($school_area_id_info as $key => $value) {
+                            $school_id_list[] = $value['carea_id'];
+                        }
+                    }
+                }
+            }
+
+            if ($school_id_list) {
+                $hot_top_100_notes = $this->CI->wxm_data->hot_top_100();
+                if ($hot_top_100_notes) {
+                    foreach ($hot_top_100_notes as $value) {
+                        $data_info = $this->add_extend_base_info($value);
+                        if ($data_info) {
+                            $data_info['collect'] = 'false';
+                            $data_area_id_school = $data_info['data_area_id_school'];
+                            if ($data_area_id_school == 0  // 公共类的笔记资料
+                                || in_array($data_area_id_school, $school_id_list)) {
+                                $result[] = $data_info;
+                            }
+                        }
+                    }
+                }
+            }
+            return $result;
+        }
     }
 /*****************************************************************************/
 }

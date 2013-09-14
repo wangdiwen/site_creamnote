@@ -129,24 +129,10 @@ class WXC_Data extends CI_Controller
                 array_push($data_recommend, $base_info);
             }
         }
-        $data_youlike = array();
-        $you_like = $this->wxm_data->latest_upload();
-        if ($you_like) {
-            foreach ($you_like as $like) {
-                $base_info = $this->wx_general->add_extend_base_info($like);
-                // check collect or not
-                if (in_array($like['data_id'], $collect_list)) {
-                    $base_info['collect'] = 'true';
-                }
-                else {
-                    $base_info['collect'] = 'false';
-                }
-                // merge data
-                array_push($data_youlike, $base_info);
-            }
-        }
-        // $data_search = array();
 
+        $data_youlike = $this->wx_general->guess_you_like();
+
+        // $data_search = array();
         $data['data_recommend'] = $data_recommend;
         $data['data_youlike'] = $data_youlike;
         // $data['data_search'] = $data_search;

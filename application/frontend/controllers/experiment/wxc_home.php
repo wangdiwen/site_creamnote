@@ -1081,16 +1081,11 @@ class WXC_Home extends CI_Controller
 /*****************************************************************/
     public function test()
     {
-        $ret = $this->wx_general->guess_you_like();
-        wx_echoxml($ret);
+		echo 'Experiment version interface...';
 
-
-
-        // $ip = '122.88.60.14';
-        // $ret = $this->wx_weibo_renren_api->get_taobao_ip_info($ip);
-        // wx_echoxml($ret);
         // $image_info = getimagesize('application/frontend/helpers/tcpdf/images/surface.jpg');
         // wx_echoxml($image_info);
+
 
         // chinese segment
         // $data = array(1,2,3,4);

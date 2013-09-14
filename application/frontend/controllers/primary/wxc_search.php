@@ -118,50 +118,24 @@ class WXC_Search extends CI_Controller
             {
                 // 第一步，先查资料关联学校 id 的数据
                 $school_id = $this->wxm_category_area->get_id_by_name($area_name);
+                wx_loginfo('school_id = '.$school_id);
                 if ($school_id)
                 {
                     $data_id_list = $this->wxm_data2carea->get_data_id_by_school($school_id);
                     if ($data_id_list)
                     {
-                        foreach ($data_id_list as $data_id)
+                        foreach ($data_id_list as $key => $value)
                         {
-                            $data_info = $this->wx_general->get_data_card($data_id->data_id);
+                            $data_info = $this->wx_general->get_data_card($value['data_id']);
                             if ($data_info)
                             {
-                                if ($collect_list && in_array($data_id->data_id, $collect_list)) {
+                                if ($collect_list && in_array($value['data_id'], $collect_list)) {
                                     $data_info['collect'] = 'true';
                                 }
                                 else {
                                     $data_info['collect'] = 'false';
                                 }
-                                array_push($data, $data_info);
-                            }
-                        }
-                    }
-                }
-                // 第二步，再查学校下面院系所关联的资料 id 的信息
-                $depart_list = $this->wxm_category_area->get_depart_by_school($area_name);
-                if ($depart_list)
-                {
-                    foreach ($depart_list as $depart)
-                    {
-                        $depart_area_id = $depart->carea_id;
-                        $data_id_list = $this->wxm_data2carea->get_data_id_by_major($depart_area_id);
-                        if ($data_id_list)
-                        {
-                            foreach ($data_id_list as $data_id)
-                            {
-                                $data_info = $this->wx_general->get_data_card($data_id->data_id);
-                                if ($data_info)
-                                {
-                                    if ($collect_list && in_array($data_id->data_id, $collect_list)) {
-                                        $data_info['collect'] = 'true';
-                                    }
-                                    else {
-                                        $data_info['collect'] = 'false';
-                                    }
-                                    array_push($data, $data_info);
-                                }
+                                $data[] = $data_info;
                             }
                         }
                     }
@@ -185,15 +159,13 @@ class WXC_Search extends CI_Controller
                                 else {
                                     $data_info['collect'] = 'false';
                                 }
-                                array_push($data, $data_info);
+                                $data[] = $data_info;
                             }
                         }
                     }
                 }
             }
         }
-        // echoxml($data);
-        // echo json_encode($data);
         return $data;
     }
 /*****************************************************************************/
@@ -214,17 +186,17 @@ class WXC_Search extends CI_Controller
         if ($school_name && $nature_id) {
             $data_obj_list = $this->gen_search_area_nature($school_name, $major_id, $nature_id);
             echo json_encode($data_obj_list);
-            return;
+            return true;
         }
         elseif (! $school_name && $nature_id) {
             $data_obj_list = $this->gen_search_by_nature_id($nature_id);
             echo json_encode($data_obj_list);
-            return;
+            return true;
         }
         elseif ($school_name && ! $nature_id) {
             $data_obj_list = $this->gen_search_by_area_id($school_name, $major_id);
             echo json_encode($data_obj_list);
-            return;
+            return true;
         }
     }
 /*****************************************************************************/
@@ -237,31 +209,30 @@ class WXC_Search extends CI_Controller
             $nature_set = $this->gen_search_by_nature_id($nature_id);
 
             if ($nature_set) {
-                $area_range_id = array();  // 筛选的area相关的id列表
-                array_push($area_range_id, $school_id);
-
-                if (! $major_id) {  // 没有专业id的信息，检索学校下面包含的所有专业的id
-                    $depart_list = $this->wxm_category_area->get_depart_by_school($school_name);
-                    if ($depart_list) {
-                        foreach ($depart_list as $depart) {
-                            $depart_area_id = $depart->carea_id;
-                            array_push($area_range_id, $depart_area_id);
+                if (! $major_id) {  // 没有专业id
+                    // 没有专业id的信息，检索学校下面包含的所有专业的id
+                    $filter_list = array();
+                    $major_id_list = $this->wxm_category_area->get_depart_by_school($school_name);
+                    if ($major_id_list) {
+                        foreach ($major_id_list as $key => $value) {
+                            $filter_list[] = $value['carea_id'];  // major id
+                        }
+                    }
+                    foreach ($nature_set as $key => $value) {
+                        if (! in_array($value['data_area_id_major'], $filter_list)) {
+                            unset($nature_set[$key]);
                         }
                     }
                 }
-
-                // filter by area category
-                foreach ($nature_set as $key => $value) {
-                    $data_area_id_school = $value['data_area_id_school'];
-                    $data_area_id_major = $value['data_area_id_major'];
-                    $data_area_id = array($data_area_id_school, $data_area_id_major);
-                    if (! in_array($data_area_id, $area_range_id)) {
-                        array_splice($nature_set, $key, 1);
+                else {  // 有专业id，忽略学校的id
+                    foreach ($nature_set as $key => $value) {
+                        $data_area_id_major = $value['data_area_id_major'];
+                        if ($data_area_id_major != $major_id) {
+                            unset($nature_set[$key]);
+                        }
                     }
                 }
             }
-
-            // echoxml($nature_set);
             return $nature_set;
         }
     }
@@ -294,7 +265,8 @@ class WXC_Search extends CI_Controller
                             else {
                                 $data_info['collect'] = 'false';
                             }
-                            array_push($data_obj, $data_info);
+                            // array_push($data_obj, $data_info);
+                            $data_obj[] = $data_info;
                         }
                     }
                 }
@@ -320,7 +292,8 @@ class WXC_Search extends CI_Controller
                                     else {
                                         $data_info['collect'] = 'false';
                                     }
-                                    array_push($data_obj, $data_info);
+                                    // array_push($data_obj, $data_info);
+                                    $data_obj[] = $data_info;
                                 }
                             }
                         }
@@ -346,7 +319,8 @@ class WXC_Search extends CI_Controller
                             else {
                                 $data_info['collect'] = 'false';
                             }
-                            array_push($data_obj, $data_info);
+                            // array_push($data_obj, $data_info);
+                            $data_obj[] = $data_info;
                         }
                     }
                 }
@@ -399,20 +373,7 @@ class WXC_Search extends CI_Controller
             }
         }
         // get user like notes
-        $data_youlike = array();
-        $you_like = $this->wxm_data->latest_upload();
-        if ($you_like) {
-            foreach ($you_like as $like) {
-                $base_info = $this->wx_general->add_extend_base_info($like);
-                if ($collect_list && in_array($like['data_id'], $collect_list)) {
-                    $base_info['collect'] = 'true';
-                }
-                else {
-                    $base_info['collect'] = 'false';
-                }
-                array_push($data_youlike, $base_info);
-            }
-        }
+        $data_youlike = $this->wx_general->guess_you_like();
 
         $data = array();
         $data['data_recommend'] = $data_recommend;

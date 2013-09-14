@@ -303,6 +303,14 @@ class WXM_Data extends CI_Model
         return $data_info;
     }
 /*****************************************************************************/
+    public function hot_top_100() {
+        $this->db->select('data_id, data_name, data_type, data_pagecount, data_price, user_id, data_uploadtime, data_point, data_keyword')
+                 ->from('wx_data')->where('data_status', '3')->limit(100)->order_by('data_point', 'desc');
+        $query = $this->db->get();
+        $data_info = $query->result_array();
+        return $data_info;
+    }
+/*****************************************************************************/
     public function latest_upload()
     {
         $this->db->select('data_id, data_name, data_type, data_pagecount, data_price, user_id, data_uploadtime, data_point, data_keyword')

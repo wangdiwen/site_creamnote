@@ -19,6 +19,8 @@ class WX_Weibo_Renren_API
 
     // 中文分词工具
     var $zh_word_segment_url = 'http://www.xunsearch.com/scws/api.php';
+    // 淘宝IP地址库，开放RESTful API
+    var $taobao_ip_restapi = 'http://ip.taobao.com/service/getIpInfo.php';
 
 /*****************************************************************************/
     public function __construct()
@@ -190,6 +192,23 @@ class WX_Weibo_Renren_API
             $word_list = array_merge($long_words_list, $short_words_list, $other_words_list);
         }
         return $word_list;
+    }
+/*****************************************************************************/
+    public function get_taobao_ip_info($query_ip = '') {
+        if ($query_ip) {
+            $url = $this->taobao_ip_restapi;
+            $params = array(
+                'ip' => $query_ip,
+                );
+            $info = $this->get_request($url, $params);
+            if ($info) {
+                $json_data = json_decode($info, true);
+                if ($json_data && $json_data['code'] == 0) {
+                    return $json_data;
+                }
+            }
+        }
+        return false;
     }
 /*****************************************************************************/
 }

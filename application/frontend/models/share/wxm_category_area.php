@@ -32,16 +32,7 @@ class WXM_Category_area extends CI_Model
             );
         $this->db->select('carea_id, carea_name')->from($table)->where($where);
         $query = $this->db->get();
-        $row = $query->row();
-        $rows = $query->num_rows();
-        if ($rows > 0)
-        {
-            return $query->result();  // result() is a object array
-        }
-        else
-        {
-            return array();
-        }
+        return $query->result_array();
     }
 /*****************************************************************************/
     // 根据名称查找对应的id
@@ -124,6 +115,30 @@ class WXM_Category_area extends CI_Model
                      ->from($table)->where('carea_flag', $area_flag)->limit(1);
             $query = $this->db->get();
             return $query->row_array();
+        }
+    }
+/*****************************************************************************/
+    public function get_all_school_by_region($region = '') {  // like: 江苏
+        if ($region) {
+            // first, get area id of region
+            $table = $this->wx_table;
+            $this->db->select('carea_flag')
+                     ->from($table)->where('carea_name', $region)->limit(1);
+            $query = $this->db->get();
+            $region_info = $query->row_array();
+            if ($region_info) {
+                $region_area_flag = $region_info['carea_flag'];
+
+                $flag_min = $region_area_flag.'000';
+                $flag_max = $region_area_flag.'999';
+                $where = array(
+                    'carea_flag >' =>$flag_min,
+                    'carea_flag <' =>$flag_max
+                    );
+                $this->db->select('carea_id, carea_name')->from($table)->where($where);
+                $query = $this->db->get();
+                return $query->result_array();
+            }
         }
     }
 /*****************************************************************************/
