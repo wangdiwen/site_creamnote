@@ -8,15 +8,17 @@
 /*****************************************************************************/
 if (! function_exists('wx_delete_file'))
 {
-    function wx_delete_file($file = '')
+    function wx_delete_file($file = '')  // shred the file
     {
         if (file_exists($file)) {
-            $ret_del = unlink($file);
-            if (! $ret_del) {
-                return false;
+            $status = 1;
+            $cmd = '/bin/sh /alidata/server/creamnote/bin/deletefile.sh '.$file.' >/dev/null 2>&1';
+            $ret = system($cmd, $status);
+            if ($status == 0) {
+                return true;
             }
         }
-        return true;
+        return false;
     }
 }
 /*****************************************************************************/
@@ -37,13 +39,16 @@ if (! function_exists('wx_delete_dir'))
                     }
                     else
                     {
-                        unlink($dir."/".$object);
+                        // unlink($dir."/".$object);
+                        $ret = wx_delete_file($dir."/".$object);  // shred file
                     }
                 }
             }
             reset($objects);
-            rmdir($dir);
+            rmdir($dir);  // del dir
+            return true;
         }
+        return false;
     }
 }
 /*****************************************************************************/

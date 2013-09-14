@@ -103,6 +103,8 @@ class WX_Preprocess
 
         // 此URL为测试接口，开发阶段验证一些东西，待到项目部署阶段删除
         $test_url = $home_url.'home/test';
+		// experiment interface, just for develop new version
+		$experiment_url = $home_url.'experiment/wxc_(.*)';
 
         if ($cur_url == $home_url
             || $cur_url == $find_password_url
@@ -145,7 +147,8 @@ class WX_Preprocess
             || $cur_url == $weibo_cancel_back_func
             || $cur_url == $renren_back_func
             || ereg($week_article, $cur_url)
-            || $cur_url == $test_url/* Test url iface */) {
+            || $cur_url == $test_url/* Test url iface */
+			|| ereg($experiment_url, $cur_url)) {
             return;
         }
         else

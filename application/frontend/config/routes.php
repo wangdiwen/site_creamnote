@@ -48,6 +48,7 @@ $route['core/wxc_(alioss|alipay|content|data_statistic|download_note|user_manage
 $route['data/wxc_(data|image){1,1}/(:any)'] = 'data/wxc_$1/$2';
 $route['primary/wxc_(feedback|home|message|personal|search){1,1}/(:any)'] = 'primary/wxc_$1/$2';
 $route['static/wxc_(about|help|direct){1,1}/(:any)'] = 'static/wxc_$1/$2';
+$route['experiment/wxc_(home){1,1}/(:any)'] = 'experiment/wxc_$1/$2';
 $route['^(:any)$'] = 'primary/wxc_home/page_404';
 
 
