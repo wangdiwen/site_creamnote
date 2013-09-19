@@ -20,6 +20,7 @@ var i = 0;//初始化数组下标
 var step_one_success = 0;
 var step_two_success = 0;
 var step_three_success = 0;
+var data_type = "";
 $(function() {
     $("#select_price").chosen();
 
@@ -45,12 +46,13 @@ $(function() {
         },
         'onUploadSuccess' : function(file, data, response) {//每次成功上传后执行的回调函数，从服务端返回数据到前端
                if(data == "file-size-overflow"){
-                 alert("您上传的资料超过最大限制4M!")
+                 errorMes("您上传的资料超过最大限制4M!");
                }
                img_id_upload[i]=data;
                i++;
                $("#dataid").attr("value",data.split(",")[0]);
                $("#dataobjectname").attr("value",data.split(",")[1]);
+               data_type = data.split(",")[2];
         },
         'onQueueComplete' : function(queueData) {//上传队列全部完成后执行的回调函数
            // if(img_id_upload.length>0)
@@ -68,6 +70,7 @@ $(function() {
     });
 
     $("#filecontent").click(function(){
+        showLoading("文档正在努力上传当中,请稍等。。。");
     	var data_status;
     	var data_preview;
         if($("#datastatus").attr("checked")){
@@ -111,14 +114,18 @@ $(function() {
         	'data_preview':data_preview,
         	'data_category_nature':wx_category_nature,
         	'data_category_area_school':wx_category_area_school,
-            'data_category_area_major':wx_category_area_major
+            'data_category_area_major':wx_category_area_major,
+            'data_type':data_type
             }),
         success: function(result)
             {
               if(result=='success'){
                // location.reload();
-                    showLoading("文档正在努力上传当中,请稍等。。。");
-            	   location.href='<?php echo site_url('home/personal'); ?>';
+                    var title = "分享干货";
+                    var content = "你的笔记已经上传成功<br/>两秒后自动关闭该窗口";
+                    var url = $("#baseUrl").val()+"home/personal";
+                    showDialog(title,content,url);
+            	   // location.href='<?php echo site_url('home/personal'); ?>';
                 }
 
             },

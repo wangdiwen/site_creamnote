@@ -29,6 +29,14 @@ class WX_Util
         return $data;
     }
 /*****************************************************************************/
+    public function check_has_login() {
+        $user_id = isset($_SESSION['wx_user_id']) ? $_SESSION['wx_user_id'] : 0;
+        if ($user_id && is_numeric($user_id) && $user_id > 0) {
+            return true;
+        }
+        return false;
+    }
+/*****************************************************************************/
     public function get_auth_code()
     {
         $random = rand(0, 29);

@@ -167,7 +167,7 @@ class WX_General
                 if ($data_upload_time >= $yesterday_time) {
                     // show hours
                     $diff = strtotime($cur_time) - strtotime($data_upload_time);
-                    $diff_time = floor($diff/(60*60));
+                    $diff_time = floor($diff/3600);
                     if ($diff_time > 0) {
                         $base_info['data_uploadtime'] = $diff_time.'小时之前';
                     }

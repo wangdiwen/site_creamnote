@@ -46,9 +46,9 @@ class WXC_Search extends CI_Controller
             if ($data) {
                 $data_obj = array();
                 foreach ($data as $row) {
-                    $obj = $this->wx_general->get_data_card($row->data_id);
+                    $obj = $this->wx_general->get_data_card($row['data_id']);
                     if ($obj) {
-                        if ($collect_list && in_array($row->data_id, $collect_list)) {
+                        if ($collect_list && in_array($row['data_id'], $collect_list)) {
                             $obj['collect'] = 'true';
                         }
                         else {

@@ -23,6 +23,7 @@ $(function() {
 
     $("#filecontent").click(function(){
     //	alert("1");
+        showLoading("文档正在努力生成当中,请稍等。。。");
         var order = $("#newid").attr("value");
         var pdfname = $("#pdfname").attr("value");
         var pdfuser = $("#pdfuser").attr("value");
@@ -47,14 +48,13 @@ $(function() {
               var objectname = temp_info[1];
               if(result=='success'){
                 //location.reload();
-                showLoading("文档正在努力生成当中,请稍等。。。");
             		location.href="<?php echo site_url('data/wxc_data/data_modify_from_image'); ?>"+"/"+objectname;
                 } else if(result=='warning'){
-                	alert("部分图片有异常，已经忽略该图片");
-                  showLoading("文档正在努力生成当中,请稍等。。。");
+                	warnMes("部分图片有异常，已经忽略该图片");
+                  // showLoading("文档正在努力生成当中,请稍等。。。");
                 	location.href="<?php echo site_url('data/wxc_data/data_modify_from_image'); ?>"+"/"+objectname;
                 } else if(result=='no image'){
-					        alert("请上传图片");
+					        errorMes("请上传图片");
                 }
 
             },
@@ -362,16 +362,22 @@ $(document).keydown(function(event){
     		<div class="entry">
                 <input type="hidden" value="1215154" name="tmpdir" id="id_file">
          		<div  id="thisform" >
-                    <fieldset>
-                        <legend>第一步：上传资料 </legend>
-                       <p style="margin-top: 12px;"> <input type="file" name="file_upload" id="file_upload" /></p>
-                             <p><a href="javascript:$('#file_upload').uploadify('settings', 'formData', {'typeCode':document.getElementById('id_file').value});$('#file_upload').uploadify('upload','*')">上传</a>
-            				<a href="javascript:$('#file_upload').uploadify('cancel','*')">重置上传队列</a>
-            				支持的图片格式(*.jpg; *.jpeg; *.png; *.gif)
-            				</p>
-            				<div id="uploadsuccess"></div>
-                    </fieldset>
+              <fieldset>
+                <legend>第一步：上传资料 </legend>
+                <div  style="margin-top: 12px;">
+
+                  <div id="batch_upload" class="fl">
+                    <span ><a style="color:#fff" href="javascript:$('#file_upload').uploadify('settings', 'formData', {'typeCode':document.getElementById('id_file').value});$('#file_upload').uploadify('upload','*')">批量上传</a></span>
+                    <span ><a style="color:#fff" href="javascript:$('#file_upload').uploadify('cancel','*')">取消上传</a></span>
+                  </div>
+                  <input type="file" name="file_upload" id="file_upload" />
                 </div>
+                <p style="color: #AA7700;">
+      				    支持的图片格式(*.jpg; *.jpeg; *.png; *.gif)
+      				  </p>
+      				<div id="uploadsuccess"></div>
+              </fieldset>
+            </div>
          	</div>
 
       		<div class="entry">
@@ -399,14 +405,14 @@ $(document).keydown(function(event){
             	<div  id="thisform2" >
                     <fieldset>
                         <legend>第三步：完善 PDF信息</legend>
-                        <p><label  accesskey="9">标题</label><br />
+                        <p><label  accesskey="9">笔记题目</label><br />
                         <input type="text" id="pdfname" name="pdfname" onblur="step_three()"></p>
-                        <p><label  accesskey="9">PDF作者</label><br />
+                        <p><label  accesskey="9">笔记作者</label><br />
                         <input type="text" id="pdfuser" name="pdfuser" value="<?php echo $base_user_info['user_name'];?>" onblur="step_three()"></p>
                         <p><label  accesskey="9">作者所在学校</label><br />
                         <input type="text" id="pdfschool" name="pdfschool" value="<?php echo $base_user_info['user_school'];?>" onblur="step_three()"></p>
-                        <p><label  accesskey="9">页眉信息</label><br />
-                        <input type="text" id="pdfheader" name="pdfheader" onblur="step_three()"></p>
+                        <p><label  accesskey="9">笔记页眉</label><br />
+                        <input type="text" id="pdfheader" name="pdfheader" onblur="step_three()" maxlength="20"></p>
                         <p><label for="name" accesskey="9">简介</label><br />
                         <textarea id="pdfsummary" name="" onblur="step_three()"></textarea></p>
 
@@ -454,7 +460,7 @@ $(document).keydown(function(event){
     <?php include  'application/frontend/views/share/footer.php';?>
     <!-- end #footer -->
 </div>
-<script type="text/javascript" src="/application/frontend/views/resources/js/jquery.uploadify.min.js"></script>
+<script type="text/javascript" src="/application/frontend/views/resources/js/jquery.uploadify.js"></script>
 <script type="text/javascript">
 $(function() {
   $('#file_upload').uploadify({
@@ -472,20 +478,15 @@ $(function() {
         'fileTypeExts' : '*.jpg; *.jpeg; *.png; *.gif',//限制允许上传的图片后缀
         'fileSizeLimit' : '2000KB',//限制上传的图片不得超过2MB
         'onSelect' : function(file) {
-      var fileName="" ;
-      var name = file.name.split(".");
-      for(i=0;i<name.length-1;i++){
-        fileName+=name[i]+".";
-        }
-      $('#dataname').val(fileName.substr(0, fileName.length-1));
+          $("#batch_upload").css("display","block");
         },
         'onUploadSuccess' : function(file, data, response) {//每次成功上传后执行的回调函数，从服务端返回数据到前端
             if(data == "UNKNOWN"){
-                alert("图片有异常，请重新上传新的图片");
+                errorMes("图片有异常，请重新上传新的图片");
              }else if(data == "image-size-overflow"){
-                alert("一次图片笔记中，最大只支持30幅图片，如果您的图片笔记未完成，建议您可以分开制作、分享!")
+                warnMes("一次图片笔记中，最大只支持30幅图片，如果您的图片笔记未完成，建议您可以分开制作、分享!");
              }else if(data == "image-count-overflow"){
-                alert("您上传的图片超过最大限制2M!")
+                errorMes("您上传的图片超过最大限制2M!");
              } else{
               var jsondata = $.parseJSON(data);
                 var str = "";
@@ -525,7 +526,7 @@ $(function() {
                     }
                     var num1 = Math.round(i);
                     if(num1 == 29){
-                      alert("一次图片笔记中，最大只支持30幅图片，如果您的图片笔记未完成，建议您可以分开制作、分享")
+                      warnMes("一次图片笔记中，最大只支持30幅图片，如果您的图片笔记未完成，建议您可以分开制作、分享")
                     }else{
                       var num2 = Math.round(5);
                       var result = num1/num2;

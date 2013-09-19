@@ -11,7 +11,6 @@
 	<script type="text/javascript" src="/application/frontend/views/resources/js/flexpaper_handlers.js"></script>
 	<script type="text/javascript" src="/application/frontend/views/resources/js/jquery.color.js"></script>
 	<script type="text/javascript" src="/application/frontend/views/resources/js/jquery.quovolver.js"></script>
-	<script type="text/javascript" src="/application/frontend/views/resources/js/jquery.blockUI.js"></script>
 	<script type="text/javascript" src="/application/frontend/views/resources/js/jquery-ui-1.10.3.custom.js"></script>
 
 <style type="text/css">
@@ -48,7 +47,7 @@ $(function() {
 	            ProgressiveLoading : false,
 	            MinZoomSize : 0.8,
 	            MaxZoomSize : 3,
-	            SearchMatchAll : true,
+	            SearchMatchAll : false,
 	            InitViewMode : 'Portrait',
 	            RenderingOrder : 'flash',
 	            StartAtPage : '',
@@ -56,7 +55,7 @@ $(function() {
 	            ViewModeToolsVisible : false,
 	            ZoomToolsVisible : true,
 	            NavToolsVisible : true,
-	            CursorToolsVisible : true,
+	            CursorToolsVisible : false,
 	            SearchToolsVisible : false,
 	            WMode : 'Opaque',
 	            localeChain: 'en_US'
@@ -70,13 +69,32 @@ var $slider_child_l = Math.round($("#commnet_count").val())/3+2;
 var $slider_width = 149*3;
 $slider.width($slider_child_l * $slider_width);
 var slider_count = 0;
+$('#btn-left').css({cursor: 'auto'});
+$('#btn-left').removeClass("dasabled");
+function resetArrow(){
+    $slider_child_l = Math.round($("#commnet_count").val())/3+2;
+
+    if ($slider_child_l < 3) {
+      $('#btn-right').css({cursor: 'auto'});
+      $('#btn-right').removeClass("dasabled");
+      $('#btn-left').css({cursor: 'auto'});
+      $('#btn-left').removeClass("dasabled");
+    }
+}
+// var $slider = $('#card_items_data');
+// var $slider_child_l = Math.round($("#commnet_count").val())/3+2;
+// var $slider_width = 149*3;
+// $slider.width($slider_child_l * $slider_width);
+// var slider_count = 0;
 
 if ($slider_child_l < 3) {
   $('#btn-right').css({cursor: 'auto'});
   $('#btn-right').removeClass("dasabled");
+  $('#btn-left').css({cursor: 'auto'});
+  $('#btn-left').removeClass("dasabled");
 }
 
-$('#btn-right').click(function() {
+$('#btn-right').live("click",(function() {
   if ($slider_child_l < 3 || slider_count >= $slider_child_l - 3) {
     return false;
   }
@@ -84,9 +102,9 @@ $('#btn-right').click(function() {
   slider_count++;
   $slider.animate({left: '-=' + $slider_width + 'px'}, 'normal');
   slider_pic();
-});
+}));
 
-$('#btn-left').click(function() {
+$('#btn-left').live("click",(function() {
   if (slider_count <= 0) {
     return false;
   }
@@ -94,22 +112,20 @@ $('#btn-left').click(function() {
   slider_count--;
   $slider.animate({left: '+=' + $slider_width + 'px'}, 'normal');
   slider_pic();
-});
+}));
 
 function slider_pic() {
   if (slider_count >= $slider_child_l - 3) {
     $('#btn-right').css({cursor: 'auto'});
-    $('#btn-right').addClass("dasabled");
+    $('#btn-left').css({cursor: 'pointer'});
   }
   else if (slider_count > 0 && slider_count <= $slider_child_l - 3) {
     $('#btn-left').css({cursor: 'pointer'});
-    $('#btn-left').removeClass("dasabled");
     $('#btn-right').css({cursor: 'pointer'});
-    $('#btn-right').removeClass("dasabled");
   }
   else if (slider_count <= 0) {
     $('#btn-left').css({cursor: 'auto'});
-    $('#btn-left').addClass("dasabled");
+    $('#btn-right').css({cursor: 'pointer'});
   }
 }
 //=========================================================提交评论=========================================//
@@ -121,35 +137,65 @@ function slider_pic() {
 			var data_user_id = $("#data_user_id").attr("value");
 			var user_name = $("#user_name").attr("value");
 			var url = '<?php echo site_url('core/wxc_data_statistic/insert_comment'); ?>';
-			 $.ajax({
-			        type:"post",
-			        url:url,
-			        data:({'comment_content':comment,
-				        'data_id':data_id,
-				        'data_name':data_name,
-				        'data_user_id':data_user_id
-			            }),
-			        success: function(result)
-			            {
-			              if(result=='success'){
-				              var str="";
-				              var count = $("#comment_count").attr("value");
-				              str+="<blockquote><p>"+comment+"<cite>&ndash;"+user_name+"(Quote #"+count+")刚刚</cite></p></blockquote>";
-				              $("#comment_content").attr("value","");
-				              count--;
-				              //$("#commnet"+count).after(str);
-				             // $('blockquote').quovolver(500,600);
-			                }
+            if(comment == ""){
+                warnMes("内容为空时不能提交的哦:)！");
+            }else{
+               $.ajax({
+                    type:"post",
+                    url:url,
+                    data:({'comment_content':comment,
+                        'data_id':data_id,
+                        'data_name':data_name,
+                        'data_user_id':data_user_id
+                        }),
+                    success: function(result)
+                        {
+                          var real_ret = result.split(",")[0];
+                          var head_url = result.split(",")[1];
+                          if(real_ret=='success'){
+                              successMes("评论成功！");
+                              var str="";
+                              str += "<div class='_detail_card_item _detail_card_item_panel'>";
+                              // echo "<div class='card_delete'></div>";
+                              str += "<p style='margin-top: 0;height: 82px;word-break: break-all;'>"+comment+"</p>";
+                              str += "<div class='_detail_card_footer' style='padding-top: 4px;height: 35px;'><p style='margin:0;'>";
+                              str += "<img class='fl' width='25' height='25' src='"+head_url+"'>";
+                              str += "<span style='color:#4c76ac;'>"+user_name+"</span></br><span class='_detail_card_time'>--刚刚";
+                              str += "</span></p></div>";
+                              str += "</div>";
+                              if($("#commnet_count").val() == 0){
+                                $("#card_items_data").html(str);
+                              }else{
+                                $("#card_items_data_one").before(str);
+                              }
 
-			            },
-			           error: function(XMLHttpRequest, textStatus, errorThrown) {
-			                        alert(XMLHttpRequest.status);
-			                        alert(XMLHttpRequest.readyState);
-			                        alert(textStatus);
-			                    }
-			        });
+                              $("#commnet_count").attr("value",Math.round($("#commnet_count").val())+1);
+                              if($("#commnet_count").val() > 3){
+                                str ="";
+                                str += "<div class='_detail_card_arrow' style=''>";
+                                str += "<div class='card_arrow_left' style='margin-top: 38px;margin-left: 6px;' id='btn-left'></div>";
+                                str += "<div class='card_arrow_right' style='margin-top: 38px;margin-left: 398px;' id='btn-right'></div></div>";
+                                $("#card_items_data").after(str);
+                                resetArrow()
+                              }
+                              $("#comment_content").attr("value","");
+
+                            }else if(real_ret = "failed"){
+                              errorMes("两小时内不能重复评论，谢谢！");
+                            }
+
+                        },
+                       error: function(XMLHttpRequest, textStatus, errorThrown) {
+                                    alert(XMLHttpRequest.status);
+                                    alert(XMLHttpRequest.readyState);
+                                    alert(textStatus);
+                                }
+                    });
+            }
+
 		}else{
-			submit_compliant();
+            warnMes("请先登录！");
+			// submit_compliant();
             $('html,body').animate({scrollTop: '0px'}, 800);
 		}
 
@@ -203,110 +249,73 @@ function slider_pic() {
 //=========================================================评分=========================================//
 $(document).ready(function()
 		{
-			// Variable to set the duration of the animation
-			var animationTime = 500;
 
-			// Variable to store the colours
-			var colours = ["bd2c33", "e49420", "ecdb00", "3bad54", "1b7db9"];
+	$("#ratings li span").click(function(e) {
+		if(if_login!=""){
+			e.preventDefault();
+            var obj_parent = $(this).parent();
+			var grade = $(this).parent().index() + 1;
+			var data_id=$("#data_id").attr("value");
+			var grade_count=0;
 
-			// Add rating information box after rating
-			var ratingInfobox = $("<div />")
-				.attr("id", "ratinginfo")
-				.insertAfter($("#rating"));
+			if(grade==1){
+				grade_count=parseInt($("#grade_bad_hidden").attr("value"))+1;
+				grade_type='bad';
+	         }else if(grade==2){
+	        	grade_count=parseInt($("#grade_well_hidden").attr("value"))+1;
+				grade_type='well';
+		     }else if(grade==3){
+		    	 grade_count=parseInt($("#grade_excellent_hidden").attr("value"))+1;
+				 grade_type='excellent';
+			 }
+			var url = '<?php echo site_url('core/wxc_data_statistic/update_grade'); ?>';
+			 $.ajax({
+			        type:"post",
+			        url:url,
+			        data:({'grade_type':grade_type,
+				        'data_id':data_id,
+				        'grade_count':grade_count
+			            }),
+			        success: function(result)
+			            {
+			              if(result=='success'){
+				              if(grade==1){
+				            	  $("#grade_bad_hidden").attr("value",grade_count);
+				            	  // $("#grade_bad").html("差（"+grade_count+")");
+                                  $(obj_parent).attr("title",""+grade_count+"人觉得差");
+					          }else if(grade==2){
+						          $("#grade_well_hidden").attr("value",grade_count);
+						          // $("#grade_well").html("良好（"+grade_count+")");
+                                    $(obj_parent).attr("title",""+grade_count+"人觉得一般");
+							  }else if(grade==3){
+							      $("#grade_excellent_hidden").attr("value",grade_count);
+							      // $("#grade_excellent").html("优秀（"+grade_count+")");
+                                    $(obj_parent).attr("title",""+grade_count+"人觉得优秀");
+							  }
+                               $(".gravatar").poshytip({
+                                    className:'tip-darkgray',
+                                })
+                               successMes("评分成功");
+			                }else if(result == "failed"){
+                                errorMes("两小时内不能重复评分，谢谢！");
+                            }
 
-			// Function to colorize the right ratings
-			var colourizeRatings = function(nrOfRatings) {
-				$("#rating li a").each(function() {
-					if($(this).parent().index() <= nrOfRatings) {
-						$(this).stop().animate({ backgroundColor : "#" + colours[nrOfRatings] } , animationTime);
-					}
-				});
-			};
-
-			// Handle the hover events
-			$("#rating li a").hover(function() {
-
-				// Empty the rating info box and fade in
-				ratingInfobox
-					.empty()
-					.stop()
-					.animate({ opacity : 1 }, animationTime);
-
-				// Add the text to the rating info box
-				$("<p />")
-					.html($(this).html())
-					.appendTo(ratingInfobox);
-
-				// Call the colourize function with the given index
-				colourizeRatings($(this).parent().index());
-			}, function() {
-                $("<p />")
-                    .html("")
-				// Fade out the rating information box
-				ratingInfobox
-					.stop()
-					.animate({ opacity : 0}, animationTime);
-
-				// Restore all the rating to their original colours
-				$("#rating li a").stop().animate({ backgroundColor : "#333" } , animationTime);
-			});
-
-			// Prevent the click event and show the rating
-			$("#rating li a").click(function(e) {
-				if(if_login!=""){
-					e.preventDefault();
-					var grade = $(this).parent().index() + 1;
-					var data_id=$("#data_id").attr("value");
-					var grade_count=0;
-
-					if(grade==1){
-						grade_count=parseInt($("#grade_bad_hidden").attr("value"))+1;
-						grade_type='bad';
-			         }else if(grade==2){
-			        	grade_count=parseInt($("#grade_well_hidden").attr("value"))+1;
-						grade_type='well';
-				     }else if(grade==3){
-				    	 grade_count=parseInt($("#grade_excellent_hidden").attr("value"))+1;
-						 grade_type='excellent';
-					 }
-					var url = '<?php echo site_url('core/wxc_data_statistic/update_grade'); ?>';
-					 $.ajax({
-					        type:"post",
-					        url:url,
-					        data:({'grade_type':grade_type,
-						        'data_id':data_id,
-						        'grade_count':grade_count
-					            }),
-					        success: function(result)
-					            {
-					              if(result=='success'){
-						              if(grade==1){
-						            	  $("#grade_bad_hidden").attr("value",grade_count);
-						            	  $("#grade_bad").html("差（"+grade_count+")");
-							          }else if(grade==2){
-								          $("#grade_well_hidden").attr("value",grade_count);
-								          $("#grade_well").html("良好（"+grade_count+")");
-									  }else if(grade==3){
-									      $("#grade_excellent_hidden").attr("value",grade_count);
-									      $("#grade_excellent").html("优秀（"+grade_count+")");
-									   }
-					                }
-
-					            },
-					           error: function(XMLHttpRequest, textStatus, errorThrown) {
-					                        alert(XMLHttpRequest.status);
-					                        alert(XMLHttpRequest.readyState);
-					                        alert(textStatus);
-					                    }
-					        });
-				}else{
-					submit_compliant();
-                    $('html,body').animate({scrollTop: '0px'}, 800);
-				}
-			});
+			            },
+			           error: function(XMLHttpRequest, textStatus, errorThrown) {
+			                        alert(XMLHttpRequest.status);
+			                        alert(XMLHttpRequest.readyState);
+			                        alert(textStatus);
+			                    }
+			        });
+		}else{
+            warnMes("请先登录！");
+			// submit_compliant();
+            $('html,body').animate({scrollTop: '0px'}, 800);
+		}
+	});
 
 //=========================================================评论滚动=========================================//
-     $('blockquote').quovolver(500,600);
+     // $('blockquote').quovolver(500,600);
 	});
 
 //=========================================================弹出消息=========================================//
@@ -566,17 +575,19 @@ if(if_login!=""){
 	</div>
 	<!------ 弹出消息 ------>
 		<div id="content" style="float: left;width:580px;border:0;">
-		  <div class="post" style="width: 500px;padding: 0px 20px;">
+		  <div class="post" style="width: 500px;padding: 25px 0 0 0;">
 
-			<div class="entry">
-				<p id="documentViewer" class="" style="background-color:#fff;margin: 0 auto;width:555px;height:730px;box-shadow: inset 0 0 10px rgb(150, 153, 167);z-index:10;"></p>
-				<p style="font-size: 20px;padding-left: 30px;margin: 0 auto;color:#337fe5;">打分</p>
-				<p>	<ul id="ratings">
-					<li><a href="#" class="common_show_login_win" id="grade_bad">差(<?php echo $grade_bad_count;?>)</a><input type="hidden" id="grade_bad_hidden" value="<?php echo $grade_bad_count;?>"></li>
-					<li><a href="#" class="common_show_login_win" id="grade_well">良好(<?php echo $grade_well_count;?>)</a><input type="hidden" id="grade_well_hidden" value="<?php echo $grade_well_count;?>"></li>
-					<li><a href="#" class="common_show_login_win" id="grade_excellent">优秀(<?php echo $grade_excellent_count;?>)</a><input type="hidden" id="grade_excellent_hidden" value="<?php echo $grade_excellent_count;?>"></li>
+			<div class="">
+				<p id="documentViewer" class="" style="background-color:#fff;margin: 0 auto;width:570px;height:730px;box-shadow: inset 0 0 10px rgb(150, 153, 167);z-index:10;"></p>
+
+				<div class="fl">
+                    <ul id="ratings" class="fl">
+					<li class="gravatar" style="margin-left: 0px;" title="<?php echo $grade_bad_count;?>人觉得差"><span class="_detail_grade_bad common_show_login_win" id="grade_bad"></span><input type="hidden" id="grade_bad_hidden" value="<?php echo $grade_bad_count;?>"></li>
+					<li class="gravatar" title="<?php echo $grade_well_count;?>人觉得一般"><span class="_detail_grade_well common_show_login_win" id="grade_well"></span><input type="hidden" id="grade_well_hidden" value="<?php echo $grade_well_count;?>"></li>
+					<li class="gravatar" title="<?php echo $grade_excellent_count;?>人觉得优秀"><span class="_detail_grade_good common_show_login_win" id="grade_excellent"></span><input type="hidden" id="grade_excellent_hidden" value="<?php echo $grade_excellent_count;?>"></li>
 					</ul>
-				</p>
+                </div>
+
 				 <input type="hidden" id="data_id" value="<?php echo $data_id;?>">
 				 <input type="hidden" id="data_name" value="<?php echo $data_name;?>">
 				 <input type="hidden" id="data_user_id" value="<?php echo $user_id;?>">
@@ -593,11 +604,17 @@ if(if_login!=""){
                   $commnet_count = 0;
                   if(isset($data_comment)&&$data_comment){
                     foreach ($data_comment as $key => $com) {
-                      echo "<div class='_detail_card_item _detail_card_item_panel'>";
+                        if($commnet_count == 0){
+                            echo "<div class='_detail_card_item _detail_card_item_panel' id='card_items_data_one'>";
+                        }else{
+                            echo "<div class='_detail_card_item _detail_card_item_panel'>";
+                        }
                       // echo "<div class='card_delete'></div>";
                       echo "<p style='margin-top: 0;height: 82px;word-break: break-all;'>".$com['comment_content']."</p>";
-                      echo "<div class='_detail_card_footer' style='padding-top: 4px;height: 35px;'><p style='margin:0;'>";
-                      echo "<span style='color:#4c76ac;'>".$com['user_name']."</span></br><span>&nbsp;&nbsp;--".$com['comment_time'];
+                      echo "<div class='_detail_card_footer' style='padding-top: 4px;height: 35px;'>";
+                      echo "<p style='margin:0;'>";
+                      echo "<img class='fl' width='25' height='25' src='".$com['head_url']."'>";
+                      echo "<span style='color:#4c76ac;'>".$com['user_name']."</span></br><span class='_detail_card_time'>--".$com['comment_time'];
                       echo "</span></p></div>";
                       echo "</div>";
                       $commnet_count++;
@@ -605,12 +622,12 @@ if(if_login!=""){
                     }
                     echo "<input type='hidden' value='".$commnet_count."' id='commnet_count'>";
                   }else{
-                    echo "<div class='_detail_card_item _detail_card_item_panel'>";
+                      echo "<div class='_detail_card_item _detail_card_item_panel' id='card_items_data_one'>";
                       // echo "<div class='card_delete'></div>";
                       echo "<p>还没有评论</p>";
                       // echo
                       echo "</div>";
-                      echo "<input type='hidden' value='1' id='commnet_count'>";
+                      echo "<input type='hidden' value='0' id='commnet_count'>";
                   }
                 ?>
 
@@ -628,54 +645,61 @@ if(if_login!=""){
 
 		</div><!-- end #content -->
 		<div id="sidebar" style="float: right;width: 400px;color: #666666;">
+      <div class="_detail_baseinfo">
+        <div class="_detail_info_title">
+          <div class="_grgh">资料详情</div>
+        </div>
+      </div>
 			<ul>
-			 <li style="padding: 10px 20px 0px 10px;margin-bottom: 0px;">
-			     <h2>资料详情</h2>
+			 <li style="padding: 10px 20px 0px 0px;margin-bottom: 0px;">
+
 				<ul style="font-size:15px">
-     				<li>
-                        <a class="datadetailLi" href="#"><span style="color:#337fe5;"><?php if (isset($data_swfpath) && $data_swfpath != "") echo $data_name; else echo ""; ?>&nbsp;</span></a>
-                    </li>
-    				<li>
-                        <a class="datadetailLi allmessage" style="color:#337fe5;" href="#" onclick="show_userInfo(<?php echo $user_id;?>)" ><?php if (isset($user_name) && $user_name != "") echo $user_name; else echo ""; ?> </a>
-                        |<?php if (isset($data_uploadtime) && $data_uploadtime != "") echo $data_uploadtime; else echo ""; ?>
-                    </li>
-    				<li>
-                        <span class="datadetailLi">分类：</span>
-    				    <a class="datadetaila" style="color:#337fe5;" href="<?php echo site_url("primary/wxc_search/search_by_nature/$data_nature_id");?>" >
-    				        <?php if (isset($data_nature_name) && $data_nature_name!= "") echo $data_nature_name; else echo ""; ?>
-    				    </a>
-                    </li>
-                    <li>
-                        <span class="datadetailLi">学校：</span>
-        				<a class="datadetaila" style="color:#337fe5;" href="<?php echo site_url("primary/wxc_search/search_by_area/$data_area_id");?>" >
-        				    <?php if (isset($data_area_name) && $data_area_name!= "") echo $data_area_name; else echo ""; ?>
-        				</a>
-                    </li>
-                    <li>
-    				    <span class="datadetailLi">下载数：<?php echo $dactivity_download_count?></span>
-                    </li>
-                    <li>
-    				    <span class="datadetailLi">浏览数：<?php echo $dactivity_view_count?></span>
-                    </li>
-                    <li>
-    				    <span class="datadetailLi">购买数：<?php echo $dactivity_buy_count?></span>
-                    </li>
-                    <li>
-    				    <span class="datadetailLi">评论数：<?php echo $dactivity_comment_count?></span>
-    				</li>
-                    <li style="max-height: 53px;overflow: hidden;overflow-y: auto;">
-                        <span class="datadetailLi">简介：<?php if (isset($data_summary) && $data_summary!= "") echo $data_summary; else echo ""; ?></span>
-                    </li>
-                    <li>
-            			<?php
-            			if (isset($_SESSION["wx_user_name"]) && $_SESSION["wx_user_name"] != ""){
-            				echo "<a class='datadetail_dowload common_show_login_win' onclick='submit_compliant()' style='color:red;' href=".base_url()."core/wxc_download_note/download_file/".$data_id."></a>";
-            			}else{
-            				echo "<a class='show_loginForm datadetail_dowload common_show_login_win' style='color:red;' href='#'></a>";
-            			}
-            			?>
-                        <a href="<?php echo base_url();?>primary/wxc_feedback/report_page?data_id=<?=$data_id?>" target="_blank"><input type="button" class="button_c" value="举报文档"></a>
-                    </li>
+  	       <li>
+            <a class="datadetailLi" href="#"><span style="color: rgb(76, 118, 172);"><?php if (isset($data_swfpath) && $data_swfpath != "") echo $data_name; else echo ""; ?>&nbsp;</span></a>
+          </li>
+          <li>
+              <a class="datadetailLi allmessage" style="color: rgb(76, 118, 172);" href="#" onclick="show_userInfo(<?php echo $user_id;?>)" ><?php if (isset($user_name) && $user_name != "") echo $user_name; else echo ""; ?> </a>
+              |<?php if (isset($data_uploadtime) && $data_uploadtime != "") echo $data_uploadtime; else echo ""; ?>
+          </li>
+          <li>
+            <span class="datadetailLi">分类：</span>
+  			    <a class="datadetaila" style="color: rgb(76, 118, 172);" href="<?php echo site_url("primary/wxc_search/search_by_nature/$data_nature_id");?>" >
+  			        <?php if (isset($data_nature_name) && $data_nature_name!= "") echo $data_nature_name; else echo ""; ?>
+  			    </a>
+          </li>
+          <?php if (isset($data_area_name) && $data_area_name!= ""){ ?>
+          <li>
+              <span class="datadetailLi">学校：</span>
+      				<a class="datadetaila" style="color: rgb(76, 118, 172);" href="<?php echo site_url("primary/wxc_search/search_by_area/$data_area_id");?>" >
+      				    <?php if (isset($data_area_name) && $data_area_name!= "") echo $data_area_name; else echo ""; ?>
+      				</a>
+          </li>
+          <?php }?>
+          <li>
+            <span class="datadetailLi">下载量：<?php echo $dactivity_download_count?></span>
+          </li>
+          <li>
+            <span class="datadetailLi">浏览量：<?php echo $dactivity_view_count?></span>
+          </li>
+          <li>
+            <span class="datadetailLi">购买量：<?php echo $dactivity_buy_count?></span>
+          </li>
+          <li>
+  				  <span class="datadetailLi">评论量：<?php echo $dactivity_comment_count?></span>
+  				</li>
+          <li style="max-height: 53px;overflow: hidden;overflow-y: auto;">
+              <span class="datadetailLi">简介：<?php if (isset($data_summary) && $data_summary!= "") echo $data_summary; else echo ""; ?></span>
+          </li>
+          <li>
+      			<?php
+      			if (isset($_SESSION["wx_user_name"]) && $_SESSION["wx_user_name"] != ""){
+      				echo "<a class=' common_show_login_win' onclick='submit_compliant()' style='color:red;' href=".base_url()."core/wxc_download_note/download_file/".$data_id."><input style='width: 90px;' type='button' class='button_c' value='下载笔记'></a>";
+      			}else{
+      				echo "<a class='show_loginForm  common_show_login_win' style='color:red;' href='#'><input style='width: 90px;' type='button' class='button_c' value='下载笔记'></a>";
+      			}
+  			   ?>
+              <a  href="<?php echo base_url();?>primary/wxc_feedback/report_page?data_id=<?=$data_id?>" target="_blank"><input style='width: 90px;' type="button" class="button_c" value="举报文档"></a>
+          </li>
 				</ul>
 			</li>
 		</ul>
@@ -683,15 +707,20 @@ if(if_login!=""){
 		</div>
 
 		<div id="sidebar" style="float: right;width: 400px;">
+      <div class="_detail_viewinfo">
+        <div class="_detail_view_title">
+          <div class="_grgh" style="margin: 10px 0 10px 0px;">最近浏览资料</div>
+        </div>
+      </div>
 			<ul>
-				<li style="padding: 0px 20px 10px 10px;">
-			<h2>最近浏览资料</h2>
+				<li style="padding: 0px 20px 10px 0px;">
+
 				<ul style="font-size:15px">
 
 
  				<?php if($data_recent_view){
 					foreach ($data_recent_view as $data_item){
-						echo "<li class='datadetail_view_li'><a href='".base_url()."data/wxc_data/data_view/".$data_item['data_id']."'><span class='datadetail_view_span' style='color:#337fe5;'>";
+						echo "<li class='datadetail_view_li'><a href='".base_url()."data/wxc_data/data_view/".$data_item['data_id']."'><span class='datadetail_view_span' style='color: rgb(76, 118, 172);'>";
 						echo $data_item['data_name'];
 						echo "</span></a></li>";
 					}

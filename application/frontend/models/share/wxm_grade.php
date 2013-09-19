@@ -85,6 +85,19 @@ class WXM_Grade extends CI_Model
         }
     }
 /*****************************************************************************/
+    public function has_grade_data_record($data_id = 0) {
+        if ($data_id > 0) {
+            $table = $this->wx_table;
+            $this->db->select('grade_id')->from($table)->where('data_id', $data_id)->limit(1);
+            $query = $this->db->get();
+            $count = $query->num_rows();
+            if ($count > 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+/*****************************************************************************/
     public function delete_by_data_id($data_id = 0)
     {
         if ($data_id > 0)

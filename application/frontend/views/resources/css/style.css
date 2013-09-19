@@ -333,7 +333,7 @@ hr { display: none; }
 }
 
 #sidebar li li a {
-	padding: 0px 0px 0px 10px;
+	padding: 0px 0px 0px 0px;
 	font-weight: normal;
 	border: none;
 }
@@ -1524,7 +1524,7 @@ z-index: 100;
 }
 
 #thisform fieldset,#thisform1 fieldset,#thisform2 fieldset {
-	border-top: 41px solid rgb(177, 210, 245)!important;
+	border-top: 41px solid rgb(125 ,142 ,167)!important;
 	border: 2px;
 	padding: 5px 20px;
 	background: rgb(225, 228, 230);
@@ -1534,14 +1534,15 @@ z-index: 100;
 	font-weight: bold;
 	font-size: 90%;
 	color: #666;
-	background: rgb(177, 210, 245);
-	border: 0px solid rgb(177, 210, 245);
-	padding: 11px 25px;
+	background: rgb(125 ,142 ,167);
+	border: 0px solid rgb(125 ,142 ,167);
+	padding: 11px 0px;
 	font-size: 15px;
+	color: #fff;
 }
 /* -------------资料预览页面------------------------- */
 .datadetailLi{
-	padding: 0px 0px 0px 10px;
+	padding: 0px 0px 0px 0px;
 }
 .datadetaila{
 	padding:0px!important;
@@ -1557,6 +1558,7 @@ z-index: 100;
 	width: 322px;
 	overflow: hidden;
 	text-overflow: ellipsis;
+	padding-left: 10px;
 }
 .datadetail_view_li{
 	text-overflow: ellipsis;
@@ -1650,7 +1652,7 @@ z-index: 100;
 ._detail_comment{
 	border: 1px #a3a3a3 solid;
 	height: 80px;
-	width: 530px;
+	width: 548px;
 }
 ._detail_comment:focus{
 	background-color: #fff;
@@ -1658,7 +1660,7 @@ z-index: 100;
 	box-shadow: none;
 }
 ._detail_buttonframe{
-	width: 550px;
+	width: 568px;
 	height: 30px;
 	line-height: 20px;
 	text-align: right;
@@ -1671,7 +1673,8 @@ z-index: 100;
 }
 ._detail_card{
 	position: absolute!important;
-	margin-left: 570px;
+	margin-left: 590px;
+	margin-top: 78px;
 }
 ._detail_card_item_panel {
 	-webkit-box-shadow: 0px 4px 14px 4px rgba(0, 0, 0, 0.05);
@@ -1733,6 +1736,18 @@ z-index: 100;
 	cursor: pointer;
 	margin-left: 6px;
 }
+._detail_card_time{
+	margin-right: 0px;
+	width: 80px;
+	position: absolute;
+	text-align: right;
+}
+._detail_card_footer span{
+	padding-left: 5px;
+}
+._detail_card_footer img{
+	margin-top: 5px;
+}
 
 ._detail_body{
 	padding: 20px 20px 0px 20px;
@@ -1742,4 +1757,69 @@ z-index: 100;
 	background: #d6d6d6 ;
 	margin-left: auto;
 	margin-right: auto;
+}
+
+._detail_grade_good{
+	background: url(../images/new_version/grade_good.png) no-repeat;
+	width: 48px;
+	height: 48px;
+	position: absolute;
+	cursor: pointer;
+}
+._detail_grade_well{
+	background: url(../images/new_version/grade_well.png) no-repeat;
+	width: 48px;
+	height: 48px;
+	position: absolute;
+	cursor: pointer;
+}
+._detail_grade_bad{
+	background: url(../images/new_version/grade_bad.png) no-repeat;
+	width: 48px;
+	height: 48px;
+	position: absolute;
+	cursor: pointer;
+}
+
+._detail_grade_good:hover{
+	background: url(../images/new_version/grade_good_blue.png) no-repeat;
+	width: 48px;
+	height: 48px;
+	position: absolute;
+}
+._detail_grade_well:hover{
+	background: url(../images/new_version/grade_well_blue.png) no-repeat;
+	width: 48px;
+	height: 48px;
+	position: absolute;
+}
+._detail_grade_bad:hover{
+	background: url(../images/new_version/grade_bad_blue.png) no-repeat;
+	width: 48px;
+	height: 48px;
+	position: absolute;
+}
+#ratings li{
+	height: 48px;
+	width: 48px;
+	float: left;
+	list-style-type: none;
+	margin-left: 10px;
+}
+#ratings{
+	padding-left: 0;
+}
+._detail_info_title{
+	height: 76px;
+	font-size: 18px;
+	font-weight: normal;
+	color: #445877;
+	background: url(../images/new_version/changdata_nick_bottom.png) no-repeat 0px 74px;
+}
+._detail_view_title{
+	height: 50px;
+	font-size: 18px;
+	font-weight: normal;
+	color: #445877;
+	background: url(../images/new_version/changdata_nick_bottom.png) no-repeat 0px 40px;
 }

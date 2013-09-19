@@ -1,0 +1,152 @@
+[2013-09-17 01:00:01] : ---------------------------------------------------------------------------------
+[2013-09-17 01:00:01] : ---------------------  Data Moving Task Everyday --------------------------------
+[2013-09-17 01:00:01] : --------- Filter Time      : 2013-09-16 00:01:00 ~ 2013-09-17 00:01:00-----------
+[2013-09-17 01:00:01] : --------- Total  Data Count: 6
+[2013-09-17 01:00:01] : --------- Actual Data Count: 6
+[2013-09-17 01:00:01] : ---------------------------------------------------------------------------------
+[2013-09-17 01:00:01] : ---------------------------------------------------------------------------------
+[2013-09-17 01:00:01] : Data Id        : 69
+[2013-09-17 01:00:01] : Data ObjectName: 2013091600012341.pdf
+[2013-09-17 01:00:01] : Data VPS Path  : /alidata/www/creamnote/upload/study-notes/2013091600012341.pdf
+[2013-09-17 01:00:01] : Data OSS Path  : /wx-study-notes/2013091600012341.pdf
+[2013-09-17 01:00:01] : Info: Upload data to OSS success
+[2013-09-17 01:00:01] : Info: Upload local flash file success
+[2013-09-17 01:00:01] : Info: Update database OSS-Path success
+[2013-09-17 01:00:01] : ---------------------------------------------------------------------------------
+[2013-09-17 01:00:01] : Data Id        : 70
+[2013-09-17 01:00:01] : Data ObjectName: 2013091622513190.doc
+[2013-09-17 01:00:01] : Data VPS Path  : /alidata/www/creamnote/upload/study-notes/2013091622513190.doc
+[2013-09-17 01:00:01] : Data OSS Path  : /wx-study-notes/2013091622513190.doc
+[2013-09-17 01:00:01] : Info: Upload data to OSS success
+[2013-09-17 01:00:01] : Info: Upload local flash file success
+[2013-09-17 01:00:01] : Info: Update database OSS-Path success
+[2013-09-17 01:00:01] : ---------------------------------------------------------------------------------
+[2013-09-17 01:00:01] : Data Id        : 71
+[2013-09-17 01:00:01] : Data ObjectName: 2013091623231623.doc
+[2013-09-17 01:00:01] : Data VPS Path  : /alidata/www/creamnote/upload/study-notes/2013091623231623.doc
+[2013-09-17 01:00:01] : Data OSS Path  : /wx-study-notes/2013091623231623.doc
+[2013-09-17 01:00:01] : Info: Upload data to OSS success
+[2013-09-17 01:00:01] : Warning: Flash not exist, /alidata/www/creamnote/upload/flash/2013091623231623.swf
+[2013-09-17 01:00:01] : Info: Update database OSS-Path success
+[2013-09-17 01:00:01] : ---------------------------------------------------------------------------------
+[2013-09-17 01:00:01] : Data Id        : 39
+[2013-09-17 01:00:01] : Data ObjectName: 2013071415303268.docx
+[2013-09-17 01:00:01] : Data VPS Path  : /alidata/www/creamnote/upload/final-exam/2013071415303268.docx
+[2013-09-17 01:00:01] : Data OSS Path  : /wx-final-exam/2013071415303268.docx
+[2013-09-17 01:00:01] : Error: has no vps data file, /alidata/www/creamnote/upload/final-exam/2013071415303268.docx
+[2013-09-17 01:00:01] : ---------------------------------------------------------------------------------
+[2013-09-17 01:00:01] : Data Id        : 72
+[2013-09-17 01:00:01] : Data ObjectName: 2013091623300694.pdf
+[2013-09-17 01:00:01] : Data VPS Path  : /alidata/www/creamnote/upload/final-exam/2013091623300694.pdf
+[2013-09-17 01:00:01] : Data OSS Path  : /wx-final-exam/2013091623300694.pdf
+[2013-09-17 01:00:02] : Info: Upload data to OSS success
+[2013-09-17 01:00:02] : Info: Upload local flash file success
+[2013-09-17 01:00:02] : Info: Update database OSS-Path success
+[2013-09-17 01:00:02] : ---------------------------------------------------------------------------------
+[2013-09-17 01:00:02] : Data Id        : 73
+[2013-09-17 01:00:02] : Data ObjectName: 2013091623312512.pdf
+[2013-09-17 01:00:02] : Data VPS Path  : /alidata/www/creamnote/upload/final-exam/2013091623312512.pdf
+[2013-09-17 01:00:02] : Data OSS Path  : /wx-final-exam/2013091623312512.pdf
+[2013-09-17 01:00:02] : Info: Upload data to OSS success
+[2013-09-17 01:00:02] : Info: Upload local flash file success
+[2013-09-17 01:00:02] : Info: Update database OSS-Path success
+[2013-09-17 01:00:02] : ---------------------------------------------------------------------------------
+[2013-09-17 01:00:02] : 
+[2013-09-17 02:00:01] : ---------------------------------------------------------------------------------
+[2013-09-17 02:00:01] : ---------------------  Data Notify Complete Info Everyday -----------------------
+[2013-09-17 02:00:01] : --------- Filter Time      : 2013-09-16 00:01:00 ~ 2013-09-17 00:01:00-----------
+[2013-09-17 02:00:01] : --------- Total  Data Count: 0
+[2013-09-17 02:00:01] : ---------------------------------------------------------------------------------
+[2013-09-17 02:00:01] : ---------------------------------------------------------------------------------
+[2013-09-17 02:00:01] : 
+[2013-09-17 03:00:01] : ---------------------------------------------------------------------------------
+[2013-09-17 03:00:01] : ---------------------  Clear Unfull Data Every Two Days -----------------------
+[2013-09-17 03:00:01] : --------- Filter Time      : 2013-09-15 00:01:00 ~ 2013-09-16 00:01:00-----------
+[2013-09-17 03:00:01] : --------- Total  Data Count: 0
+[2013-09-17 03:00:01] : ---------------------------------------------------------------------------------
+[2013-09-17 03:00:01] : ---------------------------------------------------------------------------------
+[2013-09-17 03:00:01] : 
+[2013-09-17 04:00:01] : ---------------------------------------------------------------------------------
+[2013-09-17 04:00:01] : ---------------------  Clear VPS Data Every Two Days ----------------------------
+[2013-09-17 04:00:01] : --------- Filter Time      : 2013-09-17 00:01:00  -------------------------------
+[2013-09-17 04:00:01] : --------- Standard Lifetime: 2013-09-15 00:01:00  -------------------------------
+[2013-09-17 04:00:01] : --------- Total  Data Count: 9  -------------------------------------------------
+[2013-09-17 04:00:01] : ---------------------------------------------------------------------------------
+[2013-09-17 04:00:01] : ---------------------------------------------------------------------------------
+[2013-09-17 04:00:01] : Data Id       : 39
+[2013-09-17 04:00:01] : Data Obj Name : 2013071415303268.docx
+[2013-09-17 04:00:01] : Data Vps Path : /alidata/www/creamnote/upload/final-exam/
+[2013-09-17 04:00:01] : Info: This Data Is Out Of Lifetime, Clear It
+[2013-09-17 04:00:01] : Error: Delete VPS Data File Failed
+[2013-09-17 04:00:01] : Warning: It Has No Flash File 
+[2013-09-17 04:00:01] : Info: Update Database(wx_data) Record Success
+[2013-09-17 04:00:01] : Info: Update Database(wx_data_activity) Record Success
+[2013-09-17 04:00:01] : ---------------------------------------------------------------------------------
+[2013-09-17 04:00:01] : Data Id       : 67
+[2013-09-17 04:00:01] : Data Obj Name : 2013091521584447.pdf
+[2013-09-17 04:00:01] : Data Vps Path : /alidata/www/creamnote/upload/graduate-exam/
+[2013-09-17 04:00:01] : Info: This Data Is Out Of Lifetime, Clear It
+[2013-09-17 04:00:01] : Info: Delete VPS Data File Success
+[2013-09-17 04:00:01] : Info: Delete VPS Flash File Success
+[2013-09-17 04:00:01] : Info: Update Database(wx_data) Record Success
+[2013-09-17 04:00:01] : Info: Update Database(wx_data_activity) Record Success
+[2013-09-17 04:00:01] : ---------------------------------------------------------------------------------
+[2013-09-17 04:00:01] : Data Id       : 68
+[2013-09-17 04:00:01] : Data Obj Name : 2013091522060410.pdf
+[2013-09-17 04:00:01] : Data Vps Path : /alidata/www/creamnote/upload/graduate-exam/
+[2013-09-17 04:00:01] : Info: This Data Is Out Of Lifetime, Clear It
+[2013-09-17 04:00:01] : Info: Delete VPS Data File Success
+[2013-09-17 04:00:01] : Info: Delete VPS Flash File Success
+[2013-09-17 04:00:01] : Info: Update Database(wx_data) Record Success
+[2013-09-17 04:00:01] : Info: Update Database(wx_data_activity) Record Success
+[2013-09-17 04:00:01] : ---------------------------------------------------------------------------------
+[2013-09-17 04:00:01] : Data Id       : 69
+[2013-09-17 04:00:01] : Data Obj Name : 2013091600012341.pdf
+[2013-09-17 04:00:01] : Data Vps Path : /alidata/www/creamnote/upload/study-notes/
+[2013-09-17 04:00:01] : Info: This Data Is Out Of Lifetime, Clear It
+[2013-09-17 04:00:02] : Info: Delete VPS Data File Success
+[2013-09-17 04:00:02] : Info: Delete VPS Flash File Success
+[2013-09-17 04:00:02] : Info: Update Database(wx_data) Record Success
+[2013-09-17 04:00:02] : Info: Update Database(wx_data_activity) Record Success
+[2013-09-17 04:00:02] : ---------------------------------------------------------------------------------
+[2013-09-17 04:00:02] : Data Id       : 70
+[2013-09-17 04:00:02] : Data Obj Name : 2013091622513190.doc
+[2013-09-17 04:00:02] : Data Vps Path : /alidata/www/creamnote/upload/study-notes/
+[2013-09-17 04:00:02] : Info: This Data Is Out Of Lifetime, Clear It
+[2013-09-17 04:00:02] : Info: Delete VPS Data File Success
+[2013-09-17 04:00:02] : Info: Delete VPS Flash File Success
+[2013-09-17 04:00:02] : Info: Update Database(wx_data) Record Success
+[2013-09-17 04:00:02] : Info: Update Database(wx_data_activity) Record Success
+[2013-09-17 04:00:02] : ---------------------------------------------------------------------------------
+[2013-09-17 04:00:02] : Data Id       : 71
+[2013-09-17 04:00:02] : Data Obj Name : 2013091623231623.doc
+[2013-09-17 04:00:02] : Data Vps Path : /alidata/www/creamnote/upload/study-notes/
+[2013-09-17 04:00:02] : Info: This Data Is Out Of Lifetime, Clear It
+[2013-09-17 04:00:02] : Info: Delete VPS Data File Success
+[2013-09-17 04:00:02] : Warning: It Has No Flash File 
+[2013-09-17 04:00:02] : Info: Update Database(wx_data) Record Success
+[2013-09-17 04:00:02] : Info: Update Database(wx_data_activity) Record Success
+[2013-09-17 04:00:02] : ---------------------------------------------------------------------------------
+[2013-09-17 04:00:02] : Data Id       : 72
+[2013-09-17 04:00:02] : Data Obj Name : 2013091623300694.pdf
+[2013-09-17 04:00:02] : Data Vps Path : /alidata/www/creamnote/upload/final-exam/
+[2013-09-17 04:00:02] : Info: This Data Is Out Of Lifetime, Clear It
+[2013-09-17 04:00:03] : Info: Delete VPS Data File Success
+[2013-09-17 04:00:03] : Info: Delete VPS Flash File Success
+[2013-09-17 04:00:03] : Info: Update Database(wx_data) Record Success
+[2013-09-17 04:00:03] : Info: Update Database(wx_data_activity) Record Success
+[2013-09-17 04:00:03] : ---------------------------------------------------------------------------------
+[2013-09-17 04:00:03] : Data Id       : 73
+[2013-09-17 04:00:03] : Data Obj Name : 2013091623312512.pdf
+[2013-09-17 04:00:03] : Data Vps Path : /alidata/www/creamnote/upload/final-exam/
+[2013-09-17 04:00:03] : Info: This Data Is Out Of Lifetime, Clear It
+[2013-09-17 04:00:03] : Info: Delete VPS Data File Success
+[2013-09-17 04:00:03] : Info: Delete VPS Flash File Success
+[2013-09-17 04:00:03] : Info: Update Database(wx_data) Record Success
+[2013-09-17 05:00:01] : ---------------------------------------------------------------------------------
+[2013-09-17 05:00:01] : ---------------------  Clear Timeout Images Everyday ----------------------------
+[2013-09-17 05:00:01] : --------- Filter Time      : 2013-09-17 00:01:00  -------------------------------
+[2013-09-17 05:00:01] : --------- Total  Data Count: 0
+[2013-09-17 05:00:01] : ---------------------------------------------------------------------------------
+[2013-09-17 05:00:01] : ---------------------------------------------------------------------------------
+[2013-09-17 05:00:01] : 

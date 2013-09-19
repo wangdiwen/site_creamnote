@@ -124,7 +124,7 @@ var $slider_child_l = 9;
 var $slider_width = 223*2;
 $slider.width($slider_child_l * $slider_width);
 var slider_count = 0;
-
+$('#btn-left').css({cursor: 'auto'});
 if ($slider_child_l < 5) {
   $('#btn-right').css({cursor: 'auto'});
   $('#btn-right').removeClass("dasabled");
@@ -173,7 +173,7 @@ var $slider_child_l_u = 12;
 var $slider_width_u = 223;
 $slider_u.width($slider_child_l_u * $slider_width_u);
 var slider_count_u = 0;
-
+$('#btn-left_u').css({cursor: 'auto'});
 if ($slider_child_l_u < 5) {
   $('#btn-right_u').css({cursor: 'auto'});
   $('#btn-right_u').removeClass("dasabled");
@@ -254,7 +254,7 @@ function checkLogin(){
   <div class="body">
 
     <!-- #camera_wrap -->
-    <div class="camera_wrap camera_ash_skin" id="camera_wrap">
+    <div class="camera_wrap camera_ash_skin" style="height: 430px;" id="camera_wrap">
             <div data-thumb="/application/frontend/views/resources/images/slides/thumbs/creamnote_ad.jpg" data-src="/application/frontend/views/resources/images/slides/creamnote_ad.jpg">
                 <div class="camera_caption fadeFromBottom">
                     <em>快乐学习</em>
@@ -275,7 +275,7 @@ function checkLogin(){
                     <em>快乐学习</em>
                 </div>
             </div>
-        </div>
+    </div>
         <!-- #camera_wrap -->
         <form  method="post" action="<?php echo site_url('primary/wxc_search/public_search'); ?>">
         <div class="creamnote_search fl" style="margin-left: 47px;">

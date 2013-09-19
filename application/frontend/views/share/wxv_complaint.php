@@ -8,11 +8,11 @@
     <link rel="stylesheet" href="/application/frontend/views/resources/css/wx_home.css" />
     <link rel="stylesheet" href="/application/frontend/views/resources/css/style.css" />
     <link rel="stylesheet" href="/application/backend/views/css/default.css" type="text/css" media="screen" />
-
     <script type="text/javascript" src="/application/frontend/views/resources/js/jquery-1.8.3.js"></script>
     <script src="/application/frontend/views/resources/js/jquery.tipsy.js" type="text/javascript"></script>
 
 <script type="text/javascript">
+
 </script>
 
 </head>
@@ -20,9 +20,7 @@
   <?php include  'application/frontend/views/share/header_home.php';?>
   <div class="body article_body" style="border-top: 8px solid #839acd;padding:50px 0;">
     <div class="reg_frame" id="reg_frame">
-
         <h2>投诉举报</h2>
-
         <?php if($if_login == "false"){?>
             <div class="reg_put">
               <span style="color:red">提交投诉前需要登录，谢谢您的配合</span><a href="javascript:void(0)" onclick="show_login_win()"><span style="color:#337fe5;cursor:pointer" class="common_show_login_win">【登录】</span></a><br/>

@@ -111,19 +111,8 @@ $("#feed_back_form_submit_btn").click(function(){
                 }
     });
 });
+});
 
-//滚动至顶部
-$("#updown").css("top",window.screen.availHeight/2-50+"px");
-$(window).scroll(function() {
-	if($(window).scrollTop() >= 100){
-		$('#updown').fadeIn(300);
-	}else{
-		$('#updown').fadeOut(300);
-	}
-});
-$('#updown .up').click(function(){$('html,body').animate({scrollTop: '0px'}, 800);});
-$('#updown .down').click(function(){$('html,body').animate({scrollTop: document.body.clientHeight+'px'}, 800);});
-});
 </script>
 
 </head>
@@ -214,8 +203,8 @@ $('#updown .down').click(function(){$('html,body').animate({scrollTop: document.
     	?>
         <div class="pagination" style="text-align: right;padding-top: 20px;"><?php echo $this->pagination->create_links(); ?></div>
 
-    <!--滚动至顶部插件-->
-	<div id="updown"><span class="up"></span><span class="down"></span></div>
+    <!--滚动至顶部-->
+	<div id="updown"><span class="up transition"></span></div>
 
   </div>
   <div class="clear"></div>

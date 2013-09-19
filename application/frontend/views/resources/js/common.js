@@ -46,6 +46,17 @@ function ajax_common(url,params){
 }
 
 $(function() {
+//=========================================================滚动至顶部=========================================//
+$("#updown").css("top",window.screen.availHeight/2+50+"px");
+$(window).scroll(function() {
+        if($(window).scrollTop() >= 100){
+            $('#updown').fadeIn(300);
+        }else{
+            $('#updown').fadeOut(300);
+        }
+    });
+$('#updown .up').click(function(){$('html,body').animate({scrollTop: '0px'}, 800);});
+$('#updown .down').click(function(){$('html,body').animate({scrollTop: document.body.clientHeight+'px'}, 800);});
 //=========================================================卡片hover=========================================//
     $("._item_actual").live({
         mouseenter:function(){
@@ -301,11 +312,10 @@ function submit_compliant(){
     }
 
     if(retData == "success"){
-        if(confirm("提交成功")){
-            location.href = $("#baseUrl").val()+"primary/wxc_feedback/report_page";
-        }else{
-            location.href = $("#baseUrl").val()+"primary/wxc_feedback/report_page";
-        }
+        var title = "投诉举报";
+        var content = "你的投诉内容已经提交给管理员<br/>两秒后自动关闭该窗口";
+        var url = $("#baseUrl").val()+"primary/wxc_feedback/report_page";
+        showDialog(title,content,url);
     }else{
 
     }
@@ -565,4 +575,70 @@ function close_message_dialog(){
 function hidden_mess_tip(){
     $("#message_content").poshytip('hide');
 }
+//=========================================================提示框message=========================================//
+function successMes(mes,px,py){
+    var suc = '<table width="100%" height="100%"><tr><td width="10%"><img src="/application/frontend/views/resources/images/success.png"/></td><td><b style="font-size:16pt;">'+mes+'</b></td></tr><table>';
+    message(suc,px,py);
+}
+
+function errorMes(mes,px,py){
+    var error = '<table width="100%" height="100%"><tr><td width="10%"><img src="/application/frontend/views/resources/images/error.png"/></td><td><b style="font-size:16pt;">'+mes+'</b></td></tr><table>';
+    message(error,px,py);
+}
+
+function warnMes(mes,px,py){
+    var warn = '<table width="100%" height="100%"><tr><td width="10%"><img src="/application/frontend/views/resources/images/warning.png"/></td><td><b style="font-size:16pt;">'+mes+'</b></td></tr><table>';
+    message(warn,px,py);
+}
+
+function message(mes,px,py){
+    if(!px){
+        px = ($(window).width() - 600) /2 + 'px';
+    }
+    if(!py){
+        py = '73px';
+    }
+    $.blockUI({
+            message: mes,
+            fadeIn: 700,
+            fadeOut: 700,
+            timeout: 5000,
+            showOverlay: false,
+            centerY: false,
+            css: {
+                top: py,
+                left: px,
+                width: '530px' ,
+                border: 'none',
+                padding: '5px',
+                backgroundColor: '#000',
+                '-webkit-border-radius': '10px',
+                '-moz-border-radius': '10px',
+                'border-radius': '10px',
+                opacity: .7,
+                color: '#fff'
+            }
+        });
+}
+//=========================================================提示框替代alert=========================================//
+
+function showDialog(header,content,url){
+    var btnFn = function( e ){
+        location.href = url;
+        return true;
+    };
+    easyDialog.open({
+        container : {
+            header : header,
+            content : content,
+            yesFn : btnFn,
+            noFn : false
+        },
+        fixed : true,
+        autoClose : 2000,
+        callback : btnFn
+    });
+}
+
+
 

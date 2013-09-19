@@ -892,7 +892,7 @@ function delete_data(dataid){
                       echo "<div class='_card_delete' id='".$note['data_id']."'><img src='/application/frontend/views/resources/images/new_version/dy_delete.png'></div>";
                       echo "<div class='_card_content'>";
                       echo "<div class='card_head'>";
-                      echo "<a href='#'>".str_replace(array(" ","\r","\n"), array("","",""), $note['data_name'])."</a>";
+                      echo "<a href='".base_url()."data/wxc_data/data_view/".$note['data_id']."'>".str_replace(array(" ","\r","\n"), array("","",""), $note['data_name'])."</a>";
                       echo "</div>";
                       echo "<div class='card_user _card_user'>";
                       echo "作者:".$note['user_name'];
@@ -933,7 +933,7 @@ function delete_data(dataid){
 
                       echo "<div class='_card_footer'>";
                       echo "<a href=".base_url()."core/wxc_download_note/download_file/".$note['data_id']."><img src='/application/frontend/views/resources/images/new_version/dy_card_hover_down.png' class='_foot_content_down fl'></a>";
-                      echo "<a href=".base_url()."data/wxc_data/data_modify/".$note['data_id']."><img src='/application/frontend/views/resources/images/new_version/creamnote_card_edit.png' class='_card_edit fl' title='修改资料'></a>";
+                      echo "<a href=".base_url()."data/wxc_data/complete_data_page/".$note['data_id']."><img src='/application/frontend/views/resources/images/new_version/creamnote_card_edit.png' class='_card_edit fl' title='修改资料'></a>";
                       echo "<span class='_foot_content_price fr'>".$note['data_price']."</span>";
                       echo "</div></div>";
                       echo "<div class='_card_bottom'>";
@@ -972,7 +972,7 @@ function delete_data(dataid){
 						// 	echo "<a href='#' style='padding-left:61px;'><img src='/application/frontend/views/resources/images/".$user_level."_avatar.jpg'/></a>";
 						// }
 					?>
-                    <a href="https://en.gravatar.com/site/signup/" class="gravatar" target="_blank" title="点击到Gravatar注册<br/>替换换修改你的全球唯一头像"><img src="<?php echo $head_url;?>"/></a>
+                    <a href="https://en.gravatar.com/site/signup/" class="gravatar" target="_blank" title="点击到Gravatar注册<br/>替换修改你的全球唯一头像"><img src="<?php echo $head_url;?>"/></a>
 					</div>
 					<ul>
 						<li class="_nick_personal1" style="text-align: center;font-size:16px; "><a style="padding: 0;" href="<?php echo site_url('primary/wxc_personal/update_userinfo_page'); ?>"><?php echo $user_info->user_name; ?></a></li>

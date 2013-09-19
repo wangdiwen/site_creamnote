@@ -12,6 +12,8 @@ class WXC_Data_statistic extends CI_Controller
         $this->load->model('share/wxm_grade');
         $this->load->model('core/wxm_comment');
         $this->load->model('core/wxm_notify');
+
+        $this->load->library('wx_util');  // general util tool
     }
 /*****************************************************************************/
     public function update_activity_point($data_id = 0)
@@ -54,37 +56,75 @@ class WXC_Data_statistic extends CI_Controller
         $type = $this->input->post('grade_type');
         $count = $this->input->post('grade_count');
 
-        if ($type == 'excellent')
-        {
-            $data = array(
-                'data_id' => $data_id,
-                'grade_excellent_count' => $count
-                );
-            $this->wxm_grade->update_excellent($data);
-            echo 'success';
-            return;
+        $is_login = $this->wx_util->check_has_login();
+        if (! $is_login || ! $data_id > 0) {
+            echo 'no-login';
+            return false;
         }
-        elseif ($type == 'well')
-        {
-            $data = array(
-                'data_id' => $data_id,
-                'grade_well_count' => $count
+
+        // 说明：检查浏览器的Cookie数据，看此用户是否已经对此份笔记资料打分了？
+        // Cookie的有效时间，目前设置为2个小时，7200秒
+        // 如果Cookie没有数据、或者此份笔记的id没有在Cookie中，那么表示当前用户
+        // 可以给此份笔记资料打分
+        $you_can_mark_grade = false;  // is a flag
+        $grade_data_id_list = $this->input->cookie('grade_data_id_list');
+        if (! $grade_data_id_list) {  // no 'grade_data_id_list' cookie data
+            $you_can_mark_grade = true;
+            // 将此份笔记资料的id，记录到 Cookie中
+            $cookie = array(
+                'name' => 'grade_data_id_list',
+                'value' => $data_id,
+                'expire' => '7200',
                 );
-            $this->wxm_grade->update_well($data);
-            echo 'success';
-            return;
+            $this->input->set_cookie($cookie);
         }
-        elseif ($type == 'bad')
-        {
-            $data = array(
-                'data_id' => $data_id,
-                'grade_bad_count' => $count
-                );
-            $this->wxm_grade->update_bad($data);
-            echo 'success';
-            return;
+        else {  // has cookie data, and check data_id is in or not
+            $data_id_list = explode('-', $grade_data_id_list);
+            if (! in_array($data_id, $data_id_list)) {
+                $you_can_mark_grade = true;
+                // 将此份笔记资料的id，记录到 Cookie中
+                $data_id_list[] = $data_id;
+                $cookie_value = implode('-', $data_id_list);
+                $cookie = array(
+                    'name' => 'grade_data_id_list',
+                    'value' => $cookie_value,
+                    'expire' => '7200',
+                    );
+                $this->input->set_cookie($cookie);
+            }
         }
-        echo 'failed';
+
+        if ($you_can_mark_grade) {
+            if ($type == 'excellent') {
+                $data = array(
+                    'data_id' => $data_id,
+                    'grade_excellent_count' => $count
+                    );
+                $this->wxm_grade->update_excellent($data);
+                echo 'success';
+                return true;
+            }
+            elseif ($type == 'well') {
+                $data = array(
+                    'data_id' => $data_id,
+                    'grade_well_count' => $count
+                    );
+                $this->wxm_grade->update_well($data);
+                echo 'success';
+                return true;
+            }
+            elseif ($type == 'bad') {
+                $data = array(
+                    'data_id' => $data_id,
+                    'grade_bad_count' => $count
+                    );
+                $this->wxm_grade->update_bad($data);
+                echo 'success';
+                return true;
+            }
+        }
+        echo 'failed';  // can't mard grade for this note id
+        return false;
     }
 /*****************************************************************************/
     public function update_data_point($data_id = 0)
@@ -145,11 +185,46 @@ class WXC_Data_statistic extends CI_Controller
         $comment_content = $this->input->post('comment_content');  // 评论内容
         $comment_count = $this->input->post('comment_count');  // 页面返回最新的评论数
 
-        $user_id = isset($_SESSION['wx_user_id']) ? $_SESSION['wx_user_id'] : 0;
-        $comment_time = date('Y-m-d H:i:s');
-        $comment_status = 'unmask';
-        if ($data_id > 0 && $user_id > 0)
-        {
+        $cur_user_info = $this->wx_util->get_user_session_info();
+        $user_id = $cur_user_info['user_id'];
+        $user_email = $cur_user_info['user_email'];
+        $gavator_header_url = wx_get_gravatar_image($user_email, 25);
+        if (! $user_id > 0) {
+            echo 'no-login';
+            return false;
+        }
+        // 检查当前的用户是否已经评论过一次了？
+        $you_can_mark_comment = false;
+        $comment_data_id_list = $this->input->cookie('comment_data_id_list');
+        if (! $comment_data_id_list) {
+            $you_can_mark_comment = true;
+            // 将此份笔记资料的id，记录到 Cookie中
+            $cookie = array(
+                'name' => 'comment_data_id_list',
+                'value' => $data_id,
+                'expire' => '7200',
+                );
+            $this->input->set_cookie($cookie);
+        }
+        else {
+            $data_id_list = explode('-', $comment_data_id_list);
+            if (! in_array($data_id, $data_id_list)) {
+                $you_can_mark_comment = true;
+                $data_id_list[] = $data_id;
+                $cookie_value = implode('-', $data_id_list);
+                $cookie = array(
+                    'name' => 'comment_data_id_list',
+                    'value' => $cookie_value,
+                    'expire' => '7200',
+                    );
+                $this->input->set_cookie($cookie);
+            }
+        }
+
+        if ($you_can_mark_comment && $data_id > 0) {
+            $comment_time = date('Y-m-d H:i:s');
+            $comment_status = 'unmask';
+
             $data = array(
                 'data_id' => $data_id,
                 'user_id' => $user_id,
@@ -158,21 +233,17 @@ class WXC_Data_statistic extends CI_Controller
                 'comment_status' => $comment_status
                 );
             $this->wxm_comment->insert($data);
-            echo 'success';
-            // return;
+            echo 'success,'.$gavator_header_url;
 
             // 后台记录数据
             fastcgi_finish_request();
             // 更新评论的条数
             $this->update_comment($data_id, $comment_count);
-
             // 记录通知
-            if ($data_user_id != $user_id)
-            {
+            if ($data_user_id != $user_id) {
                 // 查看在通知表notify中是否已经存在被评论资料的信息了？
                 $has_comment_notify = $this->wxm_notify->has_comment_notify($data_user_id, $data_id);
-                if (! $has_comment_notify)
-                {
+                if (! $has_comment_notify) {
                     $notify = array(
                         'notify_type' => '3',
                         'notify_content' => '您有一条资料评论信息：'.substr($data_name, 0, 30).'...',
@@ -184,7 +255,9 @@ class WXC_Data_statistic extends CI_Controller
                 }
             }
         }
+
         echo 'failed';
+        return false;
     }
 /*****************************************************************************/
 

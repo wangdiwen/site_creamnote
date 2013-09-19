@@ -406,8 +406,11 @@ $(function(){
             {
               if(result=='success'){
                // location.reload();
-            	  location.href='<?php echo site_url('home/personal'); ?>';
-                  alert("完善成功");
+                var title = "笔记完善";
+                var content = "你的笔记已经完善成功<br/>两秒后自动关闭该窗口";
+                var url = $("#baseUrl").val()+"home/personal";
+                showDialog(title,content,url);
+
                 }
 
             },

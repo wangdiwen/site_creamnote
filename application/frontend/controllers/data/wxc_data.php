@@ -339,6 +339,15 @@ class WXC_Data extends CI_Controller
             $comment_info = $this->wxm_comment->get_by_data_id($data_id);
             if ($comment_info)
             {
+                // Add gravator global header url
+                foreach ($comment_info as $key => $value) {
+                    $user_email = $value['user_email'];
+                    $comment_time = substr($value['comment_time'], 0, 10);
+                    $header_url = wx_get_gravatar_image($user_email, 25);
+
+                    $comment_info[$key]['head_url'] = $header_url;
+                    $comment_info[$key]['comment_time'] = $comment_time;
+                }
                 $data['data_comment'] = $comment_info;
             }
         }
@@ -502,7 +511,7 @@ class WXC_Data extends CI_Controller
                 $save_file_name = $upload_path.$data_objectname;
                 if (move_uploaded_file($tmp_file_name, $save_file_name))
                 {
-                    echo $data_id.','.$data_objectname;
+                    echo $data_id.','.$data_objectname.','.$suffix;
                 }
                 else
                 {
@@ -526,6 +535,7 @@ class WXC_Data extends CI_Controller
         $data_category_nature = $this->input->post('data_category_nature');
         $data_id = $this->input->post('data_id');
         $data_objectname = $this->input->post('data_objectname');
+        $data_type = $this->input->post('data_type');
 
         // 根据category分类字段，查找到已经分类，以确定存储的分类目录路径
         $to_path_file = '';
@@ -575,6 +585,19 @@ class WXC_Data extends CI_Controller
                                 'data_id' => $data_id
                                 );
             $this->wxm_data2cnature->insert($data_nature);
+            // 更新wx_grade表，解决此接口同时被图片笔记第2步使用，没有初始化grade表数据的问题
+            // 先进行wx_grade表数据的检查，如果没有则插入，有的话，就不需要插入了
+            $has_grade_data_id = $this->wxm_grade->has_grade_data_record($data_id);
+            if (! $has_grade_data_id) {
+                $grade_info = array(
+                    'data_id' => $data_id,
+                    'grade_excellent_count' => 0,
+                    'grade_well_count' => 0,
+                    'grade_bad_count' => 0,
+                    );
+                $this->wxm_grade->insert($grade_info);
+            }
+
             // 根据post数据是否有data_category_area字段，更新data2carea表
             if ($data_category_area_school || $data_category_area_major)
             {
@@ -595,7 +618,7 @@ class WXC_Data extends CI_Controller
             // 根据资料的status，进行转换flash文件操作，异步模式
             if (($data_status == '0' || $data_status == '1') && $data_preview == '1')
             {
-                $this->_convert_to_flash($data_objectname, $to_path_file, $data_id);
+                $this->_convert_to_flash($data_objectname, $to_path_file, $data_id, $data_type);
             }
         }
     }
@@ -612,19 +635,48 @@ class WXC_Data extends CI_Controller
                 $cmd = '/usr/bin/pdfinfo '.$tmp_pdf." | grep \"^Pages\" | awk '{ print $2 }'";
                 $ret_info = exec($cmd, $out_info, $is_valid);
                 if ($is_valid == 0 && $ret_info) {
-                    // echo 'page count = '.$ret_info;
-                    // print_r($out_info);
                     if ($data_id > 0) {
                         // record page count to database
                         $this->wxm_data->update_data_pagecount($data_id, $ret_info);
                     }
+                }
+                else {
+                    // 如果页数读取错误了，那么就自动填充一个页数，目前为6，因为6是个吉祥数字
+                    if ($data_id > 0) {
+                        $this->wxm_data->update_data_pagecount($data_id, '6');
+                    }
+                }
+            }
+            else {
+                // 如果页数读取错误了，那么就自动填充一个页数，目前为6，因为6是个吉祥数字
+                if ($data_id > 0) {
+                    $this->wxm_data->update_data_pagecount($data_id, '6');
+                }
+            }
+        }
+    }
+/*****************************************************************************/
+    public function record_data_page_count_from_word($word_file = '', $data_type = 'doc', $data_id = 0) {
+        if (file_exists($word_file)) {
+            $is_valid = 1;
+            $out_info = array();
+            $cmd = '/bin/sh /alidata/server/creamnote/bin/creamnote_msoffice_pagecount.sh '.$word_file.' '.$data_type;
+            $ret_info = exec($cmd, $out_info, $is_valid);
+            if ($is_valid == 0 && $ret_info && is_numeric($ret_info) && $data_id > 0) {
+                // record page count to database
+                $this->wxm_data->update_data_pagecount($data_id, $ret_info);
+            }
+            else {
+                // 如果页数读取错误了，那么就自动填充一个页数，目前为6，因为6是个吉祥数字
+                if ($data_id > 0) {
+                    $this->wxm_data->update_data_pagecount($data_id, '6');
                 }
             }
         }
     }
 /*****************************************************************************/
     // 将原文件转换为flash文件
-    public function _convert_to_flash($data_objectname = '', $to_path = '', $data_id = 0)
+    public function _convert_to_flash($data_objectname = '', $to_path = '', $data_id = 0, $data_type = '')
     {
         if ($data_objectname && $to_path)
         {
@@ -650,23 +702,23 @@ class WXC_Data extends CI_Controller
                 $ret = system($cmd, $status);
                 if ($status != 0)
                 {
-                    // loginfo("转换临时pdf文件为swf，失败！");
                     return;
                 }
 
-                // 从PDF文件中，获取该资料文档的页数信息
+                // 如果是doc，docx，那么还需要确认data_type，是否为wps，因为wps是直接改后缀为doc的，造成了
+                // 使用POI接口误当成doc去读取页数信息了，这个地方要注意！
+                // 其他的情况，从PDF文件中，获取该资料文档的页数信息
                 if ($data_id > 0) {
-                    $this->record_data_page_count($tmp_file, $data_id);
+                    if (in_array($file_suffix, array('doc','docx')) && $data_type != 'wps') {  // not wps
+                        $this->record_data_page_count_from_word($input_file, $file_suffix, $data_id);
+                    }
+                    else {  // is a wps real, not a doc file
+                        $this->record_data_page_count($tmp_file, $data_id);
+                    }
                 }
 
                 // 清除临时pdf文件
                 $ret = wx_delete_file($tmp_file);
-                // if ($ret) {
-                //     loginfo('删除临时pdf文件，成功');
-                // }
-                // else {
-                //     loginfo('删除临时pdf文件，失败');
-                // }
             }
             elseif ($file_suffix == 'pdf')
             {
@@ -675,7 +727,6 @@ class WXC_Data extends CI_Controller
                 $ret = system($cmd, $status);
                 if ($status != 0)
                 {
-                    // loginfo("转换原pdf文件为swf，失败！");
                     return;
                 }
 

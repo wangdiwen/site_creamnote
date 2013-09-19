@@ -321,7 +321,7 @@ class WXC_Image extends CI_Controller
         }
 
         // 生成PDF文件
-        // loginfo('生成PDF文件');
+        wx_loginfo('生成PDF文件');
         $pdf_info = array(
             'pdf_name' => $pdf_name,
             'pdf_user' => $pdf_user,
@@ -329,7 +329,9 @@ class WXC_Image extends CI_Controller
             'pdf_header' => $pdf_header,
             'pdf_summary' => $pdf_summary
             );
+        wx_loginfo('holy');
         $ret = $this->_create_pdf($new_json_obj, $pdf_info);  // 返回的是pdf数组信息
+        wx_loginfo('shit');
         // echo 'success';         // For ajax data
         $data_objectname = $ret['pdf_name'];
         $pdf_has_error = $ret['is_error'];
@@ -401,8 +403,10 @@ class WXC_Image extends CI_Controller
             $pdf_school = $pdf_info['pdf_school'];
             $pdf_summary = $pdf_info['pdf_summary'];
 
+            $pdf_header = mb_substr($pdf_header, 0, 30, 'UTF-8');
+
             $this->wx_tcpdfapi->init_pdf();
-            $this->wx_tcpdfapi->set_header('', 0, $pdf_header);
+            $this->wx_tcpdfapi->set_header('header_logo.png', 40, $pdf_header);
             $this->wx_tcpdfapi->set_font('droidsansfallback');
             // $this->wx_tcpdfapi->set_font('times');
             // 制作pdf封面

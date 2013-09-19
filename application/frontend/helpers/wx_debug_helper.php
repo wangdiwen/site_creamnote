@@ -36,6 +36,30 @@ if (! function_exists('wx_before_last_month')) {
     }
 }
 /*****************************************************************************/
+if (! function_exists('wx_substr_by_length')) {
+    function wx_substr_by_length($str = '', $sub_length = 0) {
+        if ($str && $sub_length > 0) {
+            $sub_str_list = array();
+            $str_len = mb_strlen($str, 'UTF-8');
+            $sub_count = floor($str_len / $sub_length);
+            if ($sub_count > 0) {
+                for ($i = 0, $j = 0; $i < $sub_count; $i++, $j += $sub_length) {
+                    $tmp_str = mb_substr($str, $j, $sub_length, 'UTF-8');
+                    $sub_str_list[] = $tmp_str;
+                }
+                $sub_total_len = $sub_length * $sub_count;
+                if ($sub_total_len < $str_len) {
+                    $end_str = mb_substr($str, $sub_total_len, $sub_length, 'UTF-8');
+                    $sub_str_list[] = $end_str;
+                }
+            }
+            else {
+                $sub_str_list[] = $str;
+            }
+            return $sub_str_list;
+        }
+    }
+}
 /*****************************************************************************/
 if (! function_exists('wx_delete_dir'))
 {

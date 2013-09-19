@@ -66,7 +66,7 @@ class WX_Tcpdfapi
         $this->tcpdf_page_no++;
     }
 /*****************************************************************************/
-    public function write($content = 'Hello, World!', $align = 'L')
+    public function write($content = '', $align = 'L')
     {
         $this->tcpdf_service->Write(0, $content, '', 0, $align, true, 0, false, false, 0);
         // $this->tcpdf_service->Ln(10);
@@ -174,23 +174,26 @@ class WX_Tcpdfapi
             $this->new_line();
         }
         $this->set_font('droidsansfallback', '', 12);
-        $this->write('                                                         作者： '.$user, 'L');
+        $this->write("                                                              作者： ".$user, 'L');
         $this->new_line();
-        $this->write('                                                         学校： '.$school, 'L');
+        $this->write("                                                              学校： ".$school, 'L');
         for ($i = 0; $i < 5; $i++)
         {
             $this->new_line();
         }
-        $length = mb_strlen($summary, 'UTF-8');
-        if ($length > 40)
-        {
-            $content = '    简介： '.$summary;
-            $this->write($content);
-        }
-        else
-        {
-            $content = '简介： '.$summary;
-            $this->write($content, 'C');
+
+        if ($summary) {
+            $this->write('笔记内容简介', 'C');
+            $str_list = wx_substr_by_length($summary, 30);  // 辅助函数，以20个汉字为长度分割字符串
+            $len = count($str_list);
+            if ($len > 1) {
+                foreach ($str_list as $content) {
+                    $this->write('                            '.$content, 'L');
+                }
+            }
+            elseif ($len == 1) {
+                $this->write($str_list[0], 'C');
+            }
         }
         $this->new_line();
     }
@@ -224,7 +227,7 @@ class WX_Tcpdfapi
     public function test()
     {
         $this->init_pdf();
-        $this->set_header('', 0, '我的标题');
+        $this->set_header('header_logo.png', 40, '我的标题我的标题我的标题我的标题我的标题我的标题我的标题');
         // $this->set_font();
 
         // $this->add_page();
@@ -239,28 +242,28 @@ class WX_Tcpdfapi
         $title = '嵌入式安全监控系统的设计与实现嵌入式安全监控系统的设计与实现';
         $user = '王地文';
         $school = '南京工程学院';
-        $summary = '随着嵌入式技术网络技随着嵌入式技术网络技随着嵌入式技术网络技';
-        // $this->add_surface($title, $user, $school, $summary);
+        $summary = '随着嵌入式技术网络技随着嵌入式';
+        $this->add_surface($title, $user, $school, $summary);
 
-        $this->add_page();
-        $image1 = 'upload/image/1/1_avatar.jpg';
-        $image2 = 'upload/image/1/2_avatar.jpg';
-        $image3 = 'upload/image/1/3_avatar.jpg';
+        // $this->add_page();
+        // $image1 = 'upload/image/1/1_avatar.jpg';
+        // $image2 = 'upload/image/1/2_avatar.jpg';
+        // $image3 = 'upload/image/1/3_avatar.jpg';
         // if (file_exists($image1))
         // {
         //     echo 'here';
         // }
-        $this->insert_image($image1, 0, 25, 45, 20, 'JPG', 'C');
+        // $this->insert_image($image1, 0, 25, 45, 20, 'JPG', 'C');
         // $this->insert_image($image2, 0, 75, 180, 50, 'JPG', 'C');
         // $this->insert_image($image3, 0, 125, 180, 50, 'JPG', 'C');
 
-        $this->output_pdf('upload/tmp/hello.pdf', 'F');
+        $this->output_pdf('upload/tmp/hello.pdf', 'I');
 
         // $image = K_PATH_IMAGES.'image_demo.jpg';
         // $size = $this->get_image_size($image);
         // echoxml($size);
 
-        echo 'upload/tmp/hello.pdf';
+        // echo 'upload/tmp/hello.pdf';
     }
 /*****************************************************************************/
 }

@@ -971,6 +971,8 @@ function user_hover(){
         </div>
         </div>
     </div>
+    <!--滚动至顶部-->
+  <div id="updown"><span class="up transition"></span></div>
 
 	<div style="clear: both;">&nbsp;</div>
 	</div>
@@ -978,6 +980,7 @@ function user_hover(){
 	<?php include  'application/frontend/views/share/footer.php';?>
 	<!-- end #footer -->
 </div>
+
 </body>
 
 </html>
