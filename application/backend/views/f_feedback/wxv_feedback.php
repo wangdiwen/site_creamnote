@@ -50,8 +50,11 @@
                 <td ><?=$feed['feedback_content']?></td>
                 <td ><?=$feed['feedback_time']?></td>
                 <td >
-                  <a href="#messages" rel="modal"><input type="button" onclick="get_topic_detail('<?=$feed['feedback_id']?>')" class="button" value="回复"></a>
-                  <input type="hidden" name="feedback_offset" id="feedback_offset" value="<?php $feedback_offset;?>">
+                  <a href="#messages" rel="modal"><input type="button" onclick="get_topic_detail('<?=$feed['feedback_id']?>','<?=$feedback_offset;?>')" class="button" value="回复"></a>
+                  <input type="hidden" name="feedback_offset" id="feedback_offset" value="<?=$feedback_offset;?>">
+                  <a href="<?php echo base_url(); ?>cnadmin/feedback/delete_feedback?feedback_id=<?=$feed['feedback_id']?>&feedback_offset=<?=$feedback_offset?>">
+                    <input type="button" style="background:red !important;border: 1px solid red !important;" class="button" value="删除">
+                  </a>
                 </td>
               </tr>
               <?php }?>
@@ -99,11 +102,11 @@ $(function() {
     var returnInfo = "<?php echo isset($_COOKIE['return_code'])?$_COOKIE['return_code'] : '';?>";
     if(returnInfo !=""){
       if(returnInfo == "success"){
-        show_dialog("每周一文管理","操作成功");
+        show_dialog("反馈管理","操作成功");
       }else if(returnInfo == "no-premission"){
-        show_dialog("每周一文管理","没有权限");
+        show_dialog("反馈管理","没有权限");
       }else{
-        show_dialog("每周一文管理","操作失败");
+        show_dialog("反馈管理","操作失败");
       }
 
     }

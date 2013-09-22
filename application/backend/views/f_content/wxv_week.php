@@ -8,7 +8,7 @@
 <script type="text/javascript" src="/application/backend/views/js/zh_CN.js"></script>
 <link rel="stylesheet" href="/application/backend/views/css/default.css" type="text/css" media="screen" />
 </head>
-<body>
+<body style="">
 <div id="body-wrapper">
   <!-- Wrapper for the radial gradient background -->
   <?php $menuParam='content_week';?>
@@ -62,6 +62,9 @@
                     <a href="<?php echo base_url(); ?>cnadmin/article/cancel_publish?article_id=<?=$week['article_id']?>&article_offset=<?=$article_offset?>"><input type="button" class="button" value="撤销发布"></a>
                     <?php }?>
                   <input type="button" onclick="edit_article('<?=$week['article_id']?>','<?=$week['article_category']?>','<?=$week['article_title']?>')" class="button" value="编辑">
+                  <a href="<?php echo base_url(); ?>cnadmin/article/delete_article?article_id=<?=$week['article_id']?>&article_offset=<?=$article_offset?>">
+                    <input type="button" style="background:red !important;border: 1px solid red !important;" class="button" value="删除">
+                  </a>
                 </td>
               </tr>
               <?php }?>

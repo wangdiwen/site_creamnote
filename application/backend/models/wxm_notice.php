@@ -12,7 +12,8 @@ class WXM_Notice extends CI_Model
     public function get_by_id($notice_id = 0) {
         if ($notice_id > 0) {
             $table = $this->wx_table;
-            $this->db->select('notice_id, notice_title, notice_content_url, notice_time, notice_status')->from($table)->where('notice_id', $notice_id)->limit(1);
+            $this->db->select('notice_id, notice_title, notice_content_url, notice_time, notice_status')
+                ->from($table)->where('notice_id', $notice_id)->limit(1);
             $query = $this->db->get();
             return $query->row_array();
         }
@@ -72,6 +73,16 @@ class WXM_Notice extends CI_Model
             $count = $query->num_rows();
             if ($count)
                 return true;
+        }
+        return false;
+    }
+/*****************************************************************************/
+    public function delete_notice($notice_id = 0) {
+        if ($notice_id > 0) {
+            $table = $this->wx_table;
+            $this->db->where('notice_id', $notice_id);
+            $this->db->delete($table);
+            return true;
         }
         return false;
     }

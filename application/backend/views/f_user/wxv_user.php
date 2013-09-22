@@ -57,6 +57,7 @@
           <div class="form" >
             <input class="text-input small-input" type="text" id="user_email_or_name" name="user_email_or_name" />
             <input type="button" class="button" onclick="user_search('<?php echo base_url(); ?>cnadmin/user/get_user_simple')" style="width: 75px;" name="user_search" id="user_search" value="查找">
+          （根据姓名和邮箱精确查找）
           </div>
         </div>
       </div>

@@ -115,6 +115,45 @@ class Article extends CI_Controller
         }
     }
 /*****************************************************************************/
+    public function delete_article() {
+        $article_id = $this->input->get('article_id');
+        $article_offset = $this->input->get('article_offset');
+        $offset = $article_offset ? $article_offset : 0;
+
+        $return_code = 'failed';
+        if ($article_id > 0) {
+            // get content url info
+            $article_content_url = '';
+            $article_info = $this->wxm_week_article->get_content_url($article_id);
+            if ($article_info) {
+                $article_content_url = $article_info['article_content_url'];
+            }
+            // first, del the OSS data
+            $oss_bucket = 'wx-article';
+            $oss_ret = $this->wx_aliossapi->delete_object($oss_bucket, $article_content_url);
+            if ($oss_ret) {
+                // second, del db data
+                $del_ret = $this->wxm_week_article->delete_article($article_id);
+                if ($del_ret) {
+                    $return_code = 'success';
+                }
+            }
+        }
+        // return cookie, save time is 1s
+        $cookie = array(
+            'name' => 'return_code',
+            'value' => $return_code,
+            'expire' => '1',
+            );
+        $this->input->set_cookie($cookie);
+        if ($offset) {
+            redirect('cnadmin/article/article_index/'.$offset);
+        }
+        else {
+            redirect('cnadmin/article/article_index');
+        }
+    }
+/*****************************************************************************/
     public function create_new_article()
     {
         $category = $this->input->post('article_category');
@@ -305,15 +344,10 @@ class Article extends CI_Controller
         exit();
     }
 /*****************************************************************************/
-
 /*****************************************************************************/
 
 /*****************************************************************************/
-    public function page_partion($offset = 0)
-    {
 
-
-    }
 /*****************************************************************************/
 }
 

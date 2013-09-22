@@ -126,7 +126,7 @@ class General extends CI_Controller {
         if ($user_email && $content) {
             $this->wx_email->clear();
 
-            $this->wx_email->set_from_user('system-mail@creamnote.com', '醍醐笔记');
+            $this->wx_email->set_from_user('no-reply@creamnote.com', '醍醐笔记');
             $this->wx_email->set_to_user($user_email);
             $this->wx_email->set_subject('优秀笔记推荐');
             $this->wx_email->set_message($content);
@@ -242,7 +242,7 @@ class General extends CI_Controller {
             $config['protocol'] = 'smtp';
             $config['smtp_host'] = 'smtp.ym.163.com';
             $config['smtp_port'] = 25;
-            $config['smtp_user'] = 'system-mail@creamnote.com';
+            $config['smtp_user'] = 'no-reply@creamnote.com';
             $config['smtp_pass'] = 'wx@creamnote';
             $config['mailtype'] = 'html';
             $config['validate'] = true;
@@ -295,7 +295,7 @@ class General extends CI_Controller {
             $config['protocol'] = 'smtp';
             $config['smtp_host'] = 'smtp.ym.163.com';
             $config['smtp_port'] = 25;
-            $config['smtp_user'] = 'system-mail@creamnote.com';
+            $config['smtp_user'] = 'no-reply@creamnote.com';
             $config['smtp_pass'] = 'wx@creamnote';
             $config['mailtype'] = 'html';
             $config['validate'] = true;

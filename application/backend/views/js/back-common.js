@@ -414,7 +414,7 @@ function edit_article(article_id,article_category,article_title){
     $("#save_button").attr("onclick","save_edit_article("+article_id+")");
     $("#category").attr("value",article_category);
     $("#title").attr("value",article_title);
-    $("#note").attr("value",retData['article_notes']);
+    $("#note").html(retData['article_notes']);
     editor.html(retData['article_content']);
     document.body.scrollTop = document.body.scrollHeight;
 }
@@ -495,6 +495,7 @@ function edit_notice(notice_id,notice_title){
     editor.html(retData['notice_content']);
     document.body.scrollTop = document.body.scrollHeight;
 }
+
 function save_edit_notice(notice_id){
     var content = editor.html();
     var title = $("#title").val();
@@ -730,7 +731,7 @@ function send_month_eamil(){
 }
 
 //=========================================================用户反馈页面=========================================//
-function get_topic_detail(feedback_id){
+function get_topic_detail(feedback_id,feedback_offset){
     var url = $("#baseUrl").val()+"cnadmin/feedback/get_topic_detail";
     var params = ({'feedback_id':feedback_id});
     var retData = ajax_common_json(url,params);
@@ -753,13 +754,18 @@ function get_topic_detail(feedback_id){
                 str+="<input type='hidden' id='top"+result[i]['feedback_id']+"' value='"+result[i]['feedback_content']+"'></div>";
                 str+="<p class='feed_back_content'>"+result[i]['feedback_content']+"</p><div class='feed_back_item_bottom'>";//内容
                 str+=result[i]['feedback_time'];
-                str+="<input type='hidden' id="+result[i]['feedback_id']+" ></div>";
+                str+="<input type='hidden' id="+result[i]['feedback_id']+" >";
+                str+="<a href='"+$('#baseUrl').val()+"cnadmin/feedback/delete_feedback?feedback_id="+feedback_id+"&feedback_offset="+feedback_offset+"'>";
+                str+="<input type='button' style='background:red !important;border: 1px solid red !important;' class='button' value='删除'></a>";
+                str+="</div>";
                 str+="<div class='feed_back_comment_list' id='comment"+result[i]['feedback_id']+"'>";
                 startid = result[i]['feedback_id'];
             }else{
                 str+= "<div class='feed_back_comment'>";
                 str+= "<p class='feed_back_comment_content'>";
                 str+= result[i]['user_name']+": "+result[i]['feedback_content'];
+                str+="<a href='"+$('#baseUrl').val()+"cnadmin/feedback/delete_feedback?feedback_id="+result[i]['feedback_id']+"&feedback_offset="+feedback_offset+"'>";
+                str+="<input type='button' style='background:red !important;border: 1px solid red !important;' class='button' value='删除'></a>";
                 str+= "</p></div>";
             }
         }

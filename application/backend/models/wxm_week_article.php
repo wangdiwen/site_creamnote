@@ -69,6 +69,16 @@ class WXM_Week_Article extends CI_Model
         return false;
     }
 /*****************************************************************************/
+    public function delete_article($article_id = 0) {
+        if ($article_id > 0) {
+            $table = $this->wx_table;
+            $this->db->where('article_id', $article_id);
+            $this->db->delete($table);
+            return true;
+        }
+        return false;
+    }
+/*****************************************************************************/
     public function create_article($info = array())
     {
         if ($info) {

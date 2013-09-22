@@ -152,6 +152,47 @@ class Content extends CI_Controller
         }
     }
 /*****************************************************************************/
+    public function delete_notice() {  // 删除网站的一条公告
+        $notice_id = $this->input->get('notice_id');
+        $notice_offset = $this->input->get('notice_offset');
+
+        $offset = $notice_offset ? $notice_offset : 0;
+
+        $return_code = 'failed';
+        if ($notice_id > 0) {
+            // get base info
+            $notice_info = $this->wxm_notice->get_content_url($notice_id);
+            $notice_content_url = '';
+            if ($notice_info) {
+                $notice_content_url = $notice_info['notice_content_url'];
+            }
+
+            // first, del the OSS data
+            $oss_bucket = 'wx-notice';
+            $oss_ret = $this->wx_aliossapi->delete_object($oss_bucket, $notice_content_url);
+            if ($oss_ret) {
+                // second, del db data
+                $del_ret = $this->wxm_notice->delete_notice($notice_id);
+                if ($del_ret) {
+                    $return_code = 'success';
+                }
+            }
+        }
+        // recode cookie
+        $cookie = array(
+            'name' => 'return_code',
+            'value' => $return_code,
+            'expire' => '1',
+            );
+        $this->input->set_cookie($cookie);
+        if ($offset) {
+            redirect('cnadmin/content/notice_index/'.$offset);
+        }
+        else {
+            redirect('cnadmin/content/notice_index');
+        }
+    }
+/*****************************************************************************/
     public function create_notice() {
         $notice_title = $this->input->post('notice_title');
         $notice_content = $this->input->post('notice_content');
@@ -182,10 +223,7 @@ class Content extends CI_Controller
         return false;
     }
 /*****************************************************************************/
-    public function test() {
-        // $notice_page = $this->wxm_notice->get_page_notice(2, 0);
-        // wx_echoxml($notice_page);
-    }
+
 /*****************************************************************************/
 }
 

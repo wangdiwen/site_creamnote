@@ -17,7 +17,7 @@
   <div id="login-top">
     <h1>Creamnote.com  CMS</h1>
     <!-- Logo (221px width) -->
-    <a href="#"><img id="logo" src="/application/backend/views/images/logo.png" alt="Simpla Admin logo" /></a> </div>
+    <a href="#"><img id="logo" src="/application/backend/views/images/dy_head_logo.png" alt="Simpla Admin logo" /></a> </div>
   <!-- End #logn-top -->
   <div id="login-content">
 

@@ -47,6 +47,50 @@ class WXM_Feedback extends CI_Model
         return false;
     }
 /*****************************************************************************/
+    public function delete_topic_feedback($feedback_id = 0) {
+        if ($feedback_id > 0) {
+            // first, del the topic data
+            $del_ret = $this->delete_one_feedback($feedback_id);
+            if ($del_ret) {
+                // second, del the followed data
+                $table = $this->wx_table;
+                $where = array(
+                    'feedback_followed_id' => $feedback_id,
+                    );
+                $this->db->where($where);
+                $this->db->delete($table);
+                return true;
+            }
+        }
+        return false;
+    }
+/*****************************************************************************/
+    public function delete_one_feedback($feedback_id = 0) {
+        if ($feedback_id > 0) {
+            $table = $this->wx_table;
+            $where = array(
+                'feedback_id' => $feedback_id,
+                );
+            $this->db->where($where);
+            $this->db->delete($table);
+            return true;
+        }
+        return false;
+    }
+/*****************************************************************************/
+    public function is_topic_feedback($feedback_id = 0) {
+        if ($feedback_id > 0) {
+            $table = $this->wx_table;
+            $this->db->select('feedback_startup')->from($table)->where('feedback_id', $feedback_id)->limit(1);
+            $query = $this->db->get();
+            $info = $query->row_array();
+            if ($info && $info['feedback_startup'] == 'true') {
+                return true;
+            }
+        }
+        return false;
+    }
+/*****************************************************************************/
     public function get_single_feedback_topic($feedback_followed_id = 0) {
         $data = array();
         if ($feedback_followed_id > 0) {

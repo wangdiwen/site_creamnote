@@ -90,8 +90,8 @@ class Audit extends CI_Controller
         $ret = $this->wxm_data->unpass_audit($data_id);
         if ($ret) {
             // send system notify
-            $title = '您有一条系统通知';
-            $content = '亲爱的用户,您的【'.$data_name.'】笔记资料没有通过审核~~';
+            $title = '您有一条系统通知：笔记资料审核';
+            $content = '亲爱的用户,您的名称为【'.$data_name.'】笔记资料没有通过审核~~';
             $notify_ret = $this->send_note_notify($user_id, $title, $content);
             $return_code = 'success';
         }

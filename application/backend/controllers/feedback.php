@@ -106,7 +106,44 @@ class Feedback extends CI_Controller
         return false;
     }
 /*****************************************************************************/
+    public function delete_feedback() {
+        $feedback_id = $this->input->get('feedback_id');
+        $feedback_offset = $this->input->get('feedback_offset');
+
+        $offset = $feedback_offset ? $feedback_offset : 0;
+
+        $return_code = 'failed';
+        if ($feedback_id > 0) {
+            $is_topic_feedback = $this->wxm_feedback->is_topic_feedback($feedback_id);
+            if ($is_topic_feedback) {
+                $del_ret = $this->wxm_feedback->delete_topic_feedback($feedback_id);
+                if ($del_ret) {
+                    $return_code = 'success';
+                }
+            }
+            else {
+                $del_ret = $this->wxm_feedback->delete_one_feedback($feedback_id);
+                if ($del_ret) {
+                    $return_code = 'success';
+                }
+            }
+        }
+        // recode cookie
+        $cookie = array(
+            'name' => 'return_code',
+            'value' => $return_code,
+            'expire' => '1',
+            );
+        $this->input->set_cookie($cookie);
+        if ($offset) {
+            redirect('cnadmin/feedback/feedback_index/'.$offset);
+        }
+        else {
+            redirect('cnadmin/feedback/feedback_index');
+        }
+    }
 /*****************************************************************************/
+
 /*****************************************************************************/
 }
 

@@ -351,7 +351,7 @@ class Report extends CI_Controller
                 $config['protocol'] = 'smtp';
                 $config['smtp_host'] = 'smtp.ym.163.com';
                 $config['smtp_port'] = 25;
-                $config['smtp_user'] = 'report_tousu@creamnote.com';
+                $config['smtp_user'] = 'report@creamnote.com';
                 $config['smtp_pass'] = 'wx@creamnote';
                 $config['mailtype'] = 'html';
                 $config['validate'] = true;
@@ -359,9 +359,9 @@ class Report extends CI_Controller
                 $config['charset'] = 'utf-8';
                 $this->email->initialize($config);
 
-                $reportor_content = '<p>尊敬的 '.$com_email.' 用户，您好：</p><p></p><p>您在 '.substr($com_time, 0, 10).' 举报&投诉的一份笔记名称为《'.$com_note_name.'》的资料，经过我们审查与核实，已经得到处理。</p>'.'<p></p><p>非常感谢您对Creamnote醍醐笔记网的支持！</p><p></p><p>Creamnote投诉&举报服务小组</p><p>report_tousu@creamnote.com</p>';
+                $reportor_content = '<p>尊敬的 '.$com_email.' 用户，您好：</p><p></p><p>您在 '.substr($com_time, 0, 10).' 举报&投诉的一份笔记名称为《'.$com_note_name.'》的资料，经过我们审查与核实，已经得到处理。</p>'.'<p></p><p>非常感谢您对Creamnote醍醐笔记网的支持！</p><p></p><p>Creamnote投诉&举报服务小组</p><p>report@creamnote.com</p>';
 
-                $owner_content = '<p>尊敬的 '.$owner_email.' 用户，您好：</p><p></p><p>您的一份名称为《'.$com_note_name.'》的笔记资料，由于受到投诉&举报，经过审核，的确存在部分内容违规，我们暂时将此份资料数据驳回到【未通过审核】状态，如果您的笔记资料，没有违反《关于网站上传笔记资料内容的规范》，以及没有侵犯任何第三方的笔记资料版权，您可以给网站的 投诉&举报服务小组（report_tousu@creamnote.com）写信，说明情况，我们会做后续的处理工作。</p><p></p><p>非常感谢您对Creamnote醍醐笔记网的支持！</p><p></p><p>Creamnote投诉&举报服务小组</p><p>report_tousu@creamnote.com</p>';
+                $owner_content = '<p>尊敬的 '.$owner_email.' 用户，您好：</p><p></p><p>您的一份名称为《'.$com_note_name.'》的笔记资料，由于受到投诉&举报，经过审核，的确存在部分内容违规，我们暂时将此份资料数据驳回到【未通过审核】状态，如果您的笔记资料，没有违反《关于网站上传笔记资料内容的规范》，以及没有侵犯任何第三方的笔记资料版权，您可以给网站的 投诉&举报服务小组（report@creamnote.com）写信，说明情况，我们会做后续的处理工作。</p><p></p><p>非常感谢您对Creamnote醍醐笔记网的支持！</p><p></p><p>Creamnote投诉&举报服务小组</p><p>report@creamnote.com</p>';
                 $send_reportor_ret = $this->_send_report_email_to_user($com_email, $reportor_content);
                 $send_owner_ret = $this->_send_report_email_to_user($owner_email, $owner_content);
                 if ($send_owner_ret) {
@@ -431,7 +431,7 @@ class Report extends CI_Controller
                 $config['protocol'] = 'smtp';
                 $config['smtp_host'] = 'smtp.ym.163.com';
                 $config['smtp_port'] = 25;
-                $config['smtp_user'] = 'report_tousu@creamnote.com';
+                $config['smtp_user'] = 'report@creamnote.com';
                 $config['smtp_pass'] = 'wx@creamnote';
                 $config['mailtype'] = 'html';
                 $config['validate'] = true;
@@ -439,9 +439,9 @@ class Report extends CI_Controller
                 $config['charset'] = 'utf-8';
                 $this->email->initialize($config);
 
-                $reportor_content = '<p>尊敬的 '.$com_email.' 用户，您好：</p><p></p><p>您在 '.substr($com_time, 0, 10).' 举报&投诉的一份笔记名称为《'.$com_note_name.'》的资料，经过我们审查与核实，已经证实部分内容存在违规，我们正在和笔记的拥有者进行进一步的协商、沟通，有关处理结果我们会第一时间通知您。</p>'.'<p></p><p>非常感谢您对Creamnote醍醐笔记网的支持！</p><p></p><p>Creamnote投诉&举报服务小组</p><p>report_tousu@creamnote.com</p>';
+                $reportor_content = '<p>尊敬的 '.$com_email.' 用户，您好：</p><p></p><p>您在 '.substr($com_time, 0, 10).' 举报&投诉的一份笔记名称为《'.$com_note_name.'》的资料，经过我们审查与核实，已经证实部分内容存在违规，我们正在和笔记的拥有者进行进一步的协商、沟通，有关处理结果我们会第一时间通知您。</p>'.'<p></p><p>非常感谢您对Creamnote醍醐笔记网的支持！</p><p></p><p>Creamnote投诉&举报服务小组</p><p>report@creamnote.com</p>';
 
-                $owner_content = '<p>尊敬的 '.$owner_email.' 用户，您好：</p><p></p><p>您的一份名称为《'.$com_note_name.'》的笔记资料，由于受到投诉&举报，经过审核，的确存在部分内容违规，违规的原因请查看邮件下方【违规原因】。</p><p>如果您的笔记确实与【违规原因】中的说明一致，那么请您在3个工作日期间给我们 投诉&举报服务小组写信确认情况属实。</p><p>如果您的笔记资料，没有违反《关于网站上传笔记资料内容的规范》，以及没有侵犯任何第三方的笔记资料版权，您可以给网站的 投诉&举报服务小组（report_tousu@creamnote.com）写信，说明情况，我们会做后续的处理工作。</p><p>如果您在接收到此封后的5个工作日内还没有和我们 投诉&举报服务小组 取得联系，那么最终的处理和解释权归Creamnote醍醐笔记网所有。</p>【违规原因】<p>'.$com_reason.'</p><p></p><p>非常感谢您对Creamnote醍醐笔记网的支持！</p><p></p><p>Creamnote投诉&举报服务小组</p><p>report_tousu@creamnote.com</p>';
+                $owner_content = '<p>尊敬的 '.$owner_email.' 用户，您好：</p><p></p><p>您的一份名称为《'.$com_note_name.'》的笔记资料，由于受到投诉&举报，经过审核，的确存在部分内容违规，违规的原因请查看邮件下方【违规原因】。</p><p>如果您的笔记确实与【违规原因】中的说明一致，那么请您在3个工作日期间给我们 投诉&举报服务小组写信确认情况属实。</p><p>如果您的笔记资料，没有违反《关于网站上传笔记资料内容的规范》，以及没有侵犯任何第三方的笔记资料版权，您可以给网站的 投诉&举报服务小组（report@creamnote.com）写信，说明情况，我们会做后续的处理工作。</p><p>如果您在接收到此封后的5个工作日内还没有和我们 投诉&举报服务小组 取得联系，那么最终的处理和解释权归Creamnote醍醐笔记网所有。</p>【违规原因】<p>'.$com_reason.'</p><p></p><p>非常感谢您对Creamnote醍醐笔记网的支持！</p><p></p><p>Creamnote投诉&举报服务小组</p><p>report@creamnote.com</p>';
                 $send_reportor_ret = $this->_send_report_email_to_user($com_email, $reportor_content);
                 $send_owner_ret = $this->_send_report_email_to_user($owner_email, $owner_content);
                 if ($send_owner_ret) {
@@ -503,7 +503,7 @@ class Report extends CI_Controller
         if ($user_email && $content) {
             $this->wx_email->clear();
 
-            $this->wx_email->set_from_user('report_tousu@creamnote.com', '醍醐笔记');
+            $this->wx_email->set_from_user('report@creamnote.com', '醍醐笔记');
             $this->wx_email->set_to_user($user_email);
             $this->wx_email->set_subject('投诉&举报服务中心');
             $this->wx_email->set_message($content);

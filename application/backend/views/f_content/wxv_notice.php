@@ -58,6 +58,9 @@
                     <a href="<?php echo base_url(); ?>cnadmin/content/unpublish_notice?notice_id=<?=$notice['notice_id']?>&notice_offset=<?=$notice_offset?>"><input type="button" class="button" value="撤销发布"></a>
                     <?php }?>
                   <input type="button" onclick="edit_notice('<?=$notice['notice_id']?>','<?=$notice['notice_title']?>')" class="button" value="编辑">
+                  <a href="<?php echo base_url(); ?>cnadmin/content/delete_notice?notice_id=<?=$notice['notice_id']?>&notice_offset=<?=$notice_offset?>">
+                    <input type="button" style="background:red !important;border: 1px solid red !important;" class="button" value="删除">
+                  </a>
                 </td>
               </tr>
               <?php }}?>

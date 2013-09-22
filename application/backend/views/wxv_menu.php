@@ -17,7 +17,7 @@
       <!-- Sidebar with logo and menu -->
       <h1 id="sidebar-title"><a href="#">Creamnote</a></h1>
       <!-- Logo (221px wide) -->
-      <a href="#"><img id="logo" src="/application/backend/views/images/logo.png" alt="Simpla Admin logo" /></a>
+      <a href="#"><img id="logo" src="/application/backend/views/images/dy_head_logo.png" alt="Simpla Admin logo" /></a>
       <!-- Sidebar Profile links -->
       <div id="profile-links"> Hello, <a href="#" title="Edit your profile"><?php if (isset($_SESSION['admin_user_name'])) echo $_SESSION['admin_user_name']; else echo '匿名管理员'; ?></a><br />
         <br />
