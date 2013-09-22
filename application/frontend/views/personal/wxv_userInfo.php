@@ -1,9 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>个人中心</title>
+<title>账户设置</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
+<link rel="stylesheet" href="/application/frontend/views/resources/css/reset.css" />
 <link rel="stylesheet" href="/application/frontend/views/resources/css/wx_home.css" />
 <link rel="stylesheet" href="/application/frontend/views/resources/css/style.css" />
 <script type="text/javascript"src="/application/frontend/views/resources/js/jquery-1.8.3.js"></script>
@@ -365,7 +365,7 @@ function social_count_bind(){
                     for(i in result){
                         str+="<p style='height: 15px;' id='"+result[i]["type"]+"'>"
                         str+="<span class='fl' style='text-align: right;display: inline-block;width: 138px;height: 34px;padding-top: 10px;color: #85b1de;'>"+result[i]["show_name"]+"</span><span class='fl' style='text-align: right;display: inline-block;color: #85b1de;width: 150px;height: 34px;padding-top: 10px;'>"+result[i]["nice_name"];
-                        str+="</span><span class='fl' style='text-align: right;display: inline-block;width: 192px;height: 44px;'><input class='button_c' onclick='del_count(this)' name='"+result[i]["type"]+"' type='button' value='解除绑定'></span>";
+                        str+="</span><span class='fl' style='text-align: right;display: inline-block;width: 192px;height: 44px;'><input class='button_c' onclick='del_count(this)' name='"+result[i]["type"]+"' style='width:90px;' type='button' value='解除绑定'></span>";
                         str+="</p></br>";
                     }
                     str+="</fieldset></div>";
@@ -411,12 +411,16 @@ function del_count(count_type){
     <?php $nav_param = "home";?>
   	<?php include  'application/frontend/views/share/navigation.php';?>
     <!-- end #header -->
-<div class="backcolor_body" style='padding-top: 20px;'>
-    <div class="_detail_body" style="min-height: 640px;">
+<div class="backcolor_body" >
+    <div class="body _body" style="min-height: 640px;">
 
-		<div id="content" style="width: 700px;border-left:0">
-            <h2 class="data_title" id="info_title">基本资料</h2>
-			<div style="margin-top: 26px; width: 640px;padding-left:0;border-top: 5px solid rgb(177, 210, 245);background-color: rgb(225, 228, 230);" id="change_form">
+		<div id="_content" class="_content" >
+            <div class="_post" id="post" style="padding-top:0;">
+            <div class="_data_title">
+                <div class="_grgh">基本资料</div>
+
+            </div>
+			<div style="margin-top: 26px; width: 640px;padding-left:0;border-top: 5px solid rgb(125 ,142 ,167);background-color: rgb(225, 228, 230);" id="change_form">
 				<div id="thisform">
 					<fieldset style="border: 0;">
 						<p>
@@ -477,16 +481,16 @@ function del_count(count_type){
 				<div id="thisform2">
 					<fieldset style="border: 0;padding-left:179px;">
 						<p>
-							<input type="button" name="" id="update_user" class="button_c" value="提交信息" >
+							<input type="button" name="" id="update_user" class="button_c" style="width:90px;" value="提交信息" >
 						</p>
 					</fieldset>
 				</div>
 			</div>
-
+        </div>
 		</div>
 		<!-- end #content -->
-        <div style="float: left;" class="data_sider">
-            <h2 class="data_title">账户设置</h2>
+        <div id="_sidebar" class="_sidebar">
+            <h2 style="padding-left: 10px;">账户设置</h2>
             <div >
                 <div class="navbox">
                     <ul class="nav">

@@ -6,6 +6,7 @@
 <script src=" http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=1899806133" type="text/javascript" charset="utf-8"></script> -->
 <link href="/application/frontend/views/resources/css/showLoading.css" rel="stylesheet"/>
 <link rel="stylesheet" href="/application/frontend/views/resources/css/easydialog.css" />
+<script type="text/javascript" src="/application/frontend/views/resources/js/jquery.blockUI.js"></script>
 <script src="/application/frontend/views/resources/js/easydialog.js" type="text/javascript"></script>
 <script type="text/javascript" src="/application/frontend/views/resources/js/jquery.showLoading.js"></script>
 <div class="_head">

@@ -303,12 +303,13 @@ hr { display: none; }
 	-moz-border-radius: 3px;
 	border-radius: 3px;
 }
-#sidebar {
-	float: left;
-	width: 300px;
+.sidebar {
+	float: right;
+	width: 355px;
+	color: #666666;
 }
 
-#sidebar ul {
+.sidebar ul {
 	margin: 0;
 	padding: 0;
 	list-style: none;
@@ -316,7 +317,7 @@ hr { display: none; }
 	border: none;
 }
 
-#sidebar li {
+.sidebar li {
 	margin-bottom: 20px;
 	padding: 10px 10px 10px 10px;
 }
@@ -326,28 +327,28 @@ hr { display: none; }
 	border: none;
 }
 
-#sidebar li li {
+.sidebar li li {
 	margin: 0;
 	padding: 10px 0px;
 	border: none;
 }
 
-#sidebar li li a {
+.sidebar li li a {
 	padding: 0px 0px 0px 0px;
 	font-weight: normal;
 	border: none;
 }
 
-#sidebar li li a:hover {
+.sidebar li li a:hover {
 	color: #666666;
 }
 
-#sidebar p {
+.sidebar p {
 	margin: 0;
 	padding: 0px 14px;
 }
 
-#sidebar h2 {
+.sidebar h2 {
 	height: 32px;
 	margin: 0 0 10px 0px;
 	padding: 8px 0 2px 0px;
@@ -363,11 +364,11 @@ hr { display: none; }
 }
 
 
-#sidebar p {
+.sidebar p {
 	line-height: 200%;
 }
 
-#sidebar a {
+.sidebar a {
 	text-align: left;
 	text-decoration: none;
 	font-weight: bold;
@@ -774,7 +775,7 @@ a.boxclose {
 .feed_back_item{
 	width: 100%;
 	min-width: 600px;
-	border-bottom: solid 1px #ccc;
+	/*border-bottom: solid 1px #ccc;*/
 	padding-bottom: 8px;
 	margin-top: 16px;
 }
@@ -911,7 +912,7 @@ select,
 input,
 textarea,
 input[type=search] {
-	background: #f4f4f4;
+	background: #F4F7FC;
 	border: solid 1px #a3a3a3;
 	padding: 5px 10px;
 	font: 15px "Times New Roman", Times, serif;
@@ -947,14 +948,18 @@ textarea {
 /*-----------------------个人资料修改菜单---------- */
 .navbox {
 	position: relative;
-	float: left;
-	border: 5px solid rgb(177, 210, 245);
+	border: 5px solid rgb(125 ,142 ,167);
 	margin-top: 15px;
-	width: 265px;
+	width: 195px;
 	height: 300px;
 	background-color: rgb(225, 228, 230);
+	margin: 0 auto;
 }
 
+.nav li {
+	margin: 0!important;
+	padding: 0!important;
+}
 ul.nav {
 	list-style: none;
 	display: inline;
@@ -976,7 +981,7 @@ ul.nav li a {
 	background: #ebebeb no-repeat;
 	color: #174867;
 	padding: 15px 15px 15px 15px;
-	width: 235px;
+	width: 165px;
 	display: block;
 	text-decoration: none;
 	margin-bottom: 5px;
@@ -1308,7 +1313,7 @@ ul.nav li a:hover {
 	padding: 3px 10px 7px 10px;
 	border: 1px solid #e1e1e1;
 	cursor: pointer;
-	background: white;
+	background: #F4F7FC;
 	/*border-radius: 5px;*/
 	border: 1px solid #a3a3a3;
 }
@@ -1527,7 +1532,7 @@ z-index: 100;
 	border-top: 41px solid rgb(125 ,142 ,167)!important;
 	border: 2px;
 	padding: 5px 20px;
-	background: rgb(225, 228, 230);
+	background: #FAFBFC;
 }
 
 #thisform legend,#thisform1 legend,#thisform2 legend {
@@ -1539,6 +1544,14 @@ z-index: 100;
 	padding: 11px 0px;
 	font-size: 15px;
 	color: #fff;
+}
+#thisform le,#thisform1 le,#thisform2 le {
+	font-weight: bold;
+	background: rgb(125 ,142 ,167);
+	font-size: 15px;
+	color: #fff;
+	margin-top: -34px;
+	position: absolute;
 }
 /* -------------资料预览页面------------------------- */
 .datadetailLi{
@@ -1568,7 +1581,7 @@ z-index: 100;
 	position: relative;
 	padding: 10px 0px 10px 10px;
 	white-space: nowrap;
-	width: 370px;
+	width: 355px;
 	margin: 4px 0px!important;
 	height: 25px;
 }
@@ -1652,7 +1665,7 @@ z-index: 100;
 ._detail_comment{
 	border: 1px #a3a3a3 solid;
 	height: 80px;
-	width: 548px;
+	width: 593px;
 }
 ._detail_comment:focus{
 	background-color: #fff;
@@ -1660,7 +1673,7 @@ z-index: 100;
 	box-shadow: none;
 }
 ._detail_buttonframe{
-	width: 568px;
+	width: 613px;
 	height: 30px;
 	line-height: 20px;
 	text-align: right;
@@ -1673,7 +1686,7 @@ z-index: 100;
 }
 ._detail_card{
 	position: absolute!important;
-	margin-left: 590px;
+	margin-left: 643px;
 	margin-top: 78px;
 }
 ._detail_card_item_panel {
@@ -1688,9 +1701,9 @@ z-index: 100;
 ._detail_card_item {
 	display: inline-block;
 	padding: 10px;
-	margin: 24px 0 0 17px;
+	margin: 24px 0 0 6px;
 	height: 131px;
-	width: 110px;
+	width: 101px;
 	position: relative;
 	color: #707072;
 	vertical-align: top;
@@ -1712,7 +1725,7 @@ z-index: 100;
 }
 ._detail_card_arrow {
 	margin: 0px 0 0 -8px;
-	width: 656px;
+	width: 603px;
 	position: absolute;
 	height: 60px;
 }
@@ -1810,11 +1823,11 @@ z-index: 100;
 	padding-left: 0;
 }
 ._detail_info_title{
-	height: 76px;
+	height: 66px;
 	font-size: 18px;
 	font-weight: normal;
 	color: #445877;
-	background: url(../images/new_version/changdata_nick_bottom.png) no-repeat 0px 74px;
+	background: url(../images/new_version/changdata_nick_bottom.png) no-repeat 0px 64px;
 }
 ._detail_view_title{
 	height: 50px;

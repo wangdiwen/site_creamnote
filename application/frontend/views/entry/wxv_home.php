@@ -65,56 +65,7 @@ $("div").hover(function(e){
 // $(".hoveruser").live('blur',function(){
 //   $(".tipforfix").css("display","none");
 // });
-$('.hoveruser').poshytip({
-        className: 'nothing',
-        offsetY: 30,
-        offsetX: -140,
-        content: function(updateCallback) {
-          var user_id = this.id;
-          var url ="<?php echo site_url('primary/wxc_personal/personal_base_tips')?>";
-          var text = this.text;
-          var str = "";
-          var position = getPosition(this);
-          var top = (position.split("&")[0]-80)+"px";
-          var left = (position.split("&")[1]-130)+"px";
 
-          $.ajax({
-              type:"post",
-              data:({'user_id': user_id}),
-              url:url,
-              dataType:"json",
-              success: function(result)
-                  {
-                    if(result!=''){
-
-                        str += "<div class='tipforfix'><div class='creamnote_tips'>";
-                        str += "<div class='tip_card'><div class='tip_content'>";
-                        str += "<img class='fl' src='"+result['user_header']+"'>";
-                        str += "<div class='tip_right fl'><div class='co fl name'>"+text+"</div>";
-                        str += "<div class='co fl'>资料被下载"+result['user_downloaded']+"次</div>";
-                        str += "<div class='co fl'>拥有"+result['user_datacount']+"份资料</div></div>";
-                        str += "<div class='tip_bottom ''>"+result['user_school']+"/"+result['user_major']+"</div></div></div>";
-                        str += "<div class='tip_arrow1'></div><div class='tip_arrow2'></div></div></div>";
-
-                         // $(".creamnote_tips").html(str);
-                         // $(".creamnote_tips").css("left",left);
-                         // $(".creamnote_tips").css("top",top);
-                        // $(".tipforfix").css("display","block");
-                    }
-
-                  },
-                 error: function(XMLHttpRequest, textStatus, errorThrown) {
-                              alert(XMLHttpRequest.status);
-                              alert(XMLHttpRequest.readyState);
-                              alert(textStatus);
-                          }
-              });
-          window.setTimeout(function() {
-            updateCallback(str);
-          }, 800);
-          return "<div class='tipforfix'><div class='creamnote_tips'><div class='tip_card'><div class='tip_content' style='text-align: center;'>资料读取中...</div></div></div><div class='tip_arrow1'></div><div class='tip_arrow2'></div></div></div>";
-        }
-      });
   $(".user_sm").poshytip({
     className:'tip-darkgray',
   })
@@ -289,7 +240,7 @@ function checkLogin(){
         <!-- creamnote card -->
         <div class="card_frame">
           <div class="card_frame_section">
-            <h3>优秀笔记</h3>
+            <h6>优秀笔记</h6>
             <div class="card_total" id="card_total_data">
               <div class="card_items" id="card_items_data" style='margin: -34px 0 0 -30px;'>
                 <?php
@@ -372,7 +323,7 @@ function checkLogin(){
 
             <!-- </div> -->
           <div class="card_frame_section" style="border-bottom:0px;">
-            <h3>明星用户</h3>
+            <h6>明星用户</h6>
             <div class="card_total" style="height: 168px;" id="card_total_user">
               <div class="card_items" id="card_items_user" style="margin: -34px 0px 0px -30px;">
                 <?php
@@ -420,23 +371,23 @@ function checkLogin(){
         <!-- creamnote card -->
         <div class="right_notice">
           <div class="right_notice_section">
-            <h3>精彩博文<a href="<?php echo base_url()?>core/wxc_content/more_article"><h3 style="float: right;font-size: 14px;margin-top: 5px;">更多>></h3></a></h3>
-            <ol class="rounded-list">
+            <h6>精彩博文<a href="<?php echo base_url()?>core/wxc_content/more_article"><h6 style="float: right;font-size: 14px;margin-top: 5px;">更多>></h6></a></h6>
+            <ol class="rounded-list" style="overflow: initial;margin-bottom: 16px;">
               <?php  foreach ($week_article as $key => $week){?>
                 <li>
-                  <a href="<?php echo base_url()?>core/wxc_content/read_article?article_id=<?=$week['article_id']?>"><span><?=$week['article_title']?></span></a>
+                  <a style="padding: 0.6em .3em .0em 1.8em;" href="<?php echo base_url()?>core/wxc_content/read_article?article_id=<?=$week['article_id']?>"><span style="width: 237px;" class='gravatar' title="<?=$week['article_title']?>"><?=$week['article_title']?></span></a>
                 </li>
               <?php }?>
 
             </ol>
           </div>
           <div class="right_notice_section" style="margin-bottom: 0;border-bottom:0px;">
-            <h3>醍醐公告<a href="<?php echo base_url()?>core/wxc_content/more_site_notice"><h3 style="float: right;font-size: 14px;margin-top: 5px;">更多>></h3></a></h3>
+            <h6>醍醐公告<a href="<?php echo base_url()?>core/wxc_content/more_site_notice"><h6 style="float: right;font-size: 14px;margin-top: 5px;">更多>></h6></a></h6>
 
-            <ol class="rounded-list">
+            <ol class="rounded-list" style="overflow: initial;margin-bottom: 16px;">
               <?php  foreach ($site_notice as $key => $notice){?>
                 <li>
-                  <a href="<?php echo base_url()?>core/wxc_content/read_notice?notice_id=<?=$notice['notice_id']?>"><?=$notice['notice_title']?></a>
+                  <a style="padding: 0.6em .3em .0em 1.8em;" href="<?php echo base_url()?>core/wxc_content/read_notice?notice_id=<?=$notice['notice_id']?>"><?=$notice['notice_title']?></a>
                 </li>
               <?php }?>
             </ol>

@@ -1,3 +1,9 @@
+p {
+margin: 5px 0;
+}
+body, p, div {
+word-wrap: break-word;
+}
 @font-face {
     font-family: 'BebasNeueRegular';
     src: url('fonts/BebasNeue-webfont.eot');
@@ -182,7 +188,7 @@ a{
 .feed_back_item{
 	width: 100%;
 	min-width: 600px;
-	border-bottom: solid 1px #ccc;
+	/*border-bottom: solid 1px #ccc;*/
 	padding-bottom: 8px;
 	margin-top: 16px;
 }
@@ -667,7 +673,7 @@ a{
 	margin: 1.2em 0 1.2em;
 }
 .card_items{
-	margin: -34px 0 0 -13px;
+	margin: -34px 0 0 -5px;
 	position: absolute;
 	width: 1610px;
 }
@@ -1111,16 +1117,16 @@ ol ol{
 	width: 500px;
 	margin: 0px auto;
 	padding: 30px;
-	background: #ececec;
+	background: #FAFBFC;
 	text-align: center;
 	filter: Alpha(opacity=95);
 	opacity: 0.95;
-	-webkit-border-radius: 0.71em;
+	/*-webkit-border-radius: 0.71em;
 	-moz-border-radius: 0.71em;
-	border-radius: 0.71em;
-	-webkit-box-shadow: 0 0.35em 8px #839acd;
-	-moz-box-shadow: 0 0.35em 8px #839acd;
-	box-shadow: 0 0.35em 8px #839acd;
+	border-radius: 0.71em;*/
+	-webkit-box-shadow: 0 1px 3px #839acd;
+	-moz-box-shadow: 0 1px 3px #839acd;
+	box-shadow: 0 1px 3px #839acd;
 	color: #839acd;
 }
 .reg_frame h1{
@@ -1157,7 +1163,7 @@ ol ol{
 }
 .article_content{
 	padding: 20px 100px;
-	line-height: 26px;
+	line-height: 16px;
 }
 .article_content h2{
 	font-size: 28px;
@@ -1173,17 +1179,17 @@ ol ol{
 }
 //分页
 .pagination a.number{
-	-moz-border-radius: 4px!important;
+	/*-moz-border-radius: 4px!important;
 	-webkit-border-radius: 4px!important;
-	border-radius: 4px!important;
+	border-radius: 4px!important;*/
 	border: 1px solid #ddd!important;
 }
 .pagination a{
 	margin: 0 5px 0 0;
 	padding: 3px 6px;
-	-moz-border-radius: 4px!important;
+	/*-moz-border-radius: 4px!important;
 	-webkit-border-radius: 4px!important;
-	border-radius: 4px!important;
+	border-radius: 4px!important;*/
 	border: 1px solid rgb(139, 137, 137)!important;
 }
 a.current{
@@ -1214,4 +1220,17 @@ a.current{
 }
 .article_icon_fire{
 	background: url(../images/version/fire_icon.png) no-repeat !important;
+}
+
+._feedback_textarea_frame{
+	padding: 5px 0px;
+	height: 28px;
+	margin-left: 50px;
+	margin-bottom: 0px;
+}
+._feedback_frame{
+	text-align: left;
+	width: 715px;
+	padding: 20px;
+	margin: 10px auto;
 }

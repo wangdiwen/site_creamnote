@@ -400,7 +400,7 @@ function show_follow(direction){
 		        	for(i in result){
                 str+="<div id='unf_"+result[i]['follow_followed_user_id']+"'>"
     						str+="<div class='follow_section fl'>";
-    						str+="<a href='javascript:void(0)'>"+result[i]['user_name']+"</a>";
+    						str+="<a href='javascript:void(0)' class='hoveruser' id='"+result[i]['follow_followed_user_id']+"'>"+result[i]['user_name']+"</a>";
     						str+="</div>";
                 str+="<div class='op_follow_section fl'>";
                 str+="<a href='javascript:void(0)' onclick='unfollow(this,"+result[i]['follow_followed_user_id']+")'>取消关注</a>";
@@ -418,7 +418,7 @@ function show_follow(direction){
               str +="<div class='_card_total_common'>";
 		        	for(i in result){
 		        		str+="<div class='follow_section fl'>";
-    						str+="<a href='javascript:void(0)'>"+result[i]['user_name']+"</a>";
+    						str+="<a href='javascript:void(0)' class='hoveruser' id='"+result[i]['follow_user_id']+"'>"+result[i]['user_name']+"</a>";
                 str+="</div>";
     						if(result[i]['has_followed']==="false"){
                   str+="<div class='op_follow_section fl'>";
@@ -434,7 +434,7 @@ function show_follow(direction){
 				      str+="</div>";
 				    }
 				    $("#buttons").html(str);
-
+            hover_user();
 	        },
 
 	       error: function(XMLHttpRequest, textStatus, errorThrown) {

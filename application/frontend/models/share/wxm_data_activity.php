@@ -153,10 +153,22 @@ class WXM_Data_activity extends CI_Model
     {
         if ($data_id > 0) {
             $table = $this->wx_table;
-            $this->db->select('dactivity_id, dactivity_download_count, dactivity_view_count')->from($table)->where('data_id', $data_id)->limit(1);
+            $this->db->select('dactivity_id, dactivity_download_count, dactivity_view_count')
+                    ->from($table)->where('data_id', $data_id)->limit(1);
             $query = $this->db->get();
             return $query->row_array();
         }
+    }
+/*****************************************************************************/
+    public function get_comment_count($data_id = 0) {
+        if ($data_id > 0) {
+            $table = $this->wx_table;
+            $this->db->select('dactivity_id, dactivity_comment_count')
+                    ->from($table)->where('data_id', $data_id)->limit(1);
+            $query = $this->db->get();
+            return $query->row_array();
+        }
+        return false;
     }
 /*****************************************************************************/
     public function get_download_info($data_id = 0) {

@@ -912,7 +912,7 @@ class WXC_Home extends CI_Controller
     {
         $this->wx_email->clear();
 
-        $this->wx_email->set_from_user('system-mail@creamnote.com', '醍醐笔记');
+        $this->wx_email->set_from_user('no-reply@creamnote.com', '醍醐笔记');
         $this->wx_email->set_to_user($to_email);
         $this->wx_email->set_subject('发送激活链接');
         $this->wx_email->set_message('用户注册激活链接：'.$link);
@@ -1057,7 +1057,7 @@ class WXC_Home extends CI_Controller
         {
             $this->wx_email->clear();
 
-            $this->wx_email->set_from_user('system-mail@creamnote.com', '醍醐笔记');
+            $this->wx_email->set_from_user('no-reply@creamnote.com', '醍醐笔记');
             $this->wx_email->set_to_user($to_email);
             $this->wx_email->set_subject('找回密码的验证码');
             $this->wx_email->set_message($content);

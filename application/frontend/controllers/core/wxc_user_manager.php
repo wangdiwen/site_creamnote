@@ -58,24 +58,76 @@ class WXC_User_manager extends CI_Controller
         echo 'failed';
     }
 /*****************************************************************/
-    public function you_like_who()
+    public function you_like_who()  // 关注
     {
         $cur_user_id = isset($_SESSION['wx_user_id']) ? $_SESSION['wx_user_id'] : 0;
         if ($cur_user_id > 0)
         {
             $you_like_who = $this->wxm_follow->you_like_who($cur_user_id);
-            // echoxml($you_like_who);
+            if ($you_like_who) {
+                $user_id_list = array();
+                foreach ($you_like_who as $key => $value) {
+                    $user_id_list[] = $value['follow_followed_user_id'];
+                }
+                $user_info = $this->wxm_user->get_by_id_list($user_id_list);
+                if ($user_info) {
+                    foreach ($you_like_who as $key => $value) {
+                        $followed_user_id = $value['follow_followed_user_id'];
+                        foreach ($user_info as $key_0 => $value_0) {
+                            if ($followed_user_id == $value_0['user_id']) {
+                                $you_like_who[$key]['user_name'] = $value_0['user_name'];
+                            }
+                        }
+                    }
+                }
+            }
+            // wx_echoxml($you_like_who);
             echo json_encode($you_like_who);
         }
     }
 /*****************************************************************/
-    public function who_like_you()
+    public function who_like_you()  // 粉丝
     {
         $cur_user_id = isset($_SESSION['wx_user_id']) ? $_SESSION['wx_user_id'] : 0;
         if ($cur_user_id > 0)
         {
             $who_like_you = $this->wxm_follow->who_like_you($cur_user_id);
-            // echoxml($who_like_you);
+            $you_like_who = $this->wxm_follow->you_like_who($cur_user_id);
+            $you_like_who_userid_list = array();
+            if ($you_like_who) {
+                foreach ($you_like_who as $value) {
+                    $you_like_who_userid_list[] = $value['follow_followed_user_id'];
+                }
+            }
+
+            if ($who_like_you) {
+                $user_id_list = array();
+                foreach ($who_like_you as $key => $value) {
+                    $user_id_list[] = $value['follow_user_id'];
+                }
+                $user_info = $this->wxm_user->get_by_id_list($user_id_list);
+                if ($user_info) {
+                    foreach ($who_like_you as $key => $value) {
+                        $follow_user_id = $value['follow_user_id'];
+                        // 查看粉丝中，是否有你已经关注的？
+                        if ($you_like_who_userid_list && in_array($follow_user_id, $you_like_who_userid_list)) {
+                            $who_like_you[$key]['has_followed'] = 'true';
+                        }
+                        else {
+                            $who_like_you[$key]['has_followed'] = 'false';
+                        }
+
+                        // add user name info
+                        foreach ($user_info as $key0 => $value_0) {
+                            if ($follow_user_id == $value_0['user_id']) {
+                                $who_like_you[$key]['user_name'] = $value_0['user_name'];
+                            }
+                        }
+                    }
+                }
+            }
+
+            // wx_echoxml($who_like_you);
             echo json_encode($who_like_you);
         }
     }

@@ -21,7 +21,7 @@ class WXC_Feedback extends CI_Controller
         $config = array(
             'base_url' => base_url().'primary/wxc_feedback/feedback_page',
             'total_rows' => $topic_count,
-            'per_page' => 5,
+            'per_page' => 10,
             'num_links' => 3,
             'uri_segment' => 4,
             'full_tag_open' => '<p>',
@@ -211,7 +211,7 @@ class WXC_Feedback extends CI_Controller
 /**************************** 投诉 & 举报 ************************************/
 /*****************************************************************************/
     public function report_page() {
-        $data_id = $this->input->get('data_id');
+        $data_id = $this->input->post('data_id');
 
         $data = array(
             'com_title' => '投诉&举报',
@@ -225,7 +225,7 @@ class WXC_Feedback extends CI_Controller
             $data['if_login'] = 'true';
         }
 
-        if ($data_id > 0) {
+        if (is_numeric($data_id) && $data_id > 0) {
             $data['com_user_email'] = $user_info['user_email'];
             $data['com_link'] = 'http://www.creamnote.com/data/wxc_data/data_view/'.$data_id;
             $simple_info = $this->wxm_data->get_simple_info_by_id($data_id);

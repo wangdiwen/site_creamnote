@@ -222,9 +222,9 @@ class WXC_Data_statistic extends CI_Controller
         }
 
         if ($you_can_mark_comment && $data_id > 0) {
+            // record new comment by cur user
             $comment_time = date('Y-m-d H:i:s');
             $comment_status = 'unmask';
-
             $data = array(
                 'data_id' => $data_id,
                 'user_id' => $user_id,
@@ -233,12 +233,25 @@ class WXC_Data_statistic extends CI_Controller
                 'comment_status' => $comment_status
                 );
             $this->wxm_comment->insert($data);
-            echo 'success,'.$gavator_header_url;
 
-            // 后台记录数据
-            fastcgi_finish_request();
-            // 更新评论的条数
-            $this->update_comment($data_id, $comment_count);
+            // record or update cur note's comment count
+            $comment_count_info = $this->wxm_data_activity->get_comment_count($data_id);
+            if ($comment_count_info) {
+                $new_count = 1;
+                $old_count = $comment_count_info['dactivity_comment_count'];
+                if ($old_count) {  // not zero or null data
+                    $new_count = $old_count + 1;
+                }
+                $record_info = array(
+                    'data_id' => $data_id,
+                    'dactivity_comment_count' => $new_count,
+                    );
+                $this->wxm_data_activity->update_comment($record_info);
+            }
+
+            echo 'success,'.$gavator_header_url;  // ajax data
+
+            fastcgi_finish_request();  //  后端继续运行任务
             // 记录通知
             if ($data_user_id != $user_id) {
                 // 查看在通知表notify中是否已经存在被评论资料的信息了？

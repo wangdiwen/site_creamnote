@@ -60,9 +60,8 @@ class WX_Aliossapi
             // $this->_format($response);
             if ($response->status == 200)
                 return true;
-            else
-                return false;
         }
+        return false;
     }
 /*****************************************************************************/
     // 根据文件而不是内容上传文件；（不支持断点续传）
@@ -76,11 +75,7 @@ class WX_Aliossapi
                 // $this->_format($response);
                 if ($response->status == 200)
                     return true;
-                else
-                    return false;
             }
-            else
-                return false;
         }
         return false;
     }
@@ -96,12 +91,9 @@ class WX_Aliossapi
                 // $this->_format($response);
                 if ($response->status == 204)
                     return true;
-                else
-                    return false;
             }
-            else
-                return false;
         }
+        return false;
     }
 /*****************************************************************************/
     // 拷贝单个文件到指定的bucket或者bucket中指定的目录
@@ -113,9 +105,8 @@ class WX_Aliossapi
             // $this->_format($response);
             if ($response->status == 200)
                 return true;
-            else
-                return false;
         }
+        return false;
     }
 /*****************************************************************************/
     public function is_object_exist($bucket = '', $object = '')         // 判断文件是否存在
@@ -126,9 +117,8 @@ class WX_Aliossapi
             // $this->_format($response);
             if ($response->status == 200)
                 return true;
-            else
-                return false;
         }
+        return false;
     }
 /*****************************************************************************/
     public function _format($response)                               // 格式化返回结果

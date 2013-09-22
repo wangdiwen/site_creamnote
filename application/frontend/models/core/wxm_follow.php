@@ -58,10 +58,7 @@ class WXM_Follow extends CI_Model
         if ($user_id > 0)
         {
             $table = $this->wx_table;
-            $join_table = 'wx_user';
-            $join_where = $join_table.'.user_id = '.$table.'.follow_followed_user_id';
-
-            $this->db->select('wx_follow.follow_followed_user_id, user_name')->from($table)->join($join_table, $join_where, 'left')->where('follow_user_id', $user_id);
+            $this->db->select('follow_followed_user_id')->from($table)->where('follow_user_id', $user_id);
             $query = $this->db->get();
             return $query->result_array();
         }
@@ -73,34 +70,9 @@ class WXM_Follow extends CI_Model
         {
             // 查找谁关注了你
             $table = $this->wx_table;
-            $join_table = 'wx_user';
-            $join_where = $join_table.'.user_id = '.$table.'.follow_user_id';
-
-            $this->db->select('wx_follow.follow_user_id, user_name')->from($table)->join($join_table, $join_where, 'left')->where('follow_followed_user_id', $user_id);
+            $this->db->select('follow_user_id')->from($table)->where('follow_followed_user_id', $user_id);
             $query = $this->db->get();
-            $who_like_you = $query->result_array();
-
-            // 查找你关注的人
-            $join_where = $join_table.'.user_id = '.$table.'.follow_followed_user_id';
-
-            $this->db->select('wx_follow.follow_followed_user_id, user_name')->from($table)->join($join_table, $join_where, 'left')->where('follow_user_id', $user_id);
-            $query = $this->db->get();
-            $you_like_who = $query->result_array();
-
-            $data = array();
-            foreach ($who_like_you as $who)
-            {
-                $who['has_followed'] = 'false';
-                foreach ($you_like_who as $you)
-                {
-                    if ($you['follow_followed_user_id'] == $who['follow_user_id'])
-                    {
-                        $who['has_followed'] = 'true';
-                    }
-                }
-                array_push($data, $who);
-            }
-            return $data;
+            return $query->result_array();
         }
     }
 /*****************************************************************************/

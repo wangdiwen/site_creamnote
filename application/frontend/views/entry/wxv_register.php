@@ -384,7 +384,7 @@ function get_new_code(){
 <body>
   <a href="http://www.baidu.com" id="skip_page" target="_blank" style="display:none;">百度</a>
     <?php include  'application/frontend/views/share/header_home.php';?>
-    <div class="body" style="min-height: 635px;border-top: 8px solid #839acd;padding: 50px 0;">
+    <div class="body article_body" style="min-height: 635px;border-top: 8px solid #839acd;padding: 50px 0;">
       <div class="reg_frame" id="reg_frame">
 
         <h2>注册Creamnote</h2>

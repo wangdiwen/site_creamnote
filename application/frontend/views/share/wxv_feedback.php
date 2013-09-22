@@ -4,8 +4,6 @@
     <title>Creamnote用户反馈</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" href="/application/frontend/views/resources/css/reset.css" />
-    <link rel="stylesheet" href="/application/frontend/views/resources/css/text.css" />
-    <link rel="stylesheet" href="/application/frontend/views/resources/css/960.css" />
     <link rel="stylesheet" href="/application/frontend/views/resources/css/wx_home.css" />
     <link rel="stylesheet" href="/application/frontend/views/resources/css/style.css" />
     <script type="text/javascript" src="/application/frontend/views/resources/js/jquery-1.8.3.js"></script>
@@ -34,6 +32,10 @@ function comment(feedback_id,user_id_list){
             user_id_list_p += user_id_list[i]+"&";
         }
 	    var top_content=$("#top"+feedback_id).attr("value");
+        if(comment_content == ""){
+            warnMes("至少写点内容再提交吧，大侠！");
+            return;
+        }
 	    $.ajax({
 	    type:"post",
 	    data:({'feedback_content': comment_content,'feedback_id': feedback_id,'user_id_list':user_id_list_p,'feedback_topic':top_content}),
@@ -41,7 +43,7 @@ function comment(feedback_id,user_id_list){
 	    success: function(result)
 	        {
 	        	if(result=="nologin"){
-					alert("请先登录");
+					warnMes("亲，要先登录的哦!");
 			    }else{
 			    	var user_name = result.split(",")[0];
                     var head_url = result.split(",")[1];
@@ -71,6 +73,10 @@ $(function(){
 $("#feed_back_form_submit_btn").click(function(){
     var url ='<?php echo site_url('/primary/wxc_feedback/create_feedback'); ?>';
     var feedback_content=$("#feedback_content").attr("value");
+    if(feedback_content == ""){
+        warnMes("至少写点内容再提交吧，大侠！");
+        return;
+    }
     $.ajax({
     type:"post",
     data:({'feedback_content': feedback_content}),
@@ -78,23 +84,23 @@ $("#feed_back_form_submit_btn").click(function(){
     success: function(result)
         {
     		if(result=="nologin"){
-				alert("请先登录");
+				warnMes("亲，要先登录的哦!");
 	    	}else{
 	    		var user_name = result.split(",")[1];
 	        	var feedback_id =result.split(",")[0];
 	        	if(result!=""){
 	        		var str="";
-	                str+="<div class='feed_back_item'><div class='feed_back_item_avator'>";
+	                str+="<div class='feed_back_item' style='margin-top:0;padding-bottom: 0;'><div class='feed_back_item_avator'>";
 	                str+="<img alt='7956af44bf4c77439bfbc84c5f8ab104' height='48' src='' width='48'></div>";
 	        		str+="<div class='feed_back_item_body'><div class='feed_back_item_head'>";
 	        		str+=user_name+" 说：</div>";//发起者名字
-	        		str+="<p class='feed_back_content'>"+feedback_content+"</p><div class='feed_back_item_bottom'>";//内容
+	        		str+="<p class='feed_back_content'>"+feedback_content+"</p><div class='feed_back_item_bottom' style='margin-bottom:0;'>";//内容
 	        		str+="刚刚   <a class='feed_back_reply_btn'  href='#' onclick='reply("+feedback_id+")'>回复</a>";
 	        		str+="<input type='hidden' id="+feedback_id+" ></div>";
-	        		str+="<div class='feed_back_comment_list' id='comment"+feedback_id+"'><div id='start"+feedback_id+"'>";
+	        		str+="<div class='feed_back_comment_list' id='comment"+feedback_id+"'><div id='start"+feedback_id+"' style='padding-left:68px;'>";
 	        		str+="<input type='hidden' name='feedback_id'>"	;
 	        		str+="<input type='text' class='feed_back_comment_content_input' id='rel"+feedback_id+"' >";
-	        		str+="<input type='submit' onclick='comment("+feedback_id+")' class='feed_back_comment_content_submit_btn' value='回复'>";
+	        		str+="<input type='submit' onclick='comment("+feedback_id+")' class='feed_back_comment_content_submit_btn' style='height: 32px;' class='button_c' value='回复'>";
 	        		str+="</div></div></div></div>";
 	        		$("#feedback_startup_show").before(str);
 	        		$("#start"+feedback_id).css("display","none");
@@ -120,51 +126,43 @@ $("#feed_back_form_submit_btn").click(function(){
 <body>
     <?php include  'application/frontend/views/share/header_home.php';?>
 
-<div class="body">
-<div class="container_16" style="background-image:none;">
+<div class="body article_body" style="border-top: 8px solid #839acd;">
+<div class="" style="background-image:none;">
 
- <div class="grid_4 prefix_6 suffix_6" style="text-align:center;">
-        意见反馈
+ <div class="reg_frame _feedback_frame" style="text-align: left;border: 8px double rgb(185, 194, 197);">
+        真诚期待您对Creamnote的批评指正，与我们共进步。</br>
+        你可以在下面提交您的意见、疑问、建议、反馈。</br>
+        我们会在第一时间回复您。
   </div>
 
- <div class="grid_10 prefix_3 suffix_3" style="text-align:center;">
-     <textarea id="feedback_content" name="" style="height: 100px;width: 519px;"></textarea>
+ <div class="reg_frame _feedback_frame" style="text-align:center;width:715px">
+    <div class="">
+        <textarea id="feedback_content" class="_detail_comment" name="" style="height: 48px;width: 593px;"></textarea>
+        <div class="_detail_buttonframe _feedback_textarea_frame">
+            <input type="submit" name="feed_back_submit" id="feed_back_form_submit_btn"  class="button_c common_show_login_win" style="width:100px" name="comment_button" id="comment_button" value="提交反馈">
+        </div>
+    </div>
+
   </div>
-   <div class="grid_10 prefix_3 suffix_3" style="text-align:center;">
-     <div class="feed_back_form_action">
-     <input type="submit" name="feed_back_submit" id="feed_back_form_submit_btn" value="提交">
-     </div>
-  </div>
 
 
-  <div class="clear"></div>
-<div class="grid_14 prefix_2">
-
-       <p style="padding-left: 20px;">最新反馈信息：</p>
-</div>
- <div class="grid_10 prefix_2 suffix_4" >
- 	<div id="feedback_startup_show">
- 	</div>
- </div>
- <div class="clear"></div>
-
- <div class="grid_10 prefix_2 suffix_4" >
 
 	 <?php
 		//echo $data_info;
 		if(isset($feedback_topic)){
 			foreach ($feedback_topic as $feed){
-
+                echo " <div class='reg_frame _feedback_frame' >";
 				$user_id_list = "";
                 $top_feed_id  = "";
                 foreach ($feed as $id => $topics)
                 {
+
                 	// $user_id_list .= $topics['user_id'].",";
                     $user_id_list[$id] = $topics['user_id'];
                     if ($id == 0)
                     {
                         //echo '话题：'.$topics['feedback_content'].'<br />';
-                        echo "<div class='feed_back_item'><div class='feed_back_item_avator'>";
+                        echo "<div class='feed_back_item' style='margin-top:0;padding-bottom: 0;'><div class='feed_back_item_avator'>";
                         echo "<img  height='48' src=".$topics['head_url']." width='48'></div>";
                         echo "<div class='feed_back_item_body'>";
                         echo "<div class='feed_back_item_head'>";
@@ -172,7 +170,7 @@ $("#feed_back_form_submit_btn").click(function(){
                         echo "<input type='hidden' id='top".$topics['feedback_id']."' value='".$topics['feedback_content']."'>";
                         echo ":</div><p class='feed_back_content'>";
                         echo $topics['feedback_content'];
-                        echo "</p><div class='feed_back_item_bottom'>";
+                        echo "</p><div class='feed_back_item_bottom' style='margin-bottom:0;'>";
                         echo $topics['feedback_time'];
                         echo "<a class='feed_back_reply_btn'  href='javascript:void(0)' onclick='reply(".$topics['feedback_id'].")'>回复</a></div>";
                         echo "<div class='feed_back_comment_list'>";
@@ -188,12 +186,13 @@ $("#feed_back_form_submit_btn").click(function(){
                     }
 
                 }
+                echo "</div>";
                 // $user_id_list = $user_id_list.substr($user_id_list,0, strlen($user_id_list)-1);
                 // $user_id_list .="}";
                 $user_id_list = json_encode($user_id_list);
-                echo "<div id='start".$top_feed_id."'>";
+                echo "<div id='start".$top_feed_id."' style='padding-left:68px'>";
                 echo "<input type='text' class='feed_back_comment_content_input'  id='rel".$top_feed_id."' >";
-                echo "<input type='submit' onclick='comment(".$top_feed_id.",".$user_id_list.")' id='feed_back_comment_content_submit_btn'  value='回复'>";
+                echo "<input type='submit' onclick='comment(".$top_feed_id.",".$user_id_list.")' class='button_c' style='height: 32px;' id='feed_back_comment_content_submit_btn'  value='回复'>";
                 echo "</div>";
                 echo "</div></div></div>";
               	echo "<input type='hidden' id='user_id_list' value='" .$user_id_list. "'/>";
@@ -201,7 +200,7 @@ $("#feed_back_form_submit_btn").click(function(){
 		}
 		//. base_url()."primary/wxc_personal/delete_data_by_id/".$info->data_id.
     	?>
-        <div class="pagination" style="text-align: right;padding-top: 20px;"><?php echo $this->pagination->create_links(); ?></div>
+    <div class="pagination fr" style="padding-right: 150px;padding-top: 20px;padding-bottom: 20px;"><?php echo $this->pagination->create_links(); ?></div>
 
     <!--滚动至顶部-->
 	<div id="updown"><span class="up transition"></span></div>

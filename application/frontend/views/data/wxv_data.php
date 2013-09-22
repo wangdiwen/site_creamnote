@@ -625,10 +625,10 @@ function user_hover(){
         </h2>
 
 				<div class="meta">
-				<div class="fl">学校 &nbsp</div><div class="fl"><input type="text" placeholder="点击选择学校" name="school" id="school-name" onclick="pop()" style="width: 175px;height:17px;"></div>
+				<div class="fl">学校 &nbsp</div><div class="fl"><input type="text" placeholder="点击选择学校" name="school" id="school-name" onclick="pop()" style="width: 208px;height:17px;"></div>
 						<input type="hidden" id="hiddenschool" name="wx_school">
             <input type="hidden" id="nature_id" name="nature_id">
-				<div class="fl" style="padding-left:5px;">专业 &nbsp</div><div class="fl"><select id='partment' name='partment' style='width: 200px;' class="chosen">  </select></div>
+				<div class="fl" style="padding-left:5px;">专业 &nbsp</div><div class="fl"><select id='partment' name='partment' style='width: 250px;' class="chosen">  </select></div>
 				<div class="fl" style="padding-left:5px;"><input type="submit" name="area_search" id="area_search" class="button_c" value="搜索" onclick="searchbefore(this,2,'')"></div>
 				</div>
         <div class="meta" id="search_filter">

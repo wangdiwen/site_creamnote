@@ -363,7 +363,7 @@ $(document).keydown(function(event){
                 <input type="hidden" value="1215154" name="tmpdir" id="id_file">
          		<div  id="thisform" >
               <fieldset>
-                <legend>第一步：上传资料 </legend>
+                <le>第一步：上传资料 </le>
                 <div  style="margin-top: 12px;">
 
                   <div id="batch_upload" class="fl">
@@ -383,7 +383,7 @@ $(document).keydown(function(event){
       		<div class="entry">
              	<div  id="thisform1" >
                     <fieldset>
-                        <legend>第二步：图片排序 </legend>
+                        <le>第二步：图片排序 </le>
                     	<div id="main">
                       		<div id="module_list" style="display:none;">
                       		<input type="hidden" id="orderlist" value="" />
@@ -404,7 +404,7 @@ $(document).keydown(function(event){
     		<div class="entry">
             	<div  id="thisform2" >
                     <fieldset>
-                        <legend>第三步：完善 PDF信息</legend>
+                        <le>第三步：完善 PDF信息</le>
                         <p><label  accesskey="9">笔记题目</label><br />
                         <input type="text" id="pdfname" name="pdfname" onblur="step_three()"></p>
                         <p><label  accesskey="9">笔记作者</label><br />

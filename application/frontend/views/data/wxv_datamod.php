@@ -462,7 +462,7 @@ $(function(){
 
                  <div  id="thisform" >
                     <fieldset>
-                    <legend>资料预览 </legend>
+                    <le>资料预览 </le>
                     <a href="#" id="showpdf">打开</a>
                     <!------ 弹出消息 ------>
                     <div class="overlay" id="overlay" style="display:none;"></div>
@@ -480,7 +480,7 @@ $(function(){
 		    <div class="entry">
              	<div  id="thisform1" >
                 <fieldset>
-                    <legend>第二步：填写资料类型 </legend>
+                    <le>第二步：填写资料类型 </le>
                         <p style="margin-bottom: 0px;"><label for="" accesskey="9">资料分类</label><br /></p>
                         <!--   start of category      -->
                         <div class="category_selected" id="category_selected">
@@ -548,7 +548,7 @@ $(function(){
 		    <div class="entry">
             	 <div  id="thisform2" >
                     <fieldset>
-                    <legend>第三步：添加资料描述 </legend>
+                    <le>第三步：添加资料描述 </le>
                     <p><label  accesskey="9">标题</label><br />
                     <input type="text" id="dataname" name="dataname" value="<?php echo $data_name;?>" onblur="step_three()"></p>
                     <p><label for="data_price" accesskey="9">价格</label><br />

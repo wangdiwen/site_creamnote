@@ -24,7 +24,7 @@ class WXC_Home extends CI_Controller
         $this->load->model('core/wxm_notice');
 
         // below is test lib iface
-        $this->load->library('wx_tcpdfapi');
+        // $this->load->library('wx_tcpdfapi');
         // $this->load->library('wx_imageapi');
         // $this->load->library('wx_aliossapi');
         $this->load->library('wx_general');
@@ -32,8 +32,8 @@ class WXC_Home extends CI_Controller
         // $this->load->library('wx_alipay_direct_api');
         // $this->load->library('wx_alipay_refund_api');
         // $this->load->library('wx_weibo_api');
-        // $this->load->library('wx_site_manager');  // test
-        $this->load->library('wx_weibo_renren_api');  // test
+        $this->load->library('wx_site_manager');
+        // $this->load->library('wx_weibo_renren_api');  // test
     }
 /*****************************************************************/
     // Home page entry
@@ -868,7 +868,7 @@ class WXC_Home extends CI_Controller
                             $this->wxm_user->record_renren_account($user_id, $renren_open_id, $renren_nice_name);
                         }
 
-                        // add new register user count
+                        // add new register user count, site manager db table
                         $this->wx_site_manager->add_new_register_user();
                     }
                 }
@@ -912,7 +912,7 @@ class WXC_Home extends CI_Controller
     {
         $this->wx_email->clear();
 
-        $this->wx_email->set_from_user('system-mail@creamnote.com', '醍醐笔记');
+        $this->wx_email->set_from_user('no-reply@creamnote.com', '醍醐笔记');
         $this->wx_email->set_to_user($to_email);
         $this->wx_email->set_subject('发送激活链接');
         $this->wx_email->set_message('用户注册激活链接：'.$link);
@@ -1057,7 +1057,7 @@ class WXC_Home extends CI_Controller
         {
             $this->wx_email->clear();
 
-            $this->wx_email->set_from_user('system-mail@creamnote.com', '醍醐笔记');
+            $this->wx_email->set_from_user('no-reply@creamnote.com', '醍醐笔记');
             $this->wx_email->set_to_user($to_email);
             $this->wx_email->set_subject('找回密码的验证码');
             $this->wx_email->set_message($content);

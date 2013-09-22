@@ -3,7 +3,7 @@
 $config['protocol'] = 'smtp';
 $config['smtp_host'] = 'smtp.ym.163.com';
 $config['smtp_port'] = 25;
-$config['smtp_user'] = 'system-mail@creamnote.com';
+$config['smtp_user'] = 'no-reply@creamnote.com';
 $config['smtp_pass'] = 'wx@creamnote';
 $config['mailtype'] = 'text';
 $config['validate'] = true;

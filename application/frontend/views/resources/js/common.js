@@ -187,6 +187,59 @@ $(".collect_data").poshytip({
     alignX: 'inner-left',
     offsetX: 60,
 })
+//=========================================================用户信息tips=========================================//
+    $('.hoveruser').poshytip({
+        className: 'nothing',
+        offsetY: 30,
+        offsetX: -140,
+        content: function(updateCallback) {
+          var user_id = this.id;
+          var url =$("#baseUrl").val()+"primary/wxc_personal/personal_base_tips";
+          var text = this.text;
+          var str = "";
+          var position = getPosition(this);
+          var top = (position.split("&")[0]-80)+"px";
+          var left = (position.split("&")[1]-130)+"px";
+
+          $.ajax({
+              type:"post",
+              data:({'user_id': user_id}),
+              url:url,
+              dataType:"json",
+              success: function(result)
+                  {
+                    if(result!=''){
+
+                        str += "<div class='tipforfix'><div class='creamnote_tips'>";
+                        str += "<div class='tip_card'><div class='tip_content'>";
+                        str += "<img class='fl' src='"+result['user_header']+"'>";
+                        str += "<div class='tip_right fl'><div class='co fl name'>"+text+"</div>";
+                        str += "<div class='co fl'>资料被下载"+result['user_downloaded']+"次</div>";
+                        str += "<div class='co fl'>拥有"+result['user_datacount']+"份资料</div></div>";
+                        str += "<div class='tip_bottom ''>"+result['user_school']+"/"+result['user_major']+"</div></div></div>";
+                        str += "<div class='tip_arrow1'></div><div class='tip_arrow2'></div></div></div>";
+
+                         // $(".creamnote_tips").html(str);
+                         // $(".creamnote_tips").css("left",left);
+                         // $(".creamnote_tips").css("top",top);
+                        // $(".tipforfix").css("display","block");
+                    }
+
+                  },
+                 error: function(XMLHttpRequest, textStatus, errorThrown) {
+                              alert(XMLHttpRequest.status);
+                              alert(XMLHttpRequest.readyState);
+                              alert(textStatus);
+                          }
+              });
+          window.setTimeout(function() {
+            updateCallback(str);
+          }, 800);
+          return "<div class='tipforfix'><div class='creamnote_tips'><div class='tip_card'><div class='tip_content' style='text-align: center;'>资料读取中...</div></div></div><div class='tip_arrow1'></div><div class='tip_arrow2'></div></div></div>";
+        }
+      });
+
+
 //=========================================================出现隐藏菜单=========================================//
 $("#Webfonts").click(function(){
 
@@ -282,6 +335,59 @@ function weiboLogin(){
 function show_login_win(){
     $("#login_win").css("display","block");
     $('html,body').animate({scrollTop: '0px'}, 800);
+}
+//=========================================================用户卡片函数=========================================//
+function hover_user(){
+    $('.hoveruser').poshytip({
+        className: 'nothing',
+        offsetY: 30,
+        offsetX: -140,
+        content: function(updateCallback) {
+          var user_id = this.id;
+          var url =$("#baseUrl").val()+"primary/wxc_personal/personal_base_tips";
+          var text = this.text;
+          var str = "";
+          var position = getPosition(this);
+          var top = (position.split("&")[0]-80)+"px";
+          var left = (position.split("&")[1]-130)+"px";
+
+          $.ajax({
+              type:"post",
+              data:({'user_id': user_id}),
+              url:url,
+              dataType:"json",
+              success: function(result)
+                  {
+                    if(result!=''){
+
+                        str += "<div class='tipforfix'><div class='creamnote_tips'>";
+                        str += "<div class='tip_card'><div class='tip_content'>";
+                        str += "<img class='fl' src='"+result['user_header']+"'>";
+                        str += "<div class='tip_right fl'><div class='co fl name'>"+text+"</div>";
+                        str += "<div class='co fl'>资料被下载"+result['user_downloaded']+"次</div>";
+                        str += "<div class='co fl'>拥有"+result['user_datacount']+"份资料</div></div>";
+                        str += "<div class='tip_bottom ''>"+result['user_school']+"/"+result['user_major']+"</div></div></div>";
+                        str += "<div class='tip_arrow1'></div><div class='tip_arrow2'></div></div></div>";
+
+                         // $(".creamnote_tips").html(str);
+                         // $(".creamnote_tips").css("left",left);
+                         // $(".creamnote_tips").css("top",top);
+                        // $(".tipforfix").css("display","block");
+                    }
+
+                  },
+                 error: function(XMLHttpRequest, textStatus, errorThrown) {
+                              alert(XMLHttpRequest.status);
+                              alert(XMLHttpRequest.readyState);
+                              alert(textStatus);
+                          }
+              });
+          window.setTimeout(function() {
+            updateCallback(str);
+          }, 800);
+          return "<div class='tipforfix'><div class='creamnote_tips'><div class='tip_card'><div class='tip_content' style='text-align: center;'>资料读取中...</div></div></div><div class='tip_arrow1'></div><div class='tip_arrow2'></div></div></div>";
+        }
+      });
 }
 //=========================================================提交投诉信息=========================================//
 var g_title;

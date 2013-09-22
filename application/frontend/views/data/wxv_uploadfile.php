@@ -499,7 +499,7 @@ function makeCenter()
 
  		     <div  id="thisform" >
             <fieldset>
-                <legend>第一步：上传资料 </legend>
+                <le>第一步：上传资料 </le>
                 <p style="margin-top: 12px;"> <input type="file" name="file_upload" id="file_upload" /></p>
                <!--  <p><a href="javascript:$('#file_upload').uploadify('settings', 'formData', {'typeCode':document.getElementById('id_file').value});$('#file_upload').uploadify('upload','*')">上传</a>
 				<a href="javascript:$('#file_upload').uploadify('cancel','*')">重置上传队列</a>
@@ -512,7 +512,7 @@ function makeCenter()
 		<div class="entry">
      	<div  id="thisform1" >
         <fieldset>
-            <legend>第二步：填写资料类型 </legend>
+            <le>第二步：填写资料类型 </le>
             <p style="margin-bottom: 0px;"><label for="" accesskey="9">资料分类</label><br />
 
                 <!--   start of category      -->
@@ -582,7 +582,7 @@ function makeCenter()
 
         	<div  id="thisform2" >
                 <fieldset>
-                <legend>第三步：添加资料描述 </legend>
+                <le>第三步：添加资料描述 </le>
                 <p><label  accesskey="9">标题</label><br />
                 <input type="text" id="dataname" name="dataname" value="" data-placeholder="选择几个默认的价格" onblur="step_three()"></p>
                 <p><label for="data_price" accesskey="9">价格</label><br />
