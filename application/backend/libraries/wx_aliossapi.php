@@ -60,9 +60,8 @@ class WX_Aliossapi
             // $this->_format($response);
             if ($response->status == 200)
                 return true;
-            else
-                return false;
         }
+        return false;
     }
 /*****************************************************************************/
     public function upload_by_content($bucket = '', $object = '', $content = '')
@@ -95,12 +94,9 @@ class WX_Aliossapi
                 // $this->_format($response);
                 if ($response->status == 200)
                     return true;
-                else
-                    return false;
             }
-            else
-                return false;
         }
+        return false;
     }
 /*****************************************************************************/
     public function delete_object($bucket = '', $object = '')           // 删除单个文件；（不支持多个文件捆绑删除）
@@ -114,12 +110,9 @@ class WX_Aliossapi
                 // $this->_format($response);
                 if ($response->status == 204)
                     return true;
-                else
-                    return false;
             }
-            else
-                return false;
         }
+        return false;
     }
 /*****************************************************************************/
     // 拷贝单个文件到指定的bucket或者bucket中指定的目录
@@ -131,9 +124,8 @@ class WX_Aliossapi
             // $this->_format($response);
             if ($response->status == 200)
                 return true;
-            else
-                return false;
         }
+        return false;
     }
 /*****************************************************************************/
     public function is_object_exist($bucket = '', $object = '')         // 判断文件是否存在
@@ -144,9 +136,8 @@ class WX_Aliossapi
             // $this->_format($response);
             if ($response->status == 200)
                 return true;
-            else
-                return false;
         }
+        return false;
     }
 /*****************************************************************************/
     public function _format($response)                               // 格式化返回结果
