@@ -21,9 +21,8 @@ input[type="password"],select,input[type=text], input[type="search"] {
     float: left;
 }
 #thisform fieldset, #thisform1 fieldset, #thisform2 fieldset {
-    border-top: 0!important;
     border: 0;
-    padding: 0;
+    padding: 20px;
 }
 #thisform, #thisform1, #thisform2 {
     font-size: 12px;
@@ -37,6 +36,15 @@ input[type="password"],select,input[type=text], input[type="search"] {
 //=========================================================修改基本用户信息=========================================//
 $(function(){
     $("#update_user").click(function(){
+        var booleans = check_name($("#user_name").val());
+        if(!booleans){
+            errorMes("昵称已经存在");
+            return;
+        }
+        if($("#user_name").val() == ""){
+            errorMes("昵称不能为空");
+            return;
+        }
     	var wx_school_id = $('#hidden_school').attr("value");
         var wx_name=$("#user_name").attr("value");
         var wx_carea=$("#partment").attr("value");
@@ -50,7 +58,12 @@ $(function(){
         url:url,
         success: function(result)
             {
-               alert(result);
+                if(result = "success"){
+                    successMes("修改成功");
+                }else{
+                    successMes("修改失败");
+                }
+
 
             },
              error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -69,23 +82,29 @@ $(function(){
 //=========================================================判断昵称=========================================//
 function check_name(user_name){
 	 var url ="<?php echo site_url('primary/wxc_personal/check_nice_name'); ?>";
+     var ret = "flase" ;
 	 $.ajax({
 	        type:"post",
 	        data:({'nice_name':user_name}),
 	        url:url,
+            async: false,
 	        success: function(result)
 	            {
 	               if(result=="failed"){
-						alert("昵称已经存在");
-		           }
+						errorMes("昵称已经存在");
+                        ret =  false;
+		           }else{
+                        ret = true;
+                   }
 
 	            },
-	             error: function(XMLHttpRequest, textStatus, errorThrown) {
-	                        alert(XMLHttpRequest.status);
-	                        alert(XMLHttpRequest.readyState);
-	                        alert(textStatus);
-	                    }
+             error: function(XMLHttpRequest, textStatus, errorThrown) {
+                alert(XMLHttpRequest.status);
+                alert(XMLHttpRequest.readyState);
+                alert(textStatus);
+            }
 	        });
+     return ret;
 }
 
 //=========================================================判断电话=========================================//
@@ -98,7 +117,7 @@ function check_phone(user_phone){
 	        success: function(result)
 	            {
 	               if(result=="failed"){
-						alert("电话号已经存在");
+						errorMes("电话号已经存在");
 		           }
 
 	            },
@@ -230,7 +249,7 @@ function get_school_id(wx_school){
 //局部更新页面，给出修改密码表单
 function update_password_page(){
 	var str="";
-	str+="<div  id='thisform' ><fieldset><p><label >原密码:</label>";
+	str+="<div  id='thisform' ><fieldset><le id='le_title' style='margin-top: -52px;'>账户设置</le><p><label >原密码:</label>";
 	str+="<input type='password' id='old_password' name='old_password' value='' ></p>";
 	str+="<label >新密码:</label>";
 	str+="<input type='password' id='new_password' name='new_password' value='' ></p>";
@@ -241,7 +260,7 @@ function update_password_page(){
 	$("#change_form").html(str);
     $("a").removeClass("navhover");
     $("#nav_pwd").addClass("navhover");
-    $("#info_title").html("密码修改");
+    // $("._grgh").html("密码修改");
 }
 //提交表单
 function update_password(){
@@ -250,11 +269,11 @@ function update_password(){
 	var new_password=$("#new_password").attr("value");
 	var repeat_new_password=$("#repeat_new_password").attr("value");
 	if(repeat_new_password!=new_password){
-		alert("两次密码不一致");
+		errorMes("两次密码不一致");
 		$("#new_password").attr("value","");
 		$("#repeat_new_password").attr("value","");
 	}else if(new_password==""){
-		alert("密码不能为空");
+		errorMes("密码不能为空");
 	}else{
 		$.ajax({
 	        type:"post",
@@ -263,17 +282,17 @@ function update_password(){
 	        success: function(result)
 	            {
 	               if(result=="old-password-wrong"){
-						alert("原始密码错误");
+						errorMes("原始密码错误");
 						$("#old_password").attr("value","");
 						$("#new_password").attr("value","");
 						$("#repeat_new_password").attr("value","");
 	               }else if(result=="success"){
-						alert("修改成功");
+						successMes("修改成功");
 						$("#old_password").attr("value","");
 						$("#new_password").attr("value","");
 						$("#repeat_new_password").attr("value","");
 	               }else if(result=="failed"){
-						alert("修改失败");
+						errorMes("修改失败");
 	               }
 	            },
 	             error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -298,10 +317,10 @@ function update_account_page(){
             {
             	if(result!=null){
             		var str="";
-            		str+="<div  id='thisform' ><fieldset><p><label style='padding-left: 55px;float: none;'>账户类型:</label>";
+            		str+="<div  id='thisform' ><fieldset><le id='le_title' style='margin-top: -52px;'>账户设置</le><p><label style='padding-left: 55px;float: none;'>账户类型:</label>";
             		str+="<span style='padding-left: 5px;'>"+result['user_account_type']+"</span></p>";
             		str+="<p><label style='padding-left: 79px;float: none;'>账号:</label>";
-            		str+="<input type='text' id='user_account_name' name='user_account_name' value='"+result['user_account_name']+"' ><input type='button' id='update_account' name='update_account' value='修改' class='button_c'  onclick='update_account()'></p>";
+            		str+="<input type='text' id='user_account_name' name='user_account_name' value='"+result['user_account_name']+"' ><input type='button' style='height:30px;' id='update_account' name='update_account' value='修改' class='button_c'  onclick='update_account()'></p>";
             		str+="<p><label style='padding-left: 79px;float: none;'>资金:</label>";
             		str+="<span style='padding-left: 5px;'>"+result['user_account_money']+"</span></p>";
             		str+="<p><label style='padding-left: 32px;float: none;'>是否激活账户:</label><input style='padding-left: 5px;' type='button' class='button_c' id='' name='' value='激活' onclick=''></p></fieldset></div>";
@@ -309,7 +328,7 @@ function update_account_page(){
             		$("#change_form").html(str);
                     $("a").removeClass("navhover");
                     $("#nav_account").addClass("navhover");
-                    $("#info_title").html("个人账户");
+                    // $("._grgh").html("个人账户");
                 }
             },
              error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -325,7 +344,7 @@ function update_account(){
 	var url ="<?php echo site_url('primary/wxc_personal/update_user_account'); ?>";
 	var user_account_name=$("#user_account_name").attr("value");
 	 if(user_account_name==""){
-		alert("账户不能为空");
+		errorMes("账户不能为空");
 	}else{
 		$.ajax({
 	        type:"post",
@@ -334,7 +353,7 @@ function update_account(){
 	        success: function(result)
 	            {
 	               if(result=="success"){
-						alert("修改成功");
+						successMes("修改成功");
 		           }
 	            },
 	             error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -361,18 +380,18 @@ function social_count_bind(){
                 if(result!=null){
                     var i;
                     var str="";
-                    str+="<div  id='thisform' ><fieldset><p style='border-bottom: 1px solid #85b1de;font-size:16px;'><label class='fl' style='width: 150px;height: 26px;padding-top: 0px;'>社交账号</label><label class='fl' style='width: 150px;height: 26px;padding-top: 0px;'>账户名称</label><label class='fl' style='width: 150px;height: 26px;padding-top: 0px;'>操作</label><br />";
+                    str+="<div  id='thisform' ><fieldset><le id='le_title' style='margin-top: -52px;'>账户设置</le><p style='border-bottom: 1px solid #85b1de;font-size:16px;'><label class='fl' style='text-align: center;width: 240px;height: 26px;padding-top: 0px;'>社交账号</label><label class='fl' style='text-align: center;width: 240px;height: 26px;padding-top: 0px;'>账户名称</label><label class='fl' style='text-align: center;width: 240px;height: 26px;padding-top: 0px;'>操作</label><br />";
                     for(i in result){
                         str+="<p style='height: 15px;' id='"+result[i]["type"]+"'>"
-                        str+="<span class='fl' style='text-align: right;display: inline-block;width: 138px;height: 34px;padding-top: 10px;color: #85b1de;'>"+result[i]["show_name"]+"</span><span class='fl' style='text-align: right;display: inline-block;color: #85b1de;width: 150px;height: 34px;padding-top: 10px;'>"+result[i]["nice_name"];
-                        str+="</span><span class='fl' style='text-align: right;display: inline-block;width: 192px;height: 44px;'><input class='button_c' onclick='del_count(this)' name='"+result[i]["type"]+"' style='width:90px;' type='button' value='解除绑定'></span>";
-                        str+="</p></br>";
+                        str+="<span class='fl _third_acount' >"+result[i]["show_name"]+"</span><span class='fl _third_acount' >"+result[i]["nice_name"];
+                        str+="</span><span class='fl _third_acount' ><input class='button_c' onclick='del_count(this)' name='"+result[i]["type"]+"' style='width:90px;' type='button' value='解除绑定'></span>";
+                        str+="</p>";
                     }
                     str+="</fieldset></div>";
                     $("#change_form").html(str);
                     $("a").removeClass("navhover");
                     $("#nav_bind").addClass("navhover");
-                    $("#info_title").html("绑定账号");
+                    // $("._grgh").html("绑定账号");
                 }
             },
              error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -416,16 +435,17 @@ function del_count(count_type){
 
 		<div id="_content" class="_content" >
             <div class="_post" id="post" style="padding-top:0;">
-            <div class="_data_title">
-                <div class="_grgh">基本资料</div>
+            <div class="_data_title" style="height: 56px;">
+                <div class="_grgh"></div>
 
             </div>
-			<div style="margin-top: 26px; width: 640px;padding-left:0;border-top: 5px solid rgb(125 ,142 ,167);background-color: rgb(225, 228, 230);" id="change_form">
+			<div style="margin-top: 0px; width: 780px;padding-left:0;border-top: 5px solid rgb(125 ,142 ,167);background-color: rgb(225, 228, 230);" id="change_form">
 				<div id="thisform">
-					<fieldset style="border: 0;">
+					<fieldset >
+                        <le id='le_title' style='margin-top: -52px;'>账户设置</le>
 						<p>
 							<label>昵称:</label> <input type="text" id="user_name"
-								name="user_name" value="<?php echo $base_info['user_name'];?>"
+								name="user_name" class="updata_name" value="<?php echo $base_info['user_name'];?>"
 								onblur="check_name(this.value)">
 						</p>
 						<p>
@@ -442,10 +462,7 @@ function del_count(count_type){
 								name="user_phone" value="<?php echo $base_info['user_phone'];?>"
 								onblur="check_phone(this.value)">
 						</p>
-					</fieldset>
-				</div>
-				<div id="thisform2">
-					<fieldset style="border: 0;">
+
 						<p>
 							<label>学校:</label>
                             <input type="hidden" name="hidden_school" id="hidden_school"value="<?php echo $base_info['user_school_id'];?>">
@@ -476,11 +493,7 @@ function del_count(count_type){
 								name="" value="<?php echo $base_info['user_period'];?>">
 						</p>
 
-					</fieldset>
-				</div>
-				<div id="thisform2">
-					<fieldset style="border: 0;padding-left:179px;">
-						<p>
+						<p style="padding-left:180px;">
 							<input type="button" name="" id="update_user" class="button_c" style="width:90px;" value="提交信息" >
 						</p>
 					</fieldset>
@@ -490,7 +503,7 @@ function del_count(count_type){
 		</div>
 		<!-- end #content -->
         <div id="_sidebar" class="_sidebar">
-            <h2 style="padding-left: 10px;">账户设置</h2>
+            <h2 style="padding-left: 10px;padding-bottom:10px;"></h2>
             <div >
                 <div class="navbox">
                     <ul class="nav">

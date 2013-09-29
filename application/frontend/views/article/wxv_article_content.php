@@ -37,6 +37,9 @@
       <div class="feedback">
       </div>
     </a>
+
+    <!--滚动至顶部-->
+  <div id="updown"><span class="up transition"></span></div>
   </div>
   <?php include  'application/frontend/views/share/footer.php';?>
 </body>

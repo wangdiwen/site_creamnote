@@ -19,8 +19,12 @@
             </div>
         </a>
         <form id="search_form_head" method="post" action="<?php echo site_url('primary/wxc_search/public_search'); ?>" onsubmit="return search()">
+          <div class="_head_search_left fl"></div>
           <div class="_head_search fl">
-            <input type="text" name="search" onclick="hiddenTip()" id="" size="15" maxlength="20">
+            <input type="text" name="search" onclick="hiddenTip()" id="" size="15" maxlength="28" placeholder="快速查找笔记">
+
+          </div>
+          <div class="_head_search_right fl">
             <span class="search-submit-head"></span>
           </div>
         </form>
@@ -135,7 +139,9 @@ var loginname = '<?php if (isset($_SESSION["wx_user_name"]) && $_SESSION["wx_use
             $("#_al_count").attr("href","<?php echo site_url('primary/wxc_personal/update_userinfo_page'); ?>");
 
         }else{
-          $("._head_search").css("margin-left","534px");
+          $("._head_search").css("margin-left","482px");
+          $("._head_search_left").css("margin-left","460px");
+          $("._head_search_right").css("margin-left","707px");
         }
         $("#check_login").css("display","block");
 
@@ -179,8 +185,21 @@ var loginname = '<?php if (isset($_SESSION["wx_user_name"]) && $_SESSION["wx_use
     document.onkeydown = function(e){
       var wx_email=$("#username").attr("value");
       var wx_password=$("#password").attr("value");
+      var ev = document.all ? window.event : e;
+      var login_block = $(".login_win_base").css("display");
+      if(login_block == "none"){
+        return;
+      }
+      if(wx_email == "" && ev.keyCode ==13){
+        warnMes("邮箱号不能为空");
+        return;
+      }
+      if(wx_password == "" && ev.keyCode ==13){
+        warnMes("密码不能为空");
+        return;
+      }
       if(loginname==""&&wx_email!=""&&wx_password!=""){
-        var ev = document.all ? window.event : e;
+        // var ev = document.all ? window.event : e;
         if(ev.keyCode==13) {
         var if_auto_login = "false";
         if ($("#remember").attr("checked")) {
@@ -199,12 +218,12 @@ var loginname = '<?php if (isset($_SESSION["wx_user_name"]) && $_SESSION["wx_use
                 if(result=='success'){
                     location.href='<?php echo site_url('home/personal'); ?>';
                  }else if(result=='no-user'){
-                     alert("没有该用户");
+                     errorMes("没有该用户");
                  }else if (result=='passwd-wrong'){
-                     alert("密码错误");
+                     errorMes("密码错误");
                  }
                  else if (result=='database-wrong'){
-                    alert("数据库连接失败");
+                    errorMes("数据库连接失败");
                  }
 
              },
@@ -223,14 +242,22 @@ var loginname = '<?php if (isset($_SESSION["wx_user_name"]) && $_SESSION["wx_use
 
     $("#signin_submit").click(function(){
         var if_auto_login = "false";
-            if ($("#remember").attr("checked")) {
-              if_auto_login = "true";
-            }else{
-              if_auto_login = "false";
-            }
+        if ($("#remember").attr("checked")) {
+          if_auto_login = "true";
+        }else{
+          if_auto_login = "false";
+        }
         var wx_email=$("#username").attr("value");
         var wx_password=$("#password").attr("value");
         var url ='<?php echo site_url('home/login'); ?>';
+        if(wx_email == "" ){
+          warnMes("邮箱号不能为空");
+          return;
+        }
+        if(wx_password == "" ){
+          warnMes("密码不能为空");
+          return;
+        }
         $.ajax({
         type:"post",
         data:({'wx_email': wx_email, 'wx_password': wx_password ,'if_auto_login':if_auto_login}),
@@ -240,12 +267,12 @@ var loginname = '<?php if (isset($_SESSION["wx_user_name"]) && $_SESSION["wx_use
                 if(result=='success'){
                     location.href='<?php echo site_url('home/personal'); ?>';
                 }else if(result=='no-user'){
-                    alert("没有该用户");
+                    errorMes("没有该用户");
                 }else if (result=='passwd-wrong'){
-                     alert("密码错误");
+                     errorMes("密码错误");
                 }
                 else if (result=='database-wrong'){
-                    alert("数据库连接失败");
+                    errorMes("数据库连接失败");
                 }
 
             },

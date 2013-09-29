@@ -25,5 +25,7 @@ class WXC_Help extends CI_Controller
     public function privacy(){
         $this->load->view('help/wxv_contentofservice');
     }
-
+    public function sitemap(){
+        $this->load->view('help/wxv_sitemap');
+    }
 }

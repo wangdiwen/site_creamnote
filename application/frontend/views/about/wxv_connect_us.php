@@ -17,7 +17,7 @@
 <body>
   <?php include  'application/frontend/views/share/header_home.php';?>
   <div class="body article_body">
-    <div class="foot_list_left" style="height:600px;">
+    <div class="foot_list_left" style="height:680px;">
       <h1><b>关于我们</b></h1>
       <ul class="foot_list_ul">
         <li><a href="<?php echo site_url('static/wxc_about/about_creamnote'); ?>" title="关于醍醐">关于醍醐</a></li>
@@ -36,8 +36,9 @@
           <a href="<?php echo site_url('primary/wxc_feedback/feedback_page'); ?>">【点击这里】</a>进入反馈提问页面，向我们提出自己的疑问和建议。</p>
         </br>
         </br>
-        <p style="font-size:14px;">醍醐邮箱：creamnote@163.com</p>
-        <p style="font-size:14px;">微博：xxxxxxx</p>
+        <p style="font-size:14px;">醍醐支持邮箱：support@creamnote.com</p>
+        <p style="font-size:14px;">醍醐联合创始人邮箱：co-founder@creamnote.com</p>
+        <p style="font-size:14px;">醍醐投诉&建议邮箱：report@creamnote.com</p>
 
       </div>
     </div>

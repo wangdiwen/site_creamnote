@@ -8,344 +8,11 @@
     <link rel="stylesheet" href="/application/frontend/views/resources/css/uploadify.css" />
     <link rel="stylesheet" href="/application/frontend/views/resources/css/style.css" />
     <script type="text/javascript" src="/application/frontend/views/resources/js/jquery-1.8.3.js"></script>
-
-   	<script type="text/javascript" src="/application/frontend/views/resources/js/school.js"></script>
-   	<script type="text/javascript" src="/application/frontend/views/resources/js/jquery-ui-1.10.3.custom.js"></script>
-    <script type="text/javascript" src="/application/frontend/views/resources/js/jquery.blockUI.js"></script>
-<script type="text/javascript">
-<!-- Javascript functions -->
-var img_id_upload=new Array();//初始化数组，存储已经上传的图片名
-var i=0;//初始化数组下标
-var step_one_success = 0;
-var step_two_success = 0;
-var step_three_success = 0;
-$(function() {
-
-    $("#filecontent").click(function(){
-    //	alert("1");
-        showLoading("文档正在努力生成当中,请稍等。。。");
-        var order = $("#newid").attr("value");
-        var pdfname = $("#pdfname").attr("value");
-        var pdfuser = $("#pdfuser").attr("value");
-        var pdfheader = $("#pdfheader").attr("value");
-        var pdfschool = $("#pdfschool").attr("value");
-        var pdfsummary = $("#pdfsummary").attr("value");
-        var url ='<?php echo site_url('data/wxc_image/submit'); ?>';
-        $.ajax({
-        type:"post",
-        url:url,
-        data:({'order':order,
-        	'pdf_name':pdfname,
-        	'pdf_user':pdfuser,
-        	'pdf_header':pdfheader,
-        	'pdf_school':pdfschool,
-        	'pdf_summary':pdfsummary
-            }),
-        success: function(result)
-            {
-              var temp_info = result.split(",");
-              result = temp_info[0];
-              var objectname = temp_info[1];
-              if(result=='success'){
-                //location.reload();
-            		location.href="<?php echo site_url('data/wxc_data/data_modify_from_image'); ?>"+"/"+objectname;
-                } else if(result=='warning'){
-                	warnMes("部分图片有异常，已经忽略该图片");
-                  // showLoading("文档正在努力生成当中,请稍等。。。");
-                	location.href="<?php echo site_url('data/wxc_data/data_modify_from_image'); ?>"+"/"+objectname;
-                } else if(result=='no image'){
-					        errorMes("请上传图片");
-                }
-
-            },
-           error: function(XMLHttpRequest, textStatus, errorThrown) {
-                        alert(XMLHttpRequest.status);
-                        alert(XMLHttpRequest.readyState);
-                        alert(textStatus);
-                    }
-        });
-  });
-
-//拖动图片
-	$(".m_title").bind('mouseover',function(){
-		$(this).css("cursor","move")
-	});
-
-    //var $show = $("#loader"); //进度条
-    //var $orderlist = $("#orderlist");
-	var $list = $("#module_list");
-	//var url ='<?php echo site_url('data/wxc_image/upload_image'); ?>';
-	$list.sortable({
-		opacity: 0.6,
-		revert: true,
-		cursor: 'move',
-		handle: '.m_title',
-		update: function(){
-			 var new_order = [];
-             $list.children(".modules").each(function() {
-                new_order.push(this.title);
-             });
-			 var newid = new_order.join(',');
-			// var oldid = $orderlist.val();
-			if(newid != $("#oldid").attr("value")){
-				$("#newid").attr("value",newid);//如果更新插入新值
-			}else{
-				$("#newid").attr("value","");//如果和原值一样，则插入空
-			}
-		}
-	});
-});
-$(document).ready(function(){
-	//初始化页面请求json
-	var url ='<?php echo site_url('data/wxc_image/get_json_data'); ?>';
-	 $.ajax({
-	        type:"post",
-	        url:url,
-	        dataType:"json",
-	        success: function(result)
-	            {
-	              if(result !=''||result!=null){
-
-	            	  var jsondata = result;
-	                  var str = "";
-	                  var i;
-                      var close;
-	                  for(i in jsondata){
-                        var width ;
-                        var height ;
-                        if(jsondata[i]['width']<=550){
-                            width = jsondata[i]['width']+"px";
-                            height = jsondata[i]['height']+"px";
-                            close = (jsondata[i]['width']-10)+"px";
-                        }else{
-                            width = 550+"px";
-                            height = 550*(jsondata[i]['height']/jsondata[i]['width'])+"px";
-                            close = 540+"px";
-                        }
-
-	                      var base_url = "<?php echo base_url(); ?>";
-	                      str +="<div class='modules' title="+jsondata[i]['id']+">";
-	                      str +=" <h3 class='m_title'>"+jsondata[i]['image'].split("/")[3]+"</h3>";
-	                      str +="<a href='#' onclick='delete_image("+jsondata[i]['id']+")'><img src="+base_url+"application/frontend/views/resources/images/close.png"+"></a>";
-
-	      				  str +="<p><img onclick='original_image("+i+")' src=" + base_url + jsondata[i]['thumb_image'] + "></img></p>";
-                          str +="<div class='display_none' id="+i+"><p><img style='width:"+width+" ;height:"+height+"' src=" + base_url + jsondata[i]['image'] + "></img></p>";
-                          str +="<div class='fancy_close' onclick='unblock()' style='left:"+close+";'></div>";
-                          str += "<div class='image_title' style='width:"+width+"'>";
-                          str +="<table cellspacing='0' cellpadding='0' border='0'><tbody><tr><td id='fancy_title_left'></td><td id='fancy_title_main'>";
-                          str +="<div>"+jsondata[i]['image'].split("/")[3]+"</div></td><td id='fancy_title_right'></td></tr></tbody></table></div></div>";
-                          str += "</div>";
-	      				//alert(jsondata[i]['thumb_image']);
-	                 	 	}
-                        if(str!=""){
-                            $("#module_list").html(str);
-                            $("#first_step").addClass("ca-menu_hover");
-                            $("#first_step span").addClass("ca-menu_hover_ca-icon");
-                            $("#first_step h2").addClass("ca-menu_hover_ca-main");
-                            $("#first_step span").html(".");
-                            step_one_success = 1;
-                            //第二步
-                            $("#second_step").addClass("ca-menu_hover");
-                            $("#second_step span").addClass("ca-menu_hover_ca-icon");
-                            $("#second_step h2").addClass("ca-menu_hover_ca-main");
-                            $("#second_step span").html(".");
-                            step_two_success = 1;
-                            check_upload();
-                        }else{
-                            $("#module_list").html("<div style='padding-top:10px;padding-bottom:10px;color: #AA7700;'>上传后的图片根据需要排列顺序，以便按序完成资料的生成！</div>");
-                        }
-                        $("#module_list").css("display","block");
-                        var num1 = Math.round(i);
-                        var num2 = Math.round(5);
-                        var result = num1/num2;
-                        var five = Math.floor(result);
-                        var height = (five+1)*162+860+"px";
-                        $(".body").css("min-height",height);
-                        $(".body").css("overflow","hidden");
-						        //得到图片顺序id
-		                 var $list = $("#module_list");
-		                 var old_order = [];
-		                 $list.children(".modules").each(function() {
-		                      old_order.push(this.title);
-		                   });
-		       			 var oldid = old_order.join(',');
-		       			// var oldid = $orderlist.val();
-		       			 $("#oldid").attr("value",oldid);
-	                }
-	            },
-	           error: function(XMLHttpRequest, textStatus, errorThrown) {
-	                        alert(XMLHttpRequest.status);
-	                        alert(XMLHttpRequest.readyState);
-	                        alert(textStatus);
-	                    }
-	        });
-});
-
-function delete_image(id){
-	var url ='<?php echo site_url('data/wxc_image/delete_image'); ?>';
-	 $.ajax({
-	        type:"post",
-	        url:url,
-	        dataType:"json",
-	        data:({'image_id':id}),
-	        success: function(result)
-	            {
-	              if(result !=''||result!=null){
-	            	  var jsondata = result;
-                      var str = "";
-                      var i;
-                      var close;
-                      for(i in jsondata){
-                        var width ;
-                        var height ;
-                        if(jsondata[i]['width']<=550){
-                            width = jsondata[i]['width']+"px";
-                            height = jsondata[i]['height']+"px";
-                            close = (jsondata[i]['width']-10)+"px";
-                        }else{
-                            width = 550+"px";
-                            height = 550*(jsondata[i]['height']/jsondata[i]['width'])+"px";
-                            close = 540+"px";
-                        }
-
-                          var base_url = "<?php echo base_url(); ?>";
-                          str +="<div class='modules' title="+jsondata[i]['id']+">";
-                          str +=" <h3 class='m_title'>"+jsondata[i]['image'].split("/")[3]+"</h3>";
-                          str +="<a href='#' onclick='delete_image("+jsondata[i]['id']+")'><img src="+base_url+"application/frontend/views/resources/images/close.png"+"></a>";
-
-                          str +="<p><img onclick='original_image("+i+")' src=" + base_url + jsondata[i]['thumb_image'] + "></img></p>";
-                          str +="<div class='display_none' id="+i+"><p><img style='width:"+width+" ;height:"+height+"' src=" + base_url + jsondata[i]['image'] + "></img></p>";
-                          str +="<div class='fancy_close' onclick='unblock()' style='left:"+close+";'></div>";
-                          str += "<div class='image_title' style='width:"+width+"'>";
-                          str +="<table cellspacing='0' cellpadding='0' border='0'><tbody><tr><td id='fancy_title_left'></td><td id='fancy_title_main'>";
-                          str +="<div>"+jsondata[i]['image'].split("/")[3]+"</div></td><td id='fancy_title_right'></td></tr></tbody></table></div></div>";
-                          str += "</div>";
-	      				       //alert(jsondata[i]['thumb_image']);
-	                 	 	}
-                        var num1 = Math.round(i);
-                        var num2 = Math.round(5);
-                        var result = num1/num2;
-                        var five = Math.floor(result);
-                        var height = (five+1)*162+860+"px";
-                        $(".body").css("min-height",height);
-                        $(".body").css("overflow","hidden");
-    	                 	 $("#module_list").html(str);
-                         if(str!=""){
-                          $("#first_step").addClass("ca-menu_hover");
-                          $("#first_step span").addClass("ca-menu_hover_ca-icon");
-                          $("#first_step h2").addClass("ca-menu_hover_ca-main");
-                          $("#first_step span").html(".");
-                          step_one_success = 1;
-                          //第二步
-                          $("#second_step").addClass("ca-menu_hover");
-                          $("#second_step span").addClass("ca-menu_hover_ca-icon");
-                          $("#second_step h2").addClass("ca-menu_hover_ca-main");
-                          $("#second_step span").html(".");
-                          step_two_success = 1;
-                          check_upload();
-                        }else{
-                          $("#module_list").html("<div style='padding-top:10px;padding-bottom:10px;color: #AA7700;'>上传后的图片根据需要排列顺序，以便按序完成资料的生成！</div>");
-                          $("#first_step").removeClass("ca-menu_hover");
-                          $("#first_step span").removeClass("ca-menu_hover_ca-icon");
-                          $("#first_step h2").removeClass("ca-menu_hover_ca-main");
-                          $("#first_step span").html("'");
-                          step_one_success = 0;
-                          //第二步
-                          $("#second_step").removeClass("ca-menu_hover");
-                          $("#second_step span").removeClass("ca-menu_hover_ca-icon");
-                          $("#second_step h2").removeClass("ca-menu_hover_ca-main");
-                          $("#second_step span").html("'");
-                          step_two_success = 0;
-                          check_upload();
-                        }
-    						        //得到图片顺序id
-    		                 var $list = $("#module_list");
-    		                 var old_order = [];
-    		                 $list.children(".modules").each(function() {
-    		                      old_order.push(this.title);
-    		                   });
-		       			 var oldid = old_order.join(',');
-		       			// var oldid = $orderlist.val();
-		       			 $("#oldid").attr("value",oldid);
-	                }
-	            },
-	           error: function(XMLHttpRequest, textStatus, errorThrown) {
-                  alert(XMLHttpRequest.status);
-                  alert(XMLHttpRequest.readyState);
-                  alert(textStatus);
-              }
-	        });
-}
-//=========================================================弹出原始图片=========================================//
-function original_image(id) {
-        $.blockUI({
-             message: $("#"+id),
-             showOverlay: true,
-             css: {
-                 width: '0px',
-                 height:'0px',
-                 border:'1px none #09335F',
-                 margin: '0 atuo',
-                 top: '12%'
-                },
-            onOverlayClick: $.unblockUI
-             });
-
-       // setTimeout($.unblockUI, 2000);
-}
-function unblock(){
-    $.unblockUI();
-}
-
-//=========================================================上传步骤=========================================//
-
-//上传第三步
-function step_three(){
-    var d_user = $("#pdfuser").attr("value");
-    var d_name = $("#pdfname").val();
-    var d_school = $("#pdfschool").val();
-    var d_summary = $("#pdfsummary").val();
-    if(d_summary.length!=""&&d_name!=""&&d_user!=""&&d_school!=""){
-        $("#third_step").addClass("ca-menu_hover");
-        $("#third_step span").addClass("ca-menu_hover_ca-icon");
-        $("#third_step h2").addClass("ca-menu_hover_ca-main");
-        $("#third_step span").html(".");
-        step_three_success = 1;
-    }else{
-        $("#third_step").removeClass("ca-menu_hover");
-        $("#third_step span").removeClass("ca-menu_hover_ca-icon");
-        $("#third_step h2").removeClass("ca-menu_hover_ca-main");
-        $("#third_step span").html("'");
-        step_three_success = 0;
-    }
-    check_upload();
-}
-//=========================================================判断上传按钮是否可用=========================================//
-function check_upload(){
-    if(step_one_success == 1&&step_two_success == 1&&step_three_success == 1){
-        $("#filecontent").attr("disabled",false);
-        $("#filecontent").css("cursor","pointer");
-    }else{
-        $("#filecontent").attr("disabled",true);
-        $("#filecontent").css("cursor","not-allowed");
-    }
-}
-//=========================================================键盘敲击事件=========================================//
-$(document).keydown(function(event){
-    var key = event.keyCode;
-    if(key!=""&&key!=null){
-        step_three();
-        check_upload();
-    }
-});
-</script>
 </head>
 
 
 <body class="activity_pane">
-  <script  defer="defer">
-  $("._body").css("overflow","hidden")
-</script>
+
 	<?php include  'application/frontend/views/share/header.php';?>
 
     <?php $nav_param = "upload_image";?>
@@ -373,7 +40,7 @@ $(document).keydown(function(event){
                   <input type="file" name="file_upload" id="file_upload" />
                 </div>
                 <p style="color: #AA7700;">
-      				    支持的图片格式(*.jpg; *.jpeg; *.png; *.gif)
+      				    支持的图片格式(*.jpg; *.jpeg; *.png; *.gif),单张最大（2M）
       				  </p>
       				<div id="uploadsuccess"></div>
               </fieldset>
@@ -422,7 +89,7 @@ $(document).keydown(function(event){
                 </div>
     		</div>
 
-            <input type="button" name="filecontent" id="filecontent" value="完成上传" onclick="" disabled style="cursor:not-allowed;height:32px;width:100px" class="button_c">
+            <input type="button" name="filecontent" id="filecontent" value="完成上传" onclick=""  style="cursor:not-allowed;height:32px;width:100px" class="button_c button_c gravatar" title="表单填写完整才能提交">
 
 			</div>
 		</div>
@@ -460,6 +127,10 @@ $(document).keydown(function(event){
     <?php include  'application/frontend/views/share/footer.php';?>
     <!-- end #footer -->
 </div>
+
+<script type="text/javascript" src="/application/frontend/views/resources/js/school.js"></script>
+<script type="text/javascript" src="/application/frontend/views/resources/js/jquery-ui-1.10.3.custom.js"></script>
+<script type="text/javascript" src="/application/frontend/views/resources/js/jquery.blockUI.js"></script>
 <script type="text/javascript" src="/application/frontend/views/resources/js/jquery.uploadify.js"></script>
 <script type="text/javascript">
 $(function() {
@@ -509,9 +180,11 @@ $(function() {
                         }
 
                         var base_url = "<?php echo base_url(); ?>";
+                        var image = '"'+jsondata[i]['image']+'"'.toString();
+                        var thumb_image= '"'+jsondata[i]['thumb_image']+'"'.toString();
                         str +="<div class='modules' title="+jsondata[i]['id']+">";
                         str +=" <h3 class='m_title'>"+jsondata[i]['image'].split("/")[3]+"</h3>";
-                        str +="<a href='#' onclick='delete_image("+jsondata[i]['id']+")'><img src="+base_url+"application/frontend/views/resources/images/close.png"+"></a>";
+                        str +="<a href='javascript:void(0)' onclick='delete_image("+jsondata[i]['id']+")'><img src="+base_url+"application/frontend/views/resources/images/close.png"+"></a>";
 
                         str +="<p><img onclick='original_image("+i+")' src=" + base_url + jsondata[i]['thumb_image'] + "></img></p>";
                         str +="<div class='display_none' id="+i+"><p><img style='width:"+width+" ;height:"+height+"' src=" + base_url + jsondata[i]['image'] + "></img></p>";
@@ -519,6 +192,7 @@ $(function() {
                         str += "<div class='image_title' style='width:"+width+"'>";
                         str +="<table cellspacing='0' cellpadding='0' border='0'><tbody><tr><td id='fancy_title_left'></td><td id='fancy_title_main'>";
                         str +="<div>"+jsondata[i]['image'].split("/")[3]+"</div></td><td id='fancy_title_right'></td></tr></tbody></table></div></div>";
+                        str += "<div class='rotation'><span onclick='rotation(0,"+jsondata[i]['id']+","+image+","+thumb_image+")'>左旋90度</span> <span onclick='rotation(1,"+jsondata[i]['id']+","+image+","+thumb_image+")'>右旋90度</span></div>";
                         str += "</div>";
                       }
 
@@ -562,8 +236,381 @@ $(function() {
     });
 });
 </script>
-</body>
+<script type="text/javascript">
+<!-- Javascript functions -->
+var img_id_upload=new Array();//初始化数组，存储已经上传的图片名
+var i=0;//初始化数组下标
+var step_one_success = 0;
+var step_two_success = 0;
+var step_three_success = 0;
+$(function() {
 
+    $("#filecontent").click(function(){
+      if(step_one_success == 0||step_two_success == 0||step_three_success == 0){
+            warnMes("表单填写完整才能提交！");
+            return;
+        }
+    //  alert("1");
+        showLoading("文档正在努力生成当中,请稍等。。。");
+        var order = $("#newid").attr("value");
+        var pdfname = $("#pdfname").attr("value");
+        var pdfuser = $("#pdfuser").attr("value");
+        var pdfheader = $("#pdfheader").attr("value");
+        var pdfschool = $("#pdfschool").attr("value");
+        var pdfsummary = $("#pdfsummary").attr("value");
+        var url ='<?php echo site_url('data/wxc_image/submit'); ?>';
+        $.ajax({
+        type:"post",
+        url:url,
+        data:({'order':order,
+          'pdf_name':pdfname,
+          'pdf_user':pdfuser,
+          'pdf_header':pdfheader,
+          'pdf_school':pdfschool,
+          'pdf_summary':pdfsummary
+            }),
+        success: function(result)
+            {
+              var temp_info = result.split(",");
+              result = temp_info[0];
+              var objectname = temp_info[1];
+              if(result=='success'){
+                //location.reload();
+                location.href="<?php echo site_url('data/wxc_data/data_modify_from_image'); ?>"+"/"+objectname;
+                } else if(result=='warning'){
+                  warnMes("部分图片有异常，已经忽略该图片");
+                  // showLoading("文档正在努力生成当中,请稍等。。。");
+                  location.href="<?php echo site_url('data/wxc_data/data_modify_from_image'); ?>"+"/"+objectname;
+                } else if(result=='no image'){
+                  errorMes("请上传图片");
+                }
+
+            },
+           error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        alert(XMLHttpRequest.status);
+                        alert(XMLHttpRequest.readyState);
+                        alert(textStatus);
+                    }
+        });
+  });
+
+//拖动图片
+  $(".m_title").bind('mouseover',function(){
+    $(this).css("cursor","move")
+  });
+
+    //var $show = $("#loader"); //进度条
+    //var $orderlist = $("#orderlist");
+  var $list = $("#module_list");
+  //var url ='<?php echo site_url('data/wxc_image/upload_image'); ?>';
+  $list.sortable({
+    opacity: 0.6,
+    revert: true,
+    cursor: 'move',
+    handle: '.m_title',
+    update: function(){
+       var new_order = [];
+             $list.children(".modules").each(function() {
+                new_order.push(this.title);
+             });
+       var newid = new_order.join(',');
+      // var oldid = $orderlist.val();
+      if(newid != $("#oldid").attr("value")){
+        $("#newid").attr("value",newid);//如果更新插入新值
+      }else{
+        $("#newid").attr("value","");//如果和原值一样，则插入空
+      }
+    }
+  });
+});
+$(document).ready(function(){
+  //初始化页面请求json
+  var url ='<?php echo site_url('data/wxc_image/get_json_data'); ?>';
+   $.ajax({
+          type:"post",
+          url:url,
+          dataType:"json",
+          success: function(result)
+              {
+                if(result !=''||result!=null){
+
+                  var jsondata = result;
+                    var str = "";
+                    var i;
+                      var close;
+                    for(i in jsondata){
+                        var width ;
+                        var height ;
+                        if(jsondata[i]['width']<=550){
+                            width = jsondata[i]['width']+"px";
+                            height = jsondata[i]['height']+"px";
+                            close = (jsondata[i]['width']-10)+"px";
+                        }else{
+                            width = 550+"px";
+                            height = 550*(jsondata[i]['height']/jsondata[i]['width'])+"px";
+                            close = 540+"px";
+                        }
+                        var base_url = "<?php echo base_url(); ?>";
+                        var image = '"'+jsondata[i]['image']+'"'.toString();
+                        var  thumb_image= '"'+jsondata[i]['thumb_image']+'"'.toString();
+                        str +="<div class='modules' title="+jsondata[i]['id']+">";
+                        str +=" <h3 class='m_title' title="+jsondata[i]['image'].split("/")[3]+">"+jsondata[i]['image'].split("/")[3]+"</h3>";
+                        str +="<a href='javascript:void(0)' onclick='delete_image("+jsondata[i]['id']+")'><img src="+base_url+"application/frontend/views/resources/images/close.png"+"></a>";
+
+                        str +="<p><img onclick='original_image("+i+")' src=" + base_url + jsondata[i]['thumb_image'] + "></img></p>";
+                          str +="<div class='display_none' id="+i+"><p><img style='width:"+width+" ;height:"+height+"' src=" + base_url + jsondata[i]['image'] + "></img></p>";
+                          str +="<div class='fancy_close' onclick='unblock()' style='left:"+close+";'></div>";
+                          str += "<div class='image_title' style='width:"+width+"'>";
+                          str +="<table cellspacing='0' cellpadding='0' border='0'><tbody><tr><td id='fancy_title_left'></td><td id='fancy_title_main'>";
+                          str +="<div>"+jsondata[i]['image'].split("/")[3]+"</div></td><td id='fancy_title_right'></td></tr></tbody></table></div></div>";
+                          str += "<div class='rotation'><span onclick='rotation(0,"+jsondata[i]['id']+","+image+","+thumb_image+")'>左旋90度</span> <span onclick='rotation(1,"+jsondata[i]['id']+","+image+","+thumb_image+")'>右旋90度</span></div>";
+                          str += "</div>";
+
+                //alert(jsondata[i]['thumb_image']);
+                      }
+                        if(str!=""){
+                            $("#module_list").html(str);
+                            $("#first_step").addClass("ca-menu_hover");
+                            $("#first_step span").addClass("ca-menu_hover_ca-icon");
+                            $("#first_step h2").addClass("ca-menu_hover_ca-main");
+                            $("#first_step span").html(".");
+                            step_one_success = 1;
+                            //第二步
+                            $("#second_step").addClass("ca-menu_hover");
+                            $("#second_step span").addClass("ca-menu_hover_ca-icon");
+                            $("#second_step h2").addClass("ca-menu_hover_ca-main");
+                            $("#second_step span").html(".");
+                            step_two_success = 1;
+                            check_upload();
+                        }else{
+                            $("#module_list").html("<div style='padding-top:10px;padding-bottom:10px;color: #AA7700;'>上传后的图片根据需要排列顺序，以便按序完成资料的生成！</div>");
+                        }
+                        $("#module_list").css("display","block");
+                        var num1 = Math.round(i);
+                        var num2 = Math.round(5);
+                        var result = num1/num2;
+                        var five = Math.floor(result);
+                        var height = (five+1)*162+860+"px";
+                        $(".body").css("min-height",height);
+                        $(".body").css("overflow","hidden");
+                    //得到图片顺序id
+                     var $list = $("#module_list");
+                     var old_order = [];
+                     $list.children(".modules").each(function() {
+                          old_order.push(this.title);
+                       });
+                 var oldid = old_order.join(',');
+                // var oldid = $orderlist.val();
+                 $("#oldid").attr("value",oldid);
+                  }
+              },
+             error: function(XMLHttpRequest, textStatus, errorThrown) {
+                          alert(XMLHttpRequest.status);
+                          alert(XMLHttpRequest.readyState);
+                          alert(textStatus);
+                      }
+          });
+});
+
+function delete_image(id){
+  var url ='<?php echo site_url('data/wxc_image/delete_image'); ?>';
+   $.ajax({
+          type:"post",
+          url:url,
+          dataType:"json",
+          data:({'image_id':id}),
+          success: function(result)
+              {
+                if(result !=''||result!=null){
+                  var jsondata = result;
+                      var str = "";
+                      var i;
+                      var close;
+                      for(i in jsondata){
+                        var width ;
+                        var height ;
+                        if(jsondata[i]['width']<=550){
+                            width = jsondata[i]['width']+"px";
+                            height = jsondata[i]['height']+"px";
+                            close = (jsondata[i]['width']-10)+"px";
+                        }else{
+                            width = 550+"px";
+                            height = 550*(jsondata[i]['height']/jsondata[i]['width'])+"px";
+                            close = 540+"px";
+                        }
+
+                          var base_url = "<?php echo base_url(); ?>";
+                          var image = '"'+jsondata[i]['image']+'"'.toString();
+                          var  thumb_image= '"'+jsondata[i]['thumb_image']+'"'.toString();
+                          str +="<div class='modules' title="+jsondata[i]['id']+">";
+                          str +=" <h3 class='m_title'>"+jsondata[i]['image'].split("/")[3]+"</h3>";
+                          str +="<a href='javascript:void(0)' onclick='delete_image("+jsondata[i]['id']+")'><img src="+base_url+"application/frontend/views/resources/images/close.png"+"></a>";
+
+                          str +="<p><img onclick='original_image("+i+")' src=" + base_url + jsondata[i]['thumb_image'] + "></img></p>";
+                          str +="<div class='display_none' id="+i+"><p><img style='width:"+width+" ;height:"+height+"' src=" + base_url + jsondata[i]['image'] + "></img></p>";
+                          str +="<div class='fancy_close' onclick='unblock()' style='left:"+close+";'></div>";
+                          str += "<div class='image_title' style='width:"+width+"'>";
+                          str +="<table cellspacing='0' cellpadding='0' border='0'><tbody><tr><td id='fancy_title_left'></td><td id='fancy_title_main'>";
+                          str +="<div>"+jsondata[i]['image'].split("/")[3]+"</div></td><td id='fancy_title_right'></td></tr></tbody></table></div></div>";
+                          str += "<div class='rotation'><span onclick='rotation(0,"+jsondata[i]['id']+","+image+","+thumb_image+")'>左旋90度</span> <span onclick='rotation(1,"+jsondata[i]['id']+","+image+","+thumb_image+")'>右旋90度</span></div>";
+                          str += "</div>";
+                       //alert(jsondata[i]['thumb_image']);
+                      }
+                        var num1 = Math.round(i);
+                        var num2 = Math.round(5);
+                        var result = num1/num2;
+                        var five = Math.floor(result);
+                        var height = (five+1)*162+860+"px";
+                        $(".body").css("min-height",height);
+                        $(".body").css("overflow","hidden");
+                         $("#module_list").html(str);
+                         if(str!=""){
+                          $("#first_step").addClass("ca-menu_hover");
+                          $("#first_step span").addClass("ca-menu_hover_ca-icon");
+                          $("#first_step h2").addClass("ca-menu_hover_ca-main");
+                          $("#first_step span").html(".");
+                          step_one_success = 1;
+                          //第二步
+                          $("#second_step").addClass("ca-menu_hover");
+                          $("#second_step span").addClass("ca-menu_hover_ca-icon");
+                          $("#second_step h2").addClass("ca-menu_hover_ca-main");
+                          $("#second_step span").html(".");
+                          step_two_success = 1;
+                          check_upload();
+                        }else{
+                          $("#module_list").html("<div style='padding-top:10px;padding-bottom:10px;color: #AA7700;'>上传后的图片根据需要排列顺序，以便按序完成资料的生成！</div>");
+                          $("#first_step").removeClass("ca-menu_hover");
+                          $("#first_step span").removeClass("ca-menu_hover_ca-icon");
+                          $("#first_step h2").removeClass("ca-menu_hover_ca-main");
+                          $("#first_step span").html("'");
+                          step_one_success = 0;
+                          //第二步
+                          $("#second_step").removeClass("ca-menu_hover");
+                          $("#second_step span").removeClass("ca-menu_hover_ca-icon");
+                          $("#second_step h2").removeClass("ca-menu_hover_ca-main");
+                          $("#second_step span").html("'");
+                          step_two_success = 0;
+                          check_upload();
+                        }
+                        //得到图片顺序id
+                         var $list = $("#module_list");
+                         var old_order = [];
+                         $list.children(".modules").each(function() {
+                              old_order.push(this.title);
+                           });
+                 var oldid = old_order.join(',');
+                // var oldid = $orderlist.val();
+                 $("#oldid").attr("value",oldid);
+                  }
+              },
+             error: function(XMLHttpRequest, textStatus, errorThrown) {
+                  alert(XMLHttpRequest.status);
+                  alert(XMLHttpRequest.readyState);
+                  alert(textStatus);
+              }
+          });
+}
+//=========================================================弹出原始图片=========================================//
+function original_image(id) {
+        $.blockUI({
+             message: $("#"+id),
+             showOverlay: true,
+             css: {
+                 width: '0px',
+                 height:'0px',
+                 border:'1px none #09335F',
+                 margin: '0 atuo',
+                 top: '12%'
+                },
+            onOverlayClick: $.unblockUI
+             });
+
+       // setTimeout($.unblockUI, 2000);
+}
+function unblock(){
+    $.unblockUI();
+}
+
+//=========================================================上传步骤=========================================//
+
+//上传第三步
+function step_three(){
+    var d_user = $("#pdfuser").attr("value");
+    var d_name = $("#pdfname").val();
+    var d_school = $("#pdfschool").val();
+    var d_summary = $("#pdfsummary").val();
+    if(d_summary.length!=""&&d_name!=""&&d_user!=""&&d_school!=""){
+        $("#third_step").addClass("ca-menu_hover");
+        $("#third_step span").addClass("ca-menu_hover_ca-icon");
+        $("#third_step h2").addClass("ca-menu_hover_ca-main");
+        $("#third_step span").html(".");
+        step_three_success = 1;
+    }else{
+        $("#third_step").removeClass("ca-menu_hover");
+        $("#third_step span").removeClass("ca-menu_hover_ca-icon");
+        $("#third_step h2").removeClass("ca-menu_hover_ca-main");
+        $("#third_step span").html("'");
+        step_three_success = 0;
+    }
+    check_upload();
+}
+//=========================================================判断上传按钮是否可用=========================================//
+function check_upload(){
+    if(step_one_success == 1&&step_two_success == 1&&step_three_success == 1){
+        // $("#filecontent").attr("disabled",false);
+        $("#filecontent").css("cursor","pointer");
+    }else{
+        // $("#filecontent").attr("disabled",true);
+        $("#filecontent").css("cursor","not-allowed");
+    }
+}
+//=========================================================键盘敲击事件=========================================//
+$(document).keydown(function(event){
+    var key = event.keyCode;
+    if(key!=""&&key!=null){
+        step_three();
+        check_upload();
+    }
+});
+//=========================================================图片旋转=========================================//
+var rotation = function(obj,id,image,thumb_image){
+  var img_class = $(".modules[title="+id+"]").find("img").attr("class");
+  var rotate_direct = "left";
+  if(obj == 0){
+    rotate_direct = "left";
+  } else{
+    rotate_direct = "right";
+  }
+  if(img_class == "undefined"||(img_class != "rotation_left_90"&&img_class != "rotation_right_90"&&img_class != "rotation_down_180")){
+     if(obj == 0){
+      $(".modules[title="+id+"]").find("img").addClass('rotation_left_90');
+    }
+    if(obj == 1){
+      $(".modules[title="+id+"]").find("img").addClass('rotation_right_90');
+    }
+  }else if((img_class == "rotation_left_90"&&obj == 0)||(img_class == "rotation_right_90"&&obj == 1)){
+    $(".modules[title="+id+"]").find("img").removeClass();
+    $(".modules[title="+id+"]").find("img").addClass('rotation_down_180');
+  }else if((img_class == "rotation_left_90"&&obj == 1)||(img_class == "rotation_right_90"&&obj == 0)){
+    $(".modules[title="+id+"]").find("img").removeClass();
+  }else if(img_class == "rotation_down_180"&&obj == 1){
+    $(".modules[title="+id+"]").find("img").removeClass();
+    $(".modules[title="+id+"]").find("img").addClass('rotation_left_90');
+  }else if(img_class == "rotation_down_180"&&obj == 0){
+    $(".modules[title="+id+"]").find("img").removeClass();
+    $(".modules[title="+id+"]").find("img").addClass('rotation_right_90');
+  }
+
+  var url = $("#baseUrl").val()+"data/wxc_image/image_rotate";
+  var params =({'image':image,'thumb_image':thumb_image,'rotate_direct':rotate_direct,});
+  var retData = ajax_common(url,params);
+  // alert(retData)
+}
+</script>
+<script  defer="defer">
+  $("._body").css("overflow","hidden")
+</script>
+</body>
 </html>
 
 

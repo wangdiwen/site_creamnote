@@ -621,8 +621,14 @@ class WXC_personal extends CI_Controller
         if (isset($_SESSION['wx_user_id']) && $_SESSION['wx_user_id'])
         {
             $user_id = $_SESSION['wx_user_id'];
-            if (! $user_id > 0)
+            if (! is_numeric($user_id) || ! $user_id > 0)
             {
+                echo 'failed';
+                return;
+            }
+
+            // check some case necessary
+            if (! $nice_name) {
                 echo 'failed';
                 return;
             }
@@ -635,7 +641,11 @@ class WXC_personal extends CI_Controller
                 'user_period' => $period,
                 'user_phone' => $phone
                 );
-            $this->wxm_user->update_base_info($info);
+            $ret = $this->wxm_user->update_base_info($info);
+            if ($ret) {
+                // update the session, $_SESSION['wx_user_name']
+                $_SESSION['wx_user_name'] = $nice_name;
+            }
 
             // update the school and major info
             $info = array(

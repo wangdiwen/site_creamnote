@@ -239,8 +239,10 @@ class WXM_User extends CI_Model
                 $table = $this->wx_table;
                 $this->db->where('user_id', $user_id);
                 $this->db->update($table, $data);
+                return true;
             }
         }
+        return false;
     }
 /*****************************************************************************/
 

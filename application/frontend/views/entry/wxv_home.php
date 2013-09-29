@@ -206,22 +206,22 @@ function checkLogin(){
 
     <!-- #camera_wrap -->
     <div class="camera_wrap camera_ash_skin" style="height: 430px;" id="camera_wrap">
-            <div data-thumb="/application/frontend/views/resources/images/slides/thumbs/creamnote_ad.jpg" data-src="/application/frontend/views/resources/images/slides/creamnote_ad.jpg">
+            <div data-thumb="/application/frontend/views/resources/images/slides/thumbs/creamnote_ad_1.jpg" data-src="/application/frontend/views/resources/images/slides/creamnote_ad_1.jpg">
+                <div class="camera_caption fadeFromBottom">
+                    <em>快乐学习</em>
+                </div>
+            </div>
+            <div data-thumb="/application/frontend/views/resources/images/slides/thumbs/creamnote_ad_2.jpg" data-src="/application/frontend/views/resources/images/slides/creamnote_ad_2.jpg">
+                <div class="camera_caption fadeFromBottom">
+                    <em>快乐学习</em>
+                </div>
+            </div>
+            <div data-thumb="/application/frontend/views/resources/images/slides/thumbs/creamnote_ad_3.jpg" data-src="/application/frontend/views/resources/images/slides/creamnote_ad_3.jpg">
                 <div class="camera_caption fadeFromBottom">
                     <em>快乐学习</em>
                 </div>
             </div>
             <div data-thumb="/application/frontend/views/resources/images/slides/thumbs/creamnote_ad.jpg" data-src="/application/frontend/views/resources/images/slides/creamnote_ad.jpg">
-                <div class="camera_caption fadeFromBottom">
-                    <em>快乐学习</em>
-                </div>
-            </div>
-            <div data-thumb="/application/frontend/views/resources/images/slides/thumbs/road.jpg" data-src="/application/frontend/views/resources/images/slides/road.jpg">
-                <div class="camera_caption fadeFromBottom">
-                    <em>快乐学习</em>
-                </div>
-            </div>
-            <div data-thumb="/application/frontend/views/resources/images/slides/thumbs/sea.jpg" data-src="/application/frontend/views/resources/images/slides/sea.jpg">
                 <div class="camera_caption fadeFromBottom">
                     <em>快乐学习</em>
                 </div>
@@ -362,8 +362,8 @@ function checkLogin(){
                   }
                 ?>
               </div>
-                <div class="card_arrow_left" id="btn-left_u"></div>
-                <div class="card_arrow_right" id="btn-right_u"></div>
+                <div class="card_arrow_left" id="btn-left_u" style="margin-top: 51px;"></div>
+                <div class="card_arrow_right" id="btn-right_u" style="margin-top: 51px;"></div>
             </div>
           </div>
 

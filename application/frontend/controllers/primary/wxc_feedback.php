@@ -10,6 +10,7 @@ class WXC_Feedback extends CI_Controller
         $this->load->model('core/wxm_notify');
         $this->load->model('core/wxm_data');
         $this->load->model('core/wxm_report');
+        $this->load->model('core/wxm_admin_user');
 
         $this->load->library('wx_util');
         $this->load->library('pagination');
@@ -42,27 +43,48 @@ class WXC_Feedback extends CI_Controller
             'cur_tag_close' => '</a></span>'
             );
         $this->pagination->initialize($config);
+
+        // get creamnote admin some base info,
+        // like id, name, email
+        $admin_base_info = $this->wxm_admin_user->get_all_admin_base_info();
+        $admin_map = array();
+        foreach ($admin_base_info as $key => $value) {
+            $admin_user_id = $value['user_id'];
+            $admin_map[$admin_user_id] = array(
+                'user_name' => $value['user_name'],
+                'user_email' => $value['user_email'],
+                );
+        }
+        // wx_echoxml($admin_map);
+
         $topic_page = $this->wxm_feedback->get_feedback_info($config['per_page'], $offset);
         // add gaverter header
         foreach ($topic_page as $key => $value) {
             foreach ($value as $key_2 => $obj) {
-                // $name = $obj['user_name'];
+                $user_type = $obj['feedback_user_type'];
+                if ($user_type == '1') {  // is admin reply
+                    $obj['user_email'] = isset($admin_map[$obj['user_id']]['user_email']) ? $admin_map[$obj['user_id']]['user_email'] : '';
+                    $topic_page[$key][$key_2]['user_name'] = isset($admin_map[$obj['user_id']]['user_name']) ? '<span style="color:red;">Creamnote_'.$admin_map[$obj['user_id']]['user_name'].'</span>' : '0';
+                    $topic_page[$key][$key_2]['user_email'] = isset($admin_map[$obj['user_id']]['user_email']) ? $admin_map[$obj['user_id']]['user_email'] : '';
+                }
+
                 $user_email = $obj['user_email'];
                 if ($user_email) {
                     $topic_page[$key][$key_2]['head_url'] = wx_get_gravatar_image($user_email, 48);
                 }
                 else {  // admin header
-                    $my_email = 'dw_wang126@126.com';
+                    $my_email = 'wangdiwen@creamnote.com';
+                    $topic_page[$key][$key_2]['user_name'] = '<span style="color:red;">Creamnote_Admin</span>';
                     $topic_page[$key][$key_2]['head_url'] = wx_get_gravatar_image($my_email, 48);
                 }
             }
         }
+        // wx_echoxml($topic_page);
 
         $data = array(
             'feedback_topic' => $topic_page,
             // 'feedback_offset' => $offset,
             );
-        // echoxml($data);
         $this->load->view('share/wxv_feedback', $data);
     }
 /*****************************************************************/

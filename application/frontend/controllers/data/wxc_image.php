@@ -645,20 +645,49 @@ class WXC_Image extends CI_Controller
         }
     }
 /*****************************************************************************/
+    public function image_rotate() {
+        $image_path = $this->input->post('image');
+        $thumb_image_path = $this->input->post('thumb_image');
+        $rotate_direct = $this->input->post('rotate_direct');
+
+        // wx_loginfo($image_path);
+        // wx_loginfo($thumb_image_path);
+        // wx_loginfo($rotate_direct);
+
+        if ($image_path && $thumb_image_path
+            && in_array($rotate_direct, array('right', 'left'))) {
+            // 快速处理缩略图图片
+            $ret_thumb = $this->wx_imageapi->rotate_image($thumb_image_path, $rotate_direct);
+            $ret_image = $this->wx_imageapi->rotate_image($image_path, $rotate_direct);
+            if ($ret_thumb) {
+                echo 'success';
+            }
+            else {
+                echo 'failed';
+                die('rotate image failed');  // 中断本次请求
+            }
+
+            // fastcgi_finish_request();  // 耗时处理原图片
+            // $ret_image = $this->wx_imageapi->rotate_image($image_path, $rotate_direct);
+        }
+    }
+/*****************************************************************************/
+/*****************************************************************************/
     public function test()
     {
-        $data = array(
-            array('image' => 'upload/image/1/1_avatar.jpg'),
-             array('image' => 'upload/image/1/2_avatar.jpg'),
-              array('image' => 'upload/image/1/3_avatar.jpg'),
-                array('image' => 'upload/image/1/4_avatar.jpg'),
-                array('image' => 'upload/image/1/5_avatar.jpg')
-            );
-        $ret = $this->compute_width_hight($data);
-        echoxml($ret);
+        // $this->image_rotate();
+        // $data = array(
+        //     array('image' => 'upload/image/1/1_avatar.jpg'),
+        //      array('image' => 'upload/image/1/2_avatar.jpg'),
+        //       array('image' => 'upload/image/1/3_avatar.jpg'),
+        //         array('image' => 'upload/image/1/4_avatar.jpg'),
+        //         array('image' => 'upload/image/1/5_avatar.jpg')
+        //     );
+        // $ret = $this->compute_width_hight($data);
+        // echoxml($ret);
 
-        $ret1 = $this->group_image($ret);
-        echoxml($ret1);
+        // $ret1 = $this->group_image($ret);
+        // echoxml($ret1);
     }
 /*****************************************************************************/
 }

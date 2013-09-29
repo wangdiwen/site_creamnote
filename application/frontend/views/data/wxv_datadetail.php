@@ -382,77 +382,6 @@ function login_form(){
 $(function() {
 
 
-//=========================================================用户登陆=========================================//
-    document.onkeydown = function(e){
-	    var ev = document.all ? window.event : e;
-	    if(ev.keyCode==13) {
-	    	 var wx_email=$("#username").attr("value");
-         var wx_password=$("#password").attr("value");
-         var url ='<?php echo site_url('home/login'); ?>';
-         $.ajax({
-         type:"post",
-         data:({'wx_email': wx_email, 'wx_password': wx_password}),
-         url:url,
-         success: function(result)
-             {
-             	if(result=='success'){
-             		alert("欢迎回来");
-             		$.unblockUI();
-             		window.location.reload();
-                 }else if(result=='no-user'){
-                     alert("没有该用户");
-                 }else if (result=='passwd-wrong'){
-                 	 alert("密码错误");
-                 }
-                 else if (result=='database-wrong'){
-                 	alert("数据库连接失败");
-                 }
-
-             },
-
-            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                         alert(XMLHttpRequest.status);
-                         alert(XMLHttpRequest.readyState);
-                         alert(textStatus);
-                     }
-         });
-
-	     }
-	};
-
-$("#signin_submit").click(function(){
-    var wx_email=$("#username").attr("value");
-    var wx_password=$("#password").attr("value");
-    var url ='<?php echo site_url('home/login'); ?>';
-    $.ajax({
-    type:"post",
-    data:({'wx_email': wx_email, 'wx_password': wx_password}),
-    url:url,
-    success: function(result)
-        {
-        	if(result=='success'){
-        		alert("欢迎回来");
-        		$.unblockUI();
-        		window.location.reload();
-            }else if(result=='no-user'){
-                alert("没有该用户");
-            }else if (result=='passwd-wrong'){
-            	 alert("密码错误");
-            }
-            else if (result=='database-wrong'){
-            	alert("数据库连接失败");
-            }
-
-        },
-
-       error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    alert(XMLHttpRequest.status);
-                    alert(XMLHttpRequest.readyState);
-                    alert(textStatus);
-                }
-    });
-});
-
 //判断登陆
 if(if_login!=""){
 
@@ -607,7 +536,7 @@ if(if_login!=""){
             if (isset($_SESSION["wx_user_name"]) && $_SESSION["wx_user_name"] != ""){
               echo "<a class=' common_show_login_win' onclick='submit_compliant()' style='color:red;' href=".base_url()."core/wxc_download_note/download_file/".$data_id."><input style='width: 90px;' type='button' class='button_c' value='下载笔记'></a>";
             }else{
-              echo "<a class='show_loginForm  common_show_login_win' style='color:red;' href='#'><input style='width: 90px;' type='button' class='button_c' value='下载笔记'></a>";
+              echo "<a class='show_loginForm  ' onclick='download_notes(".$data_id.")' style='color:red;' href='#'><input  style='width: 90px;' type='button' class='button_c common_show_login_win' value='下载笔记'></a>";
             }
            ?>
              <form target="_blank" style="margin-top: -28px;margin-left: 98px;"  method="post" action="<?php echo base_url();?>primary/wxc_feedback/report_page">
@@ -731,7 +660,7 @@ if(if_login!=""){
           <?php }?>
 
 
-          <li style="max-height: 53px;overflow: hidden;overflow-y: auto;">
+          <li style="max-height: 100px;overflow: hidden;overflow-y: auto;">
               <span class="datadetailLi">简介：<?php if (isset($data_summary) && $data_summary!= "") echo $data_summary; else echo "作者比较懒，什么简介都没有！"; ?></span>
           </li>
 
@@ -762,7 +691,7 @@ if(if_login!=""){
 		<div class="sidebar" style="">
       <div class="_detail_viewinfo">
         <div class="_detail_view_title">
-          <div class="_grgh" style="margin: 10px 0 10px 0px;">最近浏览资料</div>
+          <div class="_grgh" style="margin: 10px 0 10px 0px;">最近浏览笔记</div>
         </div>
       </div>
 			<ul>

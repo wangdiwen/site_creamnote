@@ -108,15 +108,41 @@ class WX_Imageapi
         return false;
     }
 /*****************************************************************************/
+    public function rotate_image($image_path = '', $direct = 'right') {  // rotate 90, by left or right
+        if (file_exists($image_path)) {
+            $config_rotate = array(
+                'image_library' => 'gd2',
+                'source_image' => $image_path,
+                'rotation_angle' => '270',
+                );
+            if ($direct == 'left') {
+                $config_rotate['rotation_angle'] = '90';
+            }
+            $this->CI->image_lib->clear();
+            $this->CI->image_lib->initialize($config_rotate);
+            if (! $this->CI->image_lib->rotate()) {
+                // echo $this->CI->image_lib->display_errors();
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
+/*****************************************************************************/
     public function test()                          // 测试接口
     {
         echo 'Imageapi libraries...'.'<br />';
 
-        // thumb image
-        $ret0 = $this->thumb_image('upload/image/image_demo.jpg');
-        $ret1 = $this->add_water_text('upload/image/image_demo.jpg', 'water text');
-        $ret2 = $this->add_water_image('upload/image/image_demo.jpg', 'upload/image/logo_example.png');
-        if ($ret0 && $ret1 && $ret2)
+        $image_path = 'tmp/1.jpg';
+        $ret = $this->rotate_image($image_path, 'right');
+
+        // // thumb image
+        // $ret0 = $this->thumb_image('upload/image/image_demo.jpg');
+        // $ret1 = $this->add_water_text('upload/image/image_demo.jpg', 'water text');
+        // $ret2 = $this->add_water_image('upload/image/image_demo.jpg', 'upload/image/logo_example.png');
+
+
+        if ($ret)
             echo '... success ...'.'<br />';
         else
             echo '... failed ...'.'<br />';

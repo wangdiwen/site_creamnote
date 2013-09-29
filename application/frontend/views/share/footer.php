@@ -14,16 +14,16 @@
             </div>
             <div class="foot_list_one fl">
                 <p class="foot_title" style="margin-bottom: 18px;">关注</p>
-                <p class="foot_content">人人</p>
-                <p class="foot_content">微博</p>
-                <p class="foot_content">QQ</p>
-                <p class="foot_content">豆瓣</p>
+                <p class="foot_content"><span class="foot_content_ren"></span>人人</p>
+                <p class="foot_content "><span class="foot_content_wei"></span>微博</p>
+                <p class="foot_content "><span class="foot_content_qq"></span>QQ</p>
+                <p class="foot_content "><span class="foot_content_dou"></span>豆瓣</p>
             </div>
             <div class="foot_list_one fl">
                 <p class="foot_title" style="margin-bottom: 18px;">帮助</p>
                 <a  style="" href="<?php echo site_url('static/wxc_help/faq'); ?>"><p class="foot_content">常见问题</p></a>
                 <a  style="" href="<?php echo site_url('static/wxc_help/skills'); ?>"><p class="foot_content">帮助教程</p></a>
-                <p class="foot_content">网站导航</p>
+                <a  style="" href="<?php echo site_url('static/wxc_help/sitemap'); ?>"><p class="foot_content">网站导航</p></a>
             </div>
             <div class="foot_list_one fl">
                 <p class="foot_title" style="margin-bottom: 18px;">服务条款</p>

@@ -25,7 +25,7 @@ class WXC_Home extends CI_Controller
 
         // below is test lib iface
         // $this->load->library('wx_tcpdfapi');
-        // $this->load->library('wx_imageapi');
+        $this->load->library('wx_imageapi');
         // $this->load->library('wx_aliossapi');
         $this->load->library('wx_general');
         $this->load->library('wx_util');
@@ -1082,8 +1082,15 @@ class WXC_Home extends CI_Controller
 /*****************************************************************/
     public function test()
     {
-        $comment_data_id_list = $this->input->cookie('comment_data_id_list');
-        echo $comment_data_id_list;
+        $this->wx_imageapi->test();
+
+
+        // $session_id = session_id();
+        // $cookie_id = $_COOKIE["PHPSESSID"];
+        // wx_echoxml('session_id() = '.$session_id);
+        // wx_echoxml('$_COOKIE["PHPSESSID"] = '.$cookie_id);
+        // $comment_data_id_list = $this->input->cookie('comment_data_id_list');
+        // echo $comment_data_id_list;
 
         // $this->wx_tcpdfapi->test();
         // $str = '随着嵌入式技术网络技随着嵌入式技术网络技测试';

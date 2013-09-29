@@ -665,9 +665,9 @@ function download_notes(data_id){
   if(loginname == ""){
       $("#login_win").css("display","block");
       $('html,body').animate({scrollTop: '0px'}, 800);
+      warnMes("亲，要先登录哦！");
     }else{
       location.href = $("#baseUrl").val()+"core/wxc_download_note/download_file/"+data_id;
-
     }
 }
 

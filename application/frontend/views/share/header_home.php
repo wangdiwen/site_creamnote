@@ -97,7 +97,7 @@ var loginname = '<?php if (isset($_SESSION["wx_user_name"]) && $_SESSION["wx_use
     $(function(){
       var UA = navigator.userAgent.toLowerCase();
       if(UA.indexOf("msie 7.0")>=0||UA.indexOf("msie 8.0")>=0){
-        alert("如果您在使用ie8以及更低版本，建议您升级到ie9或者更高版本浏览器，获得更好体验！\n如果您使用国产的山寨浏览器，请开启兼容模式！\n谢谢！")
+        errorMes("如果您在使用ie8以及更低版本，建议您升级到ie9或者更高版本浏览器，获得更好体验！\n如果您使用国产的山寨浏览器，请开启兼容模式！\n谢谢！")
       }
       // if(loginname == ""){
       //   var timer = setInterval( 'myrefresh()', 4000);
@@ -172,8 +172,21 @@ var loginname = '<?php if (isset($_SESSION["wx_user_name"]) && $_SESSION["wx_use
     document.onkeydown = function(e){
       var wx_email=$("#username").attr("value");
       var wx_password=$("#password").attr("value");
+      var ev = document.all ? window.event : e;
+      var login_block = $(".login_win_base").css("display");
+      if(login_block == "none"){
+        return;
+      }
+      if(wx_email == "" && ev.keyCode ==13){
+        warnMes("邮箱号不能为空");
+        return;
+      }
+      if(wx_password == "" && ev.keyCode ==13){
+        warnMes("密码不能为空");
+        return;
+      }
       if(loginname==""&&wx_email!=""&&wx_password!=""){
-        var ev = document.all ? window.event : e;
+
         if(ev.keyCode==13) {
         var if_auto_login = "false";
         if ($("#remember").attr("checked")) {
@@ -192,12 +205,12 @@ var loginname = '<?php if (isset($_SESSION["wx_user_name"]) && $_SESSION["wx_use
                 if(result=='success'){
                     location.href='<?php echo site_url('home/personal'); ?>';
                  }else if(result=='no-user'){
-                     alert("没有该用户");
+                     errorMes("没有该用户");
                  }else if (result=='passwd-wrong'){
-                     alert("密码错误");
+                     errorMes("密码错误");
                  }
                  else if (result=='database-wrong'){
-                    alert("数据库连接失败");
+                    errorMes("数据库连接失败");
                  }
 
              },
@@ -224,6 +237,14 @@ var loginname = '<?php if (isset($_SESSION["wx_user_name"]) && $_SESSION["wx_use
         var wx_email=$("#username").attr("value");
         var wx_password=$("#password").attr("value");
         var url ='<?php echo site_url('home/login'); ?>';
+        if(wx_email == "" ){
+          warnMes("邮箱号不能为空");
+          return;
+        }
+        if(wx_password == "" ){
+          warnMes("密码不能为空");
+          return;
+        }
         $.ajax({
         type:"post",
         data:({'wx_email': wx_email, 'wx_password': wx_password ,'if_auto_login':if_auto_login}),
@@ -233,12 +254,12 @@ var loginname = '<?php if (isset($_SESSION["wx_user_name"]) && $_SESSION["wx_use
                 if(result=='success'){
                     location.href='<?php echo site_url('home/personal'); ?>';
                 }else if(result=='no-user'){
-                    alert("没有该用户");
+                    errorMes("没有该用户");
                 }else if (result=='passwd-wrong'){
-                     alert("密码错误");
+                    errorMes("密码错误");
                 }
                 else if (result=='database-wrong'){
-                    alert("数据库连接失败");
+                    errorMes("数据库连接失败");
                 }
 
             },

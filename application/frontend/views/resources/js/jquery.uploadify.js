@@ -696,9 +696,9 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 				switch(errorCode) {
 					case SWFUpload.QUEUE_ERROR.QUEUE_LIMIT_EXCEEDED:
 						if (settings.queueSizeLimit > errorMsg) {
-							this.queueData.errorMsg += '\nThe number of files selected exceeds the remaining upload limit (' + errorMsg + ').';
+							this.queueData.errorMsg += '\n一次性制作图片数量不能超过 (' + errorMsg + ').';
 						} else {
-							this.queueData.errorMsg += '\nThe number of files selected exceeds the queue size limit (' + settings.queueSizeLimit + ').';
+							this.queueData.errorMsg += '\n超过了最大尺寸限制 (' + settings.queueSizeLimit + ').';
 						}
 						break;
 					case SWFUpload.QUEUE_ERROR.FILE_EXCEEDS_SIZE_LIMIT:
@@ -804,6 +804,7 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 			switch(errorCode) {
 				case SWFUpload.UPLOAD_ERROR.HTTP_ERROR:
 					errorString = 'HTTP Error (' + errorMsg + ')';
+                    alert("出错啦！！建议你更新最新的flash插件")
 					break;
 				case SWFUpload.UPLOAD_ERROR.MISSING_UPLOAD_URL:
 					errorString = 'Missing Upload URL';

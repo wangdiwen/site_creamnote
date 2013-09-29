@@ -394,14 +394,30 @@ padding-left: 10px;
     background: url(../images/new_version/dy_menu_nick.png) no-repeat 4px 17px;
 }
 ._head_search{
-    background: url(../images/new_version/dy_search_input.png) no-repeat 4px 18px;
-    width: 200px;
+    background: url(../images/new_version/search_middle.png) repeat-x 4px 18px;
+    width: 230px;
     height: 48px;
     position: absolute;
-    top: 3px;
-    margin-left: 645px;
+    top: 0px;
+    margin-left: 585px;
 }
-._head_search span{
+._head_search_left{
+    background: url(../images/new_version/search_left.png) no-repeat 4px 18px;
+    width: 40px;
+    height: 48px;
+    position: absolute;
+    top: 0px;
+    margin-left: 563px;
+}
+._head_search_right{
+    background: url(../images/new_version/search_right.png) no-repeat 4px 18px;
+    width: 40px;
+    height: 48px;
+    position: absolute;
+    top: 0px;
+    margin-left: 811px;
+}
+._head_search_right span{
     background: url(../images/new_version/dy_search_button.png) no-repeat 4px 18px;
     width: 34px;
     height: 38px;
@@ -412,13 +428,14 @@ padding-left: 10px;
 ._head_search input{
     background: transparent;
     border: none;
-    width: 139px;
+    width: 194px;
     margin-top: 21px;
-    margin-left: 11px;
+    margin-left: 1px;
     cursor: initial;
     outline: medium;
-    height: 14px;
-
+    height: 18px;
+    padding-left: 0;
+    padding-top: 4px;
     -webkit-box-shadow: none!important;
     -moz-box-shadow: none!important;
     box-shadow: none!important;

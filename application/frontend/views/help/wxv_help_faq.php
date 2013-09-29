@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01al//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>常见问题</title>
+    <title>网站导航</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" href="/application/frontend/views/resources/css/reset.css" />
     <link rel="stylesheet" href="/application/frontend/views/resources/css/wx_footlist.css" />
@@ -34,7 +34,7 @@ $(function(){
       <ul class="foot_list_ul">
         <li class="nowli"><a href="#" title="常见问题">常见问题</a></li>
         <li><a href="<?php echo site_url('static/wxc_help/skills'); ?>" title="帮助教程">帮助教程</a></li>
-        <li><a href="#" title="网站地图">网站地图</a></li>
+        <li><a href="<?php echo site_url('static/wxc_help/sitemap'); ?>" title="网站地图">网站导航</a></li>
       </ul>
     </div>
     <div class="foot_list_right" style="padding-bottom: 40px;border-left: 1px solid rgb(163, 177, 209);padding-left: 50px;">

@@ -430,7 +430,7 @@ class WXC_Data extends CI_Controller
     {
         $upload_path = '/alidata/www/creamnote/upload/tmp/';     // 存放文件的绝对目录路径
 
-        if (!empty($_FILES))
+        if (! empty($_FILES))
         {
             if ($_FILES["Filedata"]["error"] > 0)   // 错误
             {

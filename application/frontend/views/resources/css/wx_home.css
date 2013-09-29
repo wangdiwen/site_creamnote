@@ -851,7 +851,7 @@ a{
 	border-radius: 3px;
 }
 .user_head{
-	width: 83px;
+	width: 100px;
 	padding-left: 10px;
 	position: absolute;
 	overflow: hidden;
@@ -940,7 +940,34 @@ a{
 }
 .foot_title{
 	color: #fff!important;
-
+}
+.foot_content_ren{
+	background: url(../images/new_version/follow_pic.jpg) no-repeat 1px -30px;
+	height: 16px;
+	width: 17px;
+	float: left;
+	margin-right: 10px;
+}
+.foot_content_qq{
+	background: url(../images/new_version/follow_pic.jpg) no-repeat 1px -45px;
+	height: 16px;
+	width: 17px;
+	float: left;
+	margin-right: 10px;
+}
+.foot_content_wei{
+	background: url(../images/new_version/follow_pic.jpg) no-repeat 1px -15px;
+	height: 16px;
+	width: 17px;
+	float: left;
+	margin-right: 10px;
+}
+.foot_content_dou{
+	background: url(../images/new_version/follow_pic.jpg) no-repeat 1px 0px;
+	height: 16px;
+	width: 17px;
+	float: left;
+	margin-right: 10px;
 }
 /* -------------------反馈快捷键----------------------*/
 .feedback{

@@ -62,12 +62,18 @@ class WXM_Feedback extends CI_Model
                 $followed_data = $query->result_array();
 
                 // filter admin reply, add name '管理员'
-                foreach ($followed_data as $key => $value) {
-                    $user_name = $value['user_name'];
-                    if (! $user_name) {  // is admin reply
-                        $followed_data[$key]['user_name'] = '<span style="color:red;">Creamnote管理员</span>';
-                    }
-                }
+                // foreach ($followed_data as $key => $value) {
+                //     $user_type = $value['feedback_user_type'];
+                //     if ($user_type == '1') {  // is admin reply
+
+                //     }
+
+
+                    // $user_name = $value['user_name'];
+                    // if (! $user_name) {  // is admin reply
+                    //     $followed_data[$key]['user_name'] = '<span style="color:red;">Creamnote管理员</span>';
+                    // }
+                // }
 
                 if ($followed_data)
                 {

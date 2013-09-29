@@ -13,6 +13,7 @@
    	<script type="text/javascript" src="/application/frontend/views/resources/js/school.js"></script>
     <script type="text/javascript" src="/application/frontend/views/resources/js/common.js"></script>
     <script type="text/javascript" src="/application/frontend/views/resources/js/chosen.jquery.js"></script>
+
 <script type="text/javascript">
 <!-- Javascript functions -->
 var img_id_upload = new Array();//初始化数组，存储已经上传的图片名
@@ -28,7 +29,8 @@ $(function() {
     	'auto'     : true,//关闭自动上传
     	'removeTimeout' : 1,//文件队列上传完成1秒后删除
         'swf'      : '/application/frontend/views/data/uploadify.swf',
-        'uploader' : '<?php echo site_url('data/wxc_data/upload_file'); ?>',
+        'uploader' : '<?php echo site_url('data/wxc_data/upload_file'); ?>/<?php echo session_id();?>',
+        'formData': { '<?php echo session_name();?>': '<?php echo session_id();?>'},
         'method'   : 'post',//方法，服务端可以用$_POST数组获取数据
 		'buttonText' : '选择资料',//设置按钮文本
         'multi'    : false,//允许同时上传多张图片
@@ -36,6 +38,7 @@ $(function() {
         //'fileTypeDesc' : 'Image Files',//只允许上传图像
         'fileTypeExts' : '*.pdf; *.ppt; *.pptx ;*.docx;*.doc;*.wps;',//限制允许上传的图片后缀
         'fileSizeLimit' : '4000KB',//限制上传的图片不得超过4M
+        // 'debug' : true,
         'onSelect' : function(file) {
 			var fileName="" ;
 			var name = file.name.split(".");
@@ -70,6 +73,10 @@ $(function() {
     });
 
     $("#filecontent").click(function(){
+        if(step_one_success == 0||step_two_success == 0||step_three_success == 0){
+            warnMes("表单填写完整才能提交！");
+            return;
+        }
         showLoading("文档正在努力上传当中,请稍等。。。");
     	var data_status;
     	var data_preview;
@@ -121,11 +128,11 @@ $(function() {
             {
               if(result=='success'){
                // location.reload();
-                    var title = "分享干货";
-                    var content = "你的笔记已经上传成功<br/>两秒后自动关闭该窗口";
-                    var url = $("#baseUrl").val()+"home/personal";
-                    showDialog(title,content,url);
-            	   // location.href='<?php echo site_url('home/personal'); ?>';
+                    // var title = "分享干货";
+                    // var content = "你的笔记已经上传成功<br/>两秒后自动关闭该窗口";
+                    // var url = $("#baseUrl").val()+"home/personal";
+                    // showDialog(title,content,url);
+            	   location.href='<?php echo site_url('home/personal'); ?>';
                 }
 
             },
@@ -345,10 +352,10 @@ function step_three(){
 //=========================================================判断上传按钮是否可用=========================================//
 function check_upload(){
     if(step_one_success == 1&&step_two_success == 1&&step_three_success == 1){
-        $("#filecontent").attr("disabled",false);
+        // $("#filecontent").attr("disabled",false);
         $("#filecontent").css("cursor","pointer");
     }else{
-        $("#filecontent").attr("disabled",true);
+        // $("#filecontent").attr("disabled",true);
         $("#filecontent").css("cursor","not-allowed");
     }
 }
@@ -504,7 +511,7 @@ function makeCenter()
                <!--  <p><a href="javascript:$('#file_upload').uploadify('settings', 'formData', {'typeCode':document.getElementById('id_file').value});$('#file_upload').uploadify('upload','*')">上传</a>
 				<a href="javascript:$('#file_upload').uploadify('cancel','*')">重置上传队列</a>
 				</p>  -->
-				<div id="uploadsuccess" style="margin-bottom:12px;color:#AA7700;">支持的资料格式(*.pdf;*.docx;*.doc;*.wps;*.ppt;*.pptx)</div>
+				<div id="uploadsuccess" style="margin-bottom:12px;color:#AA7700;">支持的资料格式(*.pdf;*.docx;*.doc;*.wps;*.ppt;*.pptx),最大（4M）</div>
             </fieldset>
             </div>
  		</div>
@@ -609,7 +616,7 @@ function makeCenter()
             </div>
 		</div>
 
-        <div><input type="button" name="filecontent" class="button_c" id="filecontent" value="完成上传" onclick="" disabled style="cursor:not-allowed;height:32px;width:100px"></div>
+        <div><input type="button" name="filecontent" class="button_c gravatar" title="表单填写完整才能提交" id="filecontent" value="完成上传" onclick=""  style="cursor:not-allowed;height:32px;width:100px"></div>
 	   </div>
     </div>
 

@@ -661,14 +661,14 @@ function delete_data(dataid){
             <div class="_grgh">个人干货</div>
 
             <div class="filter _grgh" style="float:right;">
-            <div class="fl"><a class="active" id="button_one" rel="button_one_c" style="cursor: pointer;">已分享笔记</a></div>
-            <div class="_changedata_nick fl"><a id="button_two" rel="button_two_c" style="cursor: pointer;">待审核笔记</a></div>
-            <div class="_changedata_nick fl"><a id="button_three" rel="button_three_c" style="margin-right:0;cursor: pointer;">需完善笔记</a></div>
+            <div class="fl"><a class="active" id="button_one" onclick="javascript:delete_display()" rel="button_one_c" style="cursor: pointer;">已分享笔记</a></div>
+            <div class="_changedata_nick fl"><a id="button_two" onclick="javascript:delete_display()" rel="button_two_c" style="cursor: pointer;">待审核笔记</a></div>
+            <div class="_changedata_nick fl"><a id="button_three" onclick="javascript:delete_display()" rel="button_three_c" style="cursor: pointer;">需完善笔记</a></div>
             <?php if(isset($data_info['data_unpass'])){
               $data_unpass_count = count($data_info['data_unpass']);
               if($data_unpass_count>0){
             ?>
-            <div class="_changedata_nick fl"><a id="button_four" rel="button_four_c" style="margin-right:0;cursor: pointer;">审核未通过笔记</a></div>
+            <div class="_changedata_nick fl"><a id="button_four" onclick="javascript:delete_display()" rel="button_four_c" style="margin-right:0;cursor: pointer;">审核未通过笔记</a></div>
             <?php }}?>
             </div>
         </div>

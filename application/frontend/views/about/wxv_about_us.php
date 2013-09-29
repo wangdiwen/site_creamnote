@@ -54,13 +54,14 @@
           <div class="fl" style="padding-left: 20px;">
           <p style="font-size:18px"><b>谢旺</b></p>
           <p>12届毕业生</p>
+          <p>毕业于长春工大</p>
           </div>
         </div>
         <p style="font-size:14px;padding-top: 120px;"><b>自我评价:</b></p>
-        <p style="font-size:14px;">^_^^_^^_^</p>
+        <p style="font-size:14px;">内敛却不失奔放，简单却饱含内容!</p>
 
         <p style="font-size:14px;"><b>我的目标是:</b></p>
-        <p style="font-size:14px;">^_^^_^^_^</p>
+        <p style="font-size:14px;">用技术与美的结合，创造出许多令人爱不释手的产品！</p>
 
       </div>
     </div>
