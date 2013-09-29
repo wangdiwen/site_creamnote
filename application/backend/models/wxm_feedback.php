@@ -30,7 +30,7 @@ class WXM_Feedback extends CI_Model
         return $query->result_array();
     }
 /*****************************************************************************/
-    public function admin_reply($feedback_id = 0, $feedback_content = '', $feedback_time = '') {
+    public function admin_reply($feedback_id = 0, $feedback_content = '', $feedback_time = '', $admin_user_id = 0) {
         if ($feedback_id > 0 && $feedback_content && $feedback_time) {
             $table = $this->wx_table;
             $data = array(
@@ -39,7 +39,8 @@ class WXM_Feedback extends CI_Model
                     'feedback_startup' => 'false',
                     'feedback_followed_id' => $feedback_id,
                     'feedback_user_type' => '1',
-                    'feedback_newjoin' => '',
+                    'user_id' => $admin_user_id,
+                    'feedback_newjoin' => 'false',
                     );
             $this->db->insert($table, $data);
             return true;

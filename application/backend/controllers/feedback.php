@@ -7,7 +7,8 @@ class Feedback extends CI_Controller
         parent::__construct();
         $this->load->model('wxm_feedback');
         $this->load->model('wxm_notify');
-        // $this->load->library('wx_util');
+
+        $this->load->library('wx_util');
         $this->load->library('pagination');
     }
 /*****************************************************************************/
@@ -61,9 +62,13 @@ class Feedback extends CI_Controller
         // $feedback_id = 1;
         // $feedback_content = '测试管理员回复功能';
 
+        // get cur admin user info
+        $cur_user_info = $this->wx_util->get_admin_info();
+        $admin_user_id = $cur_user_info['admin_user_id'];
+
         if ($feedback_id > 0 && $feedback_content) {
             $cur_time = date('Y-m-d H:i:s');
-            $ret = $this->wxm_feedback->admin_reply($feedback_id, $feedback_content, $cur_time);
+            $ret = $this->wxm_feedback->admin_reply($feedback_id, $feedback_content, $cur_time, $admin_user_id);
             // pass this topic
             $this->wxm_feedback->pass_feedback_topic($feedback_id);
             // send email to all join topic user, except admin
