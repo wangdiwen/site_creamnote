@@ -184,10 +184,11 @@ class WX_Tcpdfapi
 
         if ($summary) {
             $this->write('笔记内容简介', 'C');
-            $str_list = wx_substr_by_length($summary, 30);  // 辅助函数，以20个汉字为长度分割字符串
+            // 辅助函数，以28个汉字为长度分割字符串，添加第一行缩进2个汉字，补偿8个空格
+            $str_list = wx_substr_by_length($summary, 28, 8);
             $len = count($str_list);
             if ($len > 1) {
-                foreach ($str_list as $content) {
+                foreach ($str_list as $key => $content) {
                     $this->write('                            '.$content, 'L');
                 }
             }
@@ -227,7 +228,7 @@ class WX_Tcpdfapi
     public function test()
     {
         $this->init_pdf();
-        $this->set_header('header_logo.png', 40, '我的标题我的标题我的标题我的标题我的标题我的标题我的标题');
+        $this->set_header('header_logo.png', 40, '我的笔记');
         // $this->set_font();
 
         // $this->add_page();
@@ -239,10 +240,10 @@ class WX_Tcpdfapi
         // $this->write('文件的内容');
         // $this->write('文件的内容');
 
-        $title = '嵌入式安全监控系统的设计与实现嵌入式安全监控系统的设计与实现';
-        $user = '王地文';
-        $school = '南京工程学院';
-        $summary = '随着嵌入式技术网络技随着嵌入式';
+        $title = '通信工程专业笔记';
+        $user = '王小明';
+        $school = '清华大学';
+        $summary = '在笔记简介中，你可以简单的介绍一下笔记的大致内容，可以包含专业课程的信息、也可以是有关技术文档的关键词等。';  // 40
         $this->add_surface($title, $user, $school, $summary);
 
         // $this->add_page();

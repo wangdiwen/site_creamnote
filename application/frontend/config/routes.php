@@ -38,11 +38,11 @@
 |
 */
 
-$route['default_controller'] = "primary/wxc_home";
+$route['default_controller'] = 'primary/wxc_home/index';
 $route['404_override'] = 'primary/wxc_home/page_404';
 
-$route['home/(:any)'] = 'primary/wxc_home/$1';
 $route['home/personal'] = 'primary/wxc_personal/personal';
+$route['home/(:any)'] = 'primary/wxc_home/$1';
 $route['user_active'] = 'primary/wxc_home/check_active';
 $route['core/wxc_(alioss|alipay|content|data_statistic|download_note|user_manager|util){1,1}/(:any)'] = 'core/wxc_$1/$2';
 $route['data/wxc_(data|image){1,1}/(:any)'] = 'data/wxc_$1/$2';

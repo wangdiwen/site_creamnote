@@ -141,6 +141,33 @@ class User_Manager extends CI_Controller
         return false;
     }
 /*****************************************************************************/
+    public function init_admin_users() {
+        $admin_0 = array(
+            'user_name' => 'steven',
+            'user_email' => 'wangdiwen@creamnote.com',
+            'user_status' => 'true',
+            'user_type' => 'super',
+            'user_token' => 'fish',
+            'user_password' => 'wangdiwen123!@#@creamnote',
+            'user_register_time' => date('Y-m-d'),
+            );
+        $admin_1 = array(
+            'user_name' => 'xiewang',
+            'user_email' => 'xiewang@creamnote.com',
+            'user_status' => 'true',
+            'user_type' => 'super',
+            'user_token' => 'cowboy',
+            'user_password' => 'xiewang123!@#@creamnote',
+            'user_register_time' => date('Y-m-d'),
+            );
+        $ret_0 = $this->wxm_admin_user->create_admin($admin_0);
+        $ret_1 = $this->wxm_admin_user->create_admin($admin_1);
+
+        if ($ret_0 && $ret_1) {
+            echo 'Init Admin Users Success !!!';
+        }
+    }
+/*****************************************************************************/
     public function admin_index()
     {
         $data = array();

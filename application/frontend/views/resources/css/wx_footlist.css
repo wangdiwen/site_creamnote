@@ -1,18 +1,24 @@
+.foot_list_left, .foot_list_right {
+    padding-bottom: 32767px!important;
+    margin-bottom: -32767px!important;
+}
 .foot_list_left{
     float: left;
-    width: 165px;
+    width: 210px;
     font-size: 15px;
-    box-shadow: 1px 0 0 0 rgba(0, 0, 0, 0.1);
-    height: 1092px
+    /*box-shadow: 1px 0 0 0 rgba(0, 0, 0, 0.1);*/
+    border-right: 1px solid rgb(125 ,142 ,167);
+    height: 1092px;
+    background: #F2F6FF;
 }
 .foot_list_right{
     float: right;
     width: 760px;
-    padding-right: 90px;
+    padding-right: 50px;
 }
 .foot_list_left h1{
     text-align: center;
-    border-bottom: 2px solid rgb(163, 177, 209);
+    border-bottom: 5px double rgb(125 ,142 ,167);
     height: 37px;
     line-height: 37px;
 }
@@ -20,12 +26,12 @@
     margin-top: 5px;
 }
 .foot_list_ul li{
-    width: 165px;
-    border-bottom: 1px solid rgb(163, 177, 209);
+    width: 210px;
+    border-bottom: 1px solid rgb(125 ,142 ,167);
     height: 37px;
     line-height: 37px;
-    background: url(../images/version/foot_list_arrow.png) no-repeat 26px 10px;
-    text-indent: 50px;
+    background: url(../images/version/foot_list_arrow.png) no-repeat 50px 10px;
+    text-indent: 75px;
 }
 .foot_list_ul .nowli{
     font-weight: bold;
@@ -34,14 +40,36 @@
     color: rgb(16, 170, 59);
 }
 .foot_list_right h2{
-    width: 800px;
     font-size: 22px;
     margin-top: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+    border-bottom: 1px dotted  rgb(125 ,142 ,167);
+    padding-bottom: 10px;
 }
 .text_line{
     line-height: 26px;
 }
 .indentation{
     text-indent: 24px;
+}
+._help_tail{
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    border-bottom: 1px dotted  rgb(125 ,142 ,167);
+    border-style:dotted;
+}
+.help_stand_right{
+    width: 256px;
+}
+.help_stand_left{
+    border-style: solid;
+    width: 500px;
+    margin-left: 248px;
+    padding-left: 10px;
+}
+.help_stand_left img {
+    border: 1px solid  rgb(125 ,142 ,167);
+}
+.help_section{
+    padding-bottom: 30px;
 }

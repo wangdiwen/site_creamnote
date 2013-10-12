@@ -125,7 +125,7 @@ var loginname = '<?php if (isset($_SESSION["wx_user_name"]) && $_SESSION["wx_use
            $("#check_login").html("");
             //var str ="<div class='fr logout transition' style='cursor:pointer' id='logout'><div class='logout_icon'>注销</div></div>";
             //str +="<a href='<?php echo site_url('home/personal'); ?>'><div class='fr login_user transition'><div class='login_user_icon'>"+loginname+"</div></div></a>";
-            var str = "<div class='fr _show_count'><span class='fl' style='padding-left:10px;'>"+loginname+"</span><span class='fr _user_name'></span>";
+            var str = "<div class='fr _show_count'><span class='fl _login_name' style='padding-left:10px;'>"+loginname+"</span><span class='fr _user_name'></span>";
             str += "<div class='_al_login'>";
             str += "<a id='_al_user' href='javascript:void(0)'><div class='_al_user fl'>个人中心</div></a>";
             str += "<a id='_al_count' href='javascript:void(0)'><div class='_al_count fl'>账户设置</div></a>";

@@ -530,14 +530,26 @@ if(if_login!=""){
 					</ul>
         </div>
         <div class="fl">
+          <span style="position: absolute;margin-top: 25px;width: 225px;margin-left: 15px;font-size: 10px;">(我们提供3页的笔记内容预览，如果想查看完整内容，您可以下载或者购买！)</span>
+        </div>
+        <div class="fl">
           <ul style="list-style-type: none;padding-left: 262px;margin-top: 25px;">
           <li>
             <?php
-            if (isset($_SESSION["wx_user_name"]) && $_SESSION["wx_user_name"] != ""){
-              echo "<a class=' common_show_login_win' onclick='submit_compliant()' style='color:red;' href=".base_url()."core/wxc_download_note/download_file/".$data_id."><input style='width: 90px;' type='button' class='button_c' value='下载笔记'></a>";
+            if($data_price != "0.00"){
+              if (isset($_SESSION["wx_user_name"]) && $_SESSION["wx_user_name"] != ""){
+                echo "<a class=' common_show_login_win'  style='color:red;' href=".base_url()."core/wxc_download_note/download_file/".$data_id."><input style='width: 90px;' type='button' class='button_c' value='购买笔记'></a>";
+              }else{
+                echo "<a class='show_loginForm  ' onclick='download_notes(".$data_id.")' style='color:red;' href='#'><input  style='width: 90px;' type='button' class='button_c common_show_login_win' value='购买笔记'></a>";
+              }
             }else{
-              echo "<a class='show_loginForm  ' onclick='download_notes(".$data_id.")' style='color:red;' href='#'><input  style='width: 90px;' type='button' class='button_c common_show_login_win' value='下载笔记'></a>";
+              if (isset($_SESSION["wx_user_name"]) && $_SESSION["wx_user_name"] != ""){
+                echo "<a class=' common_show_login_win'  style='color:red;' href=".base_url()."core/wxc_download_note/download_file/".$data_id."><input style='width: 90px;' type='button' class='button_c' value='下载笔记'></a>";
+              }else{
+                echo "<a class='show_loginForm  ' onclick='download_notes(".$data_id.")' style='color:red;' href='#'><input  style='width: 90px;' type='button' class='button_c common_show_login_win' value='下载笔记'></a>";
+              }
             }
+
            ?>
              <form target="_blank" style="margin-top: -28px;margin-left: 98px;"  method="post" action="<?php echo base_url();?>primary/wxc_feedback/report_page">
                 <input type="hidden" value="<?=$data_id?>" name="data_id">
@@ -641,6 +653,8 @@ if(if_login!=""){
       ?>
 
           </li>
+          <li>页数：<?php if (isset($data_pagecount) && $data_pagecount!= "") echo $data_pagecount; else echo ""; ?>&nbsp;页</li>
+          <li>价格：<?php if (isset($data_price) && $data_price!= "" &&$data_price!= "0.00" ) echo $data_price."&nbsp;RMB"; else echo "免费"; ?></li>
           <li>
             上传时间：<?php if (isset($data_uploadtime) && $data_uploadtime != "") echo $data_uploadtime; else echo ""; ?>
           </li>
@@ -721,8 +735,7 @@ if(if_login!=""){
 						echo "</span></a></li>";
 					}
 				}?>
-
-				</ul>
+    	 </ul>
 			</li>
 		</ul>
 		</div>

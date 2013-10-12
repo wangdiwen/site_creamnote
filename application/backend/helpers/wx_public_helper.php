@@ -150,6 +150,14 @@ if (! function_exists('wx_get_tomorrow_time'))
     }
 }
 /*****************************************************************************/
+if (! function_exists('wx_get_after_tomorrow_time')) {
+    function wx_get_after_tomorrow_time() {
+        $set_time = '00:01:00';
+        $after_tomorrow = date('Y-m-d', strtotime('+2 day'));
+        $after_tomorrow_time = $after_tomorrow.' '.$set_time;
+        return $after_tomorrow_time;
+    }
+}
 /*****************************************************************************/
 if (! function_exists('wx_get_filename'))
 {

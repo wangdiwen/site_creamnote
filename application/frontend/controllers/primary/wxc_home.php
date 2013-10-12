@@ -24,8 +24,8 @@ class WXC_Home extends CI_Controller
         $this->load->model('core/wxm_notice');
 
         // below is test lib iface
-        // $this->load->library('wx_tcpdfapi');
-        $this->load->library('wx_imageapi');
+        $this->load->library('wx_tcpdfapi');
+        // $this->load->library('wx_imageapi');
         // $this->load->library('wx_aliossapi');
         $this->load->library('wx_general');
         $this->load->library('wx_util');
@@ -347,9 +347,12 @@ class WXC_Home extends CI_Controller
             }
             $login_time = date('Y-m-d H:i:s');
             $reset_day_downcount = false;
+            $login_count = 0;
             $login_info = $this->wxm_user_activity->get_last_login_time($user_id);
             if ($login_info) {
                 $last_login_time = $login_info['uactivity_logintime'];
+                $login_count = $login_info['uactivity_logincount'];
+
                 if (strncmp($login_time, $last_login_time, 10) > 0) {
                     $reset_day_downcount = true;
                 }
@@ -359,6 +362,7 @@ class WXC_Home extends CI_Controller
                 'user_id' => $user_id,
                 'uactivity_loginip' => $ip,
                 'uactivity_logintime' => $login_time,
+                'uactivity_logincount' => $login_count + 1,  // 登录次数+1
                 'session_id' => $session_id,
                 'reset_day_downcount' => $reset_day_downcount,
                 );
@@ -411,6 +415,12 @@ class WXC_Home extends CI_Controller
             $user_info = $this->wxm_user->get_id_name($user_email);
             $user_id = $user_info->user_id;
             $user_name = $user_info->user_name;
+            // get login count info
+            $login_count = 0;
+            $login_count_info = $this->wxm_user_activity->get_login_count($user_id);
+            if ($login_count_info) {
+                $login_count = $login_count_info['uactivity_logincount'];
+            }
 
             // 记录登录PHP SESSION用户数据
             $_SESSION['wx_user_id'] = $user_id;
@@ -423,6 +433,7 @@ class WXC_Home extends CI_Controller
                 'user_id' => $user_id,
                 'uactivity_loginip' => $ip,
                 'uactivity_logintime' => date('Y-m-d H:i:s'),
+                'uactivity_logincount' => $login_count + 1,
                 'session_id' => ''
                 );
             $this->wxm_user_activity->update_login($info);
@@ -475,6 +486,8 @@ class WXC_Home extends CI_Controller
         $user_session_info = $this->wxm_user_activity->check_auto_login($cookie_user_id);
         if ($user_session_info) {
             $user_session_id = $user_session_info['uactivity_session_id'];
+            $login_count = $user_session_info['uactivity_logincount'];
+
             if ($cookie_session_id == $user_session_id) {  // 匹配成功
                 $user_info = $this->wxm_user->get_id_name_by_user_id($cookie_user_id);
                 if ($user_info) {
@@ -495,6 +508,7 @@ class WXC_Home extends CI_Controller
                         'user_id' => $user_id,
                         'uactivity_loginip' => $ip,
                         'uactivity_logintime' => date('Y-m-d H:i:s'),
+                        'uactivity_logincount' => $login_count + 1,
                         'session_id' => $session_id,
                         );
                     $this->wxm_user_activity->update_login($info);
@@ -749,17 +763,13 @@ class WXC_Home extends CI_Controller
         $email_md5 = $this->encrypt->encode($email);
         $passwd_md5 = $this->encrypt->encode($passwd);
 
-        // Active link like: http://www.xxx.com/user_active?id=xxx&user_name=xxx&user_email=xxx&user_passwd=xxx
-        // $server_addr = $this->get_server_ip();
+        // Active link like:
+        // http://www.xxx.com/user_active?id=xxx&user_name=xxx&user_email=xxx&user_passwd=xxx
         $url = 'http://www.creamnote.com/user_active';
         $active_link = $url.'?id='.$random_code.'&user_name='.$name_md5.'&user_email='.$email_md5.'&user_passwd='.$passwd_md5;
 
         // 保存激活链接的3个字段到本地的session
         $_SESSION['random_code'] = $random_code;
-
-        // loginfo('register func');
-        // loginfo($_SESSION['random_code']);
-
         $_SESSION['active_name'] = $name;
         $_SESSION['active_email'] = $email;
         $_SESSION['active_passwd'] = $passwd;
@@ -769,11 +779,11 @@ class WXC_Home extends CI_Controller
         $ret = $this->_send_activelink($email, $active_link);
         if ($ret)
         {
-            echo '发送激活链接成功！';
+            echo '发送注册邮箱的激活链接，成功！';
         }
         else
         {
-            echo '发送激活链接失败！';
+            echo '发送注册激活链接，失败！';
         }
     }
 /*****************************************************************/
@@ -788,10 +798,6 @@ class WXC_Home extends CI_Controller
 
         // 取得第一次注册生成的激活字段
         $session_randomcode = isset($_SESSION['random_code']) ? $_SESSION['random_code'] : '';
-
-        // loginfo('check_active func');
-        // loginfo($session_randomcode);
-
         $session_name = isset($_SESSION['active_name']) ? $_SESSION['active_name'] : '';
         $session_email = isset($_SESSION['active_email']) ? $_SESSION['active_email'] : '';
         $session_passwd = isset($_SESSION['active_passwd']) ? $_SESSION['active_passwd'] : '';
@@ -910,17 +916,18 @@ class WXC_Home extends CI_Controller
     // 发送激活链接，私有方法
     public function _send_activelink($to_email = '', $link = '')
     {
+        $content = '<html><head></head><body><p><b>亲爱的用户，欢迎您加入醍醐笔记网！</b></p><p></p><p>请点击下面的链接，激活您刚刚注册的醍醐账户</p><p><b><a href="'.$link.'">点击激活</a></b></p><p></p><p>友情提示 ^_^：如果上面的激活链接无法点击，可能是由于邮件服务提供商解析规则变动导致，请您复制完整的链接到浏览器地址栏，Enter键完成激活 ~~</p><p></p><p>激活链接：'.$link.'</p><p></p><p>Creamnote 醍醐笔记团队</p></body></html>';
         $this->wx_email->clear();
 
         $this->wx_email->set_from_user('no-reply@creamnote.com', '醍醐笔记');
         $this->wx_email->set_to_user($to_email);
-        $this->wx_email->set_subject('发送激活链接');
-        $this->wx_email->set_message('用户注册激活链接：'.$link);
+        $this->wx_email->set_subject('醍醐注册激活链接');
+        $this->wx_email->set_message($content);
 
         return $this->wx_email->send_email();
     }
 /*****************************************************************/
-    public function database_info()
+    public function _database_info()
     {
         $info = $this->wxm_user->database_info();
 
@@ -1078,25 +1085,71 @@ class WXC_Home extends CI_Controller
         return $user_nice_name;
     }
 /*****************************************************************************/
+public function wx_substr_by_length_test($str = '', $sub_length = 0, $indent = 8) {
+        if ($str && $sub_length > 0) {
+            $sub_str_list = array();
+            $str_len = mb_strlen($str, 'UTF-8');
+            $sub_count = floor($str_len / $sub_length);
+            $indent_count = floor($indent/2);
+            if ($indent_count) {
+                for ($i = 0; $i < $indent_count; $i++) {
+                    $str = '  '.$str;
+                }
+            }
 
+            if ($sub_count > 0) {
+                for ($i = 0, $j = 0; $i < $sub_count; $i++) {
+                    if ($indent_count && $i == 0) {
+                        $tmp_str = mb_substr($str, $j, $sub_length + $indent_count, 'UTF-8');
+                        $sub_str_list[] = '['.$tmp_str.']';
+                        $j += $sub_length + $indent_count;
+                    }
+                    else {
+                        $tmp_str = mb_substr($str, $j, $sub_length, 'UTF-8');
+                        $sub_str_list[] = '['.$tmp_str.']';
+                        $j += $sub_length;
+                    }
+
+                }
+                $sub_total_len = $sub_length * $sub_count;
+                if ($sub_total_len < $str_len) {
+                    $end_str = mb_substr($str, $sub_total_len, $sub_length, 'UTF-8');
+                    $sub_str_list[] = '['.$end_str.']';
+                }
+            }
+            else {
+                $sub_str_list[] = '['.$str.']';
+            }
+            return $sub_str_list;
+        }
+    }
 /*****************************************************************/
     public function test()
     {
-        $this->wx_imageapi->test();
 
+        // $pdf = 'upload/tmp/2013100821433354.pdf';
+        // $data = file_get_contents($pdf);
+        // $this->output->set_header("Content-type: application/pdf");
+        // $this->output->set_output($data);
 
-        // $session_id = session_id();
-        // $cookie_id = $_COOKIE["PHPSESSID"];
-        // wx_echoxml('session_id() = '.$session_id);
-        // wx_echoxml('$_COOKIE["PHPSESSID"] = '.$cookie_id);
-        // $comment_data_id_list = $this->input->cookie('comment_data_id_list');
-        // echo $comment_data_id_list;
+        // $summary = '嵌入式安全监控系统的嵌入式安全监控系统的嵌入式安全监控系统的嵌入式安全监控系统的'; // 40
+        // // $summary = '        '.$summary;
+        // $str_len = mb_strlen($summary, 'UTF-8');
+        // wx_echoxml($str_len);
+        // $str_list = $this->wx_substr_by_length($summary, 20);
+        // wx_echoxml($str_list);
 
-        // $this->wx_tcpdfapi->test();
-        // $str = '随着嵌入式技术网络技随着嵌入式技术网络技测试';
-        // $len = mb_strlen($str, 'UTF-8');
-        // echo $len.'<br />';
-        // echo mb_substr($str, 0, 10, 'UTF-8').'<br />';
+        // $ret = $this->wx_tcpdfapi->test();
+
+        // $email = 'dw_wang126@126.com';
+        // $link = 'http://www.creamnote.com/user_active';
+        // $ret = $this->_send_activelink($email, $link);
+
+        // $set_time = '00:01:00';
+        // $after_tomorrow = date('Y-m-d', strtotime('+2 day'));
+        // $after_tomorrow_time = $after_tomorrow.' '.$set_time;
+        // echo $after_tomorrow_time;
+
     }
 /*****************************************************************/
 }

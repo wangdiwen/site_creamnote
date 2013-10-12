@@ -11,12 +11,12 @@
 */
 
 $hook['post_controller_constructor'] = array(
-                                'class'    => 'WX_Preprocess',
-                                'function' => 'auto_session',
-                                'filename' => 'wx_preprocess.php',
-                                'filepath' => 'hooks',
-                                'params'   => array()
-                                );
+    'class'    => 'WX_Preprocess',
+    'function' => 'auto_session',
+    'filename' => 'wx_preprocess.php',
+    'filepath' => 'hooks',
+    'params'   => array()
+    );
 
 /* End of file hooks.php */
-/* Location: ./application/config/hooks.php */
+/* Location: /application/frontend/config/hooks.php */

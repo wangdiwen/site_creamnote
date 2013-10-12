@@ -53,7 +53,7 @@ function comment(feedback_id,user_id_list){
 		        		str+="<div class='feed_back_comment'>";
 		        		str+="<img alt='Ul34411334-12' height='30' src='"+head_url+"' width='30'>"	;
 		        		str+="<p class='feed_back_comment_content'>"+user_name+"："+comment_content+"</p></div>";
-		        		$("#start"+feedback_id).after(str);
+		        		$("#start"+feedback_id).before(str);
 		        		$("[id *=rel]").val("");
 		        		$("[id *=start]").css("display","none");
 		            }
@@ -186,13 +186,14 @@ $("#feed_back_form_submit_btn").click(function(){
                     }
 
                 }
-                echo "</div>";
+
                 // $user_id_list = $user_id_list.substr($user_id_list,0, strlen($user_id_list)-1);
                 // $user_id_list .="}";
                 $user_id_list = json_encode($user_id_list);
-                echo "<div id='start".$top_feed_id."' style='padding-left:68px'>";
+                echo "<div id='start".$top_feed_id."' style=''>";
                 echo "<input type='text' class='feed_back_comment_content_input'  id='rel".$top_feed_id."' >";
                 echo "<input type='submit' onclick='comment(".$top_feed_id.",".$user_id_list.")' class='button_c' style='height: 32px;' id='feed_back_comment_content_submit_btn'  value='回复'>";
+                echo "</div>";
                 echo "</div>";
                 echo "</div></div></div>";
               	echo "<input type='hidden' id='user_id_list' value='" .$user_id_list. "'/>";

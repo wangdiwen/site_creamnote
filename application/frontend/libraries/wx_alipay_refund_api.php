@@ -11,31 +11,32 @@
 /*****************************************************************************/
 class WX_Alipay_refund_api
 {
-    var $CI;        // super CI obj
+    var $CI;                                                // super CI obj
 
-    var $alipay_config;     // Alipay的通用配置项
+    var $alipay_config;                                     // Alipay的通用配置项
 
     var $notify_url = "http://www.xxx.com/notify_url.php";  //服务器异步通知页面路径
-    var $seller_email = '';     //卖家支付宝帐户
+    var $seller_email = '';                                 //卖家支付宝帐户
 
     // 以下为每次退款的变量，每次都不同，不能放在类变量中
-    //退款当天日期,格式：年[4位]-月[2位]-日[2位] 小时[2位 24小时制]:分[2位]:秒[2位]，如：2007-10-01 13:13:13
+    // 退款当天日期,格式：年[4位]-月[2位]-日[2位] 小时[2位 24小时制]:分[2位]:秒[2位]，如：2007-10-01 13:13:13
     // var $refund_date = '';
-    // var $batch_no = '';     //批次号,格式：当天日期[8位]+序列号[3至24位]，如：201008010000001
-    // var $batch_num = '';    //参数detail_data的值中，“#”字符出现的数量加1，最大支持1000笔（即“#”字符出现的数量999个）
-    // var $detail_data = '';  //退款详细数据,具体格式请参见接口技术文档
+    // var $batch_no = '';     // 批次号,格式：当天日期[8位]+序列号[3至24位]，如：201008010000001
+    // var $batch_num = '';    // 参数detail_data的值中，“#”字符出现的数量加1，最大支持1000笔（即“#”字符出现的数量999个）
+    // var $detail_data = '';  // 退款详细数据,具体格式请参见接口技术文档
 
 /*****************************************************************************/
     public function __construct()
     {
         $this->CI =& get_instance();
-        $this->CI->config->load('alipay_config', true);
+        $this->CI->config->load('alipay_config', true);     // 数组名与配置文件名称相同
         $this->CI->load->helper('wx_alipay_public');
 
         $this->alipay_config = $this->CI->config->item('alipay_config');
     }
 /*****************************************************************************/
-    public function alipay_submit($refund_date = '', $batch_no = '', $batch_num = '', $detail_data = '')
+    public function alipay_submit($refund_date = '', $batch_no = '',
+                                    $batch_num = '', $detail_data = '')
     {
         //构造要请求的参数数组，无需改动
         $parameter = array(

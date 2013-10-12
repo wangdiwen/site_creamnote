@@ -1,10 +1,13 @@
 .loading-indicator {
-	height: 80px;
-	width: 300px;
+    height: 333px;
+    width: 300px;
     text-align: center;
-	background: url( '../images/version/loading-bars.gif' );
-	background-repeat: no-repeat;
-	background-position: center center;
+    background: url('../images/version/creamnote_loading_write.gif' );
+    background-repeat: no-repeat;
+    background-position: center center;
+    font-size: 28px;
+    color: rgb(21, 148, 207);
+    font-family: '华文琥珀';
 }
 
 .loading-indicator-overlay {

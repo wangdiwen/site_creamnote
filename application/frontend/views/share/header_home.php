@@ -97,7 +97,7 @@ var loginname = '<?php if (isset($_SESSION["wx_user_name"]) && $_SESSION["wx_use
     $(function(){
       var UA = navigator.userAgent.toLowerCase();
       if(UA.indexOf("msie 7.0")>=0||UA.indexOf("msie 8.0")>=0){
-        errorMes("如果您在使用ie8以及更低版本，建议您升级到ie9或者更高版本浏览器，获得更好体验！\n如果您使用国产的山寨浏览器，请开启兼容模式！\n谢谢！")
+        warnMes("如果您在使用ie8以及更低版本，建议您升级到ie9或者更高版本浏览器，获得更好体验！\n如果您使用国产的山寨浏览器（360、搜狗...），请开启极速模式！\n谢谢！")
       }
       // if(loginname == ""){
       //   var timer = setInterval( 'myrefresh()', 4000);
@@ -115,7 +115,7 @@ var loginname = '<?php if (isset($_SESSION["wx_user_name"]) && $_SESSION["wx_use
            $("#check_login").html("");
             //var str ="<div class='fr logout transition' style='cursor:pointer' id='logout'><div class='logout_icon'>注销</div></div>";
             //str +="<a href='<?php echo site_url('home/personal'); ?>'><div class='fr login_user transition'><div class='login_user_icon'>"+loginname+"</div></div></a>";
-            var str = "<div class='fr _show_count'><span class='fl' style='padding-left:10px;'>"+loginname+"</span><span class='fr _user_name'></span>";
+            var str = "<div class='fr _show_count'><span class='fl _login_name' style='padding-left:10px;'>"+loginname+"</span><span class='fr _user_name'></span>";
             str += "<div class='_al_login'>";
             str += "<a id='_al_user' href='javascript:void(0)'><div class='_al_user fl'>个人中心</div></a>";
             str += "<a id='_al_count' href='javascript:void(0)'><div class='_al_count fl'>账户设置</div></a>";

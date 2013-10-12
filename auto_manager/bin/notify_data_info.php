@@ -47,6 +47,7 @@ require_once WX_BASE_PATH.WX_SEPARATOR.'model'.WX_SEPARATOR.'wx_database_api.php
 /*****************************************************************************/
 
 /***************************** 设定时间戳 ************************************/
+$log_name = 'data_notify';
 $today_time = wx_get_today_time();
 $yesterday_time = wx_get_yesterday_time();
 // $today_time = '2013-06-04 00:01:00';
@@ -76,16 +77,17 @@ $pend_data_list = $db_service->select($table, $select, $where);
 
 /***************************** 发送用户通知 **********************************/
 /* --------------------------- 每条未完善的数据，发送一条通知完善系统通知 -- */
-$tomorrow_time = wx_get_tomorrow_time();
+// $tomorrow_time = wx_get_tomorrow_time();
+$after_tomorrow_time = wx_get_after_tomorrow_time();
 $current_time = date('Y-m-d H:i:s');
 $total_count = count($pend_data_list);
 
-wx_log("---------------------------------------------------------------------------------");
-wx_log("---------------------  Data Notify Complete Info Everyday -----------------------");
-wx_log('--------- Filter Time      : '.$yesterday_time.' ~ '.$today_time.'-----------');
-wx_log('--------- Total  Data Count: '.$total_count);
-wx_log("---------------------------------------------------------------------------------");
-wx_log("---------------------------------------------------------------------------------");
+wx_log("---------------------------------------------------------------------------------", $log_name);
+wx_log("---------------------  Data Notify Complete Info Everyday -----------------------", $log_name);
+wx_log('--------- Filter Time      : '.$yesterday_time.' ~ '.$today_time.'-----------', $log_name);
+wx_log('--------- Total  Data Count: '.$total_count, $log_name);
+wx_log("---------------------------------------------------------------------------------", $log_name);
+wx_log("---------------------------------------------------------------------------------", $log_name);
 
 foreach ($pend_data_list as $pend_data) {
     $data_id = $pend_data['data_id'];
@@ -95,12 +97,12 @@ foreach ($pend_data_list as $pend_data) {
     $user_id = $pend_data['user_id'];
 
     $data_full_name = $data_name.'.'.$data_type;
-    $notify_title = '系统通知：名称为【'.$data_full_name.'】的笔记资料';
-    $notify_content = '您还没有对【'.$data_full_name.'】的笔记资料完善必要的信息，平台的其他人无法查看和下载使用，我们将会在'.$tomorrow_time.'自动清除掉这份资料数据，请在此之前及时完善笔记资料的信息！';
+    $notify_title = '系统通知：【'.$data_full_name.'】笔记资料';
+    $notify_content = '亲爱的用户，您还没有为【'.$data_full_name.'】笔记完善信息，其他人无法查阅和使用，系统将会在'.$after_tomorrow_time.'自动清除资料数据！';
 
-    wx_log("Data Id       : ".$data_id);
-    wx_log("Data Obj Name : ".$data_objectname);
-    // wx_log("Data Full Name: ".$data_full_name);
+    wx_log("Data Id       : ".$data_id, $log_name);
+    wx_log("Data Obj Name : ".$data_objectname, $log_name);
+    // wx_log("Data Full Name: ".$data_full_name, $log_name);
 
     // 将通知内容写入数据库
     $insert_data = array(
@@ -115,17 +117,17 @@ foreach ($pend_data_list as $pend_data) {
     $ret_insert = $db_service->insert($insert_table, $insert_data);
     if ($ret_insert) {
         $msg = 'Info: Send Notify Success';
-        wx_log($msg);
+        wx_log($msg, $log_name);
     }
     else {
         $msg = 'Error: Send Notify Failed';
-        wx_log($msg);
+        wx_log($msg, $log_name);
     }
 
-    wx_log("---------------------------------------------------------------------------------");
+    wx_log("---------------------------------------------------------------------------------", $log_name);
 }
 
-wx_log("");
+wx_log("", $log_name);
 
 
 /*****************************************************************************/

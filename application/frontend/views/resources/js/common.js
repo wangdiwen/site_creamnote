@@ -335,6 +335,7 @@ function weiboLogin(){
 function show_login_win(){
     $("#login_win").css("display","block");
     $('html,body').animate({scrollTop: '0px'}, 800);
+    warnMes("需要先登录的，亲！");
 }
 //=========================================================用户卡片函数=========================================//
 function hover_user(){
@@ -612,6 +613,10 @@ function collect(ser,data_id){
                   if(result == "success"){
                       $("#collect_"+ser+data_id).poshytip('show');
                       $("#collect_"+ser+data_id).html("<a id='col"+data_id+"' href='javascript:void(0)' onclick='uncollect("+ser+","+data_id+")'><img src='/application/frontend/views/resources/images/new_version/dy_card_hover_store_red.png' class='_card_edit fl' title='取消收藏'></a>");
+                  }else if(result == "failed"){
+                    $("#login_win").css("display","block");
+                    $('html,body').animate({scrollTop: '0px'}, 800);
+                    warnMes("请先登录");
                   }else{
                       $("#collect_"+ser+data_id).poshytip('show');
                       $("#collect_"+ser+data_id).html("<a id='col"+data_id+"' href='javascript:void(0)' onclick='uncollect("+ser+","+data_id+")'><img src='/application/frontend/views/resources/images/new_version/dy_card_hover_store_red.png' class='_card_edit fl' title='取消收藏'></a>");
@@ -746,5 +751,83 @@ function showDialog(header,content,url){
     });
 }
 
+//=========================================================学校=========================================//
+//弹出窗口
+var comm_pop = function(){
+  //将窗口居中
+  comm_makeCenter();
 
+  //初始化省份列表
+  comm_initProvince();
+
+  //默认情况下, 给第一个省份添加choosen样式
+  $('[province-id="1"]').addClass('choosen');
+
+  //初始化大学列表
+  comm_initSchool(1);
+}
+//隐藏窗口
+function hide_home()
+{
+  $('#choose-box-wrapper').css("display","none");
+  $("#search-text").focus();
+}
+
+function comm_initProvince()
+{
+  //原先的省份列表清空
+  $('#choose-a-province').html('');
+  for(i=0;i<schoolList.length;i++)
+  {
+    $('#choose-a-province').append('<a class="province-item" province-id="'+schoolList[i].id+'">'+schoolList[i].name+'</a>');
+  }
+  //添加省份列表项的click事件
+  $('.province-item').bind('click', function(){
+      var item=$(this);
+      var province = item.attr('province-id');
+      var choosenItem = item.parent().find('.choosen');
+      if(choosenItem)
+        $(choosenItem).removeClass('choosen');
+      item.addClass('choosen');
+      //更新大学列表
+      comm_initSchool(province);
+    }
+  );
+}
+var wx_school='';
+function comm_initSchool(provinceID)
+{
+  var schools = schoolList[provinceID-1].school;
+  $('#choose-a-school').html("");
+  for(i=0;i<schools.length;i++)
+  {
+    $('#choose-a-school').append('<a class="school-item" school-id="'+schools[i].id+'">'+schools[i].name+'</a>');
+  }
+     //添加大学列表项的click事件
+  $('.school-item').bind('click', function(){
+      var item=$(this);
+      wx_school=item.text()
+      $("#search-text").attr({
+        "value": wx_school
+      });
+      //关闭弹窗
+      hide_home();
+      $("#search-text").focus();
+    }
+  );
+  // return wx_school;
+}
+
+function comm_makeCenter()
+{
+  $('#choose-box-wrapper').css("display","block");
+  $('#choose-box-wrapper').css("position","absolute");
+  $('#choose-box-wrapper').css("top", Math.max(0, (($(window).height() - $('#choose-box-wrapper').outerHeight()) / 2) + $(window).scrollTop()) + "px");
+  $('#choose-box-wrapper').css("left", Math.max(0, (($(window).width() - $('#choose-box-wrapper').outerWidth()) / 2) + $(window).scrollLeft()) + "px");
+}
+
+function init_home_school(){
+  var wx_school= comm_pop();
+
+}
 

@@ -12,7 +12,6 @@
     <script type="text/javascript" src="/application/frontend/views/resources/js/menu_min.js"></script>
     <script type="text/javascript" src="/application/frontend/views/resources/js/school.js"></script>
     <script type="text/javascript" src="/application/frontend/views/resources/js/chosen.jquery.js"></script>
-    <script type="text/javascript" src="/application/frontend/views/resources/js/wx_common.js"></script>
 
 <script type="text/javascript">
 <!-- Javascript functions -->
@@ -356,6 +355,7 @@ function makeCenter()
 }
 $(function(){
 	$("#filecontent").click(function(){
+        showLoading("资料卡片正在生成当中请稍等。。。");
     	var data_status;
     	var data_preview;
         if($("#datastatus").attr("checked")){
@@ -406,11 +406,11 @@ $(function(){
             {
               if(result=='success'){
                // location.reload();
-                var title = "笔记完善";
-                var content = "你的笔记已经完善成功<br/>两秒后自动关闭该窗口";
-                var url = $("#baseUrl").val()+"home/personal";
-                showDialog(title,content,url);
-
+                // var title = "笔记完善";
+                // var content = "你的笔记已经完善成功<br/>两秒后自动关闭该窗口";
+                // var url = $("#baseUrl").val()+"home/personal";
+                // showDialog(title,content,url);
+                setTimeout("location.href='<?php echo site_url('home/personal'); ?>'",2000);
                 }
 
             },
@@ -439,13 +439,13 @@ $(function(){
 </script>
 
 </head>
-<body>
+<body class="activity_pane">
 	<?php include  'application/frontend/views/share/header.php';?>
 
     <?php $nav_param = "home";?>
     <?php include  'application/frontend/views/share/navigation.php';?>
 
-<div class="backcolor_body activity_pane">
+<div class="backcolor_body">
 	<div class="body _body" style="min-height: 900px;">
 
 	<div id="_content" class="_content">
@@ -463,12 +463,12 @@ $(function(){
                  <div  id="thisform" >
                     <fieldset>
                     <le>资料预览 </le>
-                    <a href="#" id="showpdf">打开</a>
+                    <p style="margin: 12px 0;"><a href="#" id="showpdf"><span class="common_bule_button"><b>点击预览笔记</b></span></a></p>
                     <!------ 弹出消息 ------>
                     <div class="overlay" id="overlay" style="display:none;"></div>
                     <div class="box" id="box"> <a class="boxclose" id="boxclose"></a>
-                        <h1>PDF预览</h1>
-                        <p id="messageshow"> <EMBED src="<?php  echo $pdf_file; ?>" height="450px" width="100%"/> </p>
+                        <h1>笔记预览</h1>
+                        <p id="messageshow" style='overflow-y: hidden;max-height: 450px;'> <EMBED draggable="true" src="<?php  echo site_url("data/wxc_data/preview_pdf_by_browser/")."?pdf=".$pdf_file; ?>" height="450px" width="100%"/> </p>
                    </div>
                    <!------ 弹出消息 ------>
                     </fieldset>
@@ -554,6 +554,7 @@ $(function(){
                     <p><label for="data_price" accesskey="9">价格</label><br />
                     <select id='select_price' name='select_price' style='width: 445px;' class="chosen">
                     <option>免费</option>
+                    <option>￥0.99</option>
                     <option>￥1.99</option>
                     <option>￥2.99</option>
                     <option>￥3.99</option>

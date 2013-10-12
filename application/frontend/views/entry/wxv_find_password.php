@@ -81,7 +81,7 @@ function next_two(){
 	            {
 	                if(result=='success'){
 	                	 var str="";
-	                	 str+="&nbsp;&nbsp;新密码&nbsp;<input type='password' name='new_password' id='new_password'><br/>";
+	                	 str+="&nbsp;&nbsp;新密码&nbsp;&nbsp;<input type='password' name='new_password' id='new_password'><br/>";
 	                	 str+="重复密码<input type='password' name='repeat_new_password' id='repeat_new_password'>";
 	                	 str+="<div class='reg_error' id='error_content' style='display:none;'>";
 	                	 $("#content_change").html(str);

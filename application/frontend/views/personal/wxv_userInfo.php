@@ -489,8 +489,18 @@ function del_count(count_type){
 							</select>
 						</p>
 						<p>
-							<label>入学年份:</label> <input type="text" id="user_period"
-								name="" value="<?php echo $base_info['user_period'];?>">
+							<label>入学年份:</label>
+                            <!-- <input type="text"
+								name="" > -->
+                            <select id="user_period" style='width: 381px;'>
+                                <option value="<?php echo $base_info['user_period'];?>"><?php echo $base_info['user_period'];?></option>
+                                <option value="2013">2013</option>
+                                <option value="2012">2012</option>
+                                <option value="2011">2011</option>
+                                <option value="2010">2010</option>
+                                <option value="2009">2009</option>
+                                <option value="2008">2008</option>
+                            </select>
 						</p>
 
 						<p style="padding-left:180px;">

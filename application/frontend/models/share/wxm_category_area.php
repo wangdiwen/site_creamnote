@@ -41,7 +41,11 @@ class WXM_Category_area extends CI_Model
         $table = $this->wx_table;
         $this->db->select('carea_id')->from($table)->where('carea_name', $name)->limit(1);
         $query = $this->db->get();
-        return $query->row()->carea_id;
+        $result = $query->row();
+        if ($result) {
+            return $result->carea_id;
+        }
+        return 0;
     }
 /*****************************************************************************/
     public function merge()         // 合并数据表的测试接口

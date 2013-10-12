@@ -19,6 +19,7 @@ class WXM_Feedback extends CI_Model
             $feedback_followed_id = $info['feedback_followed_id'];
             $feedback_user_type = $info['feedback_user_type'];
             $user_id = $info['user_id'];
+            $feedback_newjoin = $info['feedback_newjoin'];
 
             if ($feedback_content && $feedback_time && $feedback_startup
                 && $feedback_user_type && $user_id)
@@ -29,7 +30,8 @@ class WXM_Feedback extends CI_Model
                     'feedback_startup' => $feedback_startup,
                     'feedback_followed_id' => $feedback_followed_id,
                     'feedback_user_type' => $feedback_user_type,
-                    'user_id' => $user_id
+                    'user_id' => $user_id,
+                    'feedback_newjoin' => $feedback_newjoin,
                     );
                 $table = $this->wx_table;
                 $this->db->insert($table, $data);

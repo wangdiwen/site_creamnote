@@ -117,7 +117,7 @@ class WXM_User_activity extends CI_Model
         if ($user_id && $user_id > 0)
         {
             $table = $this->wx_table;
-            $this->db->select('uactivity_session_id')->from($table)->where('user_id', $user_id)->limit(1);
+            $this->db->select('uactivity_session_id, uactivity_logincount')->from($table)->where('user_id', $user_id)->limit(1);
             $query = $this->db->get();
             return $query->row_array();
         }
@@ -148,6 +148,7 @@ class WXM_User_activity extends CI_Model
             $user_id = $info['user_id'];
             $uactivity_loginip = $info['uactivity_loginip'];
             $uactivity_logintime = $info['uactivity_logintime'];
+            $uactivity_logincount = isset($info['uactivity_logincount']) ? $info['uactivity_logincount'] : 0;
             $uactivity_session_id = $info['session_id'];
             $reset_day_downcount = isset($info['reset_day_downcount']) ? $info['reset_day_downcount'] : false;
             if ($user_id > 0)
@@ -157,6 +158,9 @@ class WXM_User_activity extends CI_Model
                     'uactivity_logintime' => $uactivity_logintime,
                     'uactivity_session_id' => $uactivity_session_id,
                     );
+                if ($uactivity_logincount) {
+                    $data['uactivity_logincount'] = $uactivity_logincount;
+                }
                 if ($reset_day_downcount) {
                     $data['uactivity_day_downcount'] = 0;
                 }
@@ -168,10 +172,20 @@ class WXM_User_activity extends CI_Model
         }
     }
 /*****************************************************************************/
+    public function get_login_count($user_id = 0) {
+        if ($user_id > 0)
+        {
+            $table = $this->wx_table;
+            $this->db->select('uactivity_logincount')->from($table)->where('user_id', $user_id)->limit(1);
+            $query = $this->db->get();
+            return $query->row_array();
+        }
+    }
+/*****************************************************************************/
     public function get_last_login_time($user_id = 0) {
         if ($user_id > 0) {
             $table = $this->wx_table;
-            $this->db->select('uactivity_logintime')->from($table)->where('user_id', $user_id)->limit(1);
+            $this->db->select('uactivity_logintime, uactivity_logincount')->from($table)->where('user_id', $user_id)->limit(1);
             $query = $this->db->get();
             return $query->row_array();
         }

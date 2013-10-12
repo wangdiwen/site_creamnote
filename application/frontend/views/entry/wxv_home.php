@@ -11,6 +11,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta property="qc:admins" content="145042776163251567456375" />
     <meta property="wb:webmaster" content="6aba2630b40f0fd8" />
+    <meta name="baidu-site-verification" content="kcZ7s2PtTQ" />
     <meta name="google-site-verification" content="Hbt0iSqYKgfRRkrtN7VBLlAkxNXm8MgCM5xCPMC5dA0" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/application/frontend/views/resources/css/reset.css" />
@@ -25,6 +26,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     <script type='text/javascript' src='/application/frontend/views/resources/js/camera.min.js'></script>
     <script type='text/javascript' src='/application/frontend/views/resources/js/common.js'></script>
     <script type='text/javascript' src='/application/frontend/views/resources/js/jquery.poshytip.js'></script>
+    <script type="text/javascript" src="/application/frontend/views/resources/js/school.js"></script>
 
 <script type="text/javascript">
 <!-- Javascript functions -->
@@ -57,6 +59,12 @@ $("div").hover(function(e){
   $('#camera_wrap').camera({
         thumbnails: true,
         height: '430px',
+        opacityOnGrid:true,
+        fx          : 'random',
+        pieDiameter     : 58,
+        time        : 4000,
+        transPeriod     : 1000,
+        // onLoaded      : function() {  alert(1)},
 
       });
 
@@ -205,33 +213,53 @@ function checkLogin(){
   <div class="body">
 
     <!-- #camera_wrap -->
-    <div class="camera_wrap camera_ash_skin" style="height: 430px;" id="camera_wrap">
-            <div data-thumb="/application/frontend/views/resources/images/slides/thumbs/creamnote_ad_1.jpg" data-src="/application/frontend/views/resources/images/slides/creamnote_ad_1.jpg">
+    <div class="camera_wrap camera_azure_skin" style="height: 430px;" id="camera_wrap">
+            <div data-link="<?php echo site_url('data/wxc_data/data_list'); ?>" data-target="_blank" data-thumb="/application/frontend/views/resources/images/slides/thumbs/creamnote_ad_1t.jpg" data-src="/application/frontend/views/resources/images/slides/creamnote_ad_1.jpg">
                 <div class="camera_caption fadeFromBottom">
-                    <em>快乐学习</em>
+                  <em>找课堂学习笔记、找期末考试习题、找考研复习资料 -- 上Creamnote醍醐笔记网</em>
                 </div>
             </div>
-            <div data-thumb="/application/frontend/views/resources/images/slides/thumbs/creamnote_ad_2.jpg" data-src="/application/frontend/views/resources/images/slides/creamnote_ad_2.jpg">
+            <div data-link="<?php echo site_url('home/data_upload_page'); ?>" data-target="_blank" data-thumb="/application/frontend/views/resources/images/slides/thumbs/creamnote_ad_2t.jpg" data-src="/application/frontend/views/resources/images/slides/creamnote_ad_2.jpg">
                 <div class="camera_caption fadeFromBottom">
-                    <em>快乐学习</em>
+                    <em>学霸sell笔记，从中获得收益</em>
                 </div>
             </div>
-            <div data-thumb="/application/frontend/views/resources/images/slides/thumbs/creamnote_ad_3.jpg" data-src="/application/frontend/views/resources/images/slides/creamnote_ad_3.jpg">
+            <div data-link="<?php echo site_url('data/wxc_data/data_list'); ?>" data-target="_blank" data-thumb="/application/frontend/views/resources/images/slides/thumbs/creamnote_ad_3t.jpg" data-src="/application/frontend/views/resources/images/slides/creamnote_ad_3.jpg">
                 <div class="camera_caption fadeFromBottom">
-                    <em>快乐学习</em>
+                    <em>快捷搜索、分类搜索、轻松找你想要的笔记</em>
                 </div>
             </div>
-            <div data-thumb="/application/frontend/views/resources/images/slides/thumbs/creamnote_ad.jpg" data-src="/application/frontend/views/resources/images/slides/creamnote_ad.jpg">
+            <div data-link="<?php echo site_url('home/image_upload_page'); ?>" data-target="_blank" data-thumb="/application/frontend/views/resources/images/slides/thumbs/creamnote_ad_4t.jpg" data-src="/application/frontend/views/resources/images/slides/creamnote_ad_4.jpg">
                 <div class="camera_caption fadeFromBottom">
-                    <em>快乐学习</em>
+                    <em>特色功能:"图片笔记"，数字化你的手写笔记碎片，珍藏你的劳动成果</em>
+                </div>
+            </div>
+            <div data-link="<?php echo site_url('home/data_upload_page'); ?>" data-target="_blank" data-thumb="/application/frontend/views/resources/images/slides/thumbs/creamnote_ad_5t.jpg" data-src="/application/frontend/views/resources/images/slides/creamnote_ad_5.jpg">
+                <div class="camera_caption fadeFromBottom">
+                    <em>珍藏一份大学时代的学习经历，分享自己的笔记资料干货，创造学习价值，让“学霸”从中受益</em>
                 </div>
             </div>
     </div>
         <!-- #camera_wrap -->
         <form  method="post" action="<?php echo site_url('primary/wxc_search/public_search'); ?>">
         <div class="creamnote_search fl" style="margin-left: 47px;">
-          <input  name="search" id="search-text" class="creamnote_search_input" maxlength="20" placeholder="输入你想找的资料(可以以学校、专业、资料名称为关键词)"/>
+          <input name="search" id="search-text" class="creamnote_search_input" maxlength="20" placeholder="输入关键词（ 笔记名称 学校 专业 分类）"/>
+          <div onclick="init_home_school()"><span style="position: absolute;margin-left: 440px;margin-top: -34px;padding: 5px 8px;cursor: pointer;" class="common_bule_button">选择学校</span></div>
         </div>
+        <div id="choose-box-wrapper" style='z-index: 1000;'>
+            <div id="choose-box">
+              <div id="choose-box-title">
+                <span>选择学校</span>
+              </div>
+              <div id="choose-a-province">
+              </div>
+              <div id="choose-a-school">
+              </div>
+              <div id="choose-box-bottom">
+                <input type="button" onclick="hide_home()" value="关闭" />
+              </div>
+            </div>
+          </div>
         <div class="creamnote_search_button fl">
           <input type="submit"  value="" style="background: transparent;width: 124px;height: 37px;cursor:pointer;border: 0;"/>
         </div>
@@ -251,17 +279,17 @@ function checkLogin(){
                     // echo "<div class='card_delete'></div>";
                     echo "<div class='_card_content' style='padding: 10px 20px 5px 20px;'>";
                     echo "<div class='card_head'>";
-                    echo "<a href=".base_url()."data/wxc_data/data_view/".$note['data_id'].">".str_replace(array(" ","\r","\n"), array("","",""), $note['data_name'])."</a>";
+                    echo "<a target='_blank' href=".base_url()."data/wxc_data/data_view/".$note['data_id'].">".str_replace(array(" ","\r","\n"), array("","",""), $note['data_name'])."</a>";
                     echo "</div>";
                     echo "<div class='card_user _card_user'>";
-                    echo "作者:<a class='hoveruser'  id='".$note['user_id']."' href='#'>".$note['user_name']."</a>";
+                    echo "作者：<a class='hoveruser'  id='".$note['user_id']."' href='#'>".$note['user_name']."</a>";
                     echo "</div>";
                     echo "<div class='card_cate _card_cate card_padding'>";
-                    echo "分类:<a href=".base_url()."primary/wxc_search/search_by_nature/".$note['data_nature_id']." >".$note['data_nature_name']."</a>";
+                    echo "分类：<a href=".base_url()."primary/wxc_search/search_by_nature/".$note['data_nature_id']." >".$note['data_nature_name']."</a>";
                     echo $note['data_area_name_school']!=""?"|":"";
-                    echo "<a href=".base_url()."primary/wxc_search/search_by_area/".$note['data_area_id_school']." >".$note['data_area_name_school']."</a>";
+                    echo "<a target='_blank' href=".base_url()."primary/wxc_search/search_by_area/".$note['data_area_id_school']." >".$note['data_area_name_school']."</a>";
                     echo $note['data_area_name_major']!=""?"|":"";
-                    echo "<a href=".base_url()."primary/wxc_search/search_by_area/".$note['data_area_id_major']." >".$note['data_area_name_major']."</a>";
+                    echo "<a target='_blank' href=".base_url()."primary/wxc_search/search_by_area/".$note['data_area_id_major']." >".$note['data_area_name_major']."</a>";
                     echo "</div>";
                     echo "<div class='card_normal '>";
                     echo "<div class='_card_page'>";
@@ -311,7 +339,7 @@ function checkLogin(){
               ?>
                 <div class='card_item card_item_panel' style='height: 203px;margin: 22px 0 0 30px;width:166px;'>
                   <div style='text-align: center;margin-top: 45px;font-size: 14px;'>
-                    <a href="<?php echo site_url('data/wxc_data/data_list'); ?>">更多笔记...</a>
+                    <a target='_blank' href="<?php echo site_url('data/wxc_data/data_list'); ?>">更多笔记...</a>
                   </div>
                 </div>
               </div>

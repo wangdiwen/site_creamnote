@@ -34,7 +34,7 @@ a{
 #choose-box-wrapper{
 		width: 652px;
 		background-color:#000;
-		filter:alpha(opacity=50);
+		/*filter:alpha(opacity=50);*/
 		background-color: rgba(0, 0, 0, 0.5);
 		padding:10px;
 		border-radius:5px;
@@ -46,7 +46,7 @@ a{
 		background-color:white;
 	}
 	#choose-box-title{
-		background:#3777BC;
+		background:rgb(125 ,142 ,167);
 		color: white;
 		padding: 4px 10px 5px;
 		font-size: 14px;
@@ -59,13 +59,13 @@ a{
 
 	#choose-a-province, #choose-a-school{
 		margin:5px 8px 10px 8px;
-		border: 1px solid #C3C3C3;
+		border: 1px solid rgb(125 ,142 ,167);
 	}
 	#choose-a-province a{
 		display:inline-block;
 		height: 18px;
 		line-height: 18px;
-		color:#005EAC;
+		color:#000;
 		text-decoration: none;
 		font-size: 9pt;
 		font-family: Tahoma, Verdana, STHeiTi, simsun, sans-serif;
@@ -78,7 +78,7 @@ a{
 		cursor:pointer;
 	}
 	#choose-a-province .choosen{
-		background-color: #005EAC;
+		background-color: rgb(125 ,142 ,167);
 		color:white;
 	}
 
@@ -90,7 +90,7 @@ a{
 	#choose-a-school a{
 		height: 18px;
 		line-height: 18px;
-		color:#005EAC;
+		color:rgb(125 ,142 ,167);
 		text-decoration: none;
 		font-size: 9pt;
 		font-family: Tahoma, Verdana, STHeiTi, simsun, sans-serif;
@@ -101,7 +101,7 @@ a{
 		background:url(http://pic002.cnblogs.com/images/2012/70278/2012072500060712.gif) no-repeat 0 9px;
 	}
 	#choose-a-school a:hover{
-		background-color:#005EAC;
+		background-color:rgb(125 ,142 ,167);
 		color:white;
 		cursor:pointer;
 	}
@@ -116,7 +116,7 @@ a{
 	#choose-box-bottom input{
 		vertical-align: middle;
 		text-align: center;
-		background-color:#005EAC;
+		background-color:rgb(125 ,142 ,167);
 		color:white;
 		border-top: 1px solid #B8D4E8;
 		border-left: 1px solid #B8D4E8;
@@ -947,6 +947,7 @@ a{
 	width: 17px;
 	float: left;
 	margin-right: 10px;
+	margin-top: 2px;
 }
 .foot_content_qq{
 	background: url(../images/new_version/follow_pic.jpg) no-repeat 1px -45px;
@@ -954,6 +955,7 @@ a{
 	width: 17px;
 	float: left;
 	margin-right: 10px;
+	margin-top: 2px;
 }
 .foot_content_wei{
 	background: url(../images/new_version/follow_pic.jpg) no-repeat 1px -15px;
@@ -961,6 +963,7 @@ a{
 	width: 17px;
 	float: left;
 	margin-right: 10px;
+	margin-top: 2px;
 }
 .foot_content_dou{
 	background: url(../images/new_version/follow_pic.jpg) no-repeat 1px 0px;
@@ -968,10 +971,14 @@ a{
 	width: 17px;
 	float: left;
 	margin-right: 10px;
+	margin-top: 2px;
 }
 /* -------------------反馈快捷键----------------------*/
 .feedback{
-	background: url(../images/version/creamnote_feedback.png) no-repeat;
+	/*background: url(../images/version/creamnote_feedback_merge.png) no-repeat 0px 0px;*/
+	background-image:url(../images/version/creamnote_feedback_merge.png);
+	background-repeat:no-repeat;
+	background-position: 0px 0px;
 	position: fixed;
 	right: 0;
 	top:170px;
@@ -979,7 +986,9 @@ a{
 	height: 129px;
 }
 .feedback:hover{
-	background: url(../images/version/creamnote_feedback_flash.png) no-repeat;
+	background-image: url(../images/version/creamnote_feedback_merge.png);
+	background-repeat:no-repeat;
+	background-position: -39px 0px;
 }
 
 /* -----------列表--------------------------- */
@@ -1260,4 +1269,13 @@ a.current{
 	width: 715px;
 	padding: 20px;
 	margin: 10px auto;
+}
+
+.common_bule_button{
+	background-color:rgb(125 ,142 ,167);
+	padding: 8px;
+	color: #fff;
+}
+.common_bule_button:hover{
+	background-color:#aaa;
 }

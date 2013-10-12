@@ -37,17 +37,36 @@ if (! function_exists('wx_before_last_month')) {
 }
 /*****************************************************************************/
 if (! function_exists('wx_substr_by_length')) {
-    function wx_substr_by_length($str = '', $sub_length = 0) {
+    // 根据规定的长度值，将字符串分割成等长的字符数组
+    // 其中indent为首行缩进值，一个汉字==4个空格，默认首行缩进2个汉字
+    function wx_substr_by_length($str = '', $sub_length = 0, $indent = 8) {
         if ($str && $sub_length > 0) {
             $sub_str_list = array();
+
+            $indent_count = floor($indent / 2);
+            $indent_space = floor($indent / 4);
+            if ($indent_count) {
+                for ($i = 0; $i < $indent_count; $i++) {
+                    $str = '  '.$str;
+                }
+            }
             $str_len = mb_strlen($str, 'UTF-8');
             $sub_count = floor($str_len / $sub_length);
+
             if ($sub_count > 0) {
-                for ($i = 0, $j = 0; $i < $sub_count; $i++, $j += $sub_length) {
-                    $tmp_str = mb_substr($str, $j, $sub_length, 'UTF-8');
-                    $sub_str_list[] = $tmp_str;
+                for ($i = 0, $j = 0; $i < $sub_count; $i++) {
+                    if ($indent_count && $i == 0) {
+                        $tmp_str = mb_substr($str, $j, $sub_length + $indent_count + $indent_space, 'UTF-8');
+                        $sub_str_list[] = $tmp_str;
+                        $j += $sub_length + $indent_count + $indent_space;
+                    }
+                    else {
+                        $tmp_str = mb_substr($str, $j, $sub_length, 'UTF-8');
+                        $sub_str_list[] = $tmp_str;
+                        $j += $sub_length;
+                    }
                 }
-                $sub_total_len = $sub_length * $sub_count;
+                $sub_total_len = $sub_length * $sub_count + $indent;
                 if ($sub_total_len < $str_len) {
                     $end_str = mb_substr($str, $sub_total_len, $sub_length, 'UTF-8');
                     $sub_str_list[] = $end_str;
@@ -163,6 +182,15 @@ if (! function_exists('wx_get_tomorrow_time'))
         $tomorrow = date('Y-m-d', strtotime('tomorrow'));
         $tomorrow_time = $tomorrow.' '.$set_time;
         return $tomorrow_time;
+    }
+}
+/*****************************************************************************/
+if (! function_exists('wx_get_after_tomorrow_time')) {
+    function wx_get_after_tomorrow_time() {
+        $set_time = '00:01:00';
+        $after_tomorrow = date('Y-m-d', strtotime('+2 day'));
+        $after_tomorrow_time = $after_tomorrow.' '.$set_time;
+        return $after_tomorrow_time;
     }
 }
 /*****************************************************************************/

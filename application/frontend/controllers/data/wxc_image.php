@@ -321,17 +321,15 @@ class WXC_Image extends CI_Controller
         }
 
         // 生成PDF文件
-        wx_loginfo('生成PDF文件');
         $pdf_info = array(
-            'pdf_name' => $pdf_name,
-            'pdf_user' => $pdf_user,
-            'pdf_school' => $pdf_school,
-            'pdf_header' => $pdf_header,
-            'pdf_summary' => $pdf_summary
+            'pdf_name' => trim($pdf_name),
+            'pdf_user' => trim($pdf_user),
+            'pdf_school' => trim($pdf_school),
+            'pdf_header' => trim($pdf_header),
+            'pdf_summary' => wx_trim_all($pdf_summary),
             );
-        wx_loginfo('holy');
         $ret = $this->_create_pdf($new_json_obj, $pdf_info);  // 返回的是pdf数组信息
-        wx_loginfo('shit');
+
         // echo 'success';         // For ajax data
         $data_objectname = $ret['pdf_name'];
         $pdf_has_error = $ret['is_error'];

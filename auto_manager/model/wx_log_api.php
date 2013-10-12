@@ -7,7 +7,7 @@
 /*****************************************************************************/
 if (! function_exists('wx_log'))
 {
-    function wx_log($msg = '')
+    function wx_log($msg = '', $log_file_name = '')
     {
         if (WX_LOG) {
             if (defined('WX_LOG_PATH')) {
@@ -16,14 +16,17 @@ if (! function_exists('wx_log'))
                     throw new Exception('Log Error: '.$log_path.' not exist');
                 }
 
-                $log_file = $log_path.WX_SEPARATOR.'auto_manager_'.date('Y-m-d').'.log';
+                $log_file = $log_path.WX_SEPARATOR.'auto_'.$log_file_name.'_'.date('Y-m-d').'.log';
 
                 if (WX_DISPLAY_LOG) {
                     echo $msg."\n";
                 }
 
-                if (! error_log('['.date('Y-m-d H:i:s').'] : '.$msg."\n", 3, $log_file)) {
-                    throw new  Exception('Log Error: Write to log file '.$log_file.' failed');
+                if (! error_log('['.date('Y-m-d H:i:s').'] : '.$msg."\n", 3, $log_file)) {  // record auto task log
+                    // throw new  Exception('Log Error: Write to log file '.$log_file.' failed');
+					// if log exception, record to a single log file
+					$except_log_file = $log_path.WX_SEPARATOR.'log_exception_'.date('Y-m-d').'.log';
+					error_log('['.date('Y-m-d H:i:s').'] : Log Exception '.$log_file_name." \n", 3, $except_log_file);
                 }
             }
         }

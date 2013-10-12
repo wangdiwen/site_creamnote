@@ -33,6 +33,9 @@ class WXC_Content extends CI_Controller
 
             $this->load->view('article/wxv_article_content', $data);
         }
+        else {  // no such article, redirect to 404
+            redirect('primary/wxc_home/page_404');
+        }
     }
 /*****************************************************************************/
     public function more_article($offset = 0) {  // page partiong
@@ -120,6 +123,9 @@ class WXC_Content extends CI_Controller
                 'notice_content' => $content
                 );
             $this->load->view('notice/wxv_notice_content', $data);
+        }
+        else {  // no such site notice, redirect to 404
+            redirect('primary/wxc_home/page_404');
         }
     }
 /*****************************************************************************/

@@ -32,7 +32,7 @@ class WXC_Data extends CI_Controller
     // 资料详细页面
     public function data_detail()
     {
-        $this->load->view('data/wxv_datadetail');
+        $this->load->view('data/wxv_datadetail', array());
     }
 /*****************************************************************************/
     public function data_modify($data_id = '')  // 完善资料信息
@@ -57,7 +57,7 @@ class WXC_Data extends CI_Controller
             $data['data_id'] = $data_id;
             $data['data_name'] = $data_info->data_name;
             if ($data_info->data_type == 'pdf' && $data_info->data_status == 0) {
-                $data['pdf_file'] = base_url().'upload/tmp/'.$data_info->data_objectname;
+                $data['pdf_file'] = urlencode('upload/tmp/'.$data_info->data_objectname);
             }
             else {
                 $data['pdf_file'] = '';
@@ -84,7 +84,7 @@ class WXC_Data extends CI_Controller
                 $data['data_id'] = $data_id;
                 $data['data_name'] = $data_info->data_name;
                 if ($data_info->data_type == 'pdf' && $data_info->data_status == 0) {
-                    $data['pdf_file'] = base_url().'upload/tmp/'.$data_info->data_objectname;
+                    $data['pdf_file'] = urlencode('upload/tmp/'.$data_info->data_objectname);
                 }
                 else {
                     $data['pdf_file'] = '';
@@ -187,19 +187,13 @@ class WXC_Data extends CI_Controller
 /*****************************************************************************/
     // 前台页面的action方法
     public function data_view($data_id = 0) {
-        if (! ($data_id > 0)) {
-            // echo "当前资料不可用！";
-            redirect('primary/wxc_home/page_404');
-            return false;
-        }
-
         $data = array();
         $data_info = $this->wxm_data->get_data_info($data_id);
-        if ($data_info)
-        {
+        if ($data_info) {
         	$data['data_id'] = $data_id;
             $data['data_name'] = $data_info->data_name;
             $data['data_summary'] = $data_info->data_summary;
+            $data['data_price'] = $data_info->data_price;
             $data['data_objectname'] = $data_info->data_objectname;
             $data['data_type'] = $data_info->data_type;
             $data['data_pagecount'] = $data_info->data_pagecount;
@@ -275,19 +269,24 @@ class WXC_Data extends CI_Controller
             // get flash preview file path
             if ($data_info->data_preview == '1') {
                 $flash_file = wx_get_filename($data['data_objectname']).'.swf';
-                if ($data_info->data_vpspath) {             // local vps has flash file
-                    $local_flash_path = "/upload/flash/";
-                    $data['data_swfpath'] = $local_flash_path.$flash_file;
-                }
-                else {   // local vps has no flash file, need get from oss flash bucket
+                if ($data_info->data_osspath) {             // get oss flash file
                     $oss_flash_bucket = 'wx-flash';
                     $data['data_swfpath'] = 'http://'.$oss_flash_bucket.'.oss.aliyuncs.com/'.$flash_file;
+                }
+                else {   // local disk flash data file
+                    $local_flash_path = "/upload/flash/";
+                    $data['data_swfpath'] = $local_flash_path.$flash_file;
                 }
             }
             else {
                 $data['data_swfpath'] = '';
             }
         }
+        else {  // has no such note data
+            redirect('primary/wxc_home/page_404');
+            die('sorry, no such note data');
+        }
+
 
         // 增加浏览的次数
         if ($data_id > 0)
@@ -430,6 +429,13 @@ class WXC_Data extends CI_Controller
     {
         $upload_path = '/alidata/www/creamnote/upload/tmp/';     // 存放文件的绝对目录路径
 
+        // check login or not?
+        $cur_user_id = isset($_SESSION['wx_user_id']) ? $_SESSION['wx_user_id'] : 0;
+        if (! $cur_user_id) {
+            echo 'not-login';
+            return false;
+        }
+
         if (! empty($_FILES))
         {
             if ($_FILES["Filedata"]["error"] > 0)   // 错误
@@ -558,22 +564,17 @@ class WXC_Data extends CI_Controller
         }
 
         // 更新指定的资料id的新信息，第二步：
-        // loginfo($data_id);
-        // loginfo($data_name);
-        // loginfo($data_status);
-        // loginfo($data_objectname);
-
         if ($data_name && $data_status && $data_id && $data_objectname)
         {
             // 更新data表
             $data = array(
                         'data_name' => $data_name,
                         'data_status' => $data_status,
-                        'data_summary' => $data_summary,
+                        'data_summary' => trim($data_summary),
                         'data_price' => $data_price,
                         'data_point' => 0,
                         'data_vpspath' => $to_path_file,
-                        'data_keyword' => $data_keyword,
+                        'data_keyword' => trim($data_keyword),
                         'data_preview' => $data_preview,
                         'data_id' => $data_id,
                         'data_uploadtime' => date('Y-m-d H:i:s'),
@@ -1119,6 +1120,26 @@ class WXC_Data extends CI_Controller
             redirect('static/wxc_direct/sys_error');
             return false;
         }
+    }
+/*****************************************************************************/
+    public function preview_pdf_by_browser() {
+        $pdf_file_encrypt = $this->input->get('pdf');
+
+        // check login or not
+        $cur_user_info = $this->wx_util->get_user_session_info();
+        $cur_user_id = $cur_user_info['user_id'];
+        if ($cur_user_id == 0) {  // not login
+            redirect('primary/wxc_home/page_404');
+            die('sorry, you can not use this function');
+        }
+
+        $pdf_file = urldecode($pdf_file_encrypt);
+        $data = '';
+        if (file_exists($pdf_file)) {
+            $data = file_get_contents($pdf_file);
+        }
+        $this->output->set_header("Content-type: application/pdf");
+        $this->output->set_output($data);
     }
 /*****************************************************************************/
 }

@@ -129,7 +129,7 @@ class WXC_Feedback extends CI_Controller
             }
             else
             {
-                $ajax = '创建一条意见反馈的信息不全'.'<br />';
+                $ajax = 'failed';
             }
         }
 

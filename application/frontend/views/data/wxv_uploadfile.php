@@ -77,7 +77,7 @@ $(function() {
             warnMes("表单填写完整才能提交！");
             return;
         }
-        showLoading("文档正在努力上传当中,请稍等。。。");
+        showLoading("资料卡片正在生成当中请稍等。。。");
     	var data_status;
     	var data_preview;
         if($("#datastatus").attr("checked")){
@@ -132,7 +132,7 @@ $(function() {
                     // var content = "你的笔记已经上传成功<br/>两秒后自动关闭该窗口";
                     // var url = $("#baseUrl").val()+"home/personal";
                     // showDialog(title,content,url);
-            	   location.href='<?php echo site_url('home/personal'); ?>';
+            	   setTimeout("location.href='<?php echo site_url('home/personal'); ?>'",2000);
                 }
 
             },
@@ -486,13 +486,13 @@ function makeCenter()
 </head>
 
 
-<body>
+<body class="activity_pane">
 	<?php include  'application/frontend/views/share/header.php';?>
 
     <?php $nav_param = "upload_note";?>
     <?php include  'application/frontend/views/share/navigation.php';?>
     <!-- end #header -->
-<div class="backcolor_body activity_pane">
+<div class="backcolor_body ">
     <div class="body _body" style="min-height: 1010px;">
 		<div id="_content" class="_content">
 
@@ -507,7 +507,18 @@ function makeCenter()
  		     <div  id="thisform" >
             <fieldset>
                 <le>第一步：上传资料 </le>
-                <p style="margin-top: 12px;"> <input type="file" name="file_upload" id="file_upload" /></p>
+                <p style="margin-top: 12px;">
+                    <?php if (isset($_SESSION["wx_user_name"]) && $_SESSION["wx_user_name"] != ""){?>
+                        <input type="file" name="file_upload" id="file_upload" />
+                    <?php } else {?>
+                        <div class="uploadify common_show_login_win" style="height: 30px; width: 120px;">
+                            <div onclick="show_login_win()" class="common_show_login_win uploadify-button" style="height: 30px; line-height: 30px; width: 120px;cursor: pointer;">
+                                <span   class="common_show_login_win uploadify-button-text">选择资料</span>
+                            </div>
+                        </div>
+
+                    <?php }?>
+                </p>
                <!--  <p><a href="javascript:$('#file_upload').uploadify('settings', 'formData', {'typeCode':document.getElementById('id_file').value});$('#file_upload').uploadify('upload','*')">上传</a>
 				<a href="javascript:$('#file_upload').uploadify('cancel','*')">重置上传队列</a>
 				</p>  -->
@@ -595,6 +606,7 @@ function makeCenter()
                 <p><label for="data_price" accesskey="9">价格</label><br />
                 <select id='select_price' name='select_price' style='width: 445px;' class="chosen">
                     <option>免费</option>
+                    <option>￥0.99</option>
                     <option>￥1.99</option>
                     <option>￥2.99</option>
                     <option>￥3.99</option>
@@ -616,7 +628,15 @@ function makeCenter()
             </div>
 		</div>
 
-        <div><input type="button" name="filecontent" class="button_c gravatar" title="表单填写完整才能提交" id="filecontent" value="完成上传" onclick=""  style="cursor:not-allowed;height:32px;width:100px"></div>
+        <div>
+          <?php if (isset($_SESSION["wx_user_name"]) && $_SESSION["wx_user_name"] != ""){?>
+              <input type="button" name="filecontent" class="button_c gravatar" title="表单填写完整才能提交" id="filecontent" value="完成上传" onclick=""  style="cursor:not-allowed;height:32px;width:100px">
+          <?php } else {?>
+              <input type="button" name="" id="" value="完成上传" onclick="show_login_win()"   style="cursor:not-allowed;height:32px;width:100px" class="common_show_login_win button_c button_c gravatar" >
+
+          <?php }?>
+
+        </div>
 	   </div>
     </div>
 

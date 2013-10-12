@@ -7,6 +7,7 @@ class WXC_Util extends CI_Controller
     {
         parent::__construct();
         $this->load->library('wx_util');
+        $this->load->library('user_agent');
     }
 /*****************************************************************************/
     public function get_new_auth_code()
@@ -24,6 +25,46 @@ class WXC_Util extends CI_Controller
             return;
         }
         echo 'auth-code-ok';  // ajax
+    }
+/*****************************************************************************/
+    public function get_browser_info() {
+        $agent_info = $this->agent->agent_string();
+        // echo $agent_info.'<br />';
+
+        $browser = array(
+            'type' => '',
+            'version' => '',
+            );
+        if (strpos($agent_info, 'MSIE')) {   // solve chinese mess word
+            $str_list = explode(' ', $agent_info);
+            $browser['type'] = 'IE';
+            $browser['version'] = substr(isset($str_list[3]) ? $str_list[3] : '', 0, 3);
+        }
+        elseif (strpos($agent_info, 'Firefox')) {
+            $browser['type'] = 'Firefox';
+            $str_list = explode(' ', $agent_info);
+            $tmp_list = explode('/', isset($str_list[6]) ? $str_list[6] : '');
+            $browser['version'] = isset($tmp_list[1]) ? $tmp_list[1] : '';
+        }
+        elseif (strpos($agent_info, 'Chrome')) {
+            $browser['type'] = 'Chrome';
+            $str_list = explode(' ', $agent_info);
+            $tmp_list = explode('/', isset($str_list[8]) ? $str_list[8] : '');
+            $browser['version'] = isset($tmp_list[1]) ? $tmp_list[1] : '';
+        }
+        elseif (strpos($agent_info, 'Safari')) {
+            $browser['type'] = 'Safari';
+            $str_list = explode(' ', $agent_info);
+            $tmp_list = explode('/', isset($str_list[9]) ? $str_list[9] : '');
+            $browser['version'] = isset($tmp_list[1]) ? $tmp_list[1] : '';
+        }
+        // wx_echoxml($browser);
+        if ($browser['type'] && $browser['version']) {
+            echo $browser['type'].' '.$browser['version'];
+        }
+        else {
+            echo '';    // ajax return
+        }
     }
 /*****************************************************************************/
     public function _create_auth_code()

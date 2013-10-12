@@ -29,7 +29,7 @@ $(function(){
 <body>
   <?php include  'application/frontend/views/share/header_home.php';?>
   <div class="body article_body">
-    <div class="foot_list_left" style="height:0px;">
+    <div class="foot_list_left" style="">
       <h1><b>帮助</b></h1>
       <ul class="foot_list_ul">
         <li class="nowli"><a href="#" title="常见问题">常见问题</a></li>
@@ -37,7 +37,7 @@ $(function(){
         <li><a href="<?php echo site_url('static/wxc_help/sitemap'); ?>" title="网站地图">网站导航</a></li>
       </ul>
     </div>
-    <div class="foot_list_right" style="padding-bottom: 40px;border-left: 1px solid rgb(163, 177, 209);padding-left: 50px;">
+    <div class="foot_list_right" style="padding-bottom: 40px;">
       <h2><b>常见问题</b></h2>
       <div class="text_line">
         <p style="font-size:14px" class="pointer" onclick="showcontent(1)"><b>Q:1.平台是干什么的？</b></p>

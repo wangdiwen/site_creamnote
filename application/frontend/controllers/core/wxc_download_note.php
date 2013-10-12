@@ -24,6 +24,7 @@ class WXC_Download_Note extends CI_Controller {
         if (! $cur_user_id > 0
             || ! is_numeric($data_id)
             || ! $data_id > 0 ) {
+            die('Not login or system data error');
             return;
         }
 

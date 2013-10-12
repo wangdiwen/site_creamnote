@@ -149,8 +149,8 @@ class WXC_User_manager extends CI_Controller
                 if ($collect_data_str) {
                     $collect_list = explode(',', $collect_data_str);
                     if (in_array($collect_data_id, $collect_list)) {
-                        echo 'failed'; // ajax respose
-                        return;
+                        echo 'has-collected'; // ajax respose
+                        return true;
                     }
                     // collect most count: 20
                     if (count($collect_list) >= 20) {
@@ -167,10 +167,12 @@ class WXC_User_manager extends CI_Controller
                 if ($collect_str) {
                     $this->wxm_user_activity->set_collect_data($cur_user_id, $collect_str);
                 }
+                echo 'success';
+                return true;
             }
         }
-        echo 'success';  // ajax respose
-        return;
+        echo 'failed';  // ajax respose
+        return false;
     }
 /*****************************************************************************/
     public function del_collect_data() {

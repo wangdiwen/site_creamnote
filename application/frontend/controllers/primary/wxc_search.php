@@ -118,7 +118,8 @@ class WXC_Search extends CI_Controller
             {
                 // 第一步，先查资料关联学校 id 的数据
                 $school_id = $this->wxm_category_area->get_id_by_name($area_name);
-                wx_loginfo('school_id = '.$school_id);
+                wx_loginfo('school_name = '.$area_name);
+                wx_loginfo('school_id   = '.$school_id);
                 if ($school_id)
                 {
                     $data_id_list = $this->wxm_data2carea->get_data_id_by_school($school_id);
@@ -345,8 +346,6 @@ class WXC_Search extends CI_Controller
     {
         $input = $this->input->post('search');
 
-        // get user search notes
-        $four_classes = null;
         // first, use zh word segment
         $four_classes = $this->_extract_keyword_user_word_segment($input);
         if (! $four_classes) {  // if word segment failed

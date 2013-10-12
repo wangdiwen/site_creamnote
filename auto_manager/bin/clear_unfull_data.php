@@ -49,6 +49,7 @@ require_once WX_BASE_PATH.WX_SEPARATOR.'model'.WX_SEPARATOR.'wx_database_api.php
 /*****************************************************************************/
 
 /***************************** 设定时间戳 ************************************/
+$log_name = 'clear_unfull_data';
 $today_time = wx_get_today_time();
 $yesterday_time = wx_get_yesterday_time();
 $before_yesterday_time = wx_get_before_yesterday_time();
@@ -75,7 +76,7 @@ $table = 'wx_data';
 $select = array(
     'data_id',
     'data_objectname',
-    'data_type',
+    // 'data_type',
     // 'data_status',
     'user_id',
     // 'data_uploadtime',
@@ -83,8 +84,9 @@ $select = array(
     'data_vpspath'
     );
 $where = array(
-    'data_uploadtime >=' => $before_yesterday_time,
-    'data_uploadtime <=' => $yesterday_time,
+    // 'data_uploadtime >=' => $before_yesterday_time,
+    // 'data_uploadtime <=' => $yesterday_time,
+    'data_uploadtime <=' => $before_yesterday_time,
     'data_status' => '0'
     );
 $db_service = new WX_DB();
@@ -94,35 +96,36 @@ $pend_data_list = $db_service->select($table, $select, $where);
 /***************************** 执行清理工作 **********************************/
 $total_count = count($pend_data_list);
 
-wx_log("---------------------------------------------------------------------------------");
-wx_log("---------------------  Clear Unfull Data Every Two Days -----------------------");
-wx_log('--------- Filter Time      : '.$before_yesterday_time.' ~ '.$yesterday_time.'-----------');
-wx_log('--------- Total  Data Count: '.$total_count);
-wx_log("---------------------------------------------------------------------------------");
-wx_log("---------------------------------------------------------------------------------");
+wx_log("---------------------------------------------------------------------------------", $log_name);
+wx_log("---------------------  Clear Unfull Data Everyday -----------------------------", $log_name);
+//wx_log('--------- Filter Time      : '.$before_yesterday_time.' ~ '.$yesterday_time.'-----------', $log_name);
+wx_log('--------- Filter Time      : Before yesterday time '.$before_yesterday_time.'-----------', $log_name);
+wx_log('--------- Total  Data Count: '.$total_count, $log_name, $log_name);
+wx_log("---------------------------------------------------------------------------------", $log_name);
+wx_log("---------------------------------------------------------------------------------", $log_name);
 
 foreach ($pend_data_list as $pend_data) {
     $data_id = $pend_data['data_id'];
     $data_objectname = $pend_data['data_objectname'];
-    $data_type = $pend_data['data_type'];
+    // $data_type = $pend_data['data_type'];
     // $user_id = $pend_data['user_id'];
     $data_vpspath = $pend_data['data_vpspath'];
 
     $file_name = $data_vpspath.$data_objectname;
 
-    wx_log("Data Id       : ".$data_id);
-    wx_log("Data Obj Name : ".$data_objectname);
-    wx_log("Data Vps Path : ".$data_vpspath);
+    wx_log("Data Id       : ".$data_id, $log_name);
+    wx_log("Data Obj Name : ".$data_objectname, $log_name);
+    wx_log("Data Vps Path : ".$data_vpspath, $log_name);
 
     // first, delete the vps file
     $ret_del_file = wx_delete_file($file_name);
     if ($ret_del_file) {
         $msg = 'Info: Delete Tmp Data File Success';
-        wx_log($msg);
+        wx_log($msg, $log_name);
     }
     else {
         $msg = 'Error: Delete Tmp Data File Failed';
-        wx_log($msg);
+        wx_log($msg, $log_name);
     }
 
     // second, delete the data info of table:
@@ -143,55 +146,55 @@ foreach ($pend_data_list as $pend_data) {
     $ret_del_db = $db_service->delete($table_data, $del_where);
     if ($ret_del_db) {
         $msg = 'Info: Delete Database(wx_data) Record Success';
-        wx_log($msg);
+        wx_log($msg, $log_name);
     }
     else {
         $msg = 'Error: Delete Database(wx_data) Record Failed';
-        wx_log($msg);
+        wx_log($msg, $log_name);
     }
 
     // table: 'wx_data2carea'
     $ret_del_db = $db_service->delete($table_area, $del_where);
     if ($ret_del_db) {
         $msg = 'Info: Delete Database(wx_data2carea) Record Success';
-        wx_log($msg);
+        wx_log($msg, $log_name);
     }
     else {
         $msg = 'Error: Delete Database(wx_data2carea) Record Failed';
-        wx_log($msg);
+        wx_log($msg, $log_name);
     }
 
     // table: 'wx_data2cnature'
     $ret_del_db = $db_service->delete($table_nature, $del_where);
     if ($ret_del_db) {
         $msg = 'Info: Delete Database(wx_data2cnature) Record Success';
-        wx_log($msg);
+        wx_log($msg, $log_name);
     }
     else {
         $msg = 'Error: Delete Database(wx_data2cnature) Record Failed';
-        wx_log($msg);
+        wx_log($msg, $log_name);
     }
 
     // table: 'wx_data_activity'
     $ret_del_db = $db_service->delete($table_activity, $del_where);
     if ($ret_del_db) {
         $msg = 'Info: Delete Database(wx_data_activity) Record Success';
-        wx_log($msg);
+        wx_log($msg, $log_name);
     }
     else {
         $msg = 'Error: Delete Database(wx_data_activity) Record Failed';
-        wx_log($msg);
+        wx_log($msg, $log_name);
     }
 
     // table: 'wx_grade'
     $ret_del_db = $db_service->delete($table_grade, $del_where);
     if ($ret_del_db) {
         $msg = 'Info: Delete Database(wx_grade) Record Success';
-        wx_log($msg);
+        wx_log($msg, $log_name);
     }
     else {
         $msg = 'Error: Delete Database(wx_grade) Record Failed';
-        wx_log($msg);
+        wx_log($msg, $log_name);
     }
 
     // table: 'wx_notify'
@@ -201,18 +204,18 @@ foreach ($pend_data_list as $pend_data) {
     $ret_del_db = $db_service->delete($table_notify, $notify_where);
     if ($ret_del_db) {
         $msg = 'Info: Delete Database(wx_notify) Record Success';
-        wx_log($msg);
+        wx_log($msg, $log_name);
     }
     else {
         $msg = 'Error: Delete Database(wx_notify) Record Failed';
-        wx_log($msg);
+        wx_log($msg, $log_name);
     }
 
 
-    wx_log("---------------------------------------------------------------------------------");
+    wx_log("---------------------------------------------------------------------------------", $log_name);
 }
 
-wx_log("");
+wx_log("", $log_name);
 
 /*****************************************************************************/
 /* End of file clear_unfull_data.php */

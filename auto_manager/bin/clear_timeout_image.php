@@ -47,6 +47,7 @@ require_once WX_BASE_PATH.WX_SEPARATOR.'model'.WX_SEPARATOR.'wx_database_api.php
 /*****************************************************************************/
 /***************************** 设定时间戳 ************************************/
 $today_time = wx_get_today_time();
+$log_name = 'clear_image';
 /***************************** 查询数据库 ************************************/
 $table = 'wx_image';
 $select = array(
@@ -61,27 +62,27 @@ $pend_data_list = $db_service->select($table, $select, $where);
 $total_count = count($pend_data_list);
 $image_path = '/alidata/www/creamnote/upload/image/';
 
-wx_log("---------------------------------------------------------------------------------");
-wx_log("---------------------  Clear Timeout Images Everyday ----------------------------");
-wx_log('--------- Filter Time      : '.$today_time.'  -------------------------------');
-wx_log('--------- Total  Data Count: '.$total_count);
-wx_log("---------------------------------------------------------------------------------");
-wx_log("---------------------------------------------------------------------------------");
+wx_log("---------------------------------------------------------------------------------", $log_name);
+wx_log("---------------------  Clear Timeout Images Everyday ----------------------------", $log_name);
+wx_log('--------- Filter Time      : '.$today_time.'  -------------------------------', $log_name);
+wx_log('--------- Total  Data Count: '.$total_count, $log_name);
+wx_log("---------------------------------------------------------------------------------", $log_name);
+wx_log("---------------------------------------------------------------------------------", $log_name);
 
 foreach ($pend_data_list as $pend_data) {
     $user_id = $pend_data['user_id'];
     $clear_path = $image_path.$user_id;
 
-    wx_log("User Id    : ".$user_id);
-    wx_log("Clear Path : ".$clear_path);
+    wx_log("User Id    : ".$user_id, $log_name);
+    wx_log("Clear Path : ".$clear_path, $log_name);
 
     if ($clear_path && is_dir($clear_path)) {
         $ret = wx_delete_dir($clear_path);
         if ($ret) {
-            wx_log('Info: Clear User Image Path Success');
+            wx_log('Info: Clear User Image Path Success', $log_name);
         }
         else {
-            wx_log('Error: Clear User Image Path Failed');
+            wx_log('Error: Clear User Image Path Failed', $log_name);
         }
 
         // clear database data, table is 'wx_image'
@@ -91,14 +92,14 @@ foreach ($pend_data_list as $pend_data) {
         $del_table = 'wx_image';
         $ret_del = $db_service->delete($del_table, $del_where);
         if ($ret_del) {
-            wx_log('Info: Delete Database Record Success');
+            wx_log('Info: Delete Database Record Success', $log_name);
         }
         else {
-            wx_log('Error: Delete Database Record Failed');
+            wx_log('Error: Delete Database Record Failed', $log_name);
         }
     }
 
-    wx_log("---------------------------------------------------------------------------------");
+    wx_log("---------------------------------------------------------------------------------", $log_name);
 }
 
-wx_log("");
+wx_log("", $log_name);

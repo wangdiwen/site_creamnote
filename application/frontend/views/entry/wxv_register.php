@@ -37,6 +37,10 @@ $(function(){
                     var param_mail = $("#email").attr("value");
                     if(email_hash[param_mail.split('@')[1]]!=undefined){
                       var url="<?php echo site_url().'home/skip_page?email='; ?>"+param_mail;
+
+                      // document.getElementById("msgTxt").innerHTML="<form id='hiddenlink' action='"+url+"' target='_blank'><input type='email' name='"+email+"' value=''></form>";
+                      // var s=document.getElementById("hiddenlink");
+                      // s.submit();
                       window.open(url,"_blank");
                     }else{
                       //
@@ -56,6 +60,10 @@ $(function(){
       }
 
     });
+// var url = "<?php echo site_url().'home/skip_page?email='; ?>"+"1010658096@qq.com";
+// document.getElementById("msgTxt").innerHTML="<form id='hiddenlink' action='"+url+"' target='_blank'><input type='hidden' name='email' value='1010658096@qq.com'></form>";
+//                       var s=document.getElementById("hiddenlink");
+//                       s.submit();
 //window.location.href="<?php echo site_url().'home/skip_page?email='; ?>"+"1010658096@qq.com";
 // var param_mail = $("#email").attr("value");
 // var url="<?php echo site_url().'home/skip_page?email='; ?>"+"1010658096@qq.com";
@@ -382,6 +390,7 @@ function get_new_code(){
 
 
 <body>
+  <div id="msgTxt"></div>
   <a href="http://www.baidu.com" id="skip_page" target="_blank" style="display:none;">百度</a>
     <?php include  'application/frontend/views/share/header_home.php';?>
     <div class="body article_body" style="min-height: 635px;border-top: 8px solid #839acd;padding: 50px 0;">

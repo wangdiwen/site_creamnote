@@ -48,14 +48,14 @@ class WX_Site_Manager {
 
         // add new user register
         $cur_month = wx_month();
-        $reg_user_info = $this->_get_site_info_by_date();
+        $reg_user_info = $this->CI->wxm_site_manager->get_by_date($cur_month);
         if ($reg_user_info) {
             $user_count = $reg_user_info['site_users'];
             $user_count = $user_count + 1;
             $data = array(
                 'site_users' => $user_count
                 );
-            $this->_update_site_manager($cur_month, $data);
+            $this->CI->wxm_site_manager->update_site_manager($cur_month, $data);
         }
     }
 /*****************************************************************************/
@@ -65,7 +65,7 @@ class WX_Site_Manager {
 
         // add note count, and upload count
         $cur_month = wx_month();
-        $note_count_info = $this->_get_site_info_by_date($cur_month);
+        $note_count_info = $this->CI->wxm_site_manager->get_by_date($cur_month);
         if ($note_count_info) {
             $note_count = $note_count_info['site_note_count'];
             $upload_count = $note_count_info['site_upload_count'];
@@ -75,7 +75,7 @@ class WX_Site_Manager {
                 'site_note_count' => $note_count,
                 'site_upload_count' => $upload_count,
                 );
-            $this->_update_site_manager($cur_month, $data);
+            $this->CI->wxm_site_manager->update_site_manager($cur_month, $data);
         }
     }
 /*****************************************************************************/
@@ -85,7 +85,7 @@ class WX_Site_Manager {
 
         // create a new image pdf file
         $cur_month = wx_month();
-        $site_info = $this->_get_site_info_by_date($cur_month);
+        $site_info = $this->CI->wxm_site_manager->get_by_date($cur_month);
         if ($site_info) {
             $note_count = $site_info['site_note_count'];
             $imagenote_count = $site_info['site_imagenote_count'];
@@ -95,7 +95,7 @@ class WX_Site_Manager {
                 'site_note_count' => $note_count,
                 'site_imagenote_count' => $imagenote_count,
                 );
-            $this->_update_site_manager($cur_month, $data);
+            $this->CI->wxm_site_manager->update_site_manager($cur_month, $data);
         }
     }
 /*****************************************************************************/
@@ -105,7 +105,7 @@ class WX_Site_Manager {
 
         // add a download count
         $cur_month = wx_month();
-        $site_info = $this->_get_site_info_by_date($cur_month);
+        $site_info = $this->CI->wxm_site_manager->get_by_date($cur_month);
         if ($site_info) {
             $free_down_count = $site_info['site_freedown_count'];
             $download_count = $site_info['site_download_count'];
@@ -115,7 +115,7 @@ class WX_Site_Manager {
                 'site_freedown_count' => $free_down_count,
                 'site_download_count' => $download_count,
                 );
-            $this->_update_site_manager($cur_month, $data);
+            $this->CI->wxm_site_manager->update_site_manager($cur_month, $data);
         }
     }
 /*****************************************************************************/
@@ -125,7 +125,7 @@ class WX_Site_Manager {
 
         // for pay to download, update count record
         $cur_month = wx_month();
-        $site_info = $this->_get_site_info_by_date($cur_month);
+        $site_info = $this->CI->wxm_site_manager->get_by_date($cur_month);
         if ($site_info) {
             $pay_count = $site_info['site_paydown_count'];
             $down_count = $site_info['site_download_count'];
@@ -135,33 +135,15 @@ class WX_Site_Manager {
                 'site_paydown_count' => $pay_count,
                 'site_download_count' => $down_count,
                 );
-            $this->_update_site_manager($cur_month, $data);
+            $this->CI->wxm_site_manager->update_site_manager($cur_month, $data);
         }
     }
 /*****************************************************************************/
-    public function _get_site_info_by_date($year_month = '') {
-        if ($year_month) {
-            $table = $this->wx_table;
-            $this->CI->db->select('site_id, site_date, site_users, site_note_count, site_upload_count, site_imagenote_count, site_freedown_count, site_paydown_count, site_download_count, site_total_income')->from($table)->where('site_date', $year_month)->limit(1);
-            $query = $this->CI->db->get();
-            return $query->row_array();
-        }
-    }
 /*****************************************************************************/
-    public function _update_site_manager($year_month = '', $data = array()) {
-        if ($year_month && $data) {
-            $table = $this->wx_table;
-            $this->CI->db->where('site_date', $year_month);
-            $this->CI->db->update($table, $data);
-        }
-    }
 /*****************************************************************************/
 /*****************************************************************************/
     public function test() {
-        $cur_month_data = $this->_check_cur_month_record();
-        return $cur_month_data;
-        // $date = '2013-08';
-        // return $this->CI->wxm_site_manager->get_by_date($date);
+
     }
 /*****************************************************************************/
 }

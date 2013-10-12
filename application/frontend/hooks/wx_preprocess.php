@@ -27,11 +27,6 @@ class WX_Preprocess
         $home_url = base_url();
 
         // 当URL为以下几个时，页面正常加载，除此之外，一律重定向到主页面
-        // 1. http://xxx.com
-        // 2. http://xxx.com/home/index
-        // 3. http://xxx.com/home/register_page
-        // 4. http://xxx.com/home/logout_page
-        // 5. http://xxx.com/home/login
         // 基础URL
         $default_home_url = $home_url . 'home/index';
         $register_page_url = $home_url . 'home/register_page';
@@ -70,7 +65,8 @@ class WX_Preprocess
         $public_gen_nature_url_ereg = $home_url."primary/wxc_search/gen_search_by_nature_id";
         $public_data_list = $home_url."data/wxc_data/data_list";
         //一些静态宣传页面
-        $static = explode("static/",$cur_url);
+        // $static = explode("static/",$cur_url);
+        $static_url = $home_url.'static/(.*)';
         // 404页面
         $page_404 = $home_url.'primary/wxc_home/page_404';
 
@@ -80,6 +76,7 @@ class WX_Preprocess
         // auth code iface
         $auth_code_new = $home_url.'core/wxc_util/get_new_auth_code';
         $auth_code_check = $home_url.'core/wxc_util/check_auth_code';
+        $browser_check = $home_url.'core/wxc_util/get_browser_info';
 
         // qq link
         $qq_back = $home_url.'core/wxc_user_manager/qq_back_func';
@@ -128,10 +125,12 @@ class WX_Preprocess
             || $cur_url == $public_gen_nature_url_ereg
         	|| $cur_url == $public_data_list
             || $cur_url == $page_404
-            || count($static) > 1
+            // || count($static) > 1
+            || ereg($static_url, $cur_url)
             || $cur_url == $user_tips
             || $cur_url == $auth_code_new
             || $cur_url == $auth_code_check
+            || $cur_url == $browser_check
             || $cur_url == $third_party_login
             || $cur_url == $check_nice_name
             || $cur_url == $get_login_name

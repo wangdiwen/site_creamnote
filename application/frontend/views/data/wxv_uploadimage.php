@@ -37,7 +37,16 @@
                     <span ><a style="color:#fff" href="javascript:$('#file_upload').uploadify('settings', 'formData', {'typeCode':document.getElementById('id_file').value});$('#file_upload').uploadify('upload','*')">批量上传</a></span>
                     <span ><a style="color:#fff" href="javascript:$('#file_upload').uploadify('cancel','*')">取消上传</a></span>
                   </div>
-                  <input type="file" name="file_upload" id="file_upload" />
+                  <?php if (isset($_SESSION["wx_user_name"]) && $_SESSION["wx_user_name"] != ""){?>
+                        <input type="file" name="file_upload" id="file_upload" />
+                    <?php } else {?>
+                        <div class="uploadify common_show_login_win" style="height: 30px; width: 120px;">
+                            <div onclick="show_login_win()" class="common_show_login_win uploadify-button" style="height: 30px; line-height: 30px; width: 120px;cursor: pointer;">
+                                <span   class="common_show_login_win uploadify-button-text">选择图片</span>
+                            </div>
+                        </div>
+
+                    <?php }?>
                 </div>
                 <p style="color: #AA7700;">
       				    支持的图片格式(*.jpg; *.jpeg; *.png; *.gif),单张最大（2M）
@@ -49,7 +58,7 @@
 
       		<div class="entry">
              	<div  id="thisform1" >
-                    <fieldset>
+                    <fieldset style="padding-bottom: 20px;">
                         <le>第二步：图片排序 </le>
                     	<div id="main">
                       		<div id="module_list" style="display:none;">
@@ -72,24 +81,39 @@
             	<div  id="thisform2" >
                     <fieldset>
                         <le>第三步：完善 PDF信息</le>
-                        <p><label  accesskey="9">笔记题目</label><br />
-                        <input type="text" id="pdfname" name="pdfname" onblur="step_three()"></p>
+                        <p>
+                          <div style="position: absolute;margin: 17px 0 0 468px;border: 1px solid #a3b1d1;cursor:pointer;" onclick="original_image(9999,'40%')">
+                            <img style="height:317px;" src="/application/frontend/views/resources/images/Creamnote_image_help.jpg">
+                          </div>
+                          <label  accesskey="9">笔记题目</label><br />
+                          <input type="text" id="pdfname" name="pdfname" onblur="step_three()">
+                        </p>
                         <p><label  accesskey="9">笔记作者</label><br />
                         <input type="text" id="pdfuser" name="pdfuser" value="<?php echo $base_user_info['user_name'];?>" onblur="step_three()"></p>
                         <p><label  accesskey="9">作者所在学校</label><br />
                         <input type="text" id="pdfschool" name="pdfschool" value="<?php echo $base_user_info['user_school'];?>" onblur="step_three()"></p>
                         <p><label  accesskey="9">笔记页眉</label><br />
                         <input type="text" id="pdfheader" name="pdfheader" onblur="step_three()" maxlength="20"></p>
-                        <p><label for="name" accesskey="9">简介</label><br />
+                        <p><label for="name" accesskey="9">笔记简介</label><br />
                         <textarea id="pdfsummary" name="" onblur="step_three()"></textarea></p>
+
+                        <div class='display_none' id="9999"><p><img style='width:400px;height:570px' src="/application/frontend/views/resources/images/Creamnote_image_help_b.jpg"></img></p>
+                        <div class='fancy_close' onclick='unblock()' style='left:385px;'></div>
+                        <div class='image_title' style='width:150px;left: 120px;'>
+                        <table cellspacing='0' cellpadding='0' border='0'><tbody><tr><td id='fancy_title_left'></td><td id='fancy_title_main'>
+                        <div>图片笔记样例</div></td><td id='fancy_title_right'></td></tr></tbody></table></div></div>
 
                         <input type="hidden" name="dataid" id ="dataid">
                         <input type="hidden" name="dataobjectname" id ="dataobjectname">
                     </fieldset>
                 </div>
     		</div>
+          <?php if (isset($_SESSION["wx_user_name"]) && $_SESSION["wx_user_name"] != ""){?>
+              <input type="button" name="filecontent" id="filecontent" value="完成上传" onclick=""  style="cursor:not-allowed;height:32px;width:100px" class="button_c button_c gravatar" title="表单填写完整才能提交">
+          <?php } else {?>
+              <input type="button" name="" id="" value="完成上传" onclick="show_login_win()"   style="cursor:not-allowed;height:32px;width:100px" class="common_show_login_win button_c button_c gravatar" >
 
-            <input type="button" name="filecontent" id="filecontent" value="完成上传" onclick=""  style="cursor:not-allowed;height:32px;width:100px" class="button_c button_c gravatar" title="表单填写完整才能提交">
+          <?php }?>
 
 			</div>
 		</div>
@@ -116,9 +140,11 @@
                         </div>
                     </li>
             </ul>
-            <div class="help">
-                <a href="">使用帮助</a>
-            </div>
+            <a href="<?php echo site_url('static/wxc_help/skills'); ?>#image_notes">
+              <div class="help">
+                  使用帮助
+              </div>
+            </a>
         </div>
         <div style="clear: both;">&nbsp;</div>
 	</div><!-- end #content -->
@@ -134,6 +160,7 @@
 <script type="text/javascript" src="/application/frontend/views/resources/js/jquery.uploadify.js"></script>
 <script type="text/javascript">
 $(function() {
+  // showLoading("文档正在玩命生成当中请稍等。。。");
   $('#file_upload').uploadify({
       'auto'     : false,//关闭自动上传
       'removeTimeout' : 1,//文件队列上传完成1秒后删除
@@ -170,12 +197,14 @@ $(function() {
                 for(i in jsondata){
                       if(i != 29){
                         if(jsondata[i]['width']<=550){
-                          width = jsondata[i]['width']+"px";
-                          height = jsondata[i]['height']+"px";
-                          close = (jsondata[i]['width']-10)+"px";
+                            // width = jsondata[i]['width']+"px";
+                            width = jsondata[i]['height']+"px";
+                            height = jsondata[i]['height']+"px";
+                            close = (jsondata[i]['width']-10)+"px";
                         }else{
                             width = 550+"px";
-                            height = 550*(jsondata[i]['height']/jsondata[i]['width'])+"px";
+                            // height = 550*(jsondata[i]['height']/jsondata[i]['width'])+"px";
+                            height = 550+"px";
                             close = 540+"px";
                         }
 
@@ -186,7 +215,7 @@ $(function() {
                         str +=" <h3 class='m_title'>"+jsondata[i]['image'].split("/")[3]+"</h3>";
                         str +="<a href='javascript:void(0)' onclick='delete_image("+jsondata[i]['id']+")'><img src="+base_url+"application/frontend/views/resources/images/close.png"+"></a>";
 
-                        str +="<p><img onclick='original_image("+i+")' src=" + base_url + jsondata[i]['thumb_image'] + "></img></p>";
+                        str +="<p><img style='width:110px;height:118px;' onclick='original_image("+i+")' src=" + base_url + jsondata[i]['thumb_image'] + "></img></p>";
                         str +="<div class='display_none' id="+i+"><p><img style='width:"+width+" ;height:"+height+"' src=" + base_url + jsondata[i]['image'] + "></img></p>";
                         str +="<div class='fancy_close' onclick='unblock()' style='left:"+close+";'></div>";
                         str += "<div class='image_title' style='width:"+width+"'>";
@@ -244,14 +273,13 @@ var step_one_success = 0;
 var step_two_success = 0;
 var step_three_success = 0;
 $(function() {
-
     $("#filecontent").click(function(){
       if(step_one_success == 0||step_two_success == 0||step_three_success == 0){
             warnMes("表单填写完整才能提交！");
             return;
         }
     //  alert("1");
-        showLoading("文档正在努力生成当中,请稍等。。。");
+        showLoading("文档正在玩命生成当中请稍等。。。");
         var order = $("#newid").attr("value");
         var pdfname = $("#pdfname").attr("value");
         var pdfuser = $("#pdfuser").attr("value");
@@ -279,7 +307,7 @@ $(function() {
                 location.href="<?php echo site_url('data/wxc_data/data_modify_from_image'); ?>"+"/"+objectname;
                 } else if(result=='warning'){
                   warnMes("部分图片有异常，已经忽略该图片");
-                  // showLoading("文档正在努力生成当中,请稍等。。。");
+                  // showLoading("文档正在玩命生成当中请稍等。。。");
                   location.href="<?php echo site_url('data/wxc_data/data_modify_from_image'); ?>"+"/"+objectname;
                 } else if(result=='no image'){
                   errorMes("请上传图片");
@@ -342,12 +370,14 @@ $(document).ready(function(){
                         var width ;
                         var height ;
                         if(jsondata[i]['width']<=550){
-                            width = jsondata[i]['width']+"px";
+                            // width = jsondata[i]['width']+"px";
+                            width = jsondata[i]['height']+"px";
                             height = jsondata[i]['height']+"px";
                             close = (jsondata[i]['width']-10)+"px";
                         }else{
                             width = 550+"px";
-                            height = 550*(jsondata[i]['height']/jsondata[i]['width'])+"px";
+                            // height = 550*(jsondata[i]['height']/jsondata[i]['width'])+"px";
+                            height = 550+"px";
                             close = 540+"px";
                         }
                         var base_url = "<?php echo base_url(); ?>";
@@ -357,7 +387,7 @@ $(document).ready(function(){
                         str +=" <h3 class='m_title' title="+jsondata[i]['image'].split("/")[3]+">"+jsondata[i]['image'].split("/")[3]+"</h3>";
                         str +="<a href='javascript:void(0)' onclick='delete_image("+jsondata[i]['id']+")'><img src="+base_url+"application/frontend/views/resources/images/close.png"+"></a>";
 
-                        str +="<p><img onclick='original_image("+i+")' src=" + base_url + jsondata[i]['thumb_image'] + "></img></p>";
+                        str +="<p><img style='width:110px;height:118px;' onclick='original_image("+i+")' src=" + base_url + jsondata[i]['thumb_image'] + "></img></p>";
                           str +="<div class='display_none' id="+i+"><p><img style='width:"+width+" ;height:"+height+"' src=" + base_url + jsondata[i]['image'] + "></img></p>";
                           str +="<div class='fancy_close' onclick='unblock()' style='left:"+close+";'></div>";
                           str += "<div class='image_title' style='width:"+width+"'>";
@@ -430,12 +460,14 @@ function delete_image(id){
                         var width ;
                         var height ;
                         if(jsondata[i]['width']<=550){
-                            width = jsondata[i]['width']+"px";
+                            // width = jsondata[i]['width']+"px";
+                            width = jsondata[i]['height']+"px";
                             height = jsondata[i]['height']+"px";
                             close = (jsondata[i]['width']-10)+"px";
                         }else{
                             width = 550+"px";
-                            height = 550*(jsondata[i]['height']/jsondata[i]['width'])+"px";
+                            // height = 550*(jsondata[i]['height']/jsondata[i]['width'])+"px";
+                            height = 550+"px";
                             close = 540+"px";
                         }
 
@@ -446,7 +478,7 @@ function delete_image(id){
                           str +=" <h3 class='m_title'>"+jsondata[i]['image'].split("/")[3]+"</h3>";
                           str +="<a href='javascript:void(0)' onclick='delete_image("+jsondata[i]['id']+")'><img src="+base_url+"application/frontend/views/resources/images/close.png"+"></a>";
 
-                          str +="<p><img onclick='original_image("+i+")' src=" + base_url + jsondata[i]['thumb_image'] + "></img></p>";
+                          str +="<p><img style='width:110px;height:118px;' onclick='original_image("+i+")' src=" + base_url + jsondata[i]['thumb_image'] + "></img></p>";
                           str +="<div class='display_none' id="+i+"><p><img style='width:"+width+" ;height:"+height+"' src=" + base_url + jsondata[i]['image'] + "></img></p>";
                           str +="<div class='fancy_close' onclick='unblock()' style='left:"+close+";'></div>";
                           str += "<div class='image_title' style='width:"+width+"'>";
@@ -511,19 +543,36 @@ function delete_image(id){
           });
 }
 //=========================================================弹出原始图片=========================================//
-function original_image(id) {
-        $.blockUI({
-             message: $("#"+id),
-             showOverlay: true,
-             css: {
-                 width: '0px',
-                 height:'0px',
-                 border:'1px none #09335F',
-                 margin: '0 atuo',
-                 top: '12%'
-                },
-            onOverlayClick: $.unblockUI
-             });
+function original_image(id,left) {
+    if(left !="undefined"){
+      $.blockUI({
+       message: $("#"+id),
+       showOverlay: true,
+       css: {
+           width: '0px',
+           height:'0px',
+           border:'1px none #09335F',
+           margin: '0 atuo',
+           top: '12%',
+           left: left
+          },
+      onOverlayClick: $.unblockUI
+       });
+    }else{
+     $.blockUI({
+       message: $("#"+id),
+       showOverlay: true,
+       css: {
+           width: '0px',
+           height:'0px',
+           border:'1px none #09335F',
+           margin: '0 atuo',
+           top: '12%'
+          },
+      onOverlayClick: $.unblockUI
+       });
+    }
+
 
        // setTimeout($.unblockUI, 2000);
 }

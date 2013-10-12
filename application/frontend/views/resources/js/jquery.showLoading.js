@@ -168,7 +168,7 @@
 		// set vertical position
 		//
 		if ( settings.vPos.toString().toLowerCase() == 'center' ) {
-			jQuery(loadingDiv).css('top', (indicatorTop + ((jQuery(overlayDiv).height() - parseInt(jQuery(loadingDiv).height())) / 2) - 220).toString()  + 'px');
+			jQuery(loadingDiv).css('top', (indicatorTop + ((jQuery(overlayDiv).height() - parseInt(jQuery(loadingDiv).height())) / 2) ).toString()  + 'px');
 		}
 		else if ( settings.vPos.toString().toLowerCase() == 'top' ) {
 			jQuery(loadingDiv).css('top', indicatorTop.toString() + 'px');

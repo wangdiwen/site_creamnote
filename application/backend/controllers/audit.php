@@ -7,7 +7,7 @@ class Audit extends CI_Controller
     {
         parent::__construct();
         $this->load->model('wxm_data');
-        // $this->load->model('wxm_data_activity');
+        $this->load->model('wxm_data_activity');
         $this->load->model('wxm_notify');
 
         $this->load->library('wx_util');
@@ -59,6 +59,8 @@ class Audit extends CI_Controller
 
         $return_code = '';
         $ret = $this->wxm_data->pass_audit($data_id);
+        // 审核通过的资料，将审核得分置为50点
+        $ret_exam = $this->wxm_data_activity->update_examine_point($data_id, 50);
         if ($ret) {
             $return_code = 'success';
         }

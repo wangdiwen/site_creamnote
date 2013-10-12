@@ -49,7 +49,13 @@ class WXM_Site_Manager extends CI_Model {
         return false;
     }
 /*****************************************************************************/
-
+    public function update_site_manager($year_month = '', $data = array()) {
+        if ($year_month && $data) {
+            $table = $this->wx_table;
+            $this->db->where('site_date', $year_month);
+            $this->db->update($table, $data);
+        }
+    }
 /*****************************************************************************/
 
 /*****************************************************************************/

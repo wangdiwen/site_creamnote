@@ -1,0 +1,4 @@
+User-Agent: *
+Disallow: /http://www.creamnote.com/home/personal
+
+Sitemap:http://www.creamnote.com/creamnote_sitemap.xml

@@ -360,10 +360,10 @@ function searchall(nature_id,area_name,area_id){
                   str += "<a href="+dataview+">"+result[i]['data_name']+"</a>";
                   str += "</div>";
                   str += "<div class='card_user _card_user'>";
-                  str += "作者:<a class='hoveruser2'  id='"+result[i]['user_id']+"' href='#'>"+result[i]['user_name']+"</a>";
+                  str += "作者：<a class='hoveruser2'  id='"+result[i]['user_id']+"' href='#'>"+result[i]['user_name']+"</a>";
                   str += "</div>";
                   str += "<div class='card_cate _card_cate card_padding'>";
-                  str += "分类:<a href="+search_by_nature+" >"+result[i]['data_nature_name']+"</a>";
+                  str += "分类：<a href="+search_by_nature+" >"+result[i]['data_nature_name']+"</a>";
                   if(result[i]['data_area_name_school']!=""){str+="|";}
                   str += "<a href="+search_by_area+" >"+result[i]['data_area_name_school']+"</a>";
                   if(result[i]['data_area_name_major']!=""){str+="|";}
@@ -414,7 +414,9 @@ function searchall(nature_id,area_name,area_id){
 
                 }
                 if(i == -1 ||!i){
-                  str ="<div style='margin: 14px 0 0 28px;color: red;'>对不起，未找到您要找资料！</div>";
+                  str += "<div style='margin: 14px 0 0 118px;color: red;font-size: 20px;'>";
+                  str += "<img class='fl' src='/application/frontend/views/resources/images/search_cry.png'>";
+                  str += "<span class='fl' style='margin: 40px 0 0 20px;'>亲，您找的笔记资料可能还没有被收录！</span></div>";
                 }
                $("#card_items_data3").html(str);
                init();
@@ -673,10 +675,10 @@ function user_hover(){
                                   echo "<a href=".base_url()."data/wxc_data/data_view/".$note['data_id'].">".str_replace(array(" ","\r","\n"), array("","",""), $note['data_name'])."</a>";
                                   echo "</div>";
                                   echo "<div class='card_user _card_user'>";
-                                  echo "作者:<a class='hoveruser'  id='".$note['user_id']."' href='#'>".$note['user_name']."</a>";
+                                  echo "作者：<a class='hoveruser'  id='".$note['user_id']."' href='#'>".$note['user_name']."</a>";
                                   echo "</div>";
                                   echo "<div class='card_cate _card_cate card_padding'>";
-                                  echo "分类:<a href=".base_url()."primary/wxc_search/search_by_nature/".$note['data_nature_id']." >".$note['data_nature_name']."</a>";
+                                  echo "分类：<a href=".base_url()."primary/wxc_search/search_by_nature/".$note['data_nature_id']." >".$note['data_nature_name']."</a>";
                                   echo $note['data_area_name_school']!=""?"|":"";
                                   echo "<a href=".base_url()."primary/wxc_search/search_by_area/".$note['data_area_id_school']." >".$note['data_area_name_school']."</a>";
                                   echo $note['data_area_name_major']!=""?"|":"";
@@ -746,10 +748,10 @@ function user_hover(){
                                   echo "<a href=".base_url()."data/wxc_data/data_view/".$note['data_id'].">".str_replace(array(" ","\r","\n"), array("","",""), $note['data_name'])."</a>";
                                   echo "</div>";
                                   echo "<div class='card_user _card_user'>";
-                                  echo "作者:<a class='hoveruser'  id='".$note['user_id']."' href='#'>".$note['user_name']."</a>";
+                                  echo "作者：<a class='hoveruser'  id='".$note['user_id']."' href='#'>".$note['user_name']."</a>";
                                   echo "</div>";
                                   echo "<div class='card_cate _card_cate card_padding'>";
-                                  echo "分类:<a href=".base_url()."primary/wxc_search/search_by_nature/".$note['data_nature_id']." >".$note['data_nature_name']."</a>";
+                                  echo "分类：<a href=".base_url()."primary/wxc_search/search_by_nature/".$note['data_nature_id']." >".$note['data_nature_name']."</a>";
                                   echo $note['data_area_name_school']!=""?"|":"";
                                   echo "<a href=".base_url()."primary/wxc_search/search_by_area/".$note['data_area_id_school']." >".$note['data_area_name_school']."</a>";
                                   echo $note['data_area_name_major']!=""?"|":"";
@@ -821,10 +823,10 @@ function user_hover(){
                                   echo "<a href=".base_url()."data/wxc_data/data_view/".$note['data_id'].">".str_replace(array(" ","\r","\n"), array("","",""), $note['data_name'])."</a>";
                                   echo "</div>";
                                   echo "<div class='card_user _card_user'>";
-                                  echo "作者:<a class='hoveruser'  id='".$note['user_id']."' href='#'>".$note['user_name']."</a>";
+                                  echo "作者：<a class='hoveruser'  id='".$note['user_id']."' href='#'>".$note['user_name']."</a>";
                                   echo "</div>";
                                   echo "<div class='card_cate _card_cate card_padding'>";
-                                  echo "分类:<a href=".base_url()."primary/wxc_search/search_by_nature/".$note['data_nature_id']." >".$note['data_nature_name']."</a>";
+                                  echo "分类：<a href=".base_url()."primary/wxc_search/search_by_nature/".$note['data_nature_id']." >".$note['data_nature_name']."</a>";
                                   echo $note['data_area_name_school']!=""?"|":"";
                                   echo "<a href=".base_url()."primary/wxc_search/search_by_area/".$note['data_area_id_school']." >".$note['data_area_name_school']."</a>";
                                   echo $note['data_area_name_major']!=""?"|":"";
@@ -876,7 +878,9 @@ function user_hover(){
                                 }
                               }
                               if($data_count == 0){
-                                echo "<div style='margin: 14px 0 0 28px;color: red;'>对不起，未找到您要找资料！</div>";
+                                echo "<div style='margin: 14px 0 0 118px;color: red;font-size: 20px;'>";
+                                echo "<img class='fl' src='/application/frontend/views/resources/images/search_cry.png'>";
+                                echo "<span class='fl' style='margin: 40px 0 0 20px;'>亲，您找的笔记资料可能还没有被收录！</span></div>";
                               }
                             ?>
                           </div>
@@ -925,7 +929,7 @@ function user_hover(){
         					<li><a href="javascript:void(0)" onclick="searchbefore(this,1,22)">网络</a></li>
         					<li><a href="javascript:void(0)" onclick="searchbefore(this,1,23)">计算机软件</a></li>
         					<li><a href="javascript:void(0)" onclick="searchbefore(this,1,24)">计算机硬件</a></li>
-        					<li><a href="javascript:void(0)" onclick="searchbefore(this,1,25)">其他</a></li>
+        					<li><a href="javascript:void(0)" onclick="searchbefore(this,1,25)">其他（IT/计算机）</a></li>
         				</ul>
         			</li>
         			<li><a href="javascript:void(0)" onclick="searchbefore(this,1,17)">工程科学</a>
@@ -933,7 +937,7 @@ function user_hover(){
         					<li><a href="javascript:void(0)" onclick="searchbefore(this,1,26)">信息与通信</a></li>
         					<li><a href="javascript:void(0)" onclick="searchbefore(this,1,27)">电子与电路</a></li>
         					<li><a href="javascript:void(0)" onclick="searchbefore(this,1,28)">建筑/土木</a></li>
-        					<li><a href="javascript:void(0)" onclick="searchbefore(this,1,29)">其他</a></li>
+        					<li><a href="javascript:void(0)" onclick="searchbefore(this,1,29)">其他（工程科学）</a></li>
         				</ul>
         			</li>
         			<li><a href="javascript:void(0)" onclick="searchbefore(this,1,18)">自然科学</a>
@@ -943,7 +947,7 @@ function user_hover(){
         					<li><a href="javascript:void(0)" onclick="searchbefore(this,1,32)">化学</a></li>
         					<li><a href="javascript:void(0)" onclick="searchbefore(this,1,33)">生物</a></li>
         					<li><a href="javascript:void(0)" onclick="searchbefore(this,1,34)">地理</a></li>
-        					<li><a href="javascript:void(0)" onclick="searchbefore(this,1,35)">其他</a></li>
+        					<li><a href="javascript:void(0)" onclick="searchbefore(this,1,35)">其他（自然科学）</a></li>
         				</ul>
         			</li>
         			<li><a href="javascript:void(0)" onclick="searchbefore(this,1,19)">人文社科</a>
@@ -952,7 +956,7 @@ function user_hover(){
         					<li><a href="javascript:void(0)" onclick="searchbefore(this,1,37)">设计/艺术</a></li>
         					<li><a href="javascript:void(0)" onclick="searchbefore(this,1,38)">社会学</a></li>
         					<li><a href="javascript:void(0)" onclick="searchbefore(this,1,39)">教育学</a></li>
-        					<li><a href="javascript:void(0)" onclick="searchbefore(this,1,40)">其他</a></li>
+        					<li><a href="javascript:void(0)" onclick="searchbefore(this,1,40)">其他（人文社科）</a></li>
         				</ul>
         			</li>
         			<li><a href="javascript:void(0)" onclick="searchbefore(this,1,20)">医药</a>
@@ -961,10 +965,10 @@ function user_hover(){
         					<li><a href="javascript:void(0)" onclick="searchbefore(this,1,42)">中医中药</a></li>
         					<li><a href="javascript:void(0)" onclick="searchbefore(this,1,43)">药学</a></li>
         					<li><a href="javascript:void(0)" onclick="searchbefore(this,1,44)">临床医学</a></li>
-        					<li><a href="javascript:void(0)" onclick="searchbefore(this,1,45)">其他</a></li>
+        					<li><a href="javascript:void(0)" onclick="searchbefore(this,1,45)">其他（医药）</a></li>
         				</ul>
         			</li>
-        			<li><a href="javascript:void(0)" onclick="searchbefore(this,1,21)">其他</a></li>
+        			<li><a href="javascript:void(0)" onclick="searchbefore(this,1,21)">其他（学习笔记）</a></li>
         		</ul>
         	</li>
         </ul>

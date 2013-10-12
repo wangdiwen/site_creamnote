@@ -38,15 +38,15 @@
                 <th>
                   <input class="check-all" type="checkbox" />
                 </th>
-                <th>时间</th>
+                <th>时间轴</th>
                 <th>用户数量</th>
+                <th>笔记总数量</th>
                 <th>上传数量</th>
-                <th>资料总数量</th>
                 <th>图片笔记数量</th>
                 <th>免费笔记次数</th>
                 <th>付费下载次数</th>
-                <th>下载次数</th>
-                <th>收入</th>
+                <th>下载总次数</th>
+                <th>累计营收</th>
               </tr>
             </thead>
 
@@ -86,15 +86,15 @@
                 <th>
                   <input class="check-all" type="checkbox" />
                 </th>
-                <th>时间</th>
+                 <th>时间轴</th>
                 <th>用户数量</th>
+                <th>笔记总数量</th>
                 <th>上传数量</th>
-                <th>资料总数量</th>
                 <th>图片笔记数量</th>
-                <th>免费下载次数</th>
+                <th>免费笔记次数</th>
                 <th>付费下载次数</th>
                 <th>下载总次数</th>
-                <th>收入</th>
+                <th>累计营收</th>
               </tr>
             </thead>
 
@@ -180,15 +180,15 @@
                 <th>
                   <input class="check-all" type="checkbox" />
                 </th>
-                <th>时间</th>
+                  <th>时间轴</th>
                 <th>用户数量</th>
+                <th>笔记总数量</th>
                 <th>上传数量</th>
-                <th>资料总数量</th>
                 <th>图片笔记数量</th>
-                <th>免费下载次数</th>
+                <th>免费笔记次数</th>
                 <th>付费下载次数</th>
                 <th>下载总次数</th>
-                <th>收入</th>
+                <th>累计营收</th>
               </tr>
             </thead>
 
