@@ -1245,7 +1245,7 @@ a.current{
 .article_list{
 	border-bottom: 1px
 	solid #ccc;
-	padding-bottom: 0px;
+	padding-bottom: 6px;
 	padding-top: 8px;
 }
 .article_icon{

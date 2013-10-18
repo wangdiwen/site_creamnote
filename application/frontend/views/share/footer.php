@@ -17,7 +17,7 @@
                 <p class="foot_content"><span class="foot_content_ren"></span>人人</p>
                 <p class="foot_content "><span class="foot_content_wei"></span>微博</p>
                 <p class="foot_content "><span class="foot_content_qq"></span>QQ</p>
-                <p class="foot_content "><span class="foot_content_dou"></span>豆瓣</p>
+                <!-- <p class="foot_content "><span class="foot_content_dou"></span>豆瓣</p> -->
             </div>
             <div class="foot_list_one fl">
                 <p class="foot_title" style="margin-bottom: 18px;">帮助</p>
@@ -33,8 +33,8 @@
             </div>
             <div class="foot_list_one fl">
                 <p class="foot_title" style="margin-bottom: 18px;">合作伙伴</p>
-                <p class="foot_content">媒体报道</p>
-                <p class="foot_content">友情链接</p>
+                <a  style="" href="<?php echo site_url('static/wxc_cooperation/medium'); ?>"><p class="foot_content">媒体报道</p></a>
+                <a  style="" href="<?php echo site_url('static/wxc_cooperation/friendly_link'); ?>"><p class="foot_content">友情链接</p></a>
             </div>
         </div>
         <div class="creamnote_cnzz">

@@ -8,6 +8,7 @@ class WXC_Download_Note extends CI_Controller {
         $this->load->library('user_agent');
 
         $this->load->model('core/wxm_data');
+        $this->load->model('core/wxm_user');
         $this->load->model('core/wxm_user_activity');
         $this->load->model('share/wxm_data_activity');
 
@@ -112,74 +113,145 @@ class WXC_Download_Note extends CI_Controller {
 
                 // record free download count
                 $this->wx_site_manager->add_free_download_count();
+
+                // free download file by browser
+                $file_url = '';
+                if ($data_vpspath) {
+                    $file_url = $data_vpspath.$data_objectname;
+                }
+                elseif ($data_osspath) {
+                    // $file_url = 'http://'.$data_osspath.'.oss-internal.aliyuncs.com/'.$data_objectname;
+                    $bucket = $data_osspath;
+                    $object = $data_objectname;
+                    $save_file = '';
+                    $local_dir = '/alidata/www/creamnote/upload/'.substr($data_osspath, 3).'/';
+                    if (is_dir($local_dir)) {
+                        $save_file = $local_dir.'/'.$data_objectname;
+                        $oss_ret = $this->wx_aliossapi->get_object($bucket, $data_objectname, $save_file);
+                        if ($oss_ret) {
+                            // update to db, data_vpspath
+                            $this->wxm_data->update_vpspath($data_id, $local_dir);
+                            // record this data lifetime
+                            $now_timestamp = date('Y-m-d H:i:s');
+                            $this->wxm_data_activity->update_data_lifetime($data_id, $now_timestamp);
+                        }
+                        $file_url = $save_file;
+                    }
+                }
+
+                // prepare to download note
+                $file_data = file_get_contents($file_url);
+                $file_len = strlen($file_data)/1024;
+                $file_name = $data_name.'.'.$data_type;
+                $this->output->set_header("Content-type: application/octet-stream");
+                $this->output->set_header("Accept-Ranges: bytes");
+                $this->output->set_header("Content-type: application/force-download; charset=utf-8");
+                $this->output->set_header("Content-Length: ".$file_len);
+                if ($file_name && $file_data) {
+                    // check user browser
+                    $agent_info = $this->agent->agent_string();
+                    if (strpos($agent_info, 'MSIE')) {   // solve chinese mess word
+                        force_download(urlencode($file_name), $file_data);
+                    }
+                    else {
+                        force_download($file_name, $file_data);
+                    }
+                }
             }
             else {  // pay
-                // record pay download count
-                $this->wx_site_manager->add_pay_download_count();
-
-                // redirect to zhifubao pay page
-                // Todo...
-            }
-
-            // Note:: No matter the data is free or pay, both download here
-            // download file by browser
-            $file_url = '';
-            if ($data_vpspath) {
-                $file_url = $data_vpspath.$data_objectname;
-            }
-            elseif ($data_osspath) {
-                // $file_url = 'http://'.$data_osspath.'.oss-internal.aliyuncs.com/'.$data_objectname;
-                $bucket = $data_osspath;
-                $object = $data_objectname;
-                $save_file = '';
-                $local_dir = '/alidata/www/creamnote/upload/'.substr($data_osspath, 3).'/';
-                if (is_dir($local_dir)) {
-                    $save_file = $local_dir.'/'.$data_objectname;
-                    $oss_ret = $this->wx_aliossapi->get_object($bucket, $data_objectname, $save_file);
-                    if ($oss_ret) {
-                        // update to db, data_vpspath
-                        $this->wxm_data->update_vpspath($data_id, $local_dir);
-                        // record this data lifetime
-                        $now_timestamp = date('Y-m-d H:i:s');
-                        $this->wxm_data_activity->update_data_lifetime($data_id, $now_timestamp);
-                    }
-                    $file_url = $save_file;
+                // redirect to shou-yin-tai page
+                $user_account_money = 0.00;
+                $user_account_money_info = $this->wxm_user->get_user_account_money($cur_user_id);
+                if ($user_account_money_info) {
+                    $user_account_money = $user_account_money_info['user_account_money'];
                 }
-            }
 
-            // prepare to download note
-            $file_data = file_get_contents($file_url);
-			$file_len = strlen($file_data)/1024;
-            $file_name = $data_name.'.'.$data_type;
-            $this->output->set_header("Content-type: application/octet-stream");
-            $this->output->set_header("Accept-Ranges: bytes");
-            $this->output->set_header("Content-type: application/force-download; charset=utf-8");
-            $this->output->set_header("Content-Length: ".$file_len);
-            if ($file_name && $file_data) {
-                // check user browser
-                $agent_info = $this->agent->agent_string();
-                if (strpos($agent_info, 'MSIE')) {   // solve chinese mess word
-                    force_download(urlencode($file_name), $file_data);
+                $diff_money = 0.00;
+                if ($data_price > $user_account_money) {
+                    $diff_money = $data_price - $user_account_money;
                 }
-                else {
-                    force_download($file_name, $file_data);
-                }
+
+                $pay_data = array(
+                    'note_id' => $data_id,
+                    'note_name' => $data_name.'.'.$data_type,
+                    'note_price' => $data_price,
+                    'user_account_money' => $user_account_money,
+                    'diff_money' => $diff_money,  // 差额：当价格大于余额的时候，价格减去用户收益余额
+                    );
+                // wx_echoxml($pay_data);
+                $this->load->view('trade/wxv_accountselect_page', $pay_data);  // Home page
             }
         }
     }
 /*****************************************************************************/
-    public function test_browser() {
-        $agent_info = $this->agent->agent_string();
-        echo $agent_info.'<br />';
-        if (strpos($agent_info, 'MSIE')) {   // solve chinese mess word
-            echo 'IE浏览器';
+    public function pay_download_file() {
+        $note_id = $this->input->post('note_id');
+        $note_name = $this->input->post('note_name');
+        $note_price = $this->input->post('note_price');
+        $diff_money = $this->input->post('diff_money');
+
+        // 生成付费订单，数据表2个：wx_pay_download, wx_pay_platform
+        $cur_user_info = $this->wx_util->get_user_session_info();
+
+        $pay_user_id = $cur_user_info['user_id'];
+        if ($pay_user_id == 0) {
+            echo 'disconnected';  // lost connection
+            return false;
         }
-        elseif (strpos($agent_info, 'Firefox')) {
-            echo '火狐浏览器';
+        $pay_total_fee = $note_price;
+        $pay_status = 'false';
+        $pay_way = '0';             // 0：余额支付，1：支付宝，2：混合方式
+        $pay_trade_no = date('YmdHis').mt_rand(100000, 999999);
+        $pay_alipay_no = '';
+        $pay_subject = '购买醍醐笔记';
+        $pay_body = mb_substr(trim($note_name), 0, 19, 'utf-8');
+        $pay_show_url = 'http://www.creamnote.com/data/wxc_data/data_view/'.$note_id;
+        $pay_timestamp = date('Y-m-d H:i:s');
+
+        if ($diff_money == 0.00) {  // 余额足够，使用余额支付
+            $pay_way = '0';
         }
-        elseif (strpos($agent_info, 'Chrome')) {
-            echo '谷歌浏览器';
+        elseif ($diff_money == $note_price) {
+            $pay_way = '1';
         }
+        elseif ($diff_money < $note_price) {
+            $pay_way = '2';
+        }
+
+        // wx_pay_download 订单表，
+        $order_pay = array(
+            'pay_user_id' => $pay_user_id,
+            'pay_total_fee' => $pay_total_fee,
+            'pay_status' => $pay_status,
+            'pay_way' => $pay_way,
+            'pay_trade_no' => $pay_trade_no,
+            'pay_alipay_no' => $pay_alipay_no,
+            'pay_subject' => $pay_subject,
+            'pay_body' => $pay_body,
+            'pay_show_url' => $pay_show_url,
+            'pay_timestamp' => $pay_timestamp,
+            );
+
+        if ($pay_way == '0') {      // 直接下载，从收益账户余额账户扣除笔记价格
+
+        }
+        else {                      // 跳转到支付宝付费页面
+
+        }
+
+
+        // record pay download count
+        // $this->wx_site_manager->add_pay_download_count();
+    }
+/*****************************************************************************/
+    public function test() {
+        $msg = 'http://www.creamnote.com/data/wxc_data/data_view/11';
+        $len = strlen($msg);
+        echo $len;
+        // $price = 2.99;
+        // $account = 0.00;
+        // $diff = $price - $account;
+        // echo $diff;
     }
 /*****************************************************************************/
 }

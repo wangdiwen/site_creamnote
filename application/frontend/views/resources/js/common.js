@@ -830,4 +830,135 @@ function init_home_school(){
   var wx_school= comm_pop();
 
 }
+//=========================================================token=========================================//
+var set_token_input = function(){
+  $("#account_token").css("display","inline-block");
+  $("#token_button").attr("onclick","account_set_token()");
+  $("#token_button").attr("value","提交");
+}
+function account_set_token(){
+  var url = $("#baseUrl").val()+"core/wxc_user_account/require_withdraw_token";
+  var params =({'withdraw_token':$("#account_token").val()});
+  var retData ="";
+  if(!isNaN( $("#account_token").val() )&&$("#account_token").val().length == 6){
+     retData = ajax_common(url,params);
+  }else{
+    errorMes("口令需要为6位的纯数字");
+  }
 
+
+  if(retData == "invalid-token"){
+    errorMes("口令需要为6位的纯数字");
+  }else if(retData == "failed"){
+    errorMes("口令设置失败");
+  }else if(retData == "success"){
+    // successMes("验证码已发送到您注册邮箱，请验证");
+    // $("#token_ver").css("display","block");
+    var title = "验证码已发送到您注册邮箱，请验证";
+    var content = "验证码：<input type='password' id='token_ver_value' value='' onblur='ver_token(this)' style='width: 216px;'>";
+    var btnFn = function( e ){
+        ver_token_frommail();
+          // easyDialog.close();
+      };
+    easyDialog.open({
+          container : {
+              header : title,
+              content : content,
+              yesFn : btnFn,
+              noFn : false
+          },
+          fixed : true,
+      });
+  }
+}
+
+var ver_parm = "";
+function ver_token_frommail(){
+  ver_parm = $("#token_ver_value").val();
+  var url = $("#baseUrl").val()+"core/wxc_user_account/record_withdraw_token";
+  var params =({'auth_code_token':ver_parm});
+  var retData ="";
+  if(ver_parm != ''){
+    retData = ajax_common(url,params);
+  }else{
+    errorMes("验证码不能为空")
+  }
+  if(retData == "success"){
+    successMes("验证成功");
+    $("#token_ver").css("display","none");
+    $("#token_button").attr("value","更改口令");
+    $("#account_token").css("display","none");
+    $("#token_button").attr("onclick","set_token_input()");
+  }else if(retData == "failed"){
+    errorMes("验证失败");
+  }
+}
+
+function ver_token(obj){
+  ver_parm = obj.value;
+}
+
+var start_withdraw = function(){
+  var url = $("#baseUrl").val()+"core/wxc_user_account/require_withdraw_order";
+  var withdraw_count = $("#withdraw_count").val();
+  var withdraw_token = $("#withdraw_token").val();
+  var params =({'withdraw_money':withdraw_count*10,'withdraw_token':withdraw_token});
+  var retData ="";
+  if(!isNaN(withdraw_count)){
+    retData = ajax_common(url,params);
+  }else{
+    errorMes("请选择提现金额")
+  }
+  if(retData == "failed"){
+    errorMes("提现申请失败");
+  }else if(retData == "has-withdraw"){
+    errorMes("已经处于提现受理阶段，无法重复提现");
+  }else if(retData == "no-money"){
+    errorMes("账户余额不足，大于10.00RMB才可以提现");
+  }else if(retData == "no-actived"){
+    errorMes("账户没有激活，不可使用提醒功能");
+  }else if(retData == "no-token"){
+    errorMes("没有设置提醒口令");
+  }else if(retData == "wrong-money"){
+    errorMes("你提交申请的金额不合法");
+  }else if(retData == "wrong-token"){
+    errorMes("口令出错");
+  }else{
+    successMes("申请成功，我们会尽快处理您的这次提现");
+    $("#user_account_money_leave").html("￥"+retData);
+    $("#user_account_name").attr('disabled','disabled');
+    $("#update_account").attr("onclick","update_account(3)");
+    $("#user_account_status").html("提现受理中");
+  }
+}
+var show_token_window = function(){
+  if(isNaN($("#withdraw_count").val())){
+    errorMes("请选择提现金额");
+    return;
+  }
+  var title = "申请提现";
+  var content = "口令：<input type='password' id='withdraw_token' value='' style='width: 220px;'>";
+  var btnFn = function( e ){
+      start_withdraw();
+        // easyDialog.close();
+    };
+  easyDialog.open({
+        container : {
+            header : "申请提现",
+            content : content,
+            yesFn : btnFn,
+            noFn : false
+        },
+        fixed : true,
+    });
+}
+//=========================================================buy=========================================//
+var buy_one_note = function(){
+  var url = $("#baseUrl").val()+"core/wxc_download/pay_download_file";
+  var note_id = $("#note_id").val();
+  var note_price = $("#note_price").val();
+  var diff_money = $("#diff_money").val();
+  var note_name = $("#note_name").val();
+  var params =({'#note_id':note_id,'note_price':note_price,'diff_money':diff_money,'note_name':note_name});
+  var retData = ajax_common(url,params);;
+}

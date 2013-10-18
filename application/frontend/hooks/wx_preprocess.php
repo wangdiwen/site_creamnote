@@ -1,20 +1,17 @@
 <?php if (! defined('BASEPATH')) exit('No direct script access allowed.');
 
-class WX_Preprocess
-{
+class WX_Preprocess {
 /*****************************************************************/
     var $CI;  // Get the CI super object
 
 /*******************************y**********************************/
-    public function __construct()
-    {
+    public function __construct() {
         $this->CI =& get_instance();
         $this->CI->load->helper('url');
     }
 
 /*****************************************************************/
-    public function auto_session()
-    {
+    public function auto_session() {
         // 此钩子在每一个URL请求之前运行，判断当前的PHP session数据是否可用，
         // 及判断当前用户是否登录？是否离开？
         // session_start();
@@ -64,12 +61,10 @@ class WX_Preprocess
         $public_gen_area_url_ereg = $home_url."primary/wxc_search/gen_search_by_area_id";
         $public_gen_nature_url_ereg = $home_url."primary/wxc_search/gen_search_by_nature_id";
         $public_data_list = $home_url."data/wxc_data/data_list";
-        //一些静态宣传页面
-        // $static = explode("static/",$cur_url);
+        // static public resources
         $static_url = $home_url.'static/(.*)';
         // 404页面
         $page_404 = $home_url.'primary/wxc_home/page_404';
-
         //获得用户信息tips
         $user_tips = $home_url."primary/wxc_personal/personal_base_tips";
 
@@ -85,16 +80,18 @@ class WX_Preprocess
         $quick_login = $home_url.'primary/wxc_home/quick_login';
         $check_nice_name = $home_url.'core/wxc_user_manager/check_nice_name';
         $get_login_name = $home_url.'home/get_login_name';
-
         // weibo link
         $weibo_back_func = $home_url.'core/wxc_user_manager/weibo_back_func';
         $weibo_cancel_back_func = $home_url.'core/wxc_user_manager/weibo_cancel_back_func';
-
         // renren link
         $renren_back_func = $home_url.'core/wxc_user_manager/renren_back_func';
-
         // week article
         $week_article = $home_url.'core/wxc_content/(.*)';
+
+        // 支付宝公共回调接口
+        $alipay_url = $home_url.'core/wxc_alipay/(.*)';
+        // 支付宝账户验证登录接口
+        $zhifubao_login_url = $home_url.'core/wxc_zhifubao_login/(.*)';
 
         // 此URL为测试接口，开发阶段验证一些东西，待到项目部署阶段删除
         $test_url = $home_url.'home/test';
@@ -112,7 +109,6 @@ class WX_Preprocess
             || $cur_url == $active_url
             || $cur_url == $school_url
             || $cur_url == $school_id_url
-            // || $cur_url == $feedback_url
             || ereg($feedback_url, $cur_url)
             || $cur_url == $feedback_create_url
             || $cur_url == $feedback_follow_url
@@ -125,7 +121,6 @@ class WX_Preprocess
             || $cur_url == $public_gen_nature_url_ereg
         	|| $cur_url == $public_data_list
             || $cur_url == $page_404
-            // || count($static) > 1
             || ereg($static_url, $cur_url)
             || $cur_url == $user_tips
             || $cur_url == $auth_code_new
@@ -141,6 +136,8 @@ class WX_Preprocess
             || $cur_url == $weibo_cancel_back_func
             || $cur_url == $renren_back_func
             || ereg($week_article, $cur_url)
+            || ereg($alipay_url, $cur_url)
+            || ereg($zhifubao_login_url, $cur_url)
             || $cur_url == $test_url/* Test url iface */) {
             return;
         }

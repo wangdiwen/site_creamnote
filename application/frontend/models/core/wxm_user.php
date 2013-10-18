@@ -9,6 +9,16 @@ class WXM_User extends CI_Model
         $this->load->database();
     }
 /*****************************************************************************/
+    public function get_user_account_money($user_id = 0) {
+        if ($user_id > 0) {
+            $table = $this->wx_table;
+            $this->db->select('user_account_money')->from($table)->where('user_id', $user_id)->limit(1);
+            $query = $this->db->get();
+            return $query->row_array();
+        }
+        return false;
+    }
+/*****************************************************************************/
     public function record_renren_account($user_id = 0, $renren_open_id = '', $renren_nice_name = '')
     {
         if ($user_id > 0 && $renren_open_id && $renren_nice_name) {
@@ -188,12 +198,66 @@ class WXM_User extends CI_Model
         if ($user_id > 0)
         {
             $table = $this->wx_table;
-            $this->db->select('user_account_name, user_account_type, user_account_active, user_account_money')->from($table)->where('user_id', $user_id)->limit(1);
+            $this->db->select('user_account_name, user_account_realname, user_account_type, user_account_token,
+								user_account_active, user_account_status, user_account_money, user_account_total')
+				->from($table)->where('user_id', $user_id)->limit(1);
             $query = $this->db->get();
             return $query->row_array();
         }
-        return array();
+        return false;
     }
+/*****************************************************************************/
+	public function get_account_status($user_id = 0) {
+		if ($user_id > 0) {
+			$table = $this->wx_table;
+			$this->db->select('user_account_active, user_account_status')->from($table)->where('user_id', $user_id)->limit(1);
+			$query = $this->db->get();
+			return $query->row_array();
+		}
+		return false;
+	}
+/*****************************************************************************/
+    // 这个状态，标记是否提现，0->未提现，1->提现受理，同时更新账户余额
+    public function update_account_money_status($user_id = 0, $user_account_status = '0', $user_account_money = '0.00') {
+        if ($user_id > 0) {
+            $table = $this->wx_table;
+            $data = array(
+                    'user_account_status' => $user_account_status,
+                    'user_account_money' => $user_account_money,
+                    );
+            $this->db->where('user_id', $user_id);
+            $this->db->update($table, $data);
+            return true;
+        }
+        return false;
+    }
+/*****************************************************************************/
+	public function update_account_token($user_id = 0, $user_account_token = '') {
+		if ($user_id > 0 && $user_account_token) {
+			$table = $this->wx_table;
+			$data = array(
+					'user_account_token' => $user_account_token,
+					);
+			$this->db->where('user_id', $user_id);
+			$this->db->update($table, $data);
+			return true;
+		}
+		return false;
+	}
+/*****************************************************************************/
+	public function update_account_realname($user_id = 0, $user_account_realname = '') {
+		if ($user_id > 0 && $user_account_realname) {
+			$table = $this->wx_table;
+			$data = array(
+					'user_account_realname' => $user_account_realname,
+					'user_account_active' => 'true',
+					);
+			$this->db->where('user_id', $user_id);
+			$this->db->update($table, $data);
+			return true;
+		}
+		return false;
+	}
 /*****************************************************************************/
     public function update_account_name($user_id = 0, $user_account_name = '')
     {
@@ -205,7 +269,9 @@ class WXM_User extends CI_Model
             $table = $this->wx_table;
             $this->db->where('user_id', $user_id);
             $this->db->update($table, $data);
+			return true;
         }
+		return false;
     }
 /*****************************************************************************/
     public function get_base_info($user_id = 0)

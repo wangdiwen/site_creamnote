@@ -9,15 +9,12 @@
  */
 
 /*****************************************************************************/
-class WX_Alipay_direct_api {
+class WX_Zhifubao_Login_Api {
     var $CI;
 
     var $alipay_config;                                                         // Alipay的通用配置项
 
-    var $payment_type = "1";                                                    //支付类型
-    var $return_url = "http://www.creamnote.com/core/wxc_alipay/return_url";    //页面跳转同步通知页面路径
-    var $notify_url = "http://www.creamnote.com/core/wxc_alipay/notify_url";    //服务器异步通知页面路径
-    var $seller_email = '';                                                     //卖家支付宝帐户
+    var $return_url = "http://www.creamnote.com/core/wxc_zhifubao_login/zhifubao_return_url";    //页面跳转同步通知页面路径
     var $anti_phishing_key = "";                                                // 防钓鱼时间戳, 若要使用请调用类文件submit中的query_timestamp函数
     var $exter_invoke_ip = "";                                                  // 客户端的IP地址, 非局域网的外网IP地址，如：221.0.0.1
 
@@ -30,33 +27,20 @@ class WX_Alipay_direct_api {
         $this->alipay_config = $this->CI->config->item('alipay_config');
     }
 /*****************************************************************************/
-    public function alipay_submit(  $out_trade_no = '',     // 商户订单号, 商户网站订单系统中唯一订单号，必填
-                                    $subject = '',          // 订单名称
-                                    $total_fee = '',        // 付款金额
-                                    $body = '',             // 订单描述
-                                    $show_url = '') {       // 商品展示地址, 需以http://开头的完整路径
+    public function alipay_submit() {
         //构造要请求的参数数组
         $parameter = array(
-                "service" => "create_direct_pay_by_user",
+				"service" => "alipay.auth.authorize",
                 "partner" => trim($this->alipay_config['partner']),
-                "payment_type"  => $this->payment_type,
-                "notify_url"    => $this->notify_url,
+                "target_service" => "user.auth.quick.login",
                 "return_url"    => $this->return_url,
-                "seller_email"  => $this->alipay_config['seller_email'],
-                "out_trade_no"  => $out_trade_no,
-                "subject"   => $subject,
-                "total_fee" => $total_fee,
-                "body"  => $body,
-                "show_url"  => $show_url,
                 "anti_phishing_key" => $this->anti_phishing_key,
                 "exter_invoke_ip"   => $this->exter_invoke_ip,
-                "_input_charset"    => trim(strtolower($this->alipay_config['input_charset']))
+                "_input_charset"    => trim(strtolower($this->alipay_config['input_charset'])),
                 );
         //建立请求
         $submit = new AlipaySubmit($this->alipay_config);
         $html_text = $submit->buildRequestForm($parameter,"get", "确认");
-
-        // echo $html_text;
         return $html_text;
     }
 /*****************************************************************************/
@@ -74,5 +58,5 @@ class WX_Alipay_direct_api {
 /*****************************************************************************/
 }
 
-/* End of file wx_alipay_direct_api.php */
+/* End of file wx_zhifubao_login_api.php */
 /* Location: /application/frontend/libraries/wx_alipay_direct_api.php */

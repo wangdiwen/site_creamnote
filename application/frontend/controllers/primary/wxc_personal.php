@@ -506,11 +506,12 @@ class WXC_personal extends CI_Controller
         }
     }
 /*****************************************************************************/
-    public function update_userinfo_page()
+    public function update_userinfo_page($sign_name = '')
     {
         $base_info = $this->get_base_info();
         $data = array();
         $data['base_info'] = $base_info;
+        $data['sign_name'] = urldecode($sign_name);
     	$this->load->view('personal/wxv_userInfo', $data);
     }
 /*****************************************************************************/
@@ -520,7 +521,14 @@ class WXC_personal extends CI_Controller
         {
             $user_id = $_SESSION['wx_user_id'];
             $info = $this->wxm_user->get_user_account($user_id);
-            // echoxml($info);
+            if ($info) {
+                foreach ($info as $key => $value) {
+                    if (! $value && ! in_array($key, array('user_account_active', 'user_account_status'))) {
+                        $info[$key] = '';
+                    }
+                }
+            }
+            // wx_echoxml($info);
             echo json_encode($info);
         }
     }

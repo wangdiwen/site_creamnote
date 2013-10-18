@@ -538,9 +538,9 @@ if(if_login!=""){
             <?php
             if($data_price != "0.00"){
               if (isset($_SESSION["wx_user_name"]) && $_SESSION["wx_user_name"] != ""){
-                echo "<a class=' common_show_login_win'  style='color:red;' href=".base_url()."core/wxc_download_note/download_file/".$data_id."><input style='width: 90px;' type='button' class='button_c' value='购买笔记'></a>";
+                echo "<a target='_blank' class=' common_show_login_win'  style='color:red;' href=".base_url()."core/wxc_download_note/download_file/".$data_id."><input style='width: 90px;' type='button' class='button_c' value='购买笔记'></a>";
               }else{
-                echo "<a class='show_loginForm  ' onclick='download_notes(".$data_id.")' style='color:red;' href='#'><input  style='width: 90px;' type='button' class='button_c common_show_login_win' value='购买笔记'></a>";
+                echo "<a target='_blank' class='show_loginForm  ' onclick='download_notes(".$data_id.")' style='color:red;' href='#'><input  style='width: 90px;' type='button' class='button_c common_show_login_win' value='购买笔记'></a>";
               }
             }else{
               if (isset($_SESSION["wx_user_name"]) && $_SESSION["wx_user_name"] != ""){

@@ -234,7 +234,7 @@ function checkLogin(){
                     <em>特色功能:"图片笔记"，数字化你的手写笔记碎片，珍藏你的劳动成果</em>
                 </div>
             </div>
-            <div data-link="<?php echo site_url('home/data_upload_page'); ?>" data-target="_blank" data-thumb="/application/frontend/views/resources/images/slides/thumbs/creamnote_ad_5t.jpg" data-src="/application/frontend/views/resources/images/slides/creamnote_ad_5.jpg">
+            <div data-link="<?php echo site_url('home/data_upload_page'); ?>" data-target="_blank" data-thumb="/application/frontend/views/resources/images/slides/thumbs/creamnote_ad_5s_t.jpg" data-src="/application/frontend/views/resources/images/slides/creamnote_ad_5s.jpg">
                 <div class="camera_caption fadeFromBottom">
                     <em>珍藏一份大学时代的学习经历，分享自己的笔记资料干货，创造学习价值，让“学霸”从中受益</em>
                 </div>
@@ -415,7 +415,7 @@ function checkLogin(){
             <ol class="rounded-list" style="overflow: initial;margin-bottom: 16px;">
               <?php  foreach ($site_notice as $key => $notice){?>
                 <li>
-                  <a style="padding: 0.6em .3em .0em 1.8em;" href="<?php echo base_url()?>core/wxc_content/read_notice?notice_id=<?=$notice['notice_id']?>"><?=$notice['notice_title']?></a>
+                  <a style="padding: 0.6em .3em .0em 1.8em;" href="<?php echo base_url()?>core/wxc_content/read_notice?notice_id=<?=$notice['notice_id']?>"><span style="width: 237px;"><?=$notice['notice_title']?></span></a>
                 </li>
               <?php }?>
             </ol>

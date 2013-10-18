@@ -1,8 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<?php header("Content-type: text/html; charset=UTF-8"); ?>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>账户设置</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="stylesheet" href="/application/frontend/views/resources/css/reset.css" />
 <link rel="stylesheet" href="/application/frontend/views/resources/css/wx_home.css" />
 <link rel="stylesheet" href="/application/frontend/views/resources/css/style.css" />
@@ -35,6 +36,20 @@ input[type="password"],select,input[type=text], input[type="search"] {
 <!-- Javascript functions -->
 //=========================================================修改基本用户信息=========================================//
 $(function(){
+	 if(window.localStorage){
+	 	window.localStorage.setItem("home-username","xiewang@126.com");
+	 }
+     var active_roll_back = '<?php if (isset($sign_name) && $sign_name != "") echo $sign_name; else echo ""; ?>';
+     if(active_roll_back != ""){
+        // if(active_roll_back == "success"){
+        successMes("账户激活成功,请确认你的支付宝签名为："+active_roll_back);
+        update_account_page();
+         // }else{
+            // errorMes("");
+         // }
+     }
+
+
     $("#update_user").click(function(){
         var booleans = check_name($("#user_name").val());
         if(!booleans){
@@ -317,17 +332,79 @@ function update_account_page(){
             {
             	if(result!=null){
             		var str="";
-            		str+="<div  id='thisform' ><fieldset><le id='le_title' style='margin-top: -52px;'>账户设置</le><p><label style='padding-left: 55px;float: none;'>账户类型:</label>";
+            		str+="<div  id='thisform' ><fieldset><le id='le_title' style='margin-top: -52px;'>账户设置</le><p style='height:30px;'><label style='padding-left: 55px;float: none;'>账户类型:</label>";
             		str+="<span style='padding-left: 5px;'>"+result['user_account_type']+"</span></p>";
-            		str+="<p><label style='padding-left: 79px;float: none;'>账号:</label>";
-            		str+="<input type='text' id='user_account_name' name='user_account_name' value='"+result['user_account_name']+"' ><input type='button' style='height:30px;' id='update_account' name='update_account' value='修改' class='button_c'  onclick='update_account()'></p>";
-            		str+="<p><label style='padding-left: 79px;float: none;'>资金:</label>";
-            		str+="<span style='padding-left: 5px;'>"+result['user_account_money']+"</span></p>";
-            		str+="<p><label style='padding-left: 32px;float: none;'>是否激活账户:</label><input style='padding-left: 5px;' type='button' class='button_c' id='' name='' value='激活' onclick=''></p></fieldset></div>";
+                    str+="<p style='height:30px;'><label style='padding-left: 54px;float: none;'>账户状态:</label>";
+                     if(result['user_account_active'] == 'false'){
+                        str+="<span style='padding-left: 5px;'>未激活</span></p>";
+                    }else{
+                        str+="<span style='padding-left: 5px;'>已激活</span></p>";
+                    }
+                    str+="<p style='height:30px;'><label style='padding-left: 43px;float: none;' title='支付宝签名为您支付宝的真实姓名，他将作为提现时核对的标准' class='gravatar'>支付宝签名:</label>";
+                    str+="<span style='height:30px;padding-left: 5px;' title='支付宝签名为您支付宝的真实姓名，他将作为提现时核对的标准' class='gravatar'>"+result['user_account_realname']+"</span></p>";
+
+                    if(result['user_account_status'] == 0){
+                        str+="<p style='border-bottom:1px dotted rgb(76, 118, 172);padding-bottom: 15px;'><label style='padding-left: 79px;float: none;'>账户:</label>";
+                        str+="<input type='text' id='user_account_name' name='user_account_name' value='"+result['user_account_name']+"'>";
+                        if(result['user_account_active']== 'false'){
+                            str+="<input type='button' style='height:30px;' id='update_account' name='update_account' value='激活' class='button_c'  onclick='update_account(1)'></p>";
+                        }else{
+                            str+="<input type='button' style='height:30px;' id='update_account' name='update_account' value='更改账户' class='button_c'  onclick='update_account(2)'></p>";
+                        }
+                    }else if(result['user_account_status'] == 1){
+                        str+="<p style='border-bottom:1px dotted rgb(76, 118, 172);padding-bottom: 15px;'><label style='padding-left: 79px;float: none;'>账户:</label>";
+                        str+="<input type='text' id='user_account_name' name='user_account_name' value='"+result['user_account_name']+"' disabled>";
+                        if(result['user_account_active']== 'false'){
+                            str+="<input type='button' style='height:30px;' id='update_account' name='update_account' value='激活' class='button_c'  onclick='update_account(3)'></p>";
+                        }else{
+                            str+="<input type='button' style='height:30px;' id='update_account' name='update_account' value='更改账户' class='button_c'  onclick='update_account(3)'></p>";
+                        }
+                    }
+
+
+                    str+="<p style='height:30px;padding-top: 15px;'><label style='padding-left: 54px;float: none;'>提现状态:</label>";
+                     if(result['user_account_status'] == 0){
+                        str+="<span id='user_account_status' style='padding-left: 5px;'>未提现</span></p>";
+                    }else{
+                        str+="<span id='user_account_status' style='padding-left: 5px;'>提现受理中</span></p>";
+                    }
+
+            		str+="<p style='height:30px;'><label style='padding-left: 31px;float: none;'>当前收益余额:</label>";
+            		str+="<span id='user_account_money_leave' style='padding-left: 5px;'>￥"+result['user_account_money']+"</span></p>";
+                    str+="<p style='height:30px;'><label style='padding-left: 43px;float: none;'>收益总累计:</label>";
+                    str+="<span style='padding-left: 5px;'>￥"+result['user_account_total']+"</span></p>";
+
+                    str+="<p style=''><label style='padding-left: 31px;float: none;'>醍醐提现口令:</label>";
+                    str+="<span style='padding-left: 3px;'><input type='password' name='' style='display:none;' id='account_token' value=''>";
+                    if(result['user_account_token'] == ""){
+                        str+="<input type='button' id='token_button'  class='button_c' value='设置口令' onclick='set_token_input()' style='height:30px;'></span></p>";
+                    }else{
+                        str+="<input type='button' id='token_button' class='button_c' value='更改口令' onclick='set_token_input()' style='height:30px;'></span></p>";
+                    }
+                    // str+="<p id='token_ver' style='display:none;'><label style='padding-left: 43px;float: none;'>口令验证码:</label>";
+                    // str+="<span ><input type='text' name='' id='token_ver_value' value='' onblur='ver_token(this)'>";
+                    // str+="<input type='button' class='button_c' value='验证' onclick='ver_token_frommail()' style='height:30px;'></span></p>";
+
+            		if(result['user_account_money']>=10){
+                        var ten_count = parseInt(result['user_account_money']/10);
+                        // var ten_count = parseInt(100/10);
+                        str+="<p style='height:30px;'><label style='padding-left: 79px;float: none;'>提现:</label><span>";
+                        str+="<select style='width: 381px;height:30px;' id='withdraw_count'>";
+                        str+="<option>选择十元整数倍的提现金额</option>";
+                        for(var i = 1; i<=ten_count;i++){
+                            str+="<option value="+i+">￥"+i*10+"</option>";
+                        }
+                        str+="</select>"
+                        str+="</span><input type='button' class='button_c' value='申请提现' onclick='show_token_window()' style='height:30px;'></p>";
+                    }
+                    // str+="<p><label style='padding-left: 32px;float: none;'>是否激活账户:</label><input style='padding-left: 5px;' type='button' class='button_c' id='' name='' value='激活' onclick=''></p></fieldset></div>";
 
             		$("#change_form").html(str);
                     $("a").removeClass("navhover");
                     $("#nav_account").addClass("navhover");
+                    $(".gravatar").poshytip({
+                        className:'tip-darkgray',
+                      })
                     // $("._grgh").html("个人账户");
                 }
             },
@@ -340,29 +417,73 @@ function update_account_page(){
 
 }
 //提交表单
-function update_account(){
-	var url ="<?php echo site_url('primary/wxc_personal/update_user_account'); ?>";
-	var user_account_name=$("#user_account_name").attr("value");
-	 if(user_account_name==""){
-		errorMes("账户不能为空");
-	}else{
-		$.ajax({
-	        type:"post",
-	        data:({'user_account_name': user_account_name}),
-	        url:url,
-	        success: function(result)
-	            {
-	               if(result=="success"){
-						successMes("修改成功");
-		           }
-	            },
-	             error: function(XMLHttpRequest, textStatus, errorThrown) {
-	                        alert(XMLHttpRequest.status);
-	                        alert(XMLHttpRequest.readyState);
-	                        alert(textStatus);
-	                    }
-	        });
-	}
+function update_account(type){
+    if(type == 3){
+        errorMes("您的账户处于提现期间，暂时不能更改账户");
+        return;
+    }
+    if(type == 1){
+       var url ="<?php echo site_url('core/wxc_user_account/account_active'); ?>";
+        var user_account_name=$("#user_account_name").attr("value");
+         if(user_account_name==""){
+            errorMes("账户不能为空");
+        }else{
+            $.ajax({
+                type:"post",
+                data:({'account_email': user_account_name}),
+                url:url,
+                success: function(result)
+                    {
+                       if(result=="has_actived"){
+                            errorMes("已激活，不可重新激活");
+                       }else if(result=="failed"){
+                            errorMes("激活请求失败");
+                            // successMes("修改成功");
+                       }else if(result=="success"){
+                            successMes("账户正在准备跳转到支付宝登陆页面。。。");
+                            setTimeout("location.href='<?php echo site_url('core/wxc_user_account/redirect_to_alipay'); ?>'",2000)
+                       }else if(result=="success"){
+                            errorMes("您的账户处于提现期间，暂时不能更改账户");
+                       }
+                    },
+                     error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        alert(XMLHttpRequest.status);
+                        alert(XMLHttpRequest.readyState);
+                        alert(textStatus);
+                    }
+                });
+        }
+    }else if(type = 2){
+        var url ="<?php echo site_url('core/wxc_user_account/change_ali_account'); ?>";
+        var user_account_name=$("#user_account_name").attr("value");
+         if(user_account_name==""){
+            errorMes("账户不能为空");
+        }else{
+            $.ajax({
+                type:"post",
+                data:({'account_email': user_account_name}),
+                url:url,
+                success: function(result)
+                    {
+                       if(result=="no-actived"){
+                            errorMes("还未激活过账号");
+                       }else if(result=="failed"){
+                            errorMes("激活请求失败");
+                            // successMes("修改成功");
+                       }else if(result=="success"){
+                            successMes("账户正在准备跳转到支付宝登陆页面。。。");
+                            setTimeout("location.href='<?php echo site_url('core/wxc_user_account/redirect_to_alipay'); ?>'",2000)
+                       }
+                    },
+                     error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        alert(XMLHttpRequest.status);
+                        alert(XMLHttpRequest.readyState);
+                        alert(textStatus);
+                    }
+                });
+        }
+    }
+
 
 }
 

@@ -59,7 +59,7 @@
     border-style:dotted;
 }
 .help_stand_right{
-    width: 256px;
+    width: 250px;
 }
 .help_stand_left{
     border-style: solid;
@@ -67,7 +67,20 @@
     margin-left: 248px;
     padding-left: 10px;
 }
+.help_stand_right_t{
+    width: 500px;
+}
+.help_stand_left_t{
+    border-style: solid;
+    width: 250px;
+    margin-left: 500px;
+    padding-left: 10px;
+    position: absolute;
+}
 .help_stand_left img {
+    border: 1px solid  rgb(125 ,142 ,167);
+}
+.help_stand_right_t img {
     border: 1px solid  rgb(125 ,142 ,167);
 }
 .help_section{
