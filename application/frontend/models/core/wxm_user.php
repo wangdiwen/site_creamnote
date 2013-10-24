@@ -227,6 +227,16 @@ class WXM_User extends CI_Model
         }
     }
 /*****************************************************************************/
+    public function get_user_name_email_by_id_list($user_id_list = array()) {
+        if ($user_id_list) {
+            $table = $this->wx_table;
+            $this->db->select('user_id, user_name, user_email')->from($table)->where_in('user_id', $user_id_list);
+            $query = $this->db->get();
+            return $query->result_array();
+        }
+        return false;
+    }
+/*****************************************************************************/
     public function get_by_id_list($user_id_list = array())
     {
         if ($user_id_list)

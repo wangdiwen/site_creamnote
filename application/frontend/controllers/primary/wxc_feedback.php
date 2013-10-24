@@ -93,6 +93,8 @@ class WXC_Feedback extends CI_Controller
         $ajax = '';
 
         $feedback_content = $this->input->post('feedback_content');
+
+        $feedback_content = trim($feedback_content);
         $feedback_time = date('Y-m-d H:i:s');
         $feedback_startup = 'true';
         $feedback_followed_id = '';
@@ -143,11 +145,14 @@ class WXC_Feedback extends CI_Controller
         $feedback_topic = $this->input->post('feedback_topic');
         $feedback_content = $this->input->post('feedback_content');
         $feedback_followed_id = $this->input->post('feedback_id');       // 指向关注某个意见的primary id
-        $feedback_user_id_list = $this->input->post('user_id_list');
+        // $feedback_user_id_list = $this->input->post('user_id_list');
         $feedback_time = date('Y-m-d H:i:s');
         $feedback_startup = 'false';
         $feedback_user_type = '2';      // 1->admin, 2->normal user
         $user_id = isset($_SESSION['wx_user_id']) ? $_SESSION['wx_user_id'] : '';
+
+        $feedback_topic = trim($feedback_topic);
+        $feedback_content = trim($feedback_content);
 
         if (! $user_id)
         {
@@ -159,10 +164,11 @@ class WXC_Feedback extends CI_Controller
         else
         {
             if ($feedback_content && $feedback_time && $feedback_startup
-            && $feedback_followed_id && $feedback_user_type && $user_id && $feedback_user_id_list)
+            && $feedback_followed_id && $feedback_user_type && $user_id)
             {
-                // update topic feedback status, new join
-                $this->wxm_feedback->feedback_topic_new_join($feedback_followed_id);
+                // 【注意】
+                // 当有其他用户，回复后，那么打开这条反馈话题，--- 暂时不处理，防止后台一直有新话题需要回复！！！
+                // $this->wxm_feedback->feedback_topic_new_join($feedback_followed_id);
 
                 $data = array(
                     'feedback_content' => $feedback_content,
@@ -171,7 +177,7 @@ class WXC_Feedback extends CI_Controller
                     'feedback_followed_id' => $feedback_followed_id,
                     'feedback_user_type' => $feedback_user_type,
                     'user_id' => $user_id,
-                    'feedback_newjoin' => '',
+                    'feedback_newjoin' => 'false',
                     );
                 $this->wxm_feedback->insert($data);
 
@@ -190,18 +196,28 @@ class WXC_Feedback extends CI_Controller
                 // 后台记录通知
                 fastcgi_finish_request();
 
-                $user_id_list = explode('&', $feedback_user_id_list);
-                // 过滤掉数组中为空的项，以及重复的项
-                $notify_user_id_list = array_unique(array_filter($user_id_list));
-                // 过滤掉数组中与当前用户的user id相同的项
-                foreach ($notify_user_id_list as $key => $value)
-                {
-                    if (! is_numeric($value)        // filter 'null' string
-                        || $value == $user_id)
-                    {
-                        array_splice($notify_user_id_list, $key, 1);
+                $notify_user_id_list = array();
+                $followed_id_list_info = $this->wxm_feedback->get_common_user_id_info_by_id($feedback_followed_id);
+                if ($followed_id_list_info) {
+                    foreach ($followed_id_list_info as $key => $value) {
+                        $notify_user_id_list[] = $value['user_id'];
                     }
                 }
+                $notify_user_id_list = array_unique($notify_user_id_list);
+
+                // $user_id_list = explode('&', $feedback_user_id_list);
+                // // 过滤掉数组中为空的项，以及重复的项
+                // $notify_user_id_list = array_unique(array_filter($user_id_list));
+                // // 过滤掉数组中与当前用户的user id相同的项
+                // foreach ($notify_user_id_list as $key => $value)
+                // {
+                //     if (! is_numeric($value)        // filter 'null' string
+                //         || $value == $user_id)
+                //     {
+                //         array_splice($notify_user_id_list, $key, 1);
+                //     }
+                // }
+
                 foreach ($notify_user_id_list as $notify_user_id)
                 {
                     $notify = array();

@@ -62,21 +62,6 @@ class WXM_Feedback extends CI_Model
                 $this->db->select('feedback_id, feedback_content, feedback_time, feedback_startup, feedback_user_type, wx_feedback.user_id, user_name, user_email')->from($table)->join($join_table, $join_where, 'left')->where('feedback_followed_id', $feedback_followed_id)->order_by('feedback_time', 'asc');
                 $query = $this->db->get();
                 $followed_data = $query->result_array();
-
-                // filter admin reply, add name '管理员'
-                // foreach ($followed_data as $key => $value) {
-                //     $user_type = $value['feedback_user_type'];
-                //     if ($user_type == '1') {  // is admin reply
-
-                //     }
-
-
-                    // $user_name = $value['user_name'];
-                    // if (! $user_name) {  // is admin reply
-                    //     $followed_data[$key]['user_name'] = '<span style="color:red;">Creamnote管理员</span>';
-                    // }
-                // }
-
                 if ($followed_data)
                 {
                     $tmp_data = array_merge($topic_data, $followed_data);
@@ -108,38 +93,44 @@ class WXM_Feedback extends CI_Model
 
         if ($feedback_followed_id > 0) {
             $table = $this->wx_table;
-            $join_table = 'wx_user';
-            $join_where = $join_table.'.user_id = '.$table.'.user_id';
 
-            $this->db->select('feedback_id, feedback_content, feedback_time,
-                feedback_startup, feedback_user_type, wx_feedback.user_id, user_name, user_email')
-                ->from($table)->join($join_table, $join_where, 'left')
-                ->where('feedback_id', $feedback_followed_id)->limit(1);
+            // get the feedback topic
+            $this->db->select('feedback_id, feedback_content, feedback_time, feedback_startup,
+                                feedback_user_type, user_id')
+                        ->from($table)->where('feedback_id', $feedback_followed_id)->limit(1);
             $query = $this->db->get();
             $topic = $query->row_array();
-            array_push($data, $topic);
 
-            $this->db->select('feedback_id, feedback_content, feedback_time,
-                feedback_startup, feedback_user_type, wx_feedback.user_id, user_name, user_email')
-                ->from($table)->join($join_table, $join_where, 'left')
-                ->where('feedback_followed_id', $feedback_followed_id)->order_by('feedback_time', 'asc');
+            // get the follow feedback topic
+            $this->db->select('feedback_id, feedback_content, feedback_time, feedback_startup,
+                                feedback_user_type, user_id')
+                        ->from($table)->where('feedback_followed_id', $feedback_followed_id)->order_by('feedback_time', 'asc');
             $query = $this->db->get();
             $followed_data = $query->result_array();
 
-            // filter admin notice, add admin name '管理员'
-            foreach ($followed_data as $key => $value) {
-                $user_name = $value['user_name'];
-                if (! $user_name) {
-                    $followed_data[$key]['user_name'] = 'Creamnote管理员';
-                }
-            }
-
+            // merge the topic and follow feedback info
+            $data[] = $topic;
             if ($followed_data) {
                 $data = array_merge($data, $followed_data);
             }
         }
 
         return $data;
+    }
+/*****************************************************************************/
+    public function get_common_user_id_info_by_id($feedback_followed_id = 0) {
+        if ($feedback_id > 0) {
+            $table = $this->wx_table;
+            $where = array(
+                'feedback_followed_id' => $feedback_followed_id,
+                'feedback_startup' => 'false',
+                'feedback_user_type' => '2',
+                );
+            $this->db->select('user_id')->from($table)->where($where);
+            $query = $this->db->get();
+            return $query->result_array();
+        }
+        return false;
     }
 /*****************************************************************************/
     public function get_feedback_topic_count() {

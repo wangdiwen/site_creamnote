@@ -15,7 +15,15 @@ class WXM_Admin_User extends CI_Model
         return $query->result_array();
     }
 /*****************************************************************************/
-
+    public function get_name_email_by_id($user_id = 0) {
+        if ($user_id > 0) {
+            $table = $this->wx_table;
+            $this->db->select('user_name, user_email')->from($table)->where('user_id', $user_id)->limit(1);
+            $query = $this->db->get();
+            return $query->row_array();
+        }
+        return false;
+    }
 /*****************************************************************************/
 }
 
