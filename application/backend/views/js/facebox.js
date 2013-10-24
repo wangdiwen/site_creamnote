@@ -200,6 +200,9 @@
 
     $('#facebox .close').click($.facebox.close)
     $('#facebox .close_image').attr('src', $.facebox.settings.closeImage)
+    var clip = new ZeroClipboard( $(".button_copy"), {
+      moviePath: "/application/backend/views/js/ZeroClipboard.swf"
+    } );
   }
 
   // getPageScroll() by quirksmode.com
@@ -319,7 +322,4 @@
     })
   })
 
-var clip = new ZeroClipboard( $(".button_copy"), {
-      moviePath: "/application/backend/views/js/ZeroClipboard.swf"
-    } );
 })(jQuery);
