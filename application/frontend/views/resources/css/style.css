@@ -1637,6 +1637,7 @@ z-index: 100;
 }
 
 .collect_section{
+	position: relative;
 	min-height: 50px;
 	padding: 11px 8px 0;
 	background-color: #f0f0f0;

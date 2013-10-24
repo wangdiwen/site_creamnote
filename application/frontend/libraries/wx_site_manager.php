@@ -2,11 +2,12 @@
 
 class WX_Site_Manager {
 /*****************************************************************************/
-    var $CI;  // Get the CI super object
+    var $CI;
     var $wx_table = 'wx_site_manager';
 /*****************************************************************************/
     public function __construct() {
         $this->CI =& get_instance();
+
         $this->CI->load->model('core/wxm_site_manager');
     }
 /*****************************************************************************/
@@ -139,6 +140,25 @@ class WX_Site_Manager {
         }
     }
 /*****************************************************************************/
+    public function add_site_income($creamnote_income = 0.00) {
+        if ($creamnote_income > 0.00) {
+            // check cur month record ready
+            $ret = $this->_check_cur_month_record();
+
+            // add creamnote profit or income
+            $cur_month = wx_month();
+            $site_info = $this->CI->wxm_site_manager->get_by_date($cur_month);
+            if ($site_info) {
+                $site_total_income = $site_info['site_total_income'];
+                $new_total_income = number_format($site_total_income + $creamnote_income, 2, '.', '');
+
+                $data = array(
+                    'site_total_income' => $new_total_income,
+                    );
+                $this->CI->wxm_site_manager->update_site_manager($cur_month, $data);
+            }
+        }
+    }
 /*****************************************************************************/
 /*****************************************************************************/
 /*****************************************************************************/

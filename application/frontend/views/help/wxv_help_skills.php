@@ -18,7 +18,7 @@
 <body>
   <?php include  'application/frontend/views/share/header_home.php';?>
   <div class="body article_body">
-    <div class="foot_list_left" style="padding-bottom:0px!important;margin-bottom:0px!important;height: 7000px;">
+    <div class="foot_list_left" style="padding-bottom:0px!important;margin-bottom:0px!important;height: 15000px;">
       <h1><b>帮助</b></h1>
       <ul class="foot_list_ul">
         <li><a href="<?php echo site_url('static/wxc_help/faq'); ?>" title="常见问题">常见问题</a></li>
@@ -38,10 +38,9 @@
         <a href="#account_deposit"><p style="font-size:14px" class="pointer" ><b>5.账户管理（提现）</b></p></a>
         <a href="#feedback"><p style="font-size:14px" class="pointer" ><b>6.给平台提供建议和反馈</b></p></a>
         <a href="#grade_comment"><p style="font-size:14px" class="pointer" ><b>7.笔记打分和评论</b></p></a>
-        <a href="#article"><p style="font-size:14px" class="pointer" ><b>8.精彩博文和系统公告</b></p></a>
-        <a href="#collect_notes"><p style="font-size:14px" class="pointer" ><b>9.收藏笔记</b></p></a>
-        <a href="#follow"><p style="font-size:14px" class="pointer" ><b>10.关注和粉丝</b></p></a>
-        <a href="#message"><p style="font-size:14px" class="pointer _help_tail" ><b>11.给笔记所有者留言</b></p></a>
+        <a href="#collect_notes"><p style="font-size:14px" class="pointer" ><b>8.收藏笔记</b></p></a>
+        <a href="#follow"><p style="font-size:14px" class="pointer" ><b>9.关注和粉丝</b></p></a>
+        <a href="#message"><p style="font-size:14px" class="pointer _help_tail" ><b>10.给笔记所有者留言</b></p></a>
         <!-- 目录 -->
 
         <!-- 分享干货 -->
@@ -145,22 +144,105 @@
 
         <!-- 购买笔记 -->
         <a name="buy_notes"><p style="font-size:14px" class="pointer" ><b>3.购买笔记</b></p></a>
+          <div class="help_section">
+            我们平台提供了笔记的交易通道，你可以通过支付宝支付你想要购买的笔记价格数，来获得这份笔记。笔记来之不易，好东西值得你去付费
+          </div>
+          <div class="help_section">
+            <div class="fl help_stand_right">
+              第一步：在笔记卡片中，或者笔记预览页面，点击下载按钮或者“购买笔记”按钮，跳转到收银台
+            </div>
+            <div class="help_stand_left">
+              <img style='width:500px;' src="/application/frontend/views/resources/images/help_image/23.jpg"></img>
+            </div>
+          </div>
+          <div class="help_section">
+            <div class="fl help_stand_right">
+              第二步：我们在收银台判断你的账户余额，如果您的账户余额足够购买该份笔记，我们将默认让您使用余额来支付，如果余额不足，您需要跳转到支付宝页面来补足差价
+            </div>
+            <div class="help_stand_left">
+              <img style='width:500px;' src="/application/frontend/views/resources/images/help_image/24.jpg"></img>
+            </div>
+          </div>
+          <div class="help_section">
+            <div class="fl help_stand_right">
+              第三步：支付成功后（包括支付宝支付和余额支付），页面将会自动跳转到一个下载页面，你可以点击“下载”链接，完成该份资料的下载（本页面中的下载只能使用一次）
+            </div>
+            <div class="help_stand_left">
+              <img style='width:500px;' src="/application/frontend/views/resources/images/help_image/25.jpg"></img>
+            </div>
+          </div>
+          <div class="help_section">
+            <div class="fl help_stand_right">
+              第四步：如果您下载失败，可以跳转到个人中心，在“购买记录”中下载您购买过的笔记
+            </div>
+            <div class="help_stand_left">
+              <img style='width:500px;' src="/application/frontend/views/resources/images/help_image/26.jpg"></img>
+            </div>
+          </div>
         <p class="_help_tail"></p>
         <!-- 购买笔记 -->
 
         <!-- 账户管理（激活） -->
         <a name="account_activate"><p style="font-size:14px" class="pointer" ><b>4.账户管理（激活）</b></p></a>
+          <div class="help_section">
+            我们平台目前支持支付宝账户支付笔记资料，如果你账户中有收益，还想体现的话，就需要激活您的支付宝账户，以方便我们给您汇款
+          </div>
+          <div class="help_section">
+              <div class="fl help_stand_left_t">
+                点击顶部的“账户设置”，账户设置页面
+              </div>
+              <div class="help_stand_right_t">
+                <img style='width:500px;' src="/application/frontend/views/resources/images/help_image/27.jpg"></img>
+              </div>
+          </div>
+          <div class="help_section">
+              <div class="fl help_stand_left_t">
+                在个人账户菜单项里，将您的支付宝账号填写在“账户”表单里面，然后点击激活
+              </div>
+              <div class="help_stand_right_t">
+                <img style='width:500px;' src="/application/frontend/views/resources/images/help_image/28.jpg"></img>
+              </div>
+          </div>
+          <div class="help_section">
+              <div class="fl help_stand_left_t">
+                页面跳转到支付宝登录页面，填写账户名和密码，正确登录后，您将返回我们网站的账户设置页面，在这里您将看到您的支付宝签名，如果与真实相符，说明激活成功
+              </div>
+              <div class="help_stand_right_t">
+                <img style='width:500px;' src="/application/frontend/views/resources/images/help_image/29.jpg"></img>
+              </div>
+          </div>
         <p class="_help_tail"></p>
         <!-- 账户管理（激活） -->
 
         <!-- 账户管理（提现） -->
         <a name="account_deposit"><p style="font-size:14px" class="pointer" ><b>5.账户管理（提现）</b></p></a>
+          <div class="help_section">
+            对于账户中的余额，您有权体现到您支付宝中（需要大于十元收益），我们将会尽快将您的提现申请给出审核
+          </div>
+          <div class="help_section">
+            <div class="fl help_stand_right">
+              同“激活账户”，你需要跳转到“账户设置”页面
+            </div>
+            <div class="help_stand_left">
+              <img style='width:500px;' src="/application/frontend/views/resources/images/help_image/30.jpg"></img>
+            </div>
+          </div>
+          <div class="help_section">
+            <div class="fl help_stand_right">
+              提现前您需要设置您的creamnote的一个支付口令
+            </div>
+            <div class="help_stand_left">
+              <img style='width:500px;' src="/application/frontend/views/resources/images/help_image/31.jpg"></img>
+            </div>
+          </div>
         <p class="_help_tail"></p>
         <!-- 账户管理（提现） -->
 
         <!-- 给平台提供建议和反馈 -->
         <a name="feedback"><p style="font-size:14px" class="pointer" ><b>6.给平台提供建议和反馈</b></p></a>
-          为了更好地倾听用户的声音，及时反馈用户的信息，Creamnote单独建立了一个“咨询和反馈”功能页，您可以在这个畅所欲言，说说你对Creamnote的看法
+          <div class="help_section">
+            为了更好地倾听用户的声音，及时反馈用户的信息，Creamnote单独建立了一个“咨询和反馈”功能页，您可以在这个畅所欲言，说说你对Creamnote的看法
+          </div>
           <div class="help_section">
               <div class="fl help_stand_left_t">
                 在任何一个网页中，你都可以看到左侧的按钮，点击后就会进入“咨询和反馈”页面
@@ -201,23 +283,99 @@
         <p class="_help_tail"></p>
         <!-- 笔记打分和评论 -->
 
-        <!-- 精彩博文和系统公告 -->
-        <a name="article"><p style="font-size:14px" class="pointer" ><b>8.精彩博文和系统公告</b></p></a>
-        <p class="_help_tail"></p>
-        <!-- 精彩博文和系统公告 -->
-
         <!-- 收藏笔记 -->
-        <a name="collect_notes"><p style="font-size:14px" class="pointer" ><b>9.收藏笔记</b></p></a>
+        <a name="collect_notes"><p style="font-size:14px" class="pointer" ><b>8.收藏笔记</b></p></a>
+          <div class="help_section">
+            如果你对某一份笔记感兴趣，可以添加“收藏”，然后再个人中心的“收藏夹”可以看见你收藏的所有的笔记资料
+          </div>
+          <div class="help_section">
+              <div class="fl help_stand_left_t">
+                每一个公共页面的笔记卡片，当您鼠标滑过的时候，都会出现如图黑色的一块区域，你可以点击其中的心形添加收藏，再次点击可以取消收藏
+              </div>
+              <div class="help_stand_right_t">
+                <img style='width:195px;' src="/application/frontend/views/resources/images/help_image/14.jpg"></img>
+              </div>
+          </div>
+          <div class="help_section">
+              <div class="fl help_stand_left_t">
+                在个人中心，你可以看到如图圈出的“收藏夹”，点击收藏夹，可以加载你收藏过的所有笔记，点击“取消收藏”，可以取消对该笔记的收藏
+              </div>
+              <div class="help_stand_right_t">
+                <img style='width:500px;' src="/application/frontend/views/resources/images/help_image/15.jpg"></img>
+              </div>
+          </div>
         <p class="_help_tail"></p>
         <!-- 收藏笔记 -->
 
         <!-- 关注和粉丝 -->
-        <a name="follow"><p style="font-size:14px" class="pointer" ><b>10.关注和粉丝</b></p></a>
+        <a name="follow"><p style="font-size:14px" class="pointer" ><b>9.关注和粉丝</b></p></a>
+          <div class="help_section">
+            关注粉丝有web2.0的基因，主要是方便用户之间建立一个简单的联系，您可以对感兴趣的人添加关注
+          </div>
+          <div class="help_section">
+            <div class="fl help_stand_right">
+              登录后，在每份笔记详情页面，您都可以看到作者后面有一个关注按钮（当然关注过了，显示的是“已关注”），点击后可以对该用户进行关注，再次点击可以取消关注
+            </div>
+            <div class="help_stand_left">
+              <img style='width:310px;' src="/application/frontend/views/resources/images/help_image/16.jpg"></img>
+            </div>
+          </div>
+          <div class="help_section">
+            <div class="fl help_stand_right">
+              在个人中心，你可以看到如图圈出的眼睛图标和心形图标，点击心形图标，可以加载你关注的所有用户，点击“取消关注”，可以取消对该用户的关注，点击眼睛图标，可以看到所有关注你的用户，点击“关注”，可以对其进行关注
+            </div>
+            <div class="help_stand_left">
+              <img style='width:500px;' src="/application/frontend/views/resources/images/help_image/17.jpg"></img>
+            </div>
+          </div>
         <p class="_help_tail"></p>
         <!-- 关注和粉丝 -->
 
         <!-- 给笔记所有者留言 -->
-        <a name="message"><p style="font-size:14px" class="pointer" ><b>11.给笔记所有者留言</b></p></a>
+        <a name="message"><p style="font-size:14px" class="pointer" ><b>10.给笔记所有者留言</b></p></a>
+          <div class="help_section">
+            关注用户的同时，您可以选择对你感兴趣的用户留言，对方会在个人中心及时看到你的留言信息
+          </div>
+          <div class="help_section">
+              <div class="fl help_stand_left_t">
+                登录后，在每份笔记详情页面，点击作者昵称，网站会弹出一个框，在这里展示了，用户所有笔记资料
+              </div>
+              <div class="help_stand_right_t">
+                <img style='width:310px;' src="/application/frontend/views/resources/images/help_image/18.jpg"></img>
+              </div>
+          </div>
+          <div class="help_section">
+              <div class="fl help_stand_left_t">
+                在弹框里，你先点击“留言”，会显示一个留言框，在留言框中写些你想对笔记作者说的话，然后点击“提交留言”，留言信息便会发送给笔记作者
+              </div>
+              <div class="help_stand_right_t">
+                <img style='width:500px;' src="/application/frontend/views/resources/images/help_image/19.jpg"></img>
+              </div>
+          </div>
+          <div class="help_section">
+              <div class="fl help_stand_left_t">
+                如果你有留言，在进入个人中心的时候，浏览器左侧会有一个绿色闪烁的图标，点击图标，会滑出一个消息列表
+              </div>
+              <div class="help_stand_right_t">
+                <img style='width:280px;' src="/application/frontend/views/resources/images/help_image/20.jpg"></img>
+              </div>
+          </div>
+          <div class="help_section">
+              <div class="fl help_stand_left_t">
+                消息列表第一个便是留言信息，这里如果有留言，会按时间顺序列出，点击后会弹出框显示留言信息
+              </div>
+              <div class="help_stand_right_t">
+                <img style='width:280px;' src="/application/frontend/views/resources/images/help_image/21.jpg"></img>
+              </div>
+          </div>
+          <div class="help_section">
+              <div class="fl help_stand_left_t">
+                这里是你能看到的其他用户给您留的留言信息，如果你想回复他，可以编辑内容，提交
+              </div>
+              <div class="help_stand_right_t">
+                <img style='width:500px;' src="/application/frontend/views/resources/images/help_image/22.jpg"></img>
+              </div>
+          </div>
         <p class="_help_tail"></p>
         <!-- 给笔记所有者留言 -->
 

@@ -9,10 +9,55 @@ class WXM_User extends CI_Model
         $this->load->database();
     }
 /*****************************************************************************/
+    public function update_account_balance($info = array()) {
+        if ($info) {
+            $user_id = $info['user_id'];
+            $user_account_money = $info['user_account_money'];
+            if ($user_id > 0) {
+                $table = $this->wx_table;
+                $data = array(
+                    'user_account_money' => $user_account_money,
+                    );
+                $this->db->where('user_id', $user_id);
+                $this->db->update($table, $data);
+                return true;
+            }
+        }
+        return false;
+    }
+/*****************************************************************************/
+    public function add_account_balance($info = array()) {
+        if ($info) {
+            $user_id = $info['user_id'];
+            $add_balance = $info['user_account_money_add'];
+            if ($user_id > 0) {
+                $table = $this->wx_table;
+                $this->db->select('user_account_money, user_account_total')->from($table)->where('user_id', $user_id)->limit(1);
+                $query = $this->db->get();
+                $account_info = $query->row_array();
+                if ($account_info) {
+                    $cur_account_money = $account_info['user_account_money'];
+                    $cur_account_total = $account_info['user_account_total'];
+                    $new_account_money = number_format((float)$cur_account_money + (float)$add_balance, 2, '.', '');
+                    $new_account_total = number_format((float)$cur_account_total + (float)$add_balance, 2, '.', '');
+
+                    $data = array(
+                        'user_account_money' => $new_account_money,
+                        'user_account_total' => $new_account_total,
+                        );
+                    $this->db->where('user_id', $user_id);
+                    $this->db->update($table, $data);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+/*****************************************************************************/
     public function get_user_account_money($user_id = 0) {
         if ($user_id > 0) {
             $table = $this->wx_table;
-            $this->db->select('user_account_money')->from($table)->where('user_id', $user_id)->limit(1);
+            $this->db->select('user_account_money, user_account_status')->from($table)->where('user_id', $user_id)->limit(1);
             $query = $this->db->get();
             return $query->row_array();
         }
@@ -636,30 +681,13 @@ class WXM_User extends CI_Model
         }
         return false;
     }
-/*****************************************************************/
-    // Reconnect the db
-    public function reload_database()
-    {
-        $this->db->reconnect();
-    }
-/*****************************************************************/
-    // Close the db
-    public function close_database()
-    {
-        $this->db->close();
-    }
-/*****************************************************************/
-    // Return info of database
-    public function database_info()
-    {
-        $platform = $this->db->platform();
-        $version = $this->db->version();
+/*****************************************************************************/
 
-        $ret = array('platform' => $platform,
-                     'version' => $version);
-        return $ret;
-    }
-/*****************************************************************/
+/*****************************************************************************/
+
+/*****************************************************************************/
+
+/*****************************************************************************/
 }
 
 /* End of file wxm_user.php */

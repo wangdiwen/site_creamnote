@@ -18,6 +18,9 @@
 
     <div class="body article_body" style="border-top: 8px solid #839acd;">
         <div class="" style="background-image:none;">
+            <form action="<?php echo site_url('core/wxc_alipay/alipay_submit_again'); ?>" method="post" id="pay_again_form" target="_blank">
+            </form>
+            <form action="<?php echo site_url('core/wxc_download_note/pay_download_file'); ?>" method="post" id="pay_form" target="_blank">
             <div class="reg_frame _feedback_frame _accountselect_frame" style="">
                 <div class="_accountselect_title"><span>笔记信息</span></div>
                 <div style="border-bottom: 1px dashed rgb(185, 194, 197);padding: 10px 0;">
@@ -26,10 +29,12 @@
                     ?>
 
                 </div>
-                <input type="hidden" id="note_id" value="<?php echo $note_id;?>">
-                <input type="hidden" id="note_price" value="<?php echo $note_price;?>">
-                <input type="hidden" id="diff_money" value="<?php echo $diff_money;?>">
-                <input type="hidden" id="note_name" value="<?php echo $note_name;?>">
+                <input type="hidden" id="note_id" name="note_id" value="<?php echo $note_id;?>">
+                <input type="hidden" id="note_price" name="note_price" value="<?php echo $note_price;?>">
+                <!-- <input type="hidden" id="diff_money" name="diff_money" value="<?php echo $diff_money;?>"> -->
+                <input type="hidden" id="note_name" name="note_name" value="<?php echo $note_name;?>">
+                <input type="hidden" id="note_own_user_id" name="note_own_user_id" value="<?php echo $note_own_user_id;?>">
+                <!-- <input type="hidden" id="user_account_money" name="user_account_money" value="<?php echo $user_account_money;?>"> -->
                 <div style="padding-top: 5px;">价格:￥<?php echo $note_price;?></div>
             </div>
 
@@ -48,7 +53,7 @@
                         <image style="border: 1px solid rgb(185, 194, 197);" src="/application/frontend/views/resources/images/version/pay_by_zhifubao.png">
                     </div>
                     <div style="padding: 10px 0 10px 20px;">
-                        <input type="button" onclick="buy_one_note()" class="button_c" value="支付" name="pay_by_aili" >
+                        <input onclick="buy_one_note(2)" type="submit"  class="button_c" value="支付" name="pay_by_aili" >
                     </div>
                 <?php }else{?>
                     您有足够的余额来直接购买这份笔记,我们将从您的账户余额中扣除￥<?php echo $note_price;?>
@@ -57,7 +62,7 @@
                         实付价格:￥<?php echo $note_price;?>
                     </div >
                     <div style="padding: 10px 0 10px 20px;">
-                        <input type="button" onclick="buy_one_note()" class="button_c" value="支付" name="pay_by_creamnote" >
+                        <input onclick="buy_one_note(1)" type="submit"  class="button_c" value="支付" name="pay_by_creamnote" >
                     </div>
                 <?php }?>
 
@@ -68,8 +73,9 @@
                 <div style="margin: 10px 0;">常见问题</div>
                 <div style="margin: 10px 0;">1、支付时网站优先使用您的支付余额，如果不足的话需要使用支付宝来补足差额。</div>
                 <div style="margin: 10px 0;">2、支付成功后会给您下载这份笔记的链接，如果您不小心丢失该链接，可以到个人中心里“购买笔记”中下载。</div>
+                <div style="margin: 10px 0;">3、如果您的账户处于提现状态，您将不能使用余额来支付。</div>
             </div>
-
+        </form>
         </div>
         <div class="clear"></div>
 

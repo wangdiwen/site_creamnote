@@ -91,6 +91,23 @@ class WXM_Data_activity extends CI_Model
         }
     }
 /*****************************************************************************/
+    public function update_pay_download($info)
+    {
+        $data_id = $info['data_id'];
+        $dactivity_download_count = $info['dactivity_download_count'];
+        $dactivity_buy_count = $info['dactivity_buy_count'];
+        if ($data_id > 0)
+        {
+            $data = array(
+                'dactivity_download_count' => $dactivity_download_count,
+                'dactivity_buy_count' => $dactivity_buy_count,
+                );
+            $table = $this->wx_table;
+            $this->db->where('data_id', $data_id);
+            $this->db->update($table, $data);
+        }
+    }
+/*****************************************************************************/
     public function update_view($info)
     {
         $data_id = $info['data_id'];
@@ -169,6 +186,15 @@ class WXM_Data_activity extends CI_Model
             return $query->row_array();
         }
         return false;
+    }
+/*****************************************************************************/
+    public function get_pay_download_info($data_id = 0) {
+        if ($data_id > 0) {
+            $table = $this->wx_table;
+            $this->db->select('dactivity_id, dactivity_download_count, dactivity_buy_count')->from($table)->where('data_id', $data_id)->limit(1);
+            $query = $this->db->get();
+            return $query->row_array();
+        }
     }
 /*****************************************************************************/
     public function get_download_info($data_id = 0) {

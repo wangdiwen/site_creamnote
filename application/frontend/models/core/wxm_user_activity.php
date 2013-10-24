@@ -231,13 +231,40 @@ class WXM_User_activity extends CI_Model
         }
     }
 /*****************************************************************************/
+    public function update_pay_download_info($info = array()) {
+        if ($info) {
+            $user_id = $info['user_id'];
+            $table = $this->wx_table;
+            $data = array(
+                'uactivity_downloadcount' => $info['uactivity_downloadcount'],
+                'uactivity_pay_download' => $info['uactivity_pay_download'],
+                );
+            $this->db->where('user_id', $user_id);
+            $this->db->update($table, $data);
+            return true;
+        }
+        return false;
+    }
+/*****************************************************************************/
     public function get_download_info($user_id = 0) {
         if ($user_id > 0) {
             $table = $this->wx_table;
-            $this->db->select('uactivity_id, uactivity_downloadcount, uactivity_day_downcount, uactivity_download')->from($table)->where('user_id', $user_id)->limit(1);
+            $this->db->select('uactivity_id, uactivity_downloadcount, uactivity_day_downcount, uactivity_download')
+                     ->from($table)->where('user_id', $user_id)->limit(1);
             $query = $this->db->get();
             return $query->row_array();
         }
+    }
+/*****************************************************************************/
+    public function get_pay_download_info($user_id = 0) {
+        if ($user_id > 0) {
+            $table = $this->wx_table;
+            $this->db->select('uactivity_id, uactivity_downloadcount, uactivity_pay_download')
+                     ->from($table)->where('user_id', $user_id)->limit(1);
+            $query = $this->db->get();
+            return $query->row_array();
+        }
+        return false;
     }
 /*****************************************************************************/
     public function get_all_by_user_id($user_id = 0)
@@ -310,6 +337,28 @@ class WXM_User_activity extends CI_Model
             $this->db->where('user_id', $user_id);
             $this->db->update($table, $data);
         }
+    }
+/*****************************************************************************/
+    public function get_payed_note_record($user_id = 0) {
+        if ($user_id > 0) {
+            $table = $this->wx_table;
+            $this->db->select('uactivity_pay_download')
+                     ->from($table)->where('user_id', $user_id)->limit(1);
+            $query = $this->db->get();
+            return $query->row_array();
+        }
+        return false;
+    }
+/*****************************************************************************/
+    public function get_free_note_record($user_id = 0) {
+        if ($user_id > 0) {
+            $table = $this->wx_table;
+            $this->db->select('uactivity_download')
+                     ->from($table)->where('user_id', $user_id)->limit(1);
+            $query = $this->db->get();
+            return $query->row_array();
+        }
+        return false;
     }
 /*****************************************************************************/
 }

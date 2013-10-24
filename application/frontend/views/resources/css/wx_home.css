@@ -1279,3 +1279,43 @@ a.current{
 .common_bule_button:hover{
 	background-color:#aaa;
 }
+
+._coop_img{
+	width: 160px;
+	padding: 0 15px;
+	height: 180px;
+}
+
+._coop_img img{
+	border: 1px solid rgb(125 ,142 ,167);
+}
+
+._text_align{
+	text-align: center;
+}
+._site_map_button{
+	font-size: 14px;
+	padding: 4px 8px;
+	margin: 0 10px 20px 10px;
+	width: 154px;
+}
+._accountselect_title{
+	width: 755px;
+	height: 25px;
+	position: absolute;
+	margin: -30px;
+	background-color: #EEECEC;
+	padding-left: 20px;
+	font-size: 16px;
+
+}
+._accountselect_title span{
+	padding-top: 1px;
+	position: absolute;
+}
+._accountselect_frame{
+	text-align: left;
+	border: 3px double rgb(185, 194, 197);
+	padding: 30px 30px 10px 30px;
+	color: #000;
+}

@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Creamnote(每周一文)</title>
+    <title>Creamnote(精彩博文)</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" href="/application/frontend/views/resources/css/reset.css" />
     <link rel="stylesheet" href="/application/frontend/views/resources/css/wx_footlist.css" />
@@ -19,7 +19,7 @@
   <div class="body article_body" style="border-top: 8px solid #839acd;">
 
     <div class="article_content" style="margin: 10px 200px;padding: 5px 10px;border: 1px solid #ccc;">
-      <h2 class="article_title"  ><b>每周一文</b></h2>
+      <h2 class="article_title"  ><b>精彩博文</b></h2>
       <div style="padding:10px 0;">
         <?php
           $num = 1;

@@ -455,3 +455,16 @@ padding-left: 10px;
     margin-top: 10px;
     background-color: #9d9d9d;
 }
+._buy_history{
+    height: 61px;
+    background: url(../images/new_version/dy_card_hover_black.png) repeat-y 0 0;
+    position: absolute;
+    text-align: left;
+    bottom: 0;
+    margin-left: 248px;
+    display: none;
+    width: 60px;
+}
+._buy_history img{
+    margin: 22px;
+}

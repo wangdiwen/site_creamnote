@@ -140,6 +140,29 @@ class WXM_Data extends CI_Model
             $query = $this->db->get();
             return $query->row_array();
         }
+        return false;
+    }
+/*****************************************************************************/
+    public function get_simple_info_by_id_list($data_id_list = array()) {
+        if ($data_id_list) {
+            $table = $this->wx_table;
+            $this->db->select('data_id, data_name, data_type, data_uploadtime')
+                    ->from($table)->where_in('data_id', $data_id_list)->order_by('data_uploadtime', 'desc');
+            $query = $this->db->get();
+            return $query->result_array();
+        }
+        return false;
+    }
+/*****************************************************************************/
+    public function get_owner_user_id($data_id = 0) {
+        if ($data_id > 0) {
+            $table = $this->wx_table;
+            $this->db->select('user_id')
+                ->from($table)->where('data_id', $data_id)->limit(1);
+            $query = $this->db->get();
+            return $query->row_array();
+        }
+        return false;
     }
 /*****************************************************************************/
     public function search_get_baseinfo_by_id_list($data_id_list = array()) {
@@ -147,7 +170,8 @@ class WXM_Data extends CI_Model
             $where = array(
                 'data_status' => '3'
                 );
-            $this->db->select('data_id, data_name, data_type, data_pagecount, data_price, user_id, data_uploadtime, data_point, data_keyword')->from('wx_data')->where($where)->where_in('data_id', $data_id_list)->order_by('data_uploadtime');
+            $this->db->select('data_id, data_name, data_type, data_pagecount, data_price, user_id, data_uploadtime, data_point, data_keyword')
+                    ->from('wx_data')->where($where)->where_in('data_id', $data_id_list)->order_by('data_uploadtime');
             $query = $this->db->get();
             return $query->result_array();
         }

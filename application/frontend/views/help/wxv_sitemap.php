@@ -29,8 +29,52 @@
     <div class="foot_list_right">
       <h2><b>网站导航</b></h2>
       <div class="text_line">
-        <p style="font-size:14px" class="pointer" onclick="showcontent(1)"><b>Creamnote首页</b></p>
+        <a href="<?php echo site_url('home/index'); ?>">
+          <div  class="_site_map_button _text_align pointer common_bule_button fl">Creamnote首页</div>
+        </a>
+        <a href="<?php echo site_url('home/data_upload_page'); ?>">
+          <div  class="_site_map_button _text_align pointer common_bule_button fl">分享干货</div>
+        </a>
+        <a href="<?php echo site_url('home/image_upload_page'); ?>">
+          <div  class="_site_map_button _text_align pointer common_bule_button fl">图片笔记</div>
+        </a>
+        <a href="<?php echo site_url('data/wxc_data/data_list'); ?>">
+          <div  class="_site_map_button _text_align pointer common_bule_button fl">笔记展示</div>
+        </a>
+        <a href="<?php echo site_url('primary/wxc_feedback/feedback_page'); ?>">
+          <div  class="_site_map_button _text_align pointer common_bule_button fl">反馈&咨询</div>
+        </a>
+        <a href="<?php echo site_url('core/wxc_content/more_article'); ?>">
+          <div  class="_site_map_button _text_align pointer common_bule_button fl">精彩博文</div>
+        </a>
+        <a href="<?php echo site_url('core/wxc_content/more_site_notice'); ?>">
+          <div  class="_site_map_button _text_align pointer common_bule_button fl">醍醐公告</div>
+        </a>
 
+        <a href="<?php echo site_url('static/wxc_about/about_creamnote'); ?>">
+          <div  class="_site_map_button _text_align pointer common_bule_button fl">关于醍醐</div>
+        </a>
+        <a href="<?php echo site_url('static/wxc_about/about_us'); ?>">
+          <div  class="_site_map_button _text_align pointer common_bule_button fl">团队介绍</div>
+        </a>
+        <a href="<?php echo site_url('static/wxc_about/connect_us'); ?>">
+          <div  class="_site_map_button _text_align pointer common_bule_button fl">联系我们</div>
+        </a>
+        <a href="<?php echo site_url('static/wxc_help/faq'); ?>">
+          <div  class="_site_map_button _text_align pointer common_bule_button fl">常见问题</div>
+        </a>
+        <a href="<?php echo site_url('static/wxc_help/skills'); ?>">
+          <div  class="_site_map_button _text_align pointer common_bule_button fl">帮助教程</div>
+        </a>
+        <a href="<?php echo site_url('static/wxc_help/sitemap'); ?>">
+          <div  class="_site_map_button _text_align pointer common_bule_button fl">网站导航</div>
+        </a>
+        <a href="<?php echo site_url('static/wxc_cooperation/medium'); ?>">
+          <div  class="_site_map_button _text_align pointer common_bule_button fl">媒体报道</div>
+        </a>
+        <a href="<?php echo site_url('static/wxc_cooperation/friendly_link'); ?>">
+          <div  class="_site_map_button _text_align pointer common_bule_button fl">友情链接</div>
+        </a>
       </div>
     </div>
   </div>

@@ -31,7 +31,8 @@ class WXM_Site_Manager extends CI_Model {
     public function get_by_date($year_month = '') {
         if ($year_month) {
             $table = $this->wx_table;
-            $this->db->select('site_id, site_date, site_users, site_note_count, site_upload_count, site_imagenote_count, site_freedown_count, site_paydown_count, site_download_count, site_total_income')->from($table)->where('site_date', $year_month)->limit(1);
+            $this->db->select('site_id, site_date, site_users, site_note_count, site_upload_count, site_imagenote_count, site_freedown_count, site_paydown_count, site_download_count, site_total_income')
+                    ->from($table)->where('site_date', $year_month)->limit(1);
             $query = $this->db->get();
             return $query->row_array();
         }

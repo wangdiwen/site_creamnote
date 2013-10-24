@@ -1,4 +1,4 @@
-/** 
+/**
  * easyDialog v2.2
  * Url : http://stylechen.com/easydialog-v2.0.html
  * Author : chenmnkken@gmail.com
@@ -19,10 +19,10 @@ var	body = doc.body,
 	cacheData = {
 	/**
 	 *	1 : {
-	 *		eclick : [ handler1, handler2, handler3 ]; 
-	 *		clickHandler : function(){ //... }; 
-	 *	} 
-	 */	
+	 *		eclick : [ handler1, handler2, handler3 ];
+	 *		clickHandler : function(){ //... };
+	 *	}
+	 */
 	};
 
 var	Dialog = function(){};
@@ -44,7 +44,7 @@ Dialog.prototype = {
 				autoClose:   0,				// number            自动关闭弹出层的时间
 				lock:        false,			// boolean           是否允许ESC键来关闭弹出层
 				callback:    null			// function          关闭弹出层后执行的回调函数
-				/** 
+				/**
 				 *  container为object时的参数格式
 				 *	container : {
 				 *		header : '弹出层标题',
@@ -52,18 +52,18 @@ Dialog.prototype = {
 				 *		yesFn : function(){},	    // 确定按钮的回调函数
 				 *		noFn : function(){} / true,	// 取消按钮的回调函数
 				 *		yesText : '确定',		    // 确定按钮的文本，默认为‘确定’
-				 *		noText : '取消' 		    // 取消按钮的文本，默认为‘取消’		
-				 *	}		
+				 *		noText : '取消' 		    // 取消按钮的文本，默认为‘取消’
+				 *	}
 				 */
 			};
-		
+
 		for( i in defaults ){
 			options[i] = arg[i] !== undefined ? arg[i] : defaults[i];
 		}
 		Dialog.data( 'options', options );
 		return options;
 	},
-		
+
 	// 防止IE6模拟fixed时出现抖动
 	setBodyBg : function(){
 		if( body.currentStyle.backgroundAttachment !== 'fixed' ){
@@ -71,12 +71,12 @@ Dialog.prototype = {
 			body.style.backgroundAttachment = 'fixed';
 		}
 	},
-	
+
 	// 防止IE6的select穿透
 	appendIframe : function(elem){
 		elem.innerHTML = '<iframe style="position:absolute;left:0;top:0;width:100%;height:100%;z-index:-1;border:0 none;filter:alpha(opacity=0)"></iframe>';
 	},
-	
+
 	/**
 	 * 设置元素跟随定位
 	 * @param { Object } 跟随的DOM元素
@@ -87,11 +87,11 @@ Dialog.prototype = {
 	setFollow : function( elem, follow, x, y ){
 		follow = typeof follow === 'string' ? doc.getElementById( follow ) : follow;
 		var style = elem.style;
-		style.position = 'absolute';			
+		style.position = 'absolute';
 		style.left = Dialog.getOffset( follow, 'left') + x + 'px';
 		style.top = Dialog.getOffset( follow, 'top' ) + y + 'px';
 	},
-	
+
 	/**
 	 * 设置元素固定(fixed) / 绝对(absolute)定位
 	 * @param { Object } DOM元素
@@ -117,36 +117,36 @@ Dialog.prototype = {
 			style.left = docElem.clientWidth/2 + Dialog.getScroll( 'left' ) + 'px';
 		}
 	},
-	
+
 	/**
 	 * 创建遮罩层
-	 * @return { Object } 遮罩层 
+	 * @return { Object } 遮罩层
 	 */
 	createOverlay : function(){
 		var overlay = doc.createElement('div'),
 			style = overlay.style;
-			
+
 		style.cssText = 'margin:0;padding:0;border:none;width:100%;height:100%;background:#333;opacity:0.6;filter:alpha(opacity=60);z-index:9999;position:fixed;top:0;left:0;';
-		
+
 		// IE6模拟fixed
 		if(isIE6){
 			body.style.height = '100%';
 			style.position = 'absolute';
 			style.setExpression('top','fuckIE6=document.documentElement.scrollTop+"px"');
 		}
-		
+
 		overlay.id = 'overlay';
 		return overlay;
 	},
-	
+
 	/**
 	 * 创建弹出层
-	 * @return { Object } 弹出层 
+	 * @return { Object } 弹出层
 	 */
 	createDialogBox : function(){
-		var dialogBox = doc.createElement('div');		
+		var dialogBox = doc.createElement('div');
 		dialogBox.style.cssText = 'margin:0;padding:0;border:none;z-index:10000;';
-		dialogBox.id = 'easyDialogBox';		
+		dialogBox.id = 'easyDialogBox';
 		return dialogBox;
 	},
 
@@ -157,21 +157,21 @@ Dialog.prototype = {
 	 */
 	createDialogWrap : function( tmpl ){
 		// 弹出层标题
-		var header = tmpl.header ? 
+		var header = tmpl.header ?
 			'<h4 class="easyDialog_title" id="easyDialogTitle"><a href="javascript:void(0)" title="关闭窗口" class="close_btn" id="closeBtn">&times;</a>' + tmpl.header + '</h4>' :
 			'',
 			// 确定按钮
-			yesBtn = typeof tmpl.yesFn === 'function' ? 
+			yesBtn = typeof tmpl.yesFn === 'function' ?
 				'<button class="btn_highlight" id="easyDialogYesBtn">' + ( typeof tmpl.yesText === 'string' ? tmpl.yesText : '确定' ) + '</button>' :
 				'',
-			// 取消按钮	
-			noBtn = typeof tmpl.noFn === 'function' || tmpl.noFn === true ? 
+			// 取消按钮
+			noBtn = typeof tmpl.noFn === 'function' || tmpl.noFn === true ?
 				'<button class="btn_normal" id="easyDialogNoBtn">' + ( typeof tmpl.noText === 'string' ? tmpl.noText : '取消' ) + '</button>' :
-				'',			
+				'',
 			// footer
 			footer = yesBtn === '' && noBtn === '' ? '' :
 				'<div class="easyDialog_footer">' + noBtn + yesBtn + '</div>',
-			
+
 			dialogTmpl = [
 			'<div class="easyDialog_content">',
 				header,
@@ -182,23 +182,23 @@ Dialog.prototype = {
 
 			dialogWrap = doc.getElementById( 'easyDialogWrapper' ),
 			rScript = /<[\/]*script[\s\S]*?>/ig;
-			
+
 		if( !dialogWrap ){
 			dialogWrap = doc.createElement( 'div' );
 			dialogWrap.id = 'easyDialogWrapper';
 			dialogWrap.className = 'easyDialog_wrapper';
 		}
-		dialogWrap.innerHTML = dialogTmpl.replace( rScript, '' );		
+		dialogWrap.innerHTML = dialogTmpl.replace( rScript, '' );
 		return dialogWrap;
-	}		
+	}
 };
-	
+
 /**
  * 设置并返回缓存的数据 关于缓存系统详见：http://stylechen.com/cachedata.html
  * @param { String / Object } 任意字符串或DOM元素
  * @param { String } 缓存属性名
  * @param { Anything } 缓存属性值
- * @return { Object } 
+ * @return { Object }
  */
 Dialog.data = function( elem, val, data ){
     if( typeof elem === 'string' ){
@@ -210,13 +210,13 @@ Dialog.data = function( elem, val, data ){
 	else if( typeof elem === 'object' ){
 		// 如果是window、document将不添加自定义属性
 		// window的索引是0 document索引为1
-		var index = elem === win ? 0 : 
-				elem.nodeType === 9 ? 1 : 
-				elem[expando] ? elem[expando] : 
+		var index = elem === win ? 0 :
+				elem.nodeType === 9 ? 1 :
+				elem[expando] ? elem[expando] :
 				(elem[expando] = ++uuid),
-			
+
 			thisCache = cacheData[index] ? cacheData[index] : ( cacheData[index] = {} );
-				
+
 		if( data !== undefined ){
 			// 将数据存入缓存中
 			thisCache[val] = data;
@@ -239,8 +239,8 @@ Dialog.removeData = function( elem, val ){
 		var index = elem === win ? 0 :
 				elem.nodeType === 9 ? 1 :
 				elem[expando];
-			
-		if( index === undefined ) return;		
+
+		if( index === undefined ) return;
 		// 检测对象是否为空
 		var isEmptyObject = function( obj ) {
 				var name;
@@ -278,7 +278,7 @@ Dialog.removeData = function( elem, val ){
 
 // 事件处理系统
 Dialog.event = {
-	
+
 	bind : function( elem, type, handler ){
 		var events = Dialog.data( elem, 'e' + type ) || Dialog.data( elem, 'e' + type, [] );
 		// 将事件函数添加到缓存中
@@ -295,44 +295,44 @@ Dialog.event = {
 			}
 		}
 	},
-		
+
 	unbind : function( elem, type, handler ){
 		var events = Dialog.data( elem, 'e' + type );
 		if( !events ) return;
-			
+
 		// 如果没有传入要删除的事件处理函数则删除该事件类型的缓存
 		if( !handler ){
-			events = undefined;		
+			events = undefined;
 		}
 		// 如果有具体的事件处理函数则只删除一个
 		else{
 			for( var i = events.length - 1, fn = events[i]; i >= 0; i-- ){
 				if( fn === handler ){
 					events.splice( i, 1 );
-				}				
+				}
 			}
-		}		
+		}
 		// 删除事件和缓存
 		if( !events || !events.length ){
-			var eventHandler = Dialog.data( elem, type + 'Handler' );			
+			var eventHandler = Dialog.data( elem, type + 'Handler' );
 			if( elem.addEventListener ){
 				elem.removeEventListener( type, eventHandler, false );
 			}
 			else if( elem.attachEvent ){
 				elem.detachEvent( 'on' + type, eventHandler );
-			}		
+			}
 			Dialog.removeData( elem, type + 'Handler' );
 			Dialog.removeData( elem, 'e' + type );
 		}
 	},
-		
+
 	// 依次执行事件绑定的函数
 	eventHandler : function( elem ){
 		return function( event ){
 			event = Dialog.event.fixEvent( event || win.event );
 			var type = event.type,
 				events = Dialog.data( elem, 'e' + type );
-				
+
 			for( var i = 0, handler; handler = events[i++]; ){
 				if( handler.call(elem, event) === false ){
 					event.preventDefault();
@@ -341,16 +341,16 @@ Dialog.event = {
 			}
 		}
 	},
-	
+
 	// 修复IE浏览器支持常见的标准事件的API
 	fixEvent : function( e ){
 		// 支持DOM 2级标准事件的浏览器无需做修复
-		if ( e.target ) return e; 
+		if ( e.target ) return e;
 		var event = {}, name;
 		event.target = e.srcElement || document;
 		event.preventDefault = function(){
 			e.returnValue = false;
-		};		
+		};
 		event.stopPropagation = function(){
 			e.cancelBubble = true;
 		};
@@ -358,7 +358,7 @@ Dialog.event = {
 		// 会导致内存泄漏，所以采用复制的方式
 		for( name in e ){
 			event[name] = e[name];
-		}				
+		}
 		return event;
 	}
 };
@@ -376,25 +376,25 @@ Dialog.capitalize = function( str ){
 /**
  * 获取滚动条的位置
  * @param { String } 'top' & 'left'
- * @return { Number } 
- */	
+ * @return { Number }
+ */
 Dialog.getScroll = function( type ){
-	var upType = this.capitalize( type );		
-	return docElem['scroll' + upType] || body['scroll' + upType];	
+	var upType = this.capitalize( type );
+	return docElem['scroll' + upType] || body['scroll' + upType];
 };
 
 /**
  * 获取元素在页面中的位置
  * @param { Object } DOM元素
  * @param { String } 'top' & 'left'
- * @return { Number } 
- */		
+ * @return { Number }
+ */
 Dialog.getOffset = function( elem, type ){
 	var upType = this.capitalize( type ),
 		client  = docElem['client' + upType]  || body['client' + upType]  || 0,
 		scroll  = this.getScroll( type ),
 		box = elem.getBoundingClientRect();
-		
+
 	return Math.round( box[type] ) + scroll - client;
 };
 
@@ -413,14 +413,14 @@ Dialog.drag = function( target, moveElem ){
 			}
 			catch( e ){};
 		},
-		
+
 		self = this,
 		event = self.event,
 		isDown = false,
 		newElem = isIE ? target : doc,
 		fixed = moveElem.style.position === 'fixed',
 		_fixed = Dialog.data( 'options' ).fixed;
-	
+
 	// mousedown
 	var down = function( e ){
 		isDown = true;
@@ -428,10 +428,10 @@ Dialog.drag = function( target, moveElem ){
 			scrollLeft = self.getScroll( 'left' ),
 			edgeLeft = fixed ? 0 : scrollLeft,
 			edgeTop = fixed ? 0 : scrollTop;
-		
+
 		Dialog.data( 'dragData', {
-			x : e.clientX - self.getOffset( moveElem, 'left' ) + ( fixed ? scrollLeft : 0 ),	
-			y : e.clientY - self.getOffset( moveElem, 'top' ) + ( fixed ? scrollTop : 0 ),			
+			x : e.clientX - self.getOffset( moveElem, 'left' ) + ( fixed ? scrollLeft : 0 ),
+			y : e.clientY - self.getOffset( moveElem, 'top' ) + ( fixed ? scrollTop : 0 ),
 			// 设置上下左右4个临界点的位置
 			// 固定定位的临界点 = 当前屏的宽、高(下、右要减去元素本身的宽度或高度)
 			// 绝对定位的临界点 = 当前屏的宽、高 + 滚动条卷起部分(下、右要减去元素本身的宽度或高度)
@@ -440,7 +440,7 @@ Dialog.drag = function( target, moveElem ){
 			er : edgeLeft + docElem.clientWidth - moveElem.offsetWidth,  // 右临界点
 			eb : edgeTop + docElem.clientHeight - moveElem.offsetHeight  // 下临界点
 		});
-		
+
 		if( isIE ){
 			// IE6如果是模拟fixed在mousedown的时候先删除模拟，节省性能
 			if( isIE6 && _fixed ){
@@ -448,21 +448,21 @@ Dialog.drag = function( target, moveElem ){
 			}
 			target.setCapture();
 		}
-		
+
 		event.bind( newElem, 'mousemove', move );
 		event.bind( newElem, 'mouseup', up );
-		
+
 		if( isIE ){
 			event.bind( target, 'losecapture', up );
 		}
-		
+
 		e.stopPropagation();
 		e.preventDefault();
-		
+
 	};
-	
+
 	event.bind( target, 'mousedown', down );
-	
+
 	// mousemove
 	var move = function( e ){
 		if( !isDown ) return;
@@ -475,14 +475,14 @@ Dialog.drag = function( target, moveElem ){
 			eb = dragData.eb,
 			el = dragData.el,
 			style = moveElem.style;
-		
+
 		// 设置上下左右的临界点以防止元素溢出当前屏
 		style.marginLeft = style.marginTop = '0px';
 		style.left = ( left <= el ? el : (left >= er ? er : left) ) + 'px';
 		style.top = ( top <= et ? et : (top >= eb ? eb : top) ) + 'px';
 		e.stopPropagation();
 	};
-	
+
 	// mouseup
 	var up = function( e ){
 		isDown = false;
@@ -490,7 +490,7 @@ Dialog.drag = function( target, moveElem ){
 			event.unbind( target, 'losecapture', arguments.callee );
 		}
 		event.unbind( newElem, 'mousemove', move );
-		event.unbind( newElem, 'mouseup', arguments.callee );		
+		event.unbind( newElem, 'mouseup', arguments.callee );
 		if( isIE ){
 			target.releaseCapture();
 			// IE6如果是模拟fixed在mouseup的时候要重新设置模拟
@@ -509,7 +509,7 @@ var	timer,	// 定时器
 		if( e.keyCode === 27 ){
 			extend.close();
 		}
-	},	
+	},
 	// 清除定时器
 	clearTimer = function(){
 		if( timer ){
@@ -517,7 +517,7 @@ var	timer,	// 定时器
 			timer = undefined;
 		}
 	};
-	
+
 var extend = {
 	open : function(){
 		var $ = new Dialog(),
@@ -530,16 +530,16 @@ var extend = {
 			dialogBox,
 			dialogWrap,
 			boxChild;
-			
+
 		clearTimer();
-		
+
 		// ------------------------------------------------------
 		// ---------------------插入遮罩层-----------------------
 		// ------------------------------------------------------
-		
+
 		// 如果页面中已经缓存遮罩层，直接显示
 		if( options.overlay ){
-			overlay = doc.getElementById( 'overlay' );			
+			overlay = doc.getElementById( 'overlay' );
 			if( !overlay ){
 				overlay = $.createOverlay();
 				body.appendChild( overlay );
@@ -549,27 +549,27 @@ var extend = {
 			}
 			overlay.style.display = 'block';
 		}
-		
+
 		if(isIE6){
 			$.setBodyBg();
 		}
-		
+
 		// ------------------------------------------------------
 		// ---------------------插入弹出层-----------------------
 		// ------------------------------------------------------
-		
+
 		// 如果页面中已经缓存弹出层，直接显示
 		dialogBox = doc.getElementById( 'easyDialogBox' );
 		if( !dialogBox ){
 			dialogBox = $.createDialogBox();
 			body.appendChild( dialogBox );
 		}
-		
+
 		if( options.follow ){
 			var follow = function(){
 				$.setFollow( dialogBox, options.follow, options.followX, options.followY );
 			};
-			
+
 			follow();
 			event.bind( win, 'resize', follow );
 			Dialog.data( 'follow', follow );
@@ -582,18 +582,18 @@ var extend = {
 			$.setPosition( dialogBox, options.fixed );
 		}
 		dialogBox.style.display = 'block';
-				
+
 		// ------------------------------------------------------
 		// -------------------插入弹出层内容---------------------
 		// ------------------------------------------------------
-		
+
 		// 判断弹出层内容是否已经缓存过
-		dialogWrap = typeof options.container === 'string' ? 
-			doc.getElementById( options.container ) : 
+		dialogWrap = typeof options.container === 'string' ?
+			doc.getElementById( options.container ) :
 			$.createDialogWrap( options.container );
-		
+
 		boxChild = dialogBox.getElementsByTagName('*')[0];
-		
+
 		if( !boxChild ){
 			dialogBox.appendChild( dialogWrap );
 		}
@@ -602,67 +602,67 @@ var extend = {
 			body.appendChild( boxChild );
 			dialogBox.appendChild( dialogWrap );
 		}
-		
+
 		dialogWrap.style.display = 'block';
-		
+
 		var eWidth = dialogWrap.offsetWidth,
 			eHeight = dialogWrap.offsetHeight,
 			widthOverflow = eWidth > docWidth,
 			heigthOverflow = eHeight > docHeight;
-			
-		// 强制去掉自定义弹出层内容的margin	
-		dialogWrap.style.marginTop = dialogWrap.style.marginRight = dialogWrap.style.marginBottom = dialogWrap.style.marginLeft = '0px';	
-		
+
+		// 强制去掉自定义弹出层内容的margin
+		dialogWrap.style.marginTop = dialogWrap.style.marginRight = dialogWrap.style.marginBottom = dialogWrap.style.marginLeft = '0px';
+
 		// 居中定位
-		if( !options.follow ){			
+		if( !options.follow ){
 			dialogBox.style.marginLeft = '-' + (widthOverflow ? docWidth/2 : eWidth/2) + 'px';
-			dialogBox.style.marginTop = '-' + (heigthOverflow ? docHeight/2 : eHeight/2) + 'px';			
+			dialogBox.style.marginTop = '-' + (heigthOverflow ? docHeight/2 : eHeight/2) + 'px';
 		}
 		else{
 			dialogBox.style.marginLeft = dialogBox.style.marginTop = '0px';
 		}
-				
+
 		// 防止select穿透固定宽度和高度
 		if( isIE6 && !options.overlay ){
 			dialogBox.style.width = eWidth + 'px';
 			dialogBox.style.height = eHeight + 'px';
 		}
-		
+
 		// ------------------------------------------------------
 		// --------------------绑定相关事件----------------------
 		// ------------------------------------------------------
 		var closeBtn = doc.getElementById( 'closeBtn' ),
 			dialogTitle = doc.getElementById( 'easyDialogTitle' ),
 			dialogYesBtn = doc.getElementById('easyDialogYesBtn'),
-			dialogNoBtn = doc.getElementById('easyDialogNoBtn');		
+			dialogNoBtn = doc.getElementById('easyDialogNoBtn');
 
 		// 绑定确定按钮的回调函数
 		if( dialogYesBtn ){
 			event.bind( dialogYesBtn, 'click', function( event ){
-				if( options.container.yesFn.call(self, event) !== false ){
+				if( options.container.yesFn.call(self, event) !== false && options.container.noColse !== "no_close"){
 					self.close();
 				}
 			});
 		}
-		
+
 		// 绑定取消按钮的回调函数
 		if( dialogNoBtn ){
 			var noCallback = function( event ){
-				if( options.container.noFn === true || options.container.noFn.call(self, event) !== false ){
+				if( (options.container.noFn === true || options.container.noFn.call(self, event) !== false) && options.container.noColse !== "no_close" ){
 					self.close();
 				}
 			};
 			event.bind( dialogNoBtn, 'click', noCallback );
 			// 如果取消按钮有回调函数 关闭按钮也绑定同样的回调函数
 			if( closeBtn ){
-				event.bind( closeBtn, 'click', noCallback );
+				// event.bind( closeBtn, 'click', noCallback );
 			}
-		}			
-		// 关闭按钮绑定事件	
-		else if( closeBtn ){
+		}
+		// 关闭按钮绑定事件
+		 if( closeBtn ){
 			event.bind( closeBtn, 'click', self.close );
 		}
-		
+
 		// ESC键关闭弹出层
 		if( !options.lock ){
 			event.bind( doc, 'keyup', escClose );
@@ -670,15 +670,15 @@ var extend = {
 		// 自动关闭弹出层
 		if( options.autoClose && typeof options.autoClose === 'number' ){
 			timer = setTimeout( self.close, options.autoClose );
-		}		
+		}
 		// 绑定拖拽(如果弹出层内容的宽度或高度溢出将不绑定拖拽)
 		if( options.drag && dialogTitle && !widthOverflow && !heigthOverflow ){
 			dialogTitle.style.cursor = 'move';
 			Dialog.drag( dialogTitle, dialogBox );
 		}
-		
+
 		// 确保弹出层绝对定位时放大缩小窗口也可以垂直居中显示
-		
+
 		if( !options.follow && !options.fixed ){
 			var resize = function(){
 				$.setPosition( dialogBox, false );
@@ -689,7 +689,7 @@ var extend = {
 			}
 			Dialog.data( 'resize', resize );
 		}
-		
+
 		// 缓存相关元素以便关闭弹出层的时候进行操作
 		Dialog.data( 'dialogElements', {
 			overlay : overlay,
@@ -697,15 +697,15 @@ var extend = {
 			closeBtn : closeBtn,
 			dialogTitle : dialogTitle,
 			dialogYesBtn : dialogYesBtn,
-			dialogNoBtn : dialogNoBtn			
+			dialogNoBtn : dialogNoBtn
 		});
 	},
-	
+
 	close : function(){
 		var options = Dialog.data( 'options' ),
 			elements = Dialog.data( 'dialogElements' ),
 			event = Dialog.event;
-			
+
 		clearTimer();
 		//	隐藏遮罩层
 		if( options.overlay && elements.overlay ){
@@ -717,7 +717,7 @@ var extend = {
 		if( isIE6 ){
 			elements.dialogBox.style.removeExpression( 'top' );
 		}
-		
+
 		// ------------------------------------------------------
 		// --------------------删除相关事件----------------------
 		// ------------------------------------------------------
@@ -728,25 +728,25 @@ var extend = {
 		if( elements.dialogTitle ){
 			event.unbind( elements.dialogTitle, 'mousedown' );
 		}
-		
+
 		if( elements.dialogYesBtn ){
 			event.unbind( elements.dialogYesBtn, 'click' );
 		}
-		
+
 		if( elements.dialogNoBtn ){
 			event.unbind( elements.dialogNoBtn, 'click' );
 		}
-		
+
 		if( !options.follow && !options.fixed ){
 			event.unbind( win, 'resize', Dialog.data('resize') );
 			Dialog.removeData( 'resize' );
 		}
-		
+
 		if( options.follow ){
 			event.unbind( win, 'resize', Dialog.data('follow') );
 			Dialog.removeData( 'follow' );
 		}
-		
+
 		if( !options.lock ){
 			event.unbind( doc, 'keyup', escClose );
 		}
@@ -770,7 +770,7 @@ return extend;
 var loaded = function(){
 		win.easyDialog = easyDialog();
 	},
-	
+
 	doScrollCheck = function(){
 		if ( doc.body ) return;
 
@@ -802,7 +802,7 @@ var loaded = function(){
 					loaded();
 				}
 			});
-			win.attachEvent( 'onload', loaded );			
+			win.attachEvent( 'onload', loaded );
 			var toplevel = false;
 			try {
 				toplevel = win.frameElement == null;

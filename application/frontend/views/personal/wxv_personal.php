@@ -563,7 +563,7 @@ function delete_data(dataid){
     </div>
 	<!-- end #header -->
 <div class="backcolor_body">
-	<div class="body _body" style="min-height: 630px;">
+	<div class="body _body" style="min-height: 650px;">
 
 	<?php
 		if(isset($user_notify))
@@ -988,7 +988,10 @@ function delete_data(dataid){
                             </li>
 						</div>
             <div>
-              <span onclick="show_all_collect()" style="background-color: rgb(221, 221, 221);padding: 10px;position: absolute;margin-top: 10px;cursor: pointer;">收藏夹</span>
+              <span onclick="show_all_collect()" class="common_bule_button" style="position: absolute;margin-top: 10px;cursor: pointer;">收藏夹</span>
+              <span onclick="order_history()" class="common_bule_button" style="position: absolute;margin-top: 60px;cursor: pointer;">订单记录</span>
+              <span onclick="buy_history()" class="common_bule_button" style="position: absolute;margin-top: 110px;cursor: pointer;">购买记录</span>
+              <span onclick="free_history()" class="common_bule_button" style="position: absolute;margin-top: 160px;cursor: pointer;">免费下载记录</span>
             </div>
 					</ul>
 				</li>

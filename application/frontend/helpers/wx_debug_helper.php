@@ -17,6 +17,47 @@ if (! function_exists('wx_get_gravatar_image'))
     }
 }
 /*****************************************************************************/
+if (! function_exists('wx_money_distribute')) {         // 笔记付费的分配
+    function wx_money_distribute($money_str = '0.00') {
+        $money = (float)$money_str;
+        $creamnote_money = number_format($money * 0.2, 2, '.', '');
+        $alipay_money = number_format($money * 0.012, 2, '.', '');
+        $owner_money = number_format($money - $creamnote_money - $alipay_money, 2, '.', '');
+        $data = array(
+            'creamnote' => $creamnote_money,
+            'alipay' => $alipay_money,
+            'owner' => $owner_money,
+            );
+        return $data;
+    }
+}
+/*****************************************************************************/
+if (! function_exists('wx_withdraw_money_list')) {      // 返回10的整数倍，列表
+    function wx_withdraw_money_list($money_str = '') {
+        $data = array();
+        $money = (int)$money_str;
+        $multi = floor($money / 10);
+        for ($i = 1; $i <= $multi; $i++) {
+            $data[] = $i * 10;
+        }
+        return $data;
+    }
+}
+/*****************************************************************************/
+if (! function_exists('wx_withdraw_money')) {  // 醍醐提现的金额为10的整数倍
+    function wx_withdraw_money($money_str = '') {
+        $money = (float)$money_str;
+        $multi = floor($money / 10.00);
+        $withdraw =  number_format(round($multi * 10), 2, '.', '');
+        $balance = number_format($money - $withdraw, 2, '.', '');
+        $data = array(
+            'money' => number_format($money, 2, '.', ''),
+            'withdraw' => $withdraw,
+            'balance' => $balance,
+            );
+        return $data;
+    }
+}
 /*****************************************************************************/
 if (! function_exists('wx_month')) {
     function wx_month() {

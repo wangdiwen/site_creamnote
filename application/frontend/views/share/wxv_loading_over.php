@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Creamnote(醍醐公告)</title>
+    <title>Creamnote(购买笔记)</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" href="/application/frontend/views/resources/css/reset.css" />
     <link rel="stylesheet" href="/application/frontend/views/resources/css/wx_footlist.css" />
@@ -17,32 +17,24 @@
 <body>
   <?php include  'application/frontend/views/share/header_home.php';?>
   <div class="body article_body" style="border-top: 8px solid #839acd;">
+    <div class="reg_frame _feedback_frame _accountselect_frame" style="">
+        <div class="_accountselect_title"><span>完成购买</span></div>
+        <div style="border-bottom: 1px dashed rgb(185, 194, 197);padding: 10px 0;">
+          亲爱的用户，本次笔记下载请求已经完成
+        </div>
 
-    <div class="article_content" style="margin: 10px 200px;padding: 5px 10px;border: 1px solid #ccc;">
-      <h2 class="article_title"  ><b>醍醐公告</b></h2>
-      <div style="padding:10px 0;">
-        <?php
-          $num = 1;
-          foreach ($site_notice as $key => $notice){
-          ?>
-          <div class="article_list">
-            <?php if($num>3){?>
-              <div class="article_icon"></div>
-            <?php }else{?>
-              <div class="article_icon_fire article_icon"></div>
-            <?php }?>
-            <a style="font-size: 20px;" href="<?php echo base_url()?>core/wxc_content/read_notice?notice_id=<?=$notice['notice_id']?>"><?=$notice['notice_title']?></a><br>
-             <div style="line-height: 16px; margin-bottom: -6px;">
-              <span class="fr" style="font-size: 12px;">管理员/<?=$notice['notice_time']?></span>
-            </div>
-            </br>
-          </div>
-      <?php
-        $num ++;
-       }?>
-      </div>
-      <div class="pagination" style="text-align: right;"><?php echo $this->pagination->create_links(); ?></div>
     </div>
+     <div class="reg_frame _feedback_frame _accountselect_frame" style="">
+        <div class="_accountselect_title"><span>提示</span></div>
+        <div style="border-bottom: 1px dashed rgb(185, 194, 197);padding: 10px 0;">
+          1、点击<a style="text-decoration:underline" href="<?php echo site_url('core/wxc_alipay/require_download_direct'); ?>">下载</a>以获得您购买的笔记<br/>
+          2、如果下载失败，您也可以在<a style="text-decoration:underline" href="<?php echo site_url('home/personal'); ?>">个人中心</a>的购买记录中免费下载该份笔记<br/>
+          3、支付完成后该份笔记你将拥有永久下载权<br/>
+
+        </div>
+
+    </div>
+
     <a  href="<?php echo site_url('primary/wxc_feedback/feedback_page'); ?>">
       <div class="feedback">
       </div>
