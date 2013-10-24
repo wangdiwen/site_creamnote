@@ -54,7 +54,7 @@
         <li> <a href="#" class="<?php echo ($menuParam=='integrate_target'||$menuParam=='integrate_email')? 'current' :'';?> nav-top-item">网站综合管理</a>
           <ul>
             <li><a class="<?php echo ($menuParam=='integrate_target')? 'current' :'';?>" href="<?php echo base_url(); ?>cnadmin/general/general_index">指标管理</a></li>
-            <li><a class="<?php echo ($menuParam=='integrate_email')? 'current' :'';?>" href="<?php echo base_url(); ?>cnadmin/general/system_email_index">系统邮件</a></li>
+            <li><a class="<?php echo ($menuParam=='integrate_email')? 'current' :'';?>" href="<?php echo base_url(); ?>cnadmin/general/sys_email_index">系统邮件</a></li>
           </ul>
         </li>
         <li> <a class="<?php echo ($menuParam=='fed_feedback'||$menuParam=='fed_complaint'||$menuParam=='fed_complaint_sec')||$menuParam=='fed_complaint_thi'? 'current' :'';?> nav-top-item">反馈、投诉&举报管理</a>
@@ -67,12 +67,10 @@
         </li>
 
 
-        <li> <a href="#" class="nav-top-item">提现申请、审核&操作管理</a>
+        <li> <a  href="#" class="<?php echo ($menuParam=='account_withdraw')? 'current' :'';?> nav-top-item" >提现审核&操作管理</a>
           <ul>
-            <li><a href="#">General</a></li>
+            <li><a class="<?php echo ($menuParam=='account_withdraw')? 'current' :'';?>"  href="<?php echo base_url(); ?>cnadmin/withdraw/withdraw_orders">提现管理</a></li>
             <li><a href="#">Design</a></li>
-            <li><a href="#">Your Profile</a></li>
-            <li><a href="#">Users and Permissions</a></li>
           </ul>
         </li>
       </ul>

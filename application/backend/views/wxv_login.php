@@ -35,14 +35,14 @@
       </p>
       <div class="clear"></div>
       <p id="check">
-        <label>验证</label>
-        <div style="float:left;padding-left: 19px;font-size: 14px;"><?php echo $admin_auth_code;?>=？</div>
-        <input type="text" id="admin_auth_code" name="admin_auth_code" style="width:50px;float:left;height: 20px;" onfocus="javascript:$('#error_code').html('')">
+        <label style="padding-top:6px;">验证</label>
+        <div style="float:left;padding-left: 19px;font-size: 14px;padding-top: 8px;"><?php echo $admin_auth_code;?>=？</div>
+        <input type="text" id="admin_auth_code" class="text-input" name="admin_auth_code" style="width:50px;float:left;" onfocus="javascript:$('#error_code').html('')">
         <span id="error_code" style="color:red;"></span>
       </p>
       <div class="clear"></div>
       <p>
-        <input class="button" type="button" onclick="login()" value="登 录" style="margin-right: 96px;"/>
+        <input class="button" type="button" onclick="login()" value="登 录" style="margin-right: 96px;width: 100px;height: 50px;font-size: 25px!important;"/>
       </p>
       <input type="hidden" id="baseurl" value="<?php echo base_url(); ?>">
     </form >

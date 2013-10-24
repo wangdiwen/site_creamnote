@@ -18,6 +18,32 @@ if (! function_exists('wx_check_email'))
     }
 }
 /*****************************************************************************/
+if (! function_exists('wx_is_ten_multi')) {  // 判断给的2位小数的数字是否为10.00的整数倍
+    function wx_is_ten_multi($money_str = '') {
+        if (ereg('^[1-9]+[0-9]*0\.00$', $money_str)) {
+            return true;
+        }
+        return false;
+    }
+}
+/*****************************************************************************/
+if (! function_exists('wx_withdraw_money_list')) {      // 返回10的整数倍，列表
+    function wx_withdraw_money_list($money_str = '', $decimal = false) {
+        $data = array();
+        $money = (int)$money_str;
+        $multi = floor($money / 10);
+        for ($i = 1; $i <= $multi; $i++) {
+            if ($decimal) {
+                $data[] = number_format($i * 10, 2, '.', '');
+            }
+            else {
+                $data[] = $i * 10;
+            }
+        }
+        return $data;
+    }
+}
+/*****************************************************************************/
 if (! function_exists('wx_get_gravatar_image'))
 {
     function wx_get_gravatar_image($email = '', $image_size = 80)

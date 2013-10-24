@@ -1,11 +1,11 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * 支付宝公共函数接口
- * 来源：使用支付宝官方的即时到账开发包，其中的 create_direct_pay_by_user-PHP-UTF-8 开发包
+ * 支付宝即时到帐 核心公共函数 API
+ * 来源：使用支付宝官方的即时到账开发包
  * 版本：3.3
- * 开发包发布日期：2012-07-19
  * 移植接口: wangdiwen
+ * 时间： 2013-10-10
  */
 
 /*****************************************************************************/
@@ -20,7 +20,15 @@
  */
 /*****************************************************************************/
 /************************** lib/alipay_core.function.php *********************/
-/*****************************************************************************/
+/**
+ * 支付宝接口公用函数
+ * 详细：该类是请求、通知返回两个文件所调用的公用函数核心处理文件
+ * 版本：3.3
+ * 日期：2012-07-19
+ * 说明：
+ * 以下代码只是为了方便商户测试而提供的样例代码，商户可以根据自己网站的需要，按照技术文档编写,并非一定要使用该代码。
+ * 该代码仅供学习和研究支付宝接口使用，只是提供一个参考。
+ */
 /**
  * 把数组所有元素，按照“参数=参数值”的模式用“&”字符拼接成字符串
  * @param $para 需要拼接的数组
@@ -86,12 +94,13 @@ function argSort($para) {
  * @param $word 要写入日志里的文本内容 默认值：空值
  */
 function logResult($word='') {
-    $fp = fopen("application/logs/alipay_log.txt","a");
+    $fp = fopen("log.txt","a");
     flock($fp, LOCK_EX) ;
     fwrite($fp,"执行日期：".strftime("%Y%m%d%H%M%S",time())."\n".$word."\n");
     flock($fp, LOCK_UN);
     fclose($fp);
 }
+
 /**
  * 远程获取数据，POST模式
  * 注意：
@@ -122,6 +131,7 @@ function getHttpResponsePOST($url, $cacert_url, $para, $input_charset = '') {
 
     return $responseText;
 }
+
 /**
  * 远程获取数据，GET模式
  * 注意：
@@ -144,6 +154,7 @@ function getHttpResponseGET($url,$cacert_url) {
 
     return $responseText;
 }
+
 /**
  * 实现多种字符编码方式
  * @param $input 需要编码的字符串
@@ -182,10 +193,21 @@ function charsetDecode($input,$_input_charset ,$_output_charset) {
     } else die("sorry, you have no libs support for charset changes.");
     return $output;
 }
+/*****************************************************************************/
+
+
 
 /*****************************************************************************/
 /************************** lib/alipay_md5.function.php **********************/
-/*****************************************************************************/
+/**
+ * MD5
+ * 详细：MD5加密
+ * 版本：3.3
+ * 日期：2012-07-19
+ * 说明：
+ * 以下代码只是为了方便商户测试而提供的样例代码，商户可以根据自己网站的需要，按照技术文档编写,并非一定要使用该代码。
+ * 该代码仅供学习和研究支付宝接口使用，只是提供一个参考。
+ */
 /**
  * 签名字符串
  * @param $prestr 需要签名的字符串
@@ -196,6 +218,7 @@ function md5Sign($prestr, $key) {
     $prestr = $prestr . $key;
     return md5($prestr);
 }
+
 /**
  * 验证签名
  * @param $prestr 需要签名的字符串
@@ -214,15 +237,23 @@ function md5Verify($prestr, $sign, $key) {
         return false;
     }
 }
+/*****************************************************************************/
+
+
 
 /*****************************************************************************/
 /************************** lib/alipay_submit.class.php **********************/
-/**
+/* *
  * 类名：AlipaySubmit
  * 功能：支付宝各接口请求提交类
  * 详细：构造支付宝各接口表单HTML文本，获取远程HTTP数据
+ * 版本：3.3
+ * 日期：2012-07-23
+ * 说明：
+ * 以下代码只是为了方便商户测试而提供的样例代码，商户可以根据自己网站的需要，按照技术文档编写,并非一定要使用该代码。
+ * 该代码仅供学习和研究支付宝接口使用，只是提供一个参考。
  */
-/*****************************************************************************/
+
 class AlipaySubmit {
 
     var $alipay_config;
@@ -362,7 +393,7 @@ class AlipaySubmit {
      * return 时间戳字符串
      */
     function query_timestamp() {
-        $url = $this->alipay_gateway_new."service=query_timestamp&partner=".trim(strtolower($this->alipay_config['partner']));
+        $url = $this->alipay_gateway_new."service=query_timestamp&partner=".trim(strtolower($this->alipay_config['partner']))."&_input_charset=".trim(strtolower($this->alipay_config['input_charset']));
         $encrypt_key = "";
 
         $doc = new DOMDocument();
@@ -373,10 +404,25 @@ class AlipaySubmit {
         return $encrypt_key;
     }
 }
+/*****************************************************************************/
+
 
 /*****************************************************************************/
 /************************** lib/alipay_notify.class.php **********************/
-/*****************************************************************************/
+/* *
+ * 类名：AlipayNotify
+ * 功能：支付宝通知处理类
+ * 详细：处理支付宝各接口通知返回
+ * 版本：3.2
+ * 日期：2011-03-25
+ * 说明：
+ * 以下代码只是为了方便商户测试而提供的样例代码，商户可以根据自己网站的需要，按照技术文档编写,并非一定要使用该代码。
+ * 该代码仅供学习和研究支付宝接口使用，只是提供一个参考
+
+ *************************注意*************************
+ * 调试通知返回时，可查看或改写log日志的写入TXT里的数据，来检查通知返回是否正常
+ */
+
 class AlipayNotify {
     /**
      * HTTPS形式消息验证地址
@@ -521,8 +567,8 @@ class AlipayNotify {
         return $responseTxt;
     }
 }
-
+/*****************************************************************************/
 /*****************************************************************************/
 
 /* End of file wx_alipay_public_helper.php */
-/* Location: ./application/helpers/wx_alipay_public_helper.php */
+/* Location: /application/backend/helpers/wx_alipay_public_helper.php */

@@ -319,4 +319,7 @@
     })
   })
 
+var clip = new ZeroClipboard( $(".button_copy"), {
+      moviePath: "/application/backend/views/js/ZeroClipboard.swf"
+    } );
 })(jQuery);

@@ -1,17 +1,14 @@
 <?php if (! defined('BASEPATH')) exit('No direct script access allowed.');
 
-class WXH_Signin
-{
+class WXH_Signin {
     var $CI;  // Get the CI super object
 /*****************************************************************************/
-    public function __construct()
-    {
+    public function __construct() {
         $this->CI =& get_instance();
         $this->CI->load->helper('url');
     }
 /*****************************************************************************/
-    public function check_signin()
-    {
+    public function check_signin() {
         if (isset($_SESSION['admin_user_email']) && $_SESSION['admin_user_email']) {
             return;
         }
@@ -25,6 +22,9 @@ class WXH_Signin
         $login_url = $admin_base_url.'home/login_page';
         $check_url = $admin_base_url.'check/(.*)';
 
+        // 支付宝批量退款接口URL
+        $alipay_url = $admin_base_url.'alipay/(.*)';
+
         $test = $admin_base_url.'home/test';
 
         if ($cur_url == $admin_base_url
@@ -33,6 +33,7 @@ class WXH_Signin
             || $cur_url == $login_index
             || $cur_url == $login_url
             || $cur_url == $test
+            || ereg($alipay_url, $cur_url)
             || ereg($check_url, $cur_url)) {
             return;
         }

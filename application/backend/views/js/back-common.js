@@ -962,3 +962,124 @@ function teptwo_reason_detail(com_id){
 
      $("#message_content").html(str);
 }
+
+//=========================================================提现=========================================//
+var check_order_valid = function(draw_no,draw_user_id,draw_money){
+    // draw_no = $("#hidden_draw_no").val();
+    var url = $("#baseUrl").val()+"cnadmin/withdraw/check_order_valid";
+    var params =({'draw_no':draw_no,'draw_user_id':draw_user_id,'draw_money':draw_money});
+    var retData = ajax_common_json(url,params);
+    // alert(draw_no)
+    // $("#hidden_draw_no").attr("value",draw_no);
+    $("#message_title").html("提现校验结果");
+    var str = "";
+    var is_only = retData["is_only"];
+    var is_account_ok = retData["is_account_ok"];
+    var is_enough = retData["is_enough"];
+    var is_ten_multi = retData["is_ten_multi"];
+    if(retData["is_only"] == "true"){
+        str += "<p>1、提现人唯一:<span style='float: right;'>正确</span></p>";
+    }else{
+        str += "<p style='color:red;'>1、提现人唯一:<span style='float: right;'>错误</span></p>";
+    }
+    // alert(Object.prototype.toString.apply(retData["is_account_ok"]))
+    if(retData["is_account_ok"] == 'true'){
+        str += "<p>2、账户是否正确:<span style='float: right;'>正确</span></p>";
+    }else{
+        str += "<p style='color:red;'>2、账户是否正确:<span style='float: right;'>错误</span></p>";
+    }
+    if(retData["is_enough"] == "true"){
+        str += "<p>3、账户余额是否大于零:<span style='float: right;'>正确<span></p>";
+    }else{
+        str += "<p style='color:red;'>3、账户余额是否大于零:<span style='float: right;'>错误</span></p>";
+    }
+    if(retData["is_ten_multi"] == "true"){
+        str += "<p>4、提现额为10.00倍数:<span style='float: right;'>正确</span></p>";
+    }else{
+        str += "<p style='color:red;'>4、提现额为10.00倍数:<span style='float: right;'>错误</span></p>";
+    }
+
+    if(retData["is_only"] == "true"&&retData["is_account_ok"] == "true"&&retData["is_enough"] == "true"&&retData["is_ten_multi"] == "true"){
+        str += "<p>提现者账户:<button class='button_copy'  id='"+retData["ali_account"]+"' style='color: green;float: right;cursor: pointer;' data-clipboard-text='"+retData["ali_account"]+"'>【复制】</button ><span onClick='javascript:this.focus();this.select();' contenteditable  style='color: green;float: right;padding-right: 10px;'>"+retData["ali_account"]+"</span></p>";
+        str += "<p>提现者签名:<span style='color: red;font-size: 21px;padding-left: 60px;'>"+retData["ali_realname"]+"</span></p>";
+        str += "<p>提现金额:<span style='color: red;font-size: 21px;padding-left: 60px;'>"+retData["ali_draw_money"]+"元</span></p>";
+        str += "<p ><input type='button' onclick='accomplish_withdraw("+'"'+draw_no+'"'+")' value='完成提现申请' class='button'>";
+        str += "<input style='float: right;' type='button' onclick='reject_by_realname("+'"'+draw_no+'"'+")' value='签名不一致' class='button'></p>";
+    }else{
+        str += "<p ><input  type='button' onclick='reject_withdraw("+'"'+draw_no+'"'+","+is_only+","+is_account_ok+","+is_enough+","+is_ten_multi+")' value='驳回提现申请' class='button'></p>";
+    }
+    $("#message_content").html(str);
+
+if(true){
+   var clip = new ZeroClipboard( $(".button_copy"), {
+      moviePath: "/application/backend/views/js/ZeroClipboard.swf"
+    } );
+
+    clip.on( "load", function(client) {
+      // alert( "movie is loaded" );
+
+      client.on( "complete", function(client, args) {
+        // `this` is the element that was clicked
+        this.style.display = "none";
+        alert("Copied text to clipboard: " + args.text );
+      } );
+    } );
+}
+
+}
+
+var accomplish_withdraw = function(draw_no){
+    // draw_no = $("#hidden_draw_no").val();
+    var url = $("#baseUrl").val()+"cnadmin/withdraw/accept_withdraw_order";
+    var params =({'draw_no':draw_no});
+    var retData = "";
+    if(confirm("确定要进行该操作吗？")){
+        retData = ajax_common(url,params);
+        if(retData == "success"){
+            location.reload();
+        }else if(retData == "failed"){
+            alert("操作失败");
+        }else if(retData == "no-record"){
+            alert("没有该条记录");
+        }
+
+    }
+
+}
+
+var reject_withdraw = function(draw_no,is_only,is_account_ok,is_enough,is_ten_multi){
+    // draw_no = $("#hidden_draw_no").val();
+    // alert(draw_no)
+    var url = $("#baseUrl").val()+"cnadmin/withdraw/reject_withdraw_order";
+    var params =({'draw_no':draw_no,'is_only':is_only,'is_account_ok':is_account_ok,'is_enough':is_enough,'is_ten_multi':is_ten_multi});
+    var retData = "";
+    if(confirm("确定要进行该操作吗？")){
+        retData = ajax_common(url,params);
+        if(retData == "success"){
+            location.reload();
+        }else if(retData == "failed"){
+            alert("操作失败");
+        }else if(retData == "no-record"){
+            alert("没有该条记录");
+        }
+    }
+}
+
+var reject_by_realname = function(draw_no){
+    // draw_no = $("#hidden_draw_no").val();
+    var url = $("#baseUrl").val()+"cnadmin/withdraw/reject_withdraw_order_invalid_sign";
+    var params =({'draw_no':draw_no});
+    var retData = "";
+    if(confirm("确定要进行该操作吗？")){
+        retData = ajax_common(url,params);
+        if(retData == "success"){
+            location.reload();
+        }else if(retData == "failed"){
+            alert("操作失败");
+        }else if(retData == "no-record"){
+            alert("没有该条记录");
+        }
+    }
+}
+
+

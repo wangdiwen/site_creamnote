@@ -138,11 +138,12 @@ class General extends CI_Controller {
         return false;
     }
 /*****************************************************************************/
-    public function system_email_index() {
+    public function sys_email_index() {
         $cur_week = wx_cur_week();
         $data = array();
         if ($cur_week == 1) {
             $data['current_week_tip'] = "<p><b>当前是星期 一，</b></p><p>需要给上周新注册用户<b>发送欢迎邮件</b></p>";
+            // wx_echoxml($data);
         }
         $this->load->view('f_integrate/wxv_email', $data);
     }
@@ -320,12 +321,13 @@ class General extends CI_Controller {
 /*****************************************************************************/
 /*****************************************************************************/
     public function test() {
-        $user_email = 'dw_wang126@126.com';
-        $content = '这是测试邮件，测试CEO邮箱是否可用';
-        $ret = $this->_send_system_email_to_user($user_email, $content);
-        if ($ret)
-            echo 'CEO邮箱测试成功！';
-        // $week = wx_cur_week();
+        // $user_email = 'dw_wang126@126.com';
+        // $content = '这是测试邮件，测试CEO邮箱是否可用';
+        // $ret = $this->_send_system_email_to_user($user_email, $content);
+        // if ($ret)
+        //     echo 'CEO邮箱测试成功！';
+        $week = wx_cur_week();
+        echo '星期 '.$week;
         // if ($week == 3) {
         //     echo 'week = 3';
         // }

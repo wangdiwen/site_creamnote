@@ -124,6 +124,7 @@ class WXM_User extends CI_Model
             $query = $this->db->get();
             return $query->row_array();
         }
+        return false;
     }
 /*****************************************************************************/
     public function get_all_user_email() {
@@ -131,6 +132,72 @@ class WXM_User extends CI_Model
         $this->db->select('user_id, user_email')->from($table);
         $query = $this->db->get();
         return $query->result_array();
+    }
+/*****************************************************************************/
+    public function get_account_base_info($user_id = 0) {
+        if ($user_id > 0) {
+            $table = $this->wx_table;
+            $this->db->select('user_account_name, user_account_realname, user_account_type,
+                                user_account_active, user_account_status, user_account_money')
+                        ->from($table)->where('user_id', $user_id)->limit(1);
+            $query = $this->db->get();
+            return $query->row_array();
+        }
+        return false;
+    }
+/*****************************************************************************/
+    public function change_account_withdraw_status_and_refund($user_id = 0, $refund_money = 0.00) {
+        if ($user_id > 0 && $refund_money >= 0.00) {
+            $table = $this->wx_table;
+            $this->db->select('user_account_money')->from($table)->where('user_id', $user_id)->limit(1);
+            $query = $this->db->get();
+            $money_info = $query->row_array();
+            if ($money_info) {
+                $balance = $money_info['user_account_money'];
+                $new_balance = number_format($balance + $refund_money, 2, '.', '');
+                $data = array(
+                    'user_account_status' => '0',
+                    'user_account_money' => $new_balance,
+                    );
+                $this->db->where('user_id', $user_id);
+                $this->db->update($table, $data);
+                return true;
+            }
+        }
+        return false;
+    }
+/*****************************************************************************/
+    public function refund_account_withdraw_money($user_id, $refund_money = 0.00) {  // 返还提现金额给用户的收益账户余额
+        if ($user_id > 0 && $refund_money >= 0.00) {
+            $table = $this->wx_table;
+            $this->db->select('user_account_money')->from($table)->where('user_id', $user_id)->limit(1);
+            $query = $this->db->get();
+            $money_info = $query->row_array();
+            if ($money_info) {
+                $balance = $money_info['user_account_money'];
+                $new_balance = number_format($balance + $refund_money, 2, '.', '');
+                $data = array(
+                    'user_account_money' => $new_balance,
+                    );
+                $this->db->where('user_id', $user_id);
+                $this->db->update($table, $data);
+                return true;
+            }
+        }
+        return false;
+    }
+/*****************************************************************************/
+    public function change_account_withdraw_status_ok($user_id = 0) {
+        if ($user_id > 0) {
+            $table = $this->wx_table;
+            $data = array(
+                'user_account_status' => '0',
+                );
+            $this->db->where('user_id', $user_id);
+            $this->db->update($table, $data);
+            return true;
+        }
+        return false;
     }
 /*****************************************************************************/
 }
