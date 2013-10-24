@@ -96,28 +96,80 @@ class WXM_Feedback extends CI_Model
         $data = array();
         if ($feedback_followed_id > 0) {
             $table = $this->wx_table;
-            $join_table = 'wx_user';
-            $join_where = $join_table.'.user_id = '.$table.'.user_id';
+            $user_table = 'wx_user';
+            $admin_table = 'wx_admin_user';
 
-            $this->db->select('feedback_id, feedback_content, feedback_time, feedback_startup, feedback_user_type, wx_feedback.user_id, user_name')->from($table)->join($join_table, $join_where, 'left')->where('feedback_id', $feedback_followed_id)->limit(1);
+            // get the feedback topic
+            $this->db->select('feedback_id, feedback_content, feedback_time, feedback_startup,
+                                feedback_user_type, user_id')
+                        ->from($table)->where('feedback_id', $feedback_followed_id)->limit(1);
             $query = $this->db->get();
             $topic = $query->row_array();
-            array_push($data, $topic);
 
-            $this->db->select('feedback_id, feedback_content, feedback_time, feedback_startup, feedback_user_type, wx_feedback.user_id, user_name')->from($table)->join($join_table, $join_where, 'left')->where('feedback_followed_id', $feedback_followed_id)->order_by('feedback_time', 'asc');
+            // get the follow feedback topic
+            $this->db->select('feedback_id, feedback_content, feedback_time, feedback_startup,
+                                feedback_user_type, user_id')
+                        ->from($table)->where('feedback_followed_id', $feedback_followed_id)->order_by('feedback_time', 'asc');
             $query = $this->db->get();
             $followed_data = $query->result_array();
 
-            // filter admin notice, add admin name '管理员'
-            foreach ($followed_data as $key => $value) {
-                $user_name = $value['user_name'];
-                if (! $user_name) {
-                    $followed_data[$key]['user_name'] = 'Creamnote管理员';
+            // merge the topic and follow feedback info
+            $data[] = $topic;
+            if ($followed_data) {
+                $data = array_merge($data, $followed_data);
+            }
+
+            $admin_user_id_list = array();
+            $common_user_id_list = array();
+            if ($data) {
+                foreach ($data as $key => $value) {
+                    if ($value['feedback_user_type'] == '2') {
+                        $common_user_id_list[] = $value['user_id'];
+                    }
+                    else {
+                        $admin_user_id_list[] = $value['user_id'];
+                    }
                 }
             }
 
-            if ($followed_data) {
-                $data = array_merge($data, $followed_data);
+            // get common user info
+            $common_user_info = array();
+            if ($common_user_id_list) {
+                $this->db->select('user_id, user_name')->from($user_table)->where_in('user_id', $common_user_id_list);
+                $query = $this->db->get();
+                $common_user_info = $query->result_array();
+            }
+
+            $common_user_map = array();
+            if ($common_user_info) {
+                foreach ($common_user_info as $key => $value) {
+                    $common_user_map[$value['user_id']] = array();
+                    $common_user_map[$value['user_id']]['user_name'] = $value['user_name'];
+                }
+            }
+
+            // get admin user info
+            $admin_user_name = '';
+            $admin_user_info = array();
+            if ($admin_user_id_list) {
+                $this->db->select('user_name')->from($admin_table)->where('user_id', $admin_user_id_list[0]['user_id'])->limit(1);
+                $query = $this->db->get();
+                $admin_user_info = $query->row_array();
+                if ($admin_user_info) {
+                    $admin_user_name = $admin_user_info['user_name'];
+                }
+            }
+
+            // process the data result
+            foreach ($data as $key => $value) {
+                if ($value['feedback_user_type'] == '2') {
+                    $common_user_id = $value['user_id'];
+                    $data[$key]['user_name'] = $common_user_map[$common_user_id]['user_name'];
+                }
+                elseif ($value['feedback_user_type'] == '1') {
+                    $admin_user_id = $value['user_id'];
+                    $data[$key]['user_name'] = '管理员'.$admin_user_name;
+                }
             }
         }
         return $data;
@@ -132,6 +184,21 @@ class WXM_Feedback extends CI_Model
             $this->db->where('feedback_id', $feedback_id);
             $this->db->update($table, $data);
         }
+    }
+/*****************************************************************************/
+    public function get_common_user_id_info_by_id($feedback_followed_id = 0) {
+        if ($feedback_followed_id > 0) {
+            $table = $this->wx_table;
+            $where = array(
+                'feedback_followed_id' => $feedback_followed_id,
+                'feedback_startup' => 'false',
+                'feedback_user_type' => '2',
+                );
+            $this->db->select('user_id')->from($table)->where($where);
+            $query = $this->db->get();
+            return $query->result_array();
+        }
+        return false;
     }
 /*****************************************************************************/
 }

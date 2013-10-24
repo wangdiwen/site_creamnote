@@ -49,8 +49,10 @@ class Feedback extends CI_Controller
 /*****************************************************************************/
     public function get_topic_detail() {
         $feedback_id = $this->input->post('feedback_id');  // topic id
+        // $feedback_id = 1;
 
         $topic_detail = $this->wxm_feedback->get_single_feedback_topic($feedback_id);
+        // wx_echoxml($topic_detail);
         echo json_encode($topic_detail);
     }
 /*****************************************************************************/
@@ -58,7 +60,7 @@ class Feedback extends CI_Controller
         $feedback_id = $this->input->post('feedback_id');
         $feedback_content = $this->input->post('feedback_content');
         $feedback_topic = $this->input->post('feedback_topic');
-        $feedback_user_id_list = $this->input->post('user_id_list');
+        // $feedback_user_id_list = $this->input->post('user_id_list');
         // $feedback_id = 1;
         // $feedback_content = '测试管理员回复功能';
 
@@ -71,27 +73,37 @@ class Feedback extends CI_Controller
             $ret = $this->wxm_feedback->admin_reply($feedback_id, $feedback_content, $cur_time, $admin_user_id);
             // pass this topic
             $this->wxm_feedback->pass_feedback_topic($feedback_id);
+
             // send email to all join topic user, except admin
-            if ($feedback_user_id_list) {
-                $user_id_list = explode(',', $feedback_user_id_list);
-                if ($user_id_list) {
-                    foreach ($user_id_list as $user_id) {
-                        if ($user_id && $user_id > 0) {
-                            $notify = array(
-                                'notify_type' => '1',
-                                'notify_content' => '您有一条意见反馈信息：'.substr($feedback_topic, 0, 30).'...',
-                                'user_id' => $user_id,
-                                'notify_params' => $feedback_id,
-                                'notify_time' => date('Y-m-d H:i:s'),
-                                );
-                            $has_notify = $this->wxm_notify->has_feedback_topic($user_id, $feedback_id);
-                            if (! $has_notify) {
-                                $this->wxm_notify->insert($notify);
-                            }
+            $user_id_list = array();
+            $common_user_id_info = $this->wxm_feedback->get_common_user_id_info_by_id($feedback_id);
+            if ($common_user_id_info) {
+                foreach ($common_user_id_info as $key => $value) {
+                    $user_id_list[] = $value['user_id'];
+                }
+            }
+            $user_id_list = array_unique($user_id_list);
+
+            if ($user_id_list) {
+                foreach ($user_id_list as $user_id) {
+                    if ($user_id && $user_id > 0) {
+                        $notify = array(
+                            'notify_type' => '1',
+                            'notify_content' => '您有一条意见反馈信息：'.substr($feedback_topic, 0, 30).'...',
+                            'user_id' => $user_id,
+                            'notify_params' => $feedback_id,
+                            'notify_time' => date('Y-m-d H:i:s'),
+                            );
+                        $has_notify = $this->wxm_notify->has_feedback_topic($user_id, $feedback_id);
+                        if (! $has_notify) {
+                            $this->wxm_notify->insert($notify);
                         }
                     }
                 }
             }
+            // if ($feedback_user_id_list) {
+            //     // $user_id_list = explode(',', $feedback_user_id_list);
+            // }
             echo 'success';
             return true;
         }
