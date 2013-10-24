@@ -144,6 +144,27 @@ foreach ($pend_data_list as $pend_data) {
         // first, delete the vps file,
         // and if it has flash file on vps disk, path like: 'creamnote/upload/flash/'
         // we also delete the flash file
+		if (! file_exists($file_name)) {
+			wx_log('Warning: VPS File Not Existed');
+			// clear 'wx_data' table -> vpspath field
+			$update_data = array(
+					'data_vpspath' => '',
+				);
+			$update_data_where = array(
+					'data_id' => $data_id,
+					);
+			$ret_update_data = $db_service->update('wx_data', $update_data, $update_data_where);
+			if ($ret_update_data) {
+				wx_log('Info: Clear Vps Path Record Success', $log_name);
+			}
+			else {
+				wx_log('Error: Clear Vps Path Record Failed', $log_name);
+			}
+
+			wx_log("---------------------------------------------------------------------------------", $log_name);
+			continue;
+		}
+
         $ret_del_file = wx_delete_file($file_name);
         if ($ret_del_file) {
             $msg = 'Info: Delete VPS Data File Success';
