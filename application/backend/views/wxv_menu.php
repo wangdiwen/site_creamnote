@@ -12,6 +12,7 @@
 <script type="text/javascript" src="/application/backend/views/js/facebox.js"></script>
 <script type="text/javascript" src="/application/backend/views/js/jquery-ui-1.10.3.custom.js"></script>
 <script type="text/javascript" src="/application/backend/views/js/back-common.js"></script>
+<script type="text/javascript" src="/application/backend/views/js/ZeroClipboard.js"></script>
 <div id="sidebar">
     <div id="sidebar-wrapper">
       <!-- Sidebar with logo and menu -->

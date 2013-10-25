@@ -782,7 +782,8 @@ function feedback_submit(feedback_id,user_id_list,top_content){
     var url = $("#baseUrl").val()+"cnadmin/feedback/admin_feedback_reply";
     // feedback_content = $("#feedback_content").val();
     user_id_list=user_id_list.substr(0,user_id_list.length-1);
-    var params =({'feedback_content':feedback_content,'feedback_id':feedback_id,'user_id_list':user_id_list,'feedback_topic':top_content});
+    // var params =({'feedback_content':feedback_content,'feedback_id':feedback_id,'user_id_list':user_id_list,'feedback_topic':top_content});
+    var params =({'feedback_content':feedback_content,'feedback_id':feedback_id,'feedback_topic':top_content});
     var retData = ajax_common(url,params);
     if(retData =="success"){
         //show_dialog("反馈回复","操作成功");
@@ -1000,7 +1001,7 @@ var check_order_valid = function(draw_no,draw_user_id,draw_money){
     }
 
     if(retData["is_only"] == "true"&&retData["is_account_ok"] == "true"&&retData["is_enough"] == "true"&&retData["is_ten_multi"] == "true"){
-        str += "<p>提现者账户:<button class='button_copy'  id='"+retData["ali_account"]+"' style='color: green;float: right;cursor: pointer;' data-clipboard-text='"+retData["ali_account"]+"'>【复制】</button ><span onClick='javascript:this.focus();this.select();' contenteditable  style='color: green;float: right;padding-right: 10px;'>"+retData["ali_account"]+"</span></p>";
+        str += "<p>提现者账户:<button class='button_copy'  id='"+retData["ali_account"]+"' style='color: green;float: right;cursor: pointer;' data-clipboard-text='"+retData["ali_account"]+"'>【复制】</button ><textarea onClick='javascript:this.focus();this.select();' contenteditable  style='border:0px;cursor: pointer;color: green;float: right;font-size: 18px;resize: none;height: 22px;' readOnly>"+retData["ali_account"]+"</textarea></p>";
         str += "<p>提现者签名:<span style='color: red;font-size: 21px;padding-left: 60px;'>"+retData["ali_realname"]+"</span></p>";
         str += "<p>提现金额:<span style='color: red;font-size: 21px;padding-left: 60px;'>"+retData["ali_draw_money"]+"元</span></p>";
         str += "<p ><input type='button' onclick='accomplish_withdraw("+'"'+draw_no+'"'+")' value='完成提现申请' class='button'>";
@@ -1010,21 +1011,7 @@ var check_order_valid = function(draw_no,draw_user_id,draw_money){
     }
     $("#message_content").html(str);
 
-if(true){
-   var clip = new ZeroClipboard( $(".button_copy"), {
-      moviePath: "/application/backend/views/js/ZeroClipboard.swf"
-    } );
 
-    clip.on( "load", function(client) {
-      // alert( "movie is loaded" );
-
-      client.on( "complete", function(client, args) {
-        // `this` is the element that was clicked
-        this.style.display = "none";
-        alert("Copied text to clipboard: " + args.text );
-      } );
-    } );
-}
 
 }
 

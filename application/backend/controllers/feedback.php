@@ -64,6 +64,11 @@ class Feedback extends CI_Controller
         // $feedback_id = 1;
         // $feedback_content = '测试管理员回复功能';
 
+        $feedback_content = trim($feedback_content);
+        if (mb_strlen($feedback_content, 'UTF-8') >= 100) {
+            $feedback_content = mb_substr($feedback_content, 0, 99, 'utf-8');
+        }
+
         // get cur admin user info
         $cur_user_info = $this->wx_util->get_admin_info();
         $admin_user_id = $cur_user_info['admin_user_id'];

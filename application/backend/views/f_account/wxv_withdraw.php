@@ -6,7 +6,7 @@
 <script type="text/javascript" src="/application/backend/views/js/jquery-1.9.1.js"></script>
 <script type="text/javascript" src="/application/backend/views/js/kindeditor-min.js"></script>
 <script type="text/javascript" src="/application/backend/views/js/zh_CN.js"></script>
-<script type="text/javascript" src="/application/backend/views/js/ZeroClipboard.js"></script>
+
 <link rel="stylesheet" href="/application/backend/views/css/default.css" type="text/css" media="screen" />
 </head>
 <body>
@@ -90,7 +90,7 @@
       </div>
     </div>
 
-      <div id="messages" >
+      <div id="messages" style="display: none">
         <!-- Messages are shown when a link with these attributes are clicked: href="#messages" rel="modal"  -->
         <h3 id="message_title" style="font-size: 18px;">资料详情</h3>
         <div id="message_content" style="font-size: 16px;">

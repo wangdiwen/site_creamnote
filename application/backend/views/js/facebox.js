@@ -165,6 +165,24 @@
       if (klass) klass = klass[1]
 
       fillFaceboxFromHref(this.href, klass)
+
+      if(true){
+         var clip = new ZeroClipboard( $(".button_copy"), {
+            moviePath: "/application/backend/views/js/ZeroClipboard.swf"
+          } );
+
+          clip.on( "load", function(client) {
+            // alert( "movie is loaded" );
+
+            client.on( "complete", function(client, args) {
+              // `this` is the element that was clicked
+              // this.style.display = "none";
+              // alert("Copied text to clipboard: " + args.text );
+              show_dialog("复制","复制成功");
+            } );
+          } );
+      }
+
       return false
     }
 
@@ -200,9 +218,6 @@
 
     $('#facebox .close').click($.facebox.close)
     $('#facebox .close_image').attr('src', $.facebox.settings.closeImage)
-    var clip = new ZeroClipboard( $(".button_copy"), {
-      moviePath: "/application/backend/views/js/ZeroClipboard.swf"
-    } );
   }
 
   // getPageScroll() by quirksmode.com
