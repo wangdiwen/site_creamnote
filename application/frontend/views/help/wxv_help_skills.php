@@ -18,7 +18,7 @@
 <body>
   <?php include  'application/frontend/views/share/header_home.php';?>
   <div class="body article_body">
-    <div class="foot_list_left" style="padding-bottom:0px!important;margin-bottom:0px!important;height: 15000px;">
+    <div class="foot_list_left" style="padding-bottom:0px!important;margin-bottom:0px!important;height: 12000px;">
       <h1><b>帮助</b></h1>
       <ul class="foot_list_ul">
         <li><a href="<?php echo site_url('static/wxc_help/faq'); ?>" title="常见问题">常见问题</a></li>
@@ -192,7 +192,7 @@
                 点击顶部的“账户设置”，账户设置页面
               </div>
               <div class="help_stand_right_t">
-                <img style='width:500px;' src="/application/frontend/views/resources/images/help_image/27.jpg"></img>
+                <img style='width:200px;' src="/application/frontend/views/resources/images/help_image/27.jpg"></img>
               </div>
           </div>
           <div class="help_section">
@@ -221,7 +221,7 @@
           </div>
           <div class="help_section">
             <div class="fl help_stand_right">
-              同“激活账户”，你需要跳转到“账户设置”页面
+              同<a href="#account_activate">“激活账户”</a>，你需要跳转到“账户设置”页面
             </div>
             <div class="help_stand_left">
               <img style='width:500px;' src="/application/frontend/views/resources/images/help_image/30.jpg"></img>
@@ -229,10 +229,18 @@
           </div>
           <div class="help_section">
             <div class="fl help_stand_right">
-              提现前您需要设置您的creamnote的一个支付口令
+              提现前您需要设置您的creamnote的一个支付口令,提交你的“6位存数字”支付口令后，系统会发送一个验证码，验证成功后，验证码设置成功
             </div>
             <div class="help_stand_left">
               <img style='width:500px;' src="/application/frontend/views/resources/images/help_image/31.jpg"></img>
+            </div>
+          </div>
+          <div class="help_section">
+            <div class="fl help_stand_right">
+              如果您的余额大于等于十元人民币，你可以向系统提交你的提现金额，提现值为十的整数倍（在余额范围内），当然前提是你已经将您的支付宝账户激活过
+            </div>
+            <div class="help_stand_left">
+              <img style='width:500px;' src="/application/frontend/views/resources/images/help_image/32.jpg"></img>
             </div>
           </div>
         <p class="_help_tail"></p>

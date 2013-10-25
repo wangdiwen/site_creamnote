@@ -425,8 +425,10 @@ function update_account(type){
     if(type == 1){
        var url ="<?php echo site_url('core/wxc_user_account/account_active'); ?>";
         var user_account_name=$("#user_account_name").attr("value");
-         if(user_account_name==""){
+        if(user_account_name==""){
             errorMes("账户不能为空");
+        }else if(!com_check_eamil(user_account_name)){
+            errorMes("账户不合法");
         }else{
             $.ajax({
                 type:"post",
@@ -458,6 +460,8 @@ function update_account(type){
         var user_account_name=$("#user_account_name").attr("value");
          if(user_account_name==""){
             errorMes("账户不能为空");
+        }else if(!com_check_eamil(user_account_name)){
+            errorMes("账户不合法");
         }else{
             $.ajax({
                 type:"post",

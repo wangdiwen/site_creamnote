@@ -38,7 +38,8 @@ function comment(feedback_id,user_id_list){
         }
 	    $.ajax({
 	    type:"post",
-	    data:({'feedback_content': comment_content,'feedback_id': feedback_id,'user_id_list':user_id_list_p,'feedback_topic':top_content}),
+	    // data:({'feedback_content': comment_content,'feedback_id': feedback_id,'user_id_list':user_id_list_p,'feedback_topic':top_content}),
+        data:({'feedback_content': comment_content,'feedback_id': feedback_id,'feedback_topic':top_content}),
 	    url:url,
 	    success: function(result)
 	        {

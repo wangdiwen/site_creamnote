@@ -433,13 +433,16 @@ class WXC_personal extends CI_Controller
                     }
 
                     // get admin user's name and email, just get only one
-                    $admin_user_name = '';
-                    $admin_user_email = '';
-                    $admin_user_info = $this->wxm_admin_user->get_name_email_by_id($admin_user_id_list[0]['user_id']);
-                    if ($admin_user_info) {
-                        $admin_user_name = $admin_user_info['user_name'];
-                        $admin_user_email = $admin_user_info['user_email'];
+                    $admin_user_name = '小二';
+                    $admin_user_email = 'dw_wang126@126.com';
+                    if ($admin_user_id_list) {
+                        $admin_user_info = $this->wxm_admin_user->get_name_email_by_id($admin_user_id_list[0]['user_id']);
+                        if ($admin_user_info) {
+                            $admin_user_name = $admin_user_info['user_name'];
+                            $admin_user_email = $admin_user_info['user_email'];
+                        }
                     }
+
                     // get common user's name and email
                     $common_user_map = array();
                     $common_user_info = $this->wxm_user->get_user_name_email_by_id_list($common_user_id_list);
@@ -460,7 +463,7 @@ class WXC_personal extends CI_Controller
                         }
                         elseif ($value['feedback_user_type'] == '1') {
                             $admin_user_id = $value['user_id'];
-                            $data[$key]['user_name'] = '管理员'.$admin_user_name;
+                            $data[$key]['user_name'] = '管理员_'.$admin_user_name;
                             $data[$key]['user_email'] = $admin_user_email;
                             $data[$key]['head_url'] = wx_get_gravatar_image($admin_user_email, 40);
                         }

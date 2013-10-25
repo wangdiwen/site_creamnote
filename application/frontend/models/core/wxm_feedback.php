@@ -119,14 +119,14 @@ class WXM_Feedback extends CI_Model
     }
 /*****************************************************************************/
     public function get_common_user_id_info_by_id($feedback_followed_id = 0) {
-        if ($feedback_id > 0) {
+        if ($feedback_followed_id > 0) {
             $table = $this->wx_table;
             $where = array(
                 'feedback_followed_id' => $feedback_followed_id,
-                'feedback_startup' => 'false',
+                // 'feedback_startup' => 'false',
                 'feedback_user_type' => '2',
                 );
-            $this->db->select('user_id')->from($table)->where($where);
+            $this->db->select('user_id')->from($table)->where($where)->or_where('feedback_id', $feedback_followed_id);
             $query = $this->db->get();
             return $query->result_array();
         }

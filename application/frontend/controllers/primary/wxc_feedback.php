@@ -95,6 +95,10 @@ class WXC_Feedback extends CI_Controller
         $feedback_content = $this->input->post('feedback_content');
 
         $feedback_content = trim($feedback_content);
+        if (mb_strlen($feedback_content, 'UTF-8') >= 100) {
+            $feedback_content = mb_substr($feedback_content, 0, 99, 'utf-8');
+        }
+
         $feedback_time = date('Y-m-d H:i:s');
         $feedback_startup = 'true';
         $feedback_followed_id = '';
@@ -208,18 +212,21 @@ class WXC_Feedback extends CI_Controller
                 // $user_id_list = explode('&', $feedback_user_id_list);
                 // // 过滤掉数组中为空的项，以及重复的项
                 // $notify_user_id_list = array_unique(array_filter($user_id_list));
-                // // 过滤掉数组中与当前用户的user id相同的项
-                // foreach ($notify_user_id_list as $key => $value)
-                // {
-                //     if (! is_numeric($value)        // filter 'null' string
-                //         || $value == $user_id)
-                //     {
-                //         array_splice($notify_user_id_list, $key, 1);
-                //     }
-                // }
 
-                foreach ($notify_user_id_list as $notify_user_id)
+                // 过滤掉数组中与当前用户的user id相同的项
+                $user_id_list = array();
+                foreach ($notify_user_id_list as $key => $value)
                 {
+                    if ($value != $user_id) {
+                        $user_id_list[] = $value;
+                    }
+                }
+
+                foreach ($user_id_list as $notify_user_id)
+                {
+                    // wx_loginfo($notify_user_id);
+                    // wx_loginfo('---------------');
+
                     $notify = array();
                     $notify['notify_type'] = '1';
                     $notify['notify_content'] = '您有一条意见反馈信息：'.substr($feedback_topic, 0, 30).'...';
