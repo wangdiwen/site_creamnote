@@ -40,8 +40,8 @@ require_once WX_BASE_PATH.WX_SEPARATOR.'model'.WX_SEPARATOR.'wx_database_api.php
 /*****************************************************************************/
 
 /***************************** 设定时间戳 ************************************/
-$today_time = wx_get_today_time();
-$log_name = 'clear_vps_data';
+// $today_time = wx_get_today_time();
+// $log_name = 'clear_vps_data';
 
 // echo 'Filter Time: '.$today_time."\n";
 
@@ -71,34 +71,69 @@ $log_name = 'clear_vps_data';
  *          记录dactivity_lifetime生命期时间点和wx_data->data_vpspath字段。
  */
 
-$table = 'wx_data';
-$select = array(
-    'wx_data.data_id',
+// set 'wx_data' table variable
+$data_table = 'wx_data';
+$data_select = array(
+    'data_id',
     'data_objectname',
-    // 'data_type',
-    // 'data_status',
-    // 'user_id',
-    // 'data_uploadtime',
-    // 'data_osspath',
     'data_vpspath',
-    'wx_data_activity.dactivity_lifetime'
     );
-$where = array(
+$data_where = array(
     'data_osspath !=' => '',
     'data_vpspath !=' => '',
     'data_status !=' => '0',
     );
-$limit = 0;
-$order_by = '';
-$join = array(
-    'table' => 'wx_data_activity',
-    'item' => 'data_id',
-    'type' => 'left'
-    );
+$data_limit = 100;
 
+// get pending base data
 $db_service = new WX_DB();
-$pend_data_list = $db_service->select($table, $select, $where, $limit, $order_by, $join);
+$pend_data_list = $db_service->select($data_table, $data_select, $data_where, $data_limit);
 // print_r($pend_data_list);
+
+// set data activity table variable
+$dactivity_data_id_list = array();
+// get data id list
+foreach ($pend_data_list as $key => $value) {
+    $dactivity_data_id_list[] = $value['data_id'];
+}
+
+// get data activity info
+$data_activity_map = array();
+if ($dactivity_data_id_list) {
+    $dactivity_table = 'wx_data_activity';
+    $dactivity_select = array(
+        'data_id',
+        'dactivity_lifetime',
+        );
+    $dactivity_lifetime_info = $db_service->select_where_in($dactivity_table, $dactivity_select, 'data_id', $dactivity_data_id_list);
+    if ($dactivity_lifetime_info) {
+        foreach ($dactivity_lifetime_info as $key => $value) {
+            $data_activity_map[$value['data_id']] = $value['dactivity_lifetime'];
+        }
+    }
+}
+// print_r($data_activity_map);
+
+// merge the 'dactivity_lifetime' field to pending data info
+if ($pend_data_list) {
+    foreach ($pend_data_list as $key => $value) {
+        $tmp_data_id = $value['data_id'];
+        $pend_data_list[$key]['dactivity_lifetime'] = isset($data_activity_map[$tmp_data_id]) ? $data_activity_map[$tmp_data_id] : '0000-00-00 00:00:00';
+    }
+}
+// print_r($pend_data_list);
+
+// realse some resource
+unset($data_select);
+unset($data_where);
+unset($dactivity_data_id_list);
+unset($data_activity_map);
+
+// return false;
+
+/***************************** 设定时间戳 ************************************/
+$today_time = wx_get_today_time();
+$log_name = 'clear_vps_data';
 
 /***************************** 执行清理工作 **********************************/
 $total_count = count($pend_data_list);
@@ -116,8 +151,6 @@ wx_log("------------------------------------------------------------------------
 foreach ($pend_data_list as $pend_data) {
     $data_id = $pend_data['data_id'];
     $data_objectname = $pend_data['data_objectname'];
-    // $data_type = $pend_data['data_type'];
-    // $user_id = $pend_data['user_id'];
     $data_vpspath = $pend_data['data_vpspath'];
     $dactivity_lifetime = $pend_data['dactivity_lifetime'];
 
@@ -138,94 +171,94 @@ foreach ($pend_data_list as $pend_data) {
 
     if ($dactivity_lifetime <= $standard_life_time) {
         // clear working
-        $msg = 'Info: This Data Is Out Of Lifetime, Clear It';
-        wx_log($msg, $log_name);
+        wx_log('Info: This Data Is Out Of Lifetime, Clear It', $log_name);
 
         // first, delete the vps file,
         // and if it has flash file on vps disk, path like: 'creamnote/upload/flash/'
         // we also delete the flash file
-		if (! file_exists($file_name)) {
-			wx_log('Warning: VPS File Not Existed');
-			// clear 'wx_data' table -> vpspath field
-			$update_data = array(
-					'data_vpspath' => '',
-				);
-			$update_data_where = array(
-					'data_id' => $data_id,
-					);
-			$ret_update_data = $db_service->update('wx_data', $update_data, $update_data_where);
-			if ($ret_update_data) {
-				wx_log('Info: Clear Vps Path Record Success', $log_name);
-			}
-			else {
-				wx_log('Error: Clear Vps Path Record Failed', $log_name);
-			}
+        if (! file_exists($file_name)) {
+            wx_log('Warning: VPS File Not Existed');
 
-			wx_log("---------------------------------------------------------------------------------", $log_name);
-			continue;
-		}
+            // delete the flash file if has
+            $ret_del_file = wx_delete_file($flash_file);
+            if ($ret_del_file) {
+                wx_log('Info: Delete VPS Flash File Success', $log_name);
+            }
+            else {
+                wx_log('Warning: It Has No Flash File', $log_name);
+            }
+
+            // clear 'wx_data' table -> vpspath field
+            $update_data = array(
+                    'data_vpspath' => '',
+                );
+            $update_data_where = array(
+                    'data_id' => $data_id,
+                    );
+            $ret_update_data = $db_service->update('wx_data', $update_data, $update_data_where);
+            if ($ret_update_data) {
+                wx_log('Info: Clear Vps Path Record Success', $log_name);
+            }
+            else {
+                wx_log('Error: Clear Vps Path Record Failed', $log_name);
+            }
+
+            wx_log("---------------------------------------------------------------------------------", $log_name);
+            continue;
+        }
 
         $ret_del_file = wx_delete_file($file_name);
         if ($ret_del_file) {
-            $msg = 'Info: Delete VPS Data File Success';
-            wx_log($msg, $log_name);
-			
-			// delete the flash file if has
-			$ret_del_file = wx_delete_file($flash_file);
-			if ($ret_del_file) {
-				$msg = 'Info: Delete VPS Flash File Success';
-				wx_log($msg, $log_name);
-			}
-			else {
-				$msg = 'Warning: It Has No Flash File ';
-				wx_log($msg, $log_name);
-			}
+            wx_log('Info: Delete VPS Data File Success', $log_name);
 
-			// second, update the data info of table
-			// table: 'wx_data' and 'wx_data_activity'
-			$table_data = 'wx_data';
-			$table_activity = 'wx_data_activity';
+            // delete the flash file if has
+            $ret_del_file = wx_delete_file($flash_file);
+            if ($ret_del_file) {
+                wx_log('Info: Delete VPS Flash File Success', $log_name);
+            }
+            else {
+                wx_log('Warning: It Has No Flash File', $log_name);
+            }
 
-			$update_data_table = array(
-				'data_vpspath' => ''
-				);
-			$update_where = array(
-				'data_id' => $data_id
-				);
-			$update_data_activity = array(
-				'dactivity_lifetime' =>'0000-00-00 00:00:00'
-				);
+            // second, update the data info of table
+            // table: 'wx_data' and 'wx_data_activity'
+            $table_data = 'wx_data';
+            $table_activity = 'wx_data_activity';
 
-			// table: 'wx_data'
-			$ret_update = $db_service->update($table_data, $update_data_table, $update_where);
-			if ($ret_update) {
-				$msg = 'Info: Update Database(wx_data) Record Success';
-				wx_log($msg, $log_name);
+            $update_data_table = array(
+                'data_vpspath' => ''
+                );
+            $update_where = array(
+                'data_id' => $data_id
+                );
+            $update_data_activity = array(
+                'dactivity_lifetime' =>'0000-00-00 00:00:00'
+                );
 
-				// table: 'wx_data_activity'
-				$ret_update = $db_service->update($table_activity, $update_data_activity, $update_where);
-				if ($ret_update) {
-					$msg = 'Info: Update Database(wx_data_activity) Record Success';
-					wx_log($msg, $log_name);
-				}
-				else {
-					$msg = 'Error: Update Database(wx_data_activity) Record Failed';
-					wx_log($msg, $log_name);
-				}
-			}
-			else {
-				$msg = 'Error: Update Database(wx_data) Record Failed';
-				wx_log($msg, $log_name);
-			}
+            // table: 'wx_data'
+            $ret_update = $db_service->update($table_data, $update_data_table, $update_where);
+            if ($ret_update) {
+                wx_log('Info: Update Database(wx_data) Record Success', $log_name);
+
+                // table: 'wx_data_activity'
+                $ret_update = $db_service->update($table_activity, $update_data_activity, $update_where);
+                if ($ret_update) {
+                    wx_log('Info: Update Database(wx_data_activity) Record Success', $log_name);
+                }
+                else {
+                    wx_log('Error: Update Database(wx_data_activity) Record Failed', $log_name);
+                }
+            }
+            else {
+                wx_log('Error: Update Database(wx_data) Record Failed', $log_name);
+            }
         }
         else {
-            $msg = 'Error: Delete VPS Data File Failed';
-            wx_log($msg, $log_name);
+            wx_log('Error: Delete VPS Data File Failed', $log_name);
         }
     }
     else {
-        $msg = 'Warining: This Data Is Health, Donnot Need Clear';
-        wx_log($msg, $log_name);
+        wx_log('Warining: This Data Is Health, Donnot Need Clear', $log_name);
     }
 
     wx_log("---------------------------------------------------------------------------------", $log_name);

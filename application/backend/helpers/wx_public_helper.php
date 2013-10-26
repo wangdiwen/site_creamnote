@@ -62,7 +62,8 @@ if (! function_exists('wx_delete_file'))
     {
         if (file_exists($file)) {
             $status = 1;
-            $cmd = '/bin/sh /alidata/server/creamnote/bin/deletefile.sh '.$file.' >/dev/null 2>&1';
+            // $cmd = '/bin/sh /alidata/server/creamnote/bin/deletefile.sh '.$file.' >/dev/null 2>&1';
+            $cmd = 'shred -zu  '.$file.' >/dev/null 2>&1';
             $ret = system($cmd, $status);
             if ($status == 0)
                 return true;

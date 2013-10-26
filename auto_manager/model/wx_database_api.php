@@ -126,6 +126,53 @@ class WX_DB
         }
     }
 /*****************************************************************************/
+    public function select_where_in($table = '', $select = array(), $where_field = '', $where_field_list = array()) {
+        if (! $this->db_service) {
+            echo 'database connection error'."\n\n";
+            throw new DB_Exception('lost database connection');
+        }
+        else {
+            if ($table) {
+                // create sql query string
+                $sql = 'SELECT';
+                $sql_select = '';
+                $sql_from = '';
+                $sql_where_in = '';
+
+                if ($select) {
+                    $sql_select = implode(',', $select);
+                    $sql = $sql.' '.$sql_select;
+                }
+                else {
+                    $sql = $sql.' *';
+                }
+                $sql = $sql.' FROM '.$table;
+
+                if ($where_field && $where_field_list) {
+                    $new_field_list = array();
+                    foreach ($where_field_list as $key => $value) {
+                        $new_field_list[] = '\''.$value.'\'';
+                    }
+                    $field_list_str = '('.implode(',', $new_field_list).')';
+
+                    $sql .= ' WHERE '.$where_field.' IN '.$field_list_str;
+                }
+
+                // exec the sql syntax
+                $result = array();
+                mysql_select_db($this->db_database, $this->db_service);
+                $query = mysql_query($sql);
+                if ($query) {
+                    while($row = mysql_fetch_assoc($query)) {
+                        // array_push($result, $row);
+                        $result[] = $row;
+                    }
+                }
+                return $result;
+            }
+        }
+    }
+/*****************************************************************************/
     public function insert($table = '', $data = array())
     {
         if (! $this->db_service) {
