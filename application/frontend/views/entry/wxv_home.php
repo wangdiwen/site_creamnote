@@ -400,7 +400,7 @@ function checkLogin(){
         <div class="right_notice">
           <div class="right_notice_section">
             <h6>精彩博文<a href="<?php echo base_url()?>core/wxc_content/more_article"><h6 style="float: right;font-size: 14px;margin-top: 5px;">更多>></h6></a></h6>
-            <ol class="rounded-list" style="overflow: initial;margin-bottom: 16px;">
+            <ol class="rounded-list" style="overflow: inherit;margin-bottom: 16px;">
               <?php  foreach ($week_article as $key => $week){?>
                 <li>
                   <a style="padding: 0.6em .3em .0em 1.8em;" href="<?php echo base_url()?>core/wxc_content/read_article?article_id=<?=$week['article_id']?>"><span style="width: 237px;" class='gravatar' title="<?=$week['article_title']?>"><?=$week['article_title']?></span></a>
@@ -412,7 +412,7 @@ function checkLogin(){
           <div class="right_notice_section" style="margin-bottom: 0;border-bottom:0px;">
             <h6>醍醐公告<a href="<?php echo base_url()?>core/wxc_content/more_site_notice"><h6 style="float: right;font-size: 14px;margin-top: 5px;">更多>></h6></a></h6>
 
-            <ol class="rounded-list" style="overflow: initial;margin-bottom: 16px;">
+            <ol class="rounded-list" style="overflow: inherit;margin-bottom: 16px;">
               <?php  foreach ($site_notice as $key => $notice){?>
                 <li>
                   <a style="padding: 0.6em .3em .0em 1.8em;" href="<?php echo base_url()?>core/wxc_content/read_notice?notice_id=<?=$notice['notice_id']?>"><span style="width: 237px;"><?=$notice['notice_title']?></span></a>

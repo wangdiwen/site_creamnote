@@ -281,12 +281,16 @@ function searchbyarea(){
 }
 
 function searchbefore(the,type,val){
-  area_name = $("#hiddenschool").attr("value");
-  area_id = $("#partment").attr("value");
-  nature_id = $("#nature_id").attr("value");
+  var area_name = $("#hiddenschool").attr("value");
+  var area_id = $("#partment").attr("value");
+  var nature_id ;
+  if($("#nature_id").attr("value")){
+    nature_id = $("#nature_id").attr("value");
+  }
+// alert(the.textContent)
   if(type==1){
     $("#nature_id").attr("value",val);
-    var str = the.text+"<b onclick='searchbefore(this,3,null)' class='del'>X</b>";
+    var str = $(the).text()+"<b onclick='searchbefore(this,3,null)' class='del'>X</b>";
     $("#filter_o").html(str);
     $("#filter_o").css("display","inline-block");
     searchall(val,area_name,area_id);

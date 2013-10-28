@@ -364,7 +364,7 @@ a{
 	margin-right: auto;
 	width: 1066px;
 	min-height: 1094px;
-
+	overflow: hidden;
 }
 .login{
 	background-image: url(../images/version/creamnote_login.png);
@@ -1028,6 +1028,7 @@ ol ol{
 	-o-transition: all .3s ease-out;
 	transition: all .3s ease-out;
 	height: 32px;
+	word-wrap: normal;
 }
 
 .rounded-list a:hover{

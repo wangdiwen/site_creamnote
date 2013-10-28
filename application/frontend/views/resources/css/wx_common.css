@@ -96,6 +96,7 @@
     width: 150px;
     text-overflow: ellipsis;
     padding: 4px 0;
+    word-wrap: normal;
 }
 
 ._sidebar li li a {

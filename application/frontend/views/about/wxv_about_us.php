@@ -28,39 +28,37 @@
     <div class="foot_list_right">
       <h2><b>团队介绍</b></h2>
       <div class="text_line" >
-        <p style="font-size:14px; border-bottom: 1px dashed rgb(163, 177, 209);"><b>醍醐创始人/总设计/后端开发攻城狮</b></p>
+
+        <p style="font-size:14px; border-bottom: 1px dashed rgb(163, 177, 209);"><b>醍醐创始人 / 总设计 / 后端攻城狮</b></p>
         <div style="font-size:13px"><img style="box-shadow: 2px 3px 2px #aaaaaa;width: 110px;height: 150px;" class="fl" src='/application/frontend/views/resources/images/version/wangdiwen.jpg'/>
           <div class="fl" style="padding-left: 20px;">
           <p style="font-size:18px"><b>王地文</b></p>
-          <p>12届毕业生</p>
-          <p>来自南京占地面积最大、校园风光最美的南京工程学院</p>
+          <p>2012届毕业生</p>
+          <p>来自南京工程学院</p>
           </div>
         </div>
         <p style="font-size:14px;padding-top: 160px;"><b>自我评价:</b></p>
         <p style="font-size:14px;">
-        <p style="font-size:14px;">大学时代，“一事无成”，从没参加过什么社团，更没担任过什么班级干部之类，此前一直在做些无甚意义的事情…</p>
-        <p style="font-size:14px;">突然有一天，用C语言写了人生中第一个可运行的小程序，名叫“Hello world”，我勒个去，从此一发而不可收拾，疯狂的爱上了编程（其实说的好听一
-          点就是大家经常听到的“程序猿”啦~~）</p>
-        <p style="font-size:14px;">最欣赏的一部电影是《肖申克的救赎》，太赞了~~</p>
-        <p style="font-size:14px;">最推荐的一部美剧是《越狱》，喜欢男猪脚，从容淡定~~</p>
-        <p style="font-size:14px;"><b>我的目标是:</b></p>
-        <p style="font-size:14px;">用代码去颠覆中国的教育吧！</p>
-        <p style="font-size:14px;">软件蚕食一切。</p>
-        <p style="font-size:14px;">未来是网络的时代，不懂编程的人就是“文盲”啦。</p>
+        <p style="font-size:14px;">“恰同学少年”，没参加过什么社团，更没担任过班级干部之类，此前一直在做些无甚意义的事情，直到 ...</p>
+        <p style="font-size:14px;">有一天，写了一个叫“Hello World”的神奇东东，你懂得 ~~</p>
+        <p style="font-size:14px;">最欣赏的一部电影是《肖申克的救赎》~~</p>
+        <p style="font-size:14px;"><b>我的信条:</b></p>
+        <p style="font-size:14px;">喜欢Geek，热爱编程，是“一只特立独行的猪”；</p>
+        <p style="font-size:14px;">You laugh at me because I'm different，I laugh at you because you're all the same.</p>
 
 
-        <p style="font-size:14px; border-bottom: 1px dashed rgb(163, 177, 209);padding-top: 20px;"><b>醍醐联合创始人/ 前端开发攻城狮</b></p>
-        <div style="font-size:13px"><img style="box-shadow: 2px 3px 2px #aaaaaa;width: 110px;height: 150px;" class="fl" src='/application/frontend/views/resources/images/version/creator_avatar.jpg'/>
+        <p style="font-size:14px; border-bottom: 1px dashed rgb(163, 177, 209);padding-top: 20px;"><b>醍醐联合创始人 / 前端攻城狮</b></p>
+        <div style="font-size:13px"><img style="box-shadow: 2px 3px 2px #aaaaaa;width: 110px;height: 150px;" class="fl" src='/application/frontend/views/resources/images/version/xiewang.jpg'/>
           <div class="fl" style="padding-left: 20px;">
           <p style="font-size:18px"><b>谢旺</b></p>
-          <p>12届毕业生</p>
+          <p>2012届</p>
           <p>毕业于长春工大</p>
           </div>
         </div>
         <p style="font-size:14px;padding-top: 160px;"><b>自我评价:</b></p>
         <p style="font-size:14px;">内敛却不失奔放，简单却饱含内容!</p>
 
-        <p style="font-size:14px;"><b>我的目标是:</b></p>
+        <p style="font-size:14px;"><b>我的信条:</b></p>
         <p style="font-size:14px;">用技术与美的结合，创造出许多令人爱不释手的产品！</p>
 
       </div>
