@@ -149,6 +149,8 @@ function show_user_detail(){
     // setTimeout("show_userdetail_ret($('#ret_common_json').val())",500);
     // var data = $.parseJSON(data);
     var str = "";
+    str += "<p style='border-top: 0px solid #ddd;color: red'>基本信息</p>";
+    str +="用户状态:"+data['user_status']+"<br/>";
     str +="昵称:"+data['user_name']+"<br/>";
     str +="邮箱:"+data['user_email']+"<br/>";
     str +="兴趣爱好:"+data['user_hobby']+"<br/>";
@@ -157,14 +159,29 @@ function show_user_detail(){
     str +="注册时间:"+data['user_register_time']+"<br/>";
     str +="学校:"+data['carea_name_shool']+"<br/>";
     str +="专业:"+data['carea_name_major']+"<br/>";
+
+    str += "<p style='color: red'>账户信息</p>";
     str +="账户:"+data['user_account_name']+"<br/>";
+    str +="账户签名:"+data['user_account_realname']+"<br/>";
+    str +="提现状态:"+data['user_account_status']+"<br/>";
+    str +="账户余额:"+data['user_account_money']+"<br/>";
+    str +="总资产:"+data['user_account_total']+"<br/>";
     str +="账户类型:"+data['user_account_type']+"<br/>";
     str +="账户状态:"+data['user_account_active']+"<br/>";
 
+    str += "<p style='color: red'>活动信息</p>";
+    str +="资料量:"+data['uactivity_datacount']+"<br/>";
+    str +="下载量:"+data['uactivity_downloadcount']+"<br/>";
+    str +="被下载量:"+data['uactivity_downloaded_count']+"<br/>";
+    str +="登录次数:"+data['uactivity_logincount']+"<br/>";
+    str +="用户等级:"+data['uactivity_level']+"<br/>";
+    str +="用户ip:"+data['uactivity_loginip']+"<br/>";
+
+    str += "<p style='color: red'>第三方账号</p>";
     str +="微博:"+data['user_weibo_nicename']+"<br/>";
     str +="人人:"+data['user_renren_nicename']+"<br/>";
     str +="QQ:"+data['user_qq_nicename']+"<br/>";
-    str +="用户状态:"+data['user_status']+"<br/>";
+
     $("#user_deatil").html(str);
     // alert(str)
 }
@@ -332,7 +349,7 @@ function add_new_admin(){
         alert("密码不能为空")
     }
     var url = $("#baseUrl").val()+"cnadmin/user/create_admin_user";
-    var params = ({'user_email':g_user_email,'admin_name':g_user_name,'user_token':g_user_token,'user_status':g_user_status,'user_type':g_user_type,'user_password':user_password});
+    var params = ({'user_email':g_user_email,'user_name':g_user_name,'user_token':g_user_token,'user_status':g_user_status,'user_type':g_user_type,'user_password':user_password});
     var retData;
     if(g_user_name!=""&&g_user_email!=""&&user_password!=""){
         retData = ajax_common(url,params);
@@ -1069,4 +1086,31 @@ var reject_by_realname = function(draw_no){
     }
 }
 
+var get_withdraw_by_user = function(user_email){
+    user_email = $("#user_email").val();
+    var url = $("#baseUrl").val()+"cnadmin/withdraw/query_history_by_user";
+    var params =({'user_email_name':user_email});
+    var retData = "";
+    retData = ajax_common_json(url,params);
+    var i ;
+    var str = "";
+    if(retData != ""){
+        for(i in retData){
+            str += "<tr>";
+            str += "<td>";
+            str += " <input type='checkbox' value='"+retData[i]['draw_id']+"'/>";
+            str += " </td>";
+            str += " <td >"+retData[i]['draw_no']+"</td>";
+            str += " <td >"+retData[i]['draw_user_id']+"</td>";
+            str += " <td >"+retData[i]['draw_ali_account']+"</td>";
+            str += " <td >"+retData[i]['draw_money']+"</td>";
+            str += " <td >"+retData[i]['draw_timestamp']+"</td>";
+            str += " <td >"+retData[i]['draw_admin']+"</td>";
+            str += " <td >"+retData[i]['draw_admin_time']+"</td>";
+            str += "</tr>";
+        }
+    }
+
+    $("#query_by_user").html(str)
+}
 

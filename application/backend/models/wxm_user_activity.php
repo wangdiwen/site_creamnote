@@ -14,7 +14,10 @@ class WXM_User_Activity extends CI_Model
     {
         if ($user_id > 0) {
             $table = $this->wx_table;
-            $this->db->select('uactivity_datacount, uactivity_downloadcount, uactivity_loginip, uactivity_logintime, uactivity_logouttime, uactivity_status, uactivity_recent_view, uactivity_collectdata, uactivity_logincount, uactivity_level')->from($table)->where('user_id', $user_id)->limit(1);
+            $this->db->select('uactivity_datacount, uactivity_downloadcount, uactivity_downloaded_count,
+                                uactivity_loginip, uactivity_logintime, uactivity_logouttime, uactivity_status,
+                                uactivity_logincount, uactivity_level')
+                        ->from($table)->where('user_id', $user_id)->limit(1);
             $query = $this->db->get();
             return $query->row_array();
         }

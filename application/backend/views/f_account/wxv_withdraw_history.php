@@ -12,25 +12,31 @@
 <body>
 <div id="body-wrapper">
   <!-- Wrapper for the radial gradient background -->
-  <?php $menuParam='account_withdraw';?>
+  <?php $menuParam='account_withdraw_history';?>
   <?php include("application/backend/views/wxv_menu.php");?>
   <div id="main-content">
 
     <!-- Page Head -->
-    <h2>提现管理</h2>
+    <h2>提现历史</h2>
 
     <div class="content-box">
       <div class="content-box-header">
-        <h3>提现列表</h3>
+        <h3>提现历史列表</h3>
         <ul class="content-box-tabs">
-          <li><a href="#tab1" class="default-tab">提现管理列表</a></li>
-
+          <li><a href="#tab2" class="default-tab">提现查询列表</a></li>
         </ul>
         <div class="clear"></div>
       </div>
 
       <div class="content-box-content">
-        <div class="tab-content default-tab" id="tab1">
+
+
+        <div class="tab-content default-tab" id="tab2">
+          <div class="form" >
+            <input class="text-input small-input" type="text" id="user_email" name="user_email" />
+            <input type="button" class="button" onclick="get_withdraw_by_user()" style="width: 75px;" name="user_search" id="user_search" value="查找">
+          （根据邮箱精确查找）
+          </div>
           <table>
             <thead>
               <tr>
@@ -42,44 +48,15 @@
                 <th>提现者账户</th>
                 <th>提现金额</th>
                 <th>提现时间</th>
-                <th>提现状态</th>
                 <th>提现管理员</th>
                 <th>提现成功时间</th>
-                <th>操作</th>
 
               </tr>
             </thead>
 
-            <tbody>
-              <?php  foreach ($withdraw_order as $key => $withdraw){?>
+            <tbody id="query_by_user">
               <tr>
-                <td>
-                  <input type="checkbox" value="<?=$withdraw['draw_id']?>"/>
-                </td>
-                <td ><?=$withdraw['draw_no']?></td>
-                <td ><?=$withdraw['draw_user_id']?></td>
-                <td ><?=$withdraw['draw_ali_account']?></td>
-                <td ><?=$withdraw['draw_money']?></td>
-                <td ><?=$withdraw['draw_timestamp']?></td>
-                <td ><?=$withdraw['draw_status']?></td>
-                <td ><?=$withdraw['draw_admin']?></td>
-                <td ><?=$withdraw['draw_admin_time']?></td>
 
-                <td style="max-width:300px;">
-
-                  <input type="hidden" id="hidden_account_name" value="<?=$withdraw['draw_ali_account']?>">
-                  <input type="hidden" id="hidden_draw_money" value="<?=$withdraw['draw_money']?>">
-
-                  <a href="#messages" rel="modal">
-                    <input onclick="check_order_valid('<?=$withdraw['draw_no']?>','<?=$withdraw['draw_user_id']?>','<?=$withdraw['draw_money']?>')" type="button" onclick="" class="button" value="校验数据正确性">
-                  </a>
-
-                </td>
-              </tr>
-
-              <?php }?>
-
-              <tr>
                 <td colspan="10">
                   <div class="pagination"><?php echo $this->pagination->create_links(); ?></div>
                 </td>
@@ -87,8 +64,6 @@
             </tbody>
           </table>
         </div>
-
-
 
       </div>
     </div>

@@ -98,7 +98,10 @@ class WXM_User extends CI_Model
     {
         if ($user_email_or_name) {
             $table = $this->wx_table;
-            $this->db->select('user_id, user_name, user_email, user_hobby, user_period, user_register_time, user_status')->from($table)->where('user_email', $user_email_or_name)->or_where('user_name', $user_email_or_name)->limit(1);
+            $this->db->select('user_id, user_name, user_email, user_hobby, user_period, user_register_time,
+                                user_status')
+                        ->from($table)->where('user_email', $user_email_or_name)
+                        ->or_where('user_name', $user_email_or_name)->limit(1);
             $query = $this->db->get();
             $data = $query->row_array();
             if ($data) {
@@ -107,11 +110,28 @@ class WXM_User extends CI_Model
         }
     }
 /*****************************************************************************/
+    public function get_id_by_email_or_name($email_or_name = '') {
+        if ($email_or_name) {
+            $table = $this->wx_table;
+            $this->db->select('user_id')->from($table)->where('user_email', $email_or_name)
+                        ->or_where('user_name', $email_or_name)->limit(1);
+            $query = $this->db->get();
+            return $query->row_array();
+        }
+        return false;
+    }
+/*****************************************************************************/
+/*****************************************************************************/
     public function get_user_detail($user_email = '')
     {
         if ($user_email) {
             $table = $this->wx_table;
-            $this->db->select('user_id, user_name, user_email, user_hobby, user_period, user_register_time, user_status, user_account_name, user_account_type, user_account_active, user_account_money, user_phone, user_qq_nicename, user_weibo_nicename, user_renren_nicename')->from($table)->where('user_email', $user_email)->limit(1);
+            $this->db->select('user_id, user_name, user_email, user_hobby, user_period,
+                                user_register_time, user_status, user_account_name, user_account_realname,
+                                user_account_type, user_account_active, user_account_status,
+                                user_account_money, user_account_total,
+                                user_phone, user_qq_nicename, user_weibo_nicename, user_renren_nicename')
+                    ->from($table)->where('user_email', $user_email)->limit(1);
             $query = $this->db->get();
             return $query->row_array();
         }

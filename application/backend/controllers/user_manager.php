@@ -69,6 +69,17 @@ class User_Manager extends CI_Controller
         $user_token = $this->input->post('user_token');
         $user_type = $this->input->post('user_type');
 
+        // filter space char
+        $user_name = trim($user_name);
+        $user_email = trim($user_email);
+        $user_token = trim($user_token);
+
+        // wx_loginfo($user_name);
+        // wx_loginfo($user_email);
+        // wx_loginfo($user_status);
+        // wx_loginfo($user_type);
+        // wx_loginfo($user_token);
+
         $auth = $this->wx_util->check_admin_permission('super');
         if (! $auth) {
             echo 'no-permission';
@@ -107,13 +118,29 @@ class User_Manager extends CI_Controller
         $user_token = $this->input->post('user_token');
         $user_password = $this->input->post('user_password');
 
+        // filter space char
+        $user_name = trim($user_name);
+        $user_email = trim($user_email);
+        $user_token = trim($user_token);
+        $user_password = trim($user_password);
+
+        // wx_loginfo($user_name);
+        // wx_loginfo($user_email);
         // wx_loginfo($user_status);
         // wx_loginfo($user_type);
+        // wx_loginfo($user_token);
+        // wx_loginfo($user_password);
 
         // only 'super' admin can do this
         $auth = $this->wx_util->check_admin_permission('super');
         if (! $auth) {
             echo 'no-permission';
+            return false;
+        }
+
+        if (! $user_name || ! $user_email || ! $user_status
+            || ! $user_type || ! $user_token || ! $user_password) {
+            echo 'failed';
             return false;
         }
 
@@ -130,7 +157,7 @@ class User_Manager extends CI_Controller
                 'user_type' => $user_type,
                 'user_token' => $user_token,
                 'user_password' => $user_password,
-                'user_register_time' => date('Y-m-d')
+                'user_register_time' => date('Y-m-d'),
                 );
         $ret = $this->wxm_admin_user->create_admin($data);
         if ($ret) {
@@ -248,6 +275,7 @@ class User_Manager extends CI_Controller
     {
         $user_email_or_name = $this->input->post('user_email_or_name');
         // $user_email_or_name = 'dw_wang126@126.com';  // test
+        $user_email_or_name = trim($user_email_or_name);
 
         if ($user_email_or_name) {
             $base_info = $this->wxm_user->base_info($user_email_or_name);
@@ -280,6 +308,13 @@ class User_Manager extends CI_Controller
 
         $activity_info = $this->wxm_user_activity->get_user_detail($user_id);
         $data = array_merge($base_info, $area_info, $activity_info);
+        // process the null field
+
+        foreach ($data as $key => $value) {
+            if (! $value && $value != 0) {
+                $data[$key] = '';
+            }
+        }
         // wx_echoxml($data);
         echo json_encode($data);
     }

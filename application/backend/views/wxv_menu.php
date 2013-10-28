@@ -68,10 +68,10 @@
         </li>
 
 
-        <li> <a  href="#" class="<?php echo ($menuParam=='account_withdraw')? 'current' :'';?> nav-top-item" >提现审核&操作管理</a>
+        <li> <a  href="#" class="<?php echo ($menuParam=='account_withdraw'||$menuParam=='account_withdraw_history')? 'current' :'';?> nav-top-item" >提现审核&操作管理</a>
           <ul>
             <li><a class="<?php echo ($menuParam=='account_withdraw')? 'current' :'';?>"  href="<?php echo base_url(); ?>cnadmin/withdraw/withdraw_orders">提现管理</a></li>
-            <li><a href="#">Design</a></li>
+            <li><a class="<?php echo ($menuParam=='account_withdraw_history')? 'current' :'';?>"  href="<?php echo base_url(); ?>cnadmin/withdraw/query_history_index">提现历史</a></li>
           </ul>
         </li>
       </ul>

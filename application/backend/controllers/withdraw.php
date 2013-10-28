@@ -360,6 +360,32 @@ class Withdraw extends CI_Controller
         return false;
     }
 /*****************************************************************************/
+    public function query_history_index() {
+        $this->load->view('f_account/wxv_withdraw_history');
+    }
+/*****************************************************************************/
+    public function query_history_by_user() {
+        $user_email_name = $this->input->post('user_email_name');
+        // $user_email_name = 'steven wang';
+
+        // filter space char
+        $user_email_name = trim($user_email_name);
+        if ($user_email_name) {
+            // get user id info
+            $draw_user_id = 0;
+            $user_id_info = $this->wxm_user->get_id_by_email_or_name($user_email_name);
+            if ($user_id_info) {
+                $draw_user_id = $user_id_info['user_id'];
+            }
+            $orders_history = $this->wxm_withdraw->get_history_by_user_id($draw_user_id);
+            if ($orders_history) {
+                echo json_encode($orders_history);
+                return true;
+            }
+        }
+        echo json_encode('');
+        return false;
+    }
 /*****************************************************************************/
     public function test() {
         // echo 'CMS withdraw interface...';

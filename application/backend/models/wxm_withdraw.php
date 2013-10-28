@@ -7,7 +7,7 @@ class WXM_Withdraw extends CI_Model {
         $this->load->database();
     }
 /*****************************************************************************/
-    public function get_page_withdraw_order($per_page_limit = '5', $offset = '10') {
+    public function get_page_withdraw_order($per_page_limit = 5, $offset = 10) {
         $table = $this->wx_table;
         $this->db->select('draw_id, draw_no, draw_user_id, draw_ali_account, draw_money,
                             draw_timestamp, draw_status, draw_admin, draw_admin_time')
@@ -62,6 +62,23 @@ class WXM_Withdraw extends CI_Model {
         }
         return false;
     }
+/*****************************************************************************/
+    public function get_history_by_user_id($draw_user_id = 0) {
+        if ($draw_user_id > 0) {
+            $table = $this->wx_table;
+            $where = array(
+                'draw_user_id' => $draw_user_id,
+                'draw_status' => 'true',
+                );
+            $this->db->select('draw_id, draw_no, draw_user_id, draw_ali_account, draw_money,
+                                draw_timestamp, draw_admin, draw_admin_time')
+                        ->from($table)->where($where)->limit(100)->order_by('draw_timestamp', 'desc');
+            $query = $this->db->get();
+            return $query->result_array();
+        }
+        return false;
+    }
+/*****************************************************************************/
 /*****************************************************************************/
 }
 

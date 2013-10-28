@@ -52,8 +52,8 @@ class WXM_Admin_User extends CI_Model
     {
         if ($user_email && $other) {
             $has_email = $this->has_admin_user($user_email);
-            $has_name = $this->has_user_name($other['user_name']);
-            if ($has_email && ! $has_name) {
+            // $has_name = $this->has_user_name($other['user_name']);
+            if ($has_email) {
                 $table = $this->wx_table;
                 $data = array(
                     'user_name' => $other['user_name'],

@@ -58,16 +58,16 @@
                   <input type="checkbox" value="<?=$data['data_id']?>"/>
                 </td>
                 <td><?=$data['data_name']?></td>
-                <!-- <td ><?=$data['data_objectname']?></td> -->
+
                 <td ><?=$data['data_type']?></td>
                 <td ><?=$data['data_pagecount']?></td>
-                <!-- <td ><?=$data['data_price']?></td> -->
+
                 <td ><?=$data['data_osspath']?></td>
                 <td ><?=$data['data_vpspath']?></td>
-                <!-- <td ><?=$data['data_preview']?></td> -->
+
                 <td ><?=$data['data_uploadtime']?></td>
                 <td ><?=$data['user_id']?></td>
-                <!-- <td ><?=$data['data_status']?></td> -->
+
                 <td >
                   <a href="#messages" rel="modal2"><input onclick="show_data_detail('<?=$data['data_id']?>','<?=$data['data_name']?>','<?=$data['user_id']?>')" type="button" class="button" value="审核"></a>
                   <!-- <input type="button" onclick="" class="button" value="删除"> -->
