@@ -29,14 +29,14 @@
       <h2><b>团队介绍</b></h2>
       <div class="text_line" >
         <p style="font-size:14px; border-bottom: 1px dashed rgb(163, 177, 209);"><b>醍醐创始人/总设计/后端开发攻城狮</b></p>
-        <div style="font-size:13px"><img style="box-shadow: 2px 3px 2px #aaaaaa;" class="fl" src='/application/frontend/views/resources/images/version/creator_avatar.jpg'/>
+        <div style="font-size:13px"><img style="box-shadow: 2px 3px 2px #aaaaaa;width: 110px;height: 150px;" class="fl" src='/application/frontend/views/resources/images/version/wangdiwen.jpg'/>
           <div class="fl" style="padding-left: 20px;">
           <p style="font-size:18px"><b>王地文</b></p>
           <p>12届毕业生</p>
           <p>来自南京占地面积最大、校园风光最美的南京工程学院</p>
           </div>
         </div>
-        <p style="font-size:14px;padding-top: 120px;"><b>自我评价:</b></p>
+        <p style="font-size:14px;padding-top: 160px;"><b>自我评价:</b></p>
         <p style="font-size:14px;">
         <p style="font-size:14px;">大学时代，“一事无成”，从没参加过什么社团，更没担任过什么班级干部之类，此前一直在做些无甚意义的事情…</p>
         <p style="font-size:14px;">突然有一天，用C语言写了人生中第一个可运行的小程序，名叫“Hello world”，我勒个去，从此一发而不可收拾，疯狂的爱上了编程（其实说的好听一
@@ -50,14 +50,14 @@
 
 
         <p style="font-size:14px; border-bottom: 1px dashed rgb(163, 177, 209);padding-top: 20px;"><b>醍醐联合创始人/ 前端开发攻城狮</b></p>
-        <div style="font-size:13px"><img style="box-shadow: 2px 3px 2px #aaaaaa;" class="fl" src='/application/frontend/views/resources/images/version/creator_avatar.jpg'/>
+        <div style="font-size:13px"><img style="box-shadow: 2px 3px 2px #aaaaaa;width: 110px;height: 150px;" class="fl" src='/application/frontend/views/resources/images/version/creator_avatar.jpg'/>
           <div class="fl" style="padding-left: 20px;">
           <p style="font-size:18px"><b>谢旺</b></p>
           <p>12届毕业生</p>
           <p>毕业于长春工大</p>
           </div>
         </div>
-        <p style="font-size:14px;padding-top: 120px;"><b>自我评价:</b></p>
+        <p style="font-size:14px;padding-top: 160px;"><b>自我评价:</b></p>
         <p style="font-size:14px;">内敛却不失奔放，简单却饱含内容!</p>
 
         <p style="font-size:14px;"><b>我的目标是:</b></p>

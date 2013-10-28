@@ -314,19 +314,23 @@ class WXC_Home extends CI_Controller
         $passwd = $this->input->post('wx_password');
         $if_auto_login = $this->input->post('if_auto_login');
 
+        // filter space char
+        $email = trim($email);
+        $passwd = trim($passwd);
+
         $data['result'] = '';
         $ret = $this->wxm_user->login($email, $passwd);
         if ($ret == '2') {
-            $output = 'database-wrong';
-            echo $output;
+            echo 'database-wrong';
         }
         elseif ($ret == '0') {
-            $output = 'passwd-wrong';
-            echo $output;
+            echo 'passwd-wrong';
         }
         elseif ($ret == '1') {
-            $output = 'no-user';
-            echo $output;
+            echo 'no-user';
+        }
+        elseif ($ret == '3') {
+            echo 'user-close';
         }
         else {  // 正常登录
             // Record the CI session
@@ -386,6 +390,7 @@ class WXC_Home extends CI_Controller
                 }
             }
         }
+        return true;
     }
 /*****************************************************************************/
     public function quick_login()

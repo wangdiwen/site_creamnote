@@ -551,7 +551,8 @@ class WXM_User extends CI_Model
         if ($has_user)
         {
             // Check user passwd
-            $this->db->select('user_name, user_email, user_password')->from('wx_user')->where('user_email', $email);
+            $this->db->select('user_name, user_email, user_password, user_status')
+                        ->from('wx_user')->where('user_email', $email);
             $query = $this->db->get();
 
             $rows = $query->num_rows();
@@ -560,7 +561,14 @@ class WXM_User extends CI_Model
                 $first = $query->row();
                 $user_password = $first->user_password;
                 $user_name = $first->user_name;
+                $user_status = $first->user_status;
                 $encrypt_passwd = $this->encrypt->decode($user_password);
+
+                // 判断用户是否被封号
+                if ($user_status == 'false') {
+                    return '3';
+                }
+
                 if ($encrypt_passwd == $passwd)
                 {
                     return $user_name;  // Successed, return name

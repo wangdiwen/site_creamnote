@@ -221,9 +221,10 @@ var loginname = '<?php if (isset($_SESSION["wx_user_name"]) && $_SESSION["wx_use
                      errorMes("没有该用户");
                  }else if (result=='passwd-wrong'){
                      errorMes("密码错误");
-                 }
-                 else if (result=='database-wrong'){
+                 }else if (result=='database-wrong'){
                     errorMes("数据库连接失败");
+                 }else if (result=='user-close'){
+                    errorMes("您的账号已经被封号，如有疑义请联系我们！");
                  }
 
              },

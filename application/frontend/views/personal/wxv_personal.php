@@ -584,7 +584,7 @@ function delete_data(dataid){
 				$counts = count($message);
 				if($counts!=0)
 				{
-					echo "<li id='message'><p id='message_red' style='padding-left:6px;color:red;'>".$counts."</p><ul class='free'>";
+					echo "<li id='message'><p id='message_red' style='padding-left:6px;color:red;margin: 0;'>".$counts."</p><ul class='free'>";
 				}
 				else
 				{
@@ -603,7 +603,7 @@ function delete_data(dataid){
 				$counts = count($comment);
 				if($counts!=0)
 				{
-					echo "<li id='comment'><p id='comment_red' style='padding-left:6px;color:red;'>".$counts."</p><ul class='free'>";
+					echo "<li id='comment'><p id='comment_red' style='padding-left:6px;color:red;margin: 0;'>".$counts."</p><ul class='free'>";
 				}
 				else
 				{
@@ -619,7 +619,7 @@ function delete_data(dataid){
 			if($system)
 			{
 				$counts = count($system);
-				echo "<li id='system'><p id='system_red' style='padding-left:6px;color:red;'>".$counts."</p><ul class='free'>";
+				echo "<li id='system'><p id='system_red' style='padding-left:6px;color:red;margin: 0;'>".$counts."</p><ul class='free'>";
 				echo "<li class='header'><a href='#' class='dock'>锁定</a><a href='#' class='undock'>解除锁定</a>系统信息</li>";
 				foreach ($system as $sys)
 				{
@@ -631,7 +631,7 @@ function delete_data(dataid){
 			{
 				$counts = 0;
 				$counts = count($feedback);
-				echo "<li id='feedback'><p id='feedback_red' style='padding-left:6px;color:red;'>".$counts."</p><ul class='free'>";
+				echo "<li id='feedback'><p id='feedback_red' style='padding-left:6px;color:red;margin: 0;'>".$counts."</p><ul class='free'>";
 				echo "<li class='header'><a href='#' class='dock'>锁定</a><a href='#' class='undock'>解除锁定</a>反馈信息</li>";
 				foreach ($feedback as $fed)
 				{
