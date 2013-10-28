@@ -97,7 +97,7 @@ $pend_data_list = $db_service->select($table, $select, $where);
 $total_count = count($pend_data_list);
 
 wx_log("---------------------------------------------------------------------------------", $log_name);
-wx_log("---------------------  Clear Unfull Data Everyday -----------------------------", $log_name);
+wx_log("---------------------  Clear Unfull Data Everyday ------------------------------", $log_name);
 //wx_log('--------- Filter Time      : '.$before_yesterday_time.' ~ '.$yesterday_time.'-----------', $log_name);
 wx_log('--------- Filter Time      : Before yesterday time '.$before_yesterday_time.'-----------', $log_name);
 wx_log('--------- Total  Data Count: '.$total_count, $log_name, $log_name);
