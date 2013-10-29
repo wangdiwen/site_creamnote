@@ -40,7 +40,7 @@
         <div class="creamnote_cnzz">
            <script src="http://s14.cnzz.com/stat.php?id=5368685&web_id=5368685&show=pic2" language="JavaScript"></script>
            <a target="_blank" href="http://webscan.360.cn/index/checkwebsite/url/www.creamnote.com"><img style="width: 50px;" border="0" src="http://img.webscan.360.cn/status/pai/hash/0d6bfadeffcbd25ebc0419ab9827277a"/></a>
-           Copyright © 2013-2014  醍醐笔记网Creamnote.com  All Rights Reserved | <a href="http://www.miitbeian.gov.cn/" target="_blank" style="color:black;cursor:pointer">苏ICP备13034212号-1</a>
+           Copyright © 2013-2014  醍醐笔记网Creamnote.com  All Rights Reserved丨南京醍醐网络科技有限公司 | <a href="http://www.miitbeian.gov.cn/" target="_blank" style="color:black;cursor:pointer">苏ICP备13034212号-1</a>
         </div>
     </div>
 </div>

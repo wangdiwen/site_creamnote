@@ -926,7 +926,7 @@ var start_withdraw = function(){
   }else if(retData == "no-money"){
     errorMes("账户余额不足，大于10.00RMB才可以提现");
   }else if(retData == "no-actived"){
-    errorMes("账户没有激活，不可使用提醒功能");
+    errorMes("账户没有激活，不可使用提现功能");
   }else if(retData == "no-token"){
     errorMes("没有设置提醒口令");
   }else if(retData == "wrong-money"){

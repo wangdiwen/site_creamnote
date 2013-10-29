@@ -177,7 +177,7 @@ foreach ($pend_data_list as $pend_data) {
         // and if it has flash file on vps disk, path like: 'creamnote/upload/flash/'
         // we also delete the flash file
         if (! file_exists($file_name)) {
-            wx_log('Warning: VPS File Not Existed');
+            wx_log('Warning: VPS File Not Existed', $log_name);
 
             // delete the flash file if has
             $ret_del_file = wx_delete_file($flash_file);

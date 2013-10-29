@@ -329,6 +329,21 @@ class WXM_User extends CI_Model
 		return false;
     }
 /*****************************************************************************/
+    public function update_account_name_and_status($user_id = 0, $user_account_name = '') {
+        if ($user_id > 0 && $user_account_name) {
+            $data = array(
+                'user_account_name' => $user_account_name,
+                'user_account_realname' => '',
+                'user_account_active' => 'false',
+                );
+            $table = $this->wx_table;
+            $this->db->where('user_id', $user_id);
+            $this->db->update($table, $data);
+            return true;
+        }
+        return false;
+    }
+/*****************************************************************************/
     public function get_base_info($user_id = 0)
     {
         if ($user_id > 0)

@@ -411,6 +411,9 @@ class WXC_Home extends CI_Controller
         elseif ($ret == '2') {
             $ajax = 'database-wrong';
         }
+        elseif ($ret == '3') {
+            $ajax = 'user-close';
+        }
 
         echo $ajax;  // ajax
         fastcgi_finish_request();

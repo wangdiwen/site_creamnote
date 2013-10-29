@@ -33,7 +33,7 @@
         <div style="font-size:13px"><img style="box-shadow: 2px 3px 2px #aaaaaa;width: 110px;height: 150px;" class="fl" src='/application/frontend/views/resources/images/version/wangdiwen.jpg'/>
           <div class="fl" style="padding-left: 20px;">
           <p style="font-size:18px"><b>王地文</b></p>
-          <p>2012届毕业生</p>
+          <p>2012届</p>
           <p>来自南京工程学院</p>
           </div>
         </div>

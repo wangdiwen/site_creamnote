@@ -97,7 +97,7 @@ var loginname = '<?php if (isset($_SESSION["wx_user_name"]) && $_SESSION["wx_use
     $(function(){
       var UA = navigator.userAgent.toLowerCase();
       if(UA.indexOf("msie 7.0")>=0||UA.indexOf("msie 8.0")>=0){
-        warnMes("如果您在使用ie8以及更低版本，建议您升级到ie9或者更高版本浏览器，获得更好体验！\n如果您使用国产的山寨浏览器（360、搜狗...），请开启极速模式！\n谢谢！")
+        warnMes("IE版本较低，建议您升级到ie9或者更高版本，以获得更好体验！\r推荐使用chrome、火狐浏览器")
       }
       // if(loginname == ""){
       //   var timer = setInterval( 'myrefresh()', 4000);

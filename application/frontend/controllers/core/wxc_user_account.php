@@ -69,7 +69,7 @@ class WXC_User_Account extends CI_Controller {
 
 			// has no actived
 			if ($account_name) {
-				$ret = $this->wxm_user->update_account_name($user_id, trim($account_name));
+				$ret = $this->wxm_user->update_account_name_and_status($user_id, trim($account_name));
 				if ($ret) {
 					echo 'success';
 					return true;
