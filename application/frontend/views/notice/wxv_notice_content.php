@@ -20,11 +20,16 @@
   <div class="body article_body" style="border-top: 8px solid #839acd;">
 
     <div class="article_content">
-      <h2><b><?php echo $notice_title;?></b></h2>
-
-
-      <?php echo $notice_content;?>
-
+      <div class="reg_frame notice_frame" style="text-align: left;width:600px;" id="reg_frame">
+        <img src="/application/frontend/views/resources/images/version/trumpet.jpg" style="width: 135px;position: absolute;margin-left: -29px;margin-top: -30px;">
+        <h2 style="padding: 0px 0 30px 45px;line-height: 35px;">
+          <b><?php echo $notice_title;?></b>
+        </h2>
+        <div style="color:#000;">
+          <?php echo $notice_content;?>
+        </div>
+        <img src="/application/frontend/views/resources/images/version/trumpet2.jpg" style="width: 135px;position: absolute;margin-left: 494px;margin-top: -61px;">
+      </div>
     </div>
     <a  href="<?php echo site_url('primary/wxc_feedback/feedback_page'); ?>">
       <div class="feedback">

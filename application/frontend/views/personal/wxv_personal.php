@@ -127,7 +127,7 @@ function viewMessage(the,notify_id,notify_type,notify_params){
                 			str+="<div id='start"+startid+"'>";
         	        		str+="<input type='hidden' name='feedback_id'>"	;
         	        		str+="<input type='text' class='feed_back_comment_content_input' style='width: 289px;' id='rel"+startid+"' >";
-        	        		str+="<input type='submit' onclick='comment("+startid+")' class='feed_back_comment_content_submit_btn' value='回复'>";
+        	        		str+="<input type='submit' style='height: 32px;' onclick='comment("+startid+")' class='feed_back_comment_content_submit_btn button_c'  value='回复'>";
         	        		str+="</div></div></div></div>";
         	        		str+="<input type='hidden' id='user_id_list' value='" +user_id_list+ "'/>";
                       $("#message_title").html("反馈信息");
@@ -225,6 +225,7 @@ function viewMessage(the,notify_id,notify_type,notify_params){
 function reply(feedback_id){
 	$("[id *=start]").css("display","none");
 	$("#start"+feedback_id).css("display","block");
+  $("#rel"+feedback_id).focus();
 	//rerutn false;
 }
 //评论回复

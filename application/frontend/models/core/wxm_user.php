@@ -81,7 +81,7 @@ class WXM_User extends CI_Model
     {
         if ($renren_open_id) {
             $table = $this->wx_table;
-            $this->db->select('user_id, user_name, user_email')->from($table)->where('user_renren_openid', $renren_open_id)->limit(1);
+            $this->db->select('user_id, user_name, user_email, user_status')->from($table)->where('user_renren_openid', $renren_open_id)->limit(1);
             $query = $this->db->get();
             return $query->row_array();
         }
@@ -117,7 +117,7 @@ class WXM_User extends CI_Model
     {
         if ($weibo_open_id) {
             $table = $this->wx_table;
-            $this->db->select('user_id, user_name, user_email')->from($table)->where('user_weibo_openid', $weibo_open_id)->limit(1);
+            $this->db->select('user_id, user_name, user_email, user_status')->from($table)->where('user_weibo_openid', $weibo_open_id)->limit(1);
             $query = $this->db->get();
             return $query->row_array();
         }
@@ -140,7 +140,7 @@ class WXM_User extends CI_Model
     {
         if ($qq_open_id) {
             $table = $this->wx_table;
-            $this->db->select('user_id, user_name, user_email')->from($table)->where('user_qq_openid', $qq_open_id)->limit(1);
+            $this->db->select('user_id, user_name, user_email, user_status')->from($table)->where('user_qq_openid', $qq_open_id)->limit(1);
             $query = $this->db->get();
             return $query->row_array();
         }

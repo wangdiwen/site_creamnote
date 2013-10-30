@@ -20,7 +20,7 @@
         <h3>管理员列表</h3>
         <ul class="content-box-tabs">
           <li><a href="#tab1" class="default-tab">列表</a></li>
-          <li><a href="#tab2" class="default-tab">新增管理员</a></li>
+          <li><a href="#tab2" >新增管理员</a></li>
         </ul>
         <div class="clear"></div>
       </div>

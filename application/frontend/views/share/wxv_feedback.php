@@ -19,6 +19,7 @@ $(document).ready(function() {
 function reply(feedback_id){
 	$("[id *=start]").css("display","none");
 	$("#start"+feedback_id).css("display","block");
+    $("#rel"+feedback_id).focus();
 	//rerutn false;
 }
 

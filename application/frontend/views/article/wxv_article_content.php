@@ -19,7 +19,7 @@
   <div class="body article_body" style="border-top: 8px solid #839acd;">
 
     <div class="article_content" >
-      <h2><b><?php echo $article_title;?></b></h2>
+      <h2 style="line-height: 35px;color: #839acd;"><b><?php echo $article_title;?></b></h2>
       <div class="article_author" style="font-style: oblique;">
         <p>作者:<?php echo $article_author;?></p>
         <p>时间:<?php echo $article_time;?></p>

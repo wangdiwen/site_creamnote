@@ -15,6 +15,10 @@ class WXC_Direct extends CI_Controller
         $this->load->view('share/wxv_download_overflow');
     }
 /*****************************************************************************/
+    public function user_close_page() {  // 用户封号页面
+        $this->load->view('entry/wxv_account_ban');
+    }
+/*****************************************************************************/
 }
 
 /* End of file wxc_direct.php */

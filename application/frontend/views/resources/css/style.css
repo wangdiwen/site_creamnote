@@ -656,7 +656,7 @@ hr { display: none; }
 
         /* panels */
         #dock ul li {
-        	padding:5px;
+        	padding:4px;
         	border: solid 1px #F1F1F1;
         	line-height: 130%;
         	overflow: hidden;
@@ -667,7 +667,7 @@ hr { display: none; }
 
         #dock > li:hover ul {display:block;}
         #dock > li ul {position:absolute; top:0px; left:-180px;  z-index:-1;width:300px; display:none;
-                       background-color:#F1F1F1; border:solid 1px #969696; padding:0px; margin:0px; list-style:none;}
+                       background-color:#F1F1F1; border:solid 1px #969696; padding:0px; margin:0px; list-style:none;border-left: 0;}
         #dock > li ul.docked { display:block;z-index:-2;}
 
         .dock,.undock{float:right;}

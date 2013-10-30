@@ -299,11 +299,14 @@ class WXC_User_manager extends CI_Controller
 
         // check qq bind or not
         $has_qq_bind = $this->check_qq_bind($user_open_id, $user_nice_name);
-        if ($has_qq_bind) {
+        if ($has_qq_bind == '0') {      // 已经绑定了
             redirect('home/personal');
         }
-        else {
+        elseif ($has_qq_bind == '1') {      // 未绑定QQ，进入绑定提示页面
             $this->third_party_login($user_nice_name);
+        }
+        else {     // 用户被封号了
+            redirect('static/wxc_direct/user_close_page');
         }
     }
 /*****************************************************************************/
@@ -318,6 +321,11 @@ class WXC_User_manager extends CI_Controller
             // Record user session
             $user_info = $this->wxm_user->get_by_qq_openid($qq_open_id);
             if ($user_info) {
+                $user_status = $user_info['user_status'];
+                if ($user_status == 'false') {  // 被封号了
+                    return '2';
+                }
+
                 // 记录登录PHP SESSION用户数据
                 $_SESSION['wx_user_id'] = $user_info['user_id'];
                 $_SESSION['wx_user_name'] = $user_info['user_name'];
@@ -337,14 +345,14 @@ class WXC_User_manager extends CI_Controller
                 }
                 $this->wxm_user_activity->update_login_time_ip($user_info['user_id'], $login_time, $login_ip, $reset_day_downcount);
             }
-
-            return true;
+            // return true;
+            return '0';
         }
         else {
             $_SESSION['qq_open_id'] = $qq_open_id;
             $_SESSION['qq_nice_name'] = $qq_nice_name;
-
-            return false;
+            // return false;
+            return '1';
         }
     }
 /*****************************************************************************/
@@ -452,13 +460,18 @@ class WXC_User_manager extends CI_Controller
 
         // check weibo bind or not
         $bind_weibo = $this->check_weibo_bind($weibo_user_id, $weibo_user_nice_name);
-        if ($bind_weibo) {
+        if ($bind_weibo == '0') {  // 有绑定微博账户
             redirect('home/personal');
         }
-        else {
+        elseif ($bind_weibo == '1') {  // 没有绑定，进入绑定微博账户页面
             $this->third_party_login($weibo_user_nice_name);
         }
+        else {  // 结果返回'2'，表示此用户被封号了
+            redirect('static/wxc_direct/user_close_page');
+        }
     }
+/*****************************************************************************/
+
 /*****************************************************************************/
     public function weibo_cancel_back_func()
     {
@@ -474,6 +487,11 @@ class WXC_User_manager extends CI_Controller
         if ($has_weibo_account) {
             $user_info = $this->wxm_user->get_by_weibo_openid($weibo_open_id);
             if ($user_info) {
+                $user_status = $user_info['user_status'];
+                if ($user_status == 'false') {  // 用户被封号了
+                    return '2';
+                }
+
                 // 记录登录PHP SESSION用户数据
                 $_SESSION['wx_user_id'] = $user_info['user_id'];
                 $_SESSION['wx_user_name'] = $user_info['user_name'];
@@ -492,15 +510,15 @@ class WXC_User_manager extends CI_Controller
                     }
                 }
                 $this->wxm_user_activity->update_login_time_ip($user_info['user_id'], $login_time, $login_ip, $reset_day_downcount);
-
-                return true;
+                // return true;
+                return '0';
             }
         }
         else {
             $_SESSION['weibo_open_id'] = $weibo_open_id;
             $_SESSION['weibo_nice_name'] = $weibo_nice_name;
-
-            return false;
+            // return false;
+            return '1';
         }
     }
 /*****************************************************************************/
@@ -533,11 +551,14 @@ class WXC_User_manager extends CI_Controller
         }
 
         $has_renren_bind = $this->check_renren_bind($user_id, $user_name);
-        if ($has_renren_bind) {
+        if ($has_renren_bind == '0') {  // 已经绑定
             redirect('home/personal');
         }
-        else {
+        elseif ($has_renren_bind == '1') {  // 未绑定，进入绑定提示页面
             $this->third_party_login($user_name);
+        }
+        else {  // 用户被封号
+            redirect('static/wxc_direct/user_close_page');
         }
     }
 /*****************************************************************************/
@@ -550,6 +571,11 @@ class WXC_User_manager extends CI_Controller
         if ($has_renren_account) {
             $user_info = $this->wxm_user->get_by_renren_openid($renren_open_id);
             if ($user_info) {
+                $user_status = $user_info['user_status'];
+                if ($user_status == 'false') {
+                    return '2';
+                }
+
                 // 记录登录PHP SESSION用户数据
                 $_SESSION['wx_user_id'] = $user_info['user_id'];
                 $_SESSION['wx_user_name'] = $user_info['user_name'];
@@ -568,15 +594,15 @@ class WXC_User_manager extends CI_Controller
                     }
                 }
                 $this->wxm_user_activity->update_login_time_ip($user_info['user_id'], $login_time, $login_ip, $reset_day_downcount);
-
-                return true;
+                // return true;
+                return '0';
             }
         }
         else {
             $_SESSION['renren_open_id'] = $renren_open_id;
             $_SESSION['renren_nice_name'] = $renren_nice_name;
-
-            return false;
+            // return false;
+            return '1';
         }
     }
 /*****************************************************************************/

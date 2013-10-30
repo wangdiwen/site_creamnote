@@ -151,7 +151,7 @@ function next_three(){
 <body>
 	<?php include  'application/frontend/views/share/header_home.php';?>
 
-	<div class="body" style="min-height: 510px;border-top: 8px solid #839acd;padding: 50px 0;">
+	<div class="body" style="min-height: 600px;border-top: 8px solid #839acd;padding: 50px 0;">
       <div class="reg_frame" id="reg_frame">
 
         <h2 id="title">输入邮箱号</h2>

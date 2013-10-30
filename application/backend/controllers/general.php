@@ -319,6 +319,122 @@ class General extends CI_Controller {
         return false;
     }
 /*****************************************************************************/
+    public function test_send_welcome_email() {
+        $test_email = 'dw_wang126@126.com';
+
+        $email_content = '测试给上周新注册的用户，发送欢迎邮件，由网站创始人发送，发送测试成功！';
+        $user_name = 'Hello Kitty';
+
+        $greet = "<html><head></head>你好 <b>".$user_name."</b> 同学：<p></p>";
+        $content = $greet.$email_content.'</html>';
+        $send_ret = $this->_send_system_email_to_user($test_email, $content);
+        if ($send_ret) {
+            echo 'success';
+            return true;
+        }
+        echo 'failed';
+        return false;
+    }
+/*****************************************************************************/
+    public function test_send_week_recommend() {
+        $data_id_list = $this->input->post('data_id_list');
+        // $data_id_list = '41,42,43,47';
+        $data_list = explode(',', $data_id_list);
+        // wx_echoxml($data_list);
+
+        $data_list_info = $this->wxm_data->filter_note_by_id_list($data_list);
+        // wx_echoxml($data_list_info);
+        if ($data_list_info) {
+            $email_header = file_get_contents('application/backend/site_file/recommand_note_header.html');
+            $email_content = '';
+            $email_footer = file_get_contents('application/backend/site_file/recommand_note_footer.html');
+            foreach ($data_list_info as $data) {
+                $data_id = $data['data_id'];
+                $data_name = $data['data_name'];
+                $data_type = $data['data_type'];
+                $data_pagecount = $data['data_pagecount'];
+                $data_price = $data['data_price'];
+                $data_uploadtime = $data['data_uploadtime'];
+                $data_keyword = $data['data_keyword'];
+
+                $email_content .= '<tr><td colspan="2" align="left" bgcolor="#f3f2ce" style="color: #3399FF;font-size: 14px;"><a href="http://www.creamnote.com/data/wxc_data/data_view/'.$data_id.'" style="text-decoration: none;color:#3399FF" target="_blank">'.$data_name.'</a></td></tr><tr><td colspan="2" valign="top" bgcolor="#f3f2ce" style="font-size: 12px;"><div style="margin-top:-10px;margin-left:10px;">类型:'.$data_type.'&nbsp;&nbsp;&nbsp;&nbsp;页数:'.$data_pagecount.'&nbsp;&nbsp;&nbsp;&nbsp;价格￥:'.$data_price.'&nbsp;&nbsp;&nbsp;&nbsp;关键词:'.$data_keyword.'</div></td></tr>';
+            }
+            $content = $email_header.$email_content.$email_footer;
+
+            // init system email settings
+            $config['protocol'] = 'smtp';
+            $config['smtp_host'] = 'smtp.ym.163.com';
+            $config['smtp_port'] = 25;
+            $config['smtp_user'] = 'no-reply@creamnote.com';
+            $config['smtp_pass'] = 'wx@creamnote';
+            $config['mailtype'] = 'html';
+            $config['validate'] = true;
+            $config['crlf'] = '\r\n';
+            $config['charset'] = 'utf-8';
+            $this->email->initialize($config);
+
+            // get all register user email
+            $test_email = 'dw_wang126@126.com';  // test email
+            $send_ret = $this->_send_recommand_email_to_user($test_email, $content);
+            if ($send_ret) {
+                echo 'success';
+                return true;
+            }
+        }
+        echo 'failed';
+        return false;
+    }
+/*****************************************************************************/
+    public function test_send_month_recommend() {
+        $data_id_list = $this->input->post('data_id_list');
+
+        // $data_id_list = '41,42,43,47';
+        $data_list = explode(',', $data_id_list);
+        // wx_echoxml($data_list);
+
+        $data_list_info = $this->wxm_data->filter_note_by_id_list($data_list);
+        // wx_echoxml($data_list_info);
+        if ($data_list_info) {
+            $email_header = file_get_contents('application/backend/site_file/recommand_note_month_header.html');
+            $email_content = '';
+            $email_footer = file_get_contents('application/backend/site_file/recommand_note_footer.html');
+            foreach ($data_list_info as $data) {
+                $data_id = $data['data_id'];
+                $data_name = $data['data_name'];
+                $data_type = $data['data_type'];
+                $data_pagecount = $data['data_pagecount'];
+                $data_price = $data['data_price'];
+                $data_uploadtime = $data['data_uploadtime'];
+                $data_keyword = $data['data_keyword'];
+
+                $email_content .= '<tr><td colspan="2" align="left" bgcolor="#f3f2ce" style="color: #3399FF;font-size: 14px;"><a href="http://www.creamnote.com/data/wxc_data/data_view/'.$data_id.'" style="text-decoration: none;color:#3399FF" target="_blank">'.$data_name.'</a></td></tr><tr><td colspan="2" valign="top" bgcolor="#f3f2ce" style="font-size: 12px;"><div style="margin-top:-10px;margin-left:10px;">类型:'.$data_type.'&nbsp;&nbsp;&nbsp;&nbsp;页数:'.$data_pagecount.'&nbsp;&nbsp;&nbsp;&nbsp;价格:￥'.$data_price.'&nbsp;&nbsp;&nbsp;&nbsp;关键词:'.$data_keyword.'</div></td></tr>';
+            }
+            $content = $email_header.$email_content.$email_footer;
+
+            // init system email settings
+            $config['protocol'] = 'smtp';
+            $config['smtp_host'] = 'smtp.ym.163.com';
+            $config['smtp_port'] = 25;
+            $config['smtp_user'] = 'no-reply@creamnote.com';
+            $config['smtp_pass'] = 'wx@creamnote';
+            $config['mailtype'] = 'html';
+            $config['validate'] = true;
+            $config['crlf'] = '\r\n';
+            $config['charset'] = 'utf-8';
+            $this->email->initialize($config);
+
+            // get all register user email
+            $test_email = 'dw_wang126@126.com';  // test email
+            $send_ret = $this->_send_recommand_email_to_user($test_email, $content);
+            if ($send_ret) {
+                echo 'success';
+                return true;
+            }
+        }
+        echo 'failed';
+        return false;
+    }
+/*****************************************************************************/
 /*****************************************************************************/
     public function test() {
         // $user_email = 'dw_wang126@126.com';

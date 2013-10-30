@@ -1190,7 +1190,9 @@ ol ol{
 	color: #3EB917;
 	font-size: 14px;
 }
-
+.notice_frame{
+	background: url(../images/version/notice_bg.jpg) repeat;
+}
 /* -------------文章（content）------------------------- */
 .article_body{
 	min-height: 680px;
