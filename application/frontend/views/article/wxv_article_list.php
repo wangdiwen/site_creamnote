@@ -18,7 +18,7 @@
   <?php include  'application/frontend/views/share/header_home.php';?>
   <div class="body article_body" style="border-top: 8px solid #839acd;">
 
-    <div class="article_content" style="margin: 10px 200px;padding: 5px 10px;border: 1px solid #ccc;">
+    <div class="article_content" style="margin: 10px 200px;padding: 5px 10px;border: 1px solid #ccc;background: #fff;">
       <h2 class="article_title"  ><b>精彩博文</b></h2>
       <div style="padding:10px 0;">
         <?php
@@ -30,7 +30,7 @@
             <?php }else{?>
               <div class="article_icon_fire article_icon"></div>
             <?php }?>
-            <a style="font-size: 20px;" href="<?php echo base_url()?>core/wxc_content/read_article?article_id=<?=$week['article_id']?>"><?=$week['article_title']?></a><br>
+            <a style="font-size: 18px;" href="<?php echo base_url()?>core/wxc_content/read_article?article_id=<?=$week['article_id']?>"><?=$week['article_title']?></a><br>
             <div style="line-height: 16px; margin-bottom: -6px;">
               <span class="fr" style="font-size: 12px;">分类:<?=$week['article_category']?></span></br>
               <span class="fr" style="font-size: 12px;">作者:<?=$week['article_author']?>/<?=$week['article_time']?></span>

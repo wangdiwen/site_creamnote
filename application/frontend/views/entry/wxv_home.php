@@ -63,7 +63,7 @@ $("div").hover(function(e){
         fx          : 'random',
         pieDiameter     : 58,
         time        : 4000,
-        transPeriod     : 1000,
+        transPeriod     : 500,
         // onLoaded      : function() {  alert(1)},
 
       });

@@ -29,25 +29,24 @@
       <h2><b>团队介绍</b></h2>
       <div class="text_line" >
 
-        <p style="font-size:14px; border-bottom: 1px dashed rgb(163, 177, 209);"><b>醍醐创始人 / 总设计 / 后端攻城狮</b></p>
+        <p style="font-size:14px; border-bottom: 1px dashed rgb(163, 177, 209);"><b>醍醐创始人 / 总设计 / Founder</b></p>
         <div style="font-size:13px"><img style="box-shadow: 2px 3px 2px #aaaaaa;width: 110px;height: 150px;" class="fl" src='/application/frontend/views/resources/images/version/wangdiwen.jpg'/>
           <div class="fl" style="padding-left: 20px;">
           <p style="font-size:18px"><b>王地文</b></p>
           <p>2012届</p>
-          <p>来自南京工程学院</p>
+          <p>来自南工程</p>
           </div>
         </div>
         <p style="font-size:14px;padding-top: 160px;"><b>自我评价:</b></p>
         <p style="font-size:14px;">
-        <p style="font-size:14px;">“恰同学少年”，没参加过什么社团，更没担任过班级干部之类，此前一直在做些无甚意义的事情，直到 ...</p>
+        <p style="font-size:14px;">&nbsp;&nbsp;&nbsp;&nbsp;“恰同学少年”，没参加过什么社团，更没担任过班级干部之类，此前一直在做些无甚意义的事情，直到 ...</p>
         <p style="font-size:14px;">有一天，写了一个叫“Hello World”的神奇东东，你懂得 ~~</p>
-        <p style="font-size:14px;">最欣赏的一部电影是《肖申克的救赎》~~</p>
+        <p style="font-size:14px;">&nbsp;&nbsp;&nbsp;&nbsp;最欣赏的一部电影是《肖申克的救赎》，一部充满了自由、希望、友谊的生命之歌，当Andy爬过足足5个足球场那么长的排污管道的时候，给心灵带来的只有震撼.</p>
         <p style="font-size:14px;"><b>我的信条:</b></p>
-        <p style="font-size:14px;">喜欢Geek，热爱编程，是“一只特立独行的猪”；</p>
-        <p style="font-size:14px;">You laugh at me because I'm different，I laugh at you because you're all the same.</p>
+        <p style="font-size:14px;">&nbsp;&nbsp;&nbsp;&nbsp;喜欢Geek，是“一只特立独行的猪”；</p>
+        <p style="font-size:15px;">&nbsp;&nbsp;&nbsp;&nbsp;You laugh at me because I'm different，I laugh at you because you're all the same.</p>
 
-
-        <p style="font-size:14px; border-bottom: 1px dashed rgb(163, 177, 209);padding-top: 20px;"><b>醍醐联合创始人 / 前端攻城狮</b></p>
+        <p style="font-size:14px; border-bottom: 1px dashed rgb(163, 177, 209);padding-top: 20px;"><b>醍醐联合创始人 / 攻城狮 /Co-founder</b></p>
         <div style="font-size:13px"><img style="box-shadow: 2px 3px 2px #aaaaaa;width: 110px;height: 150px;" class="fl" src='/application/frontend/views/resources/images/version/xiewang.jpg'/>
           <div class="fl" style="padding-left: 20px;">
           <p style="font-size:18px"><b>谢旺</b></p>
@@ -56,10 +55,23 @@
           </div>
         </div>
         <p style="font-size:14px;padding-top: 160px;"><b>自我评价:</b></p>
-        <p style="font-size:14px;">内敛却不失奔放，简单却饱含内容!</p>
-
+        <p style="font-size:14px;">&nbsp;&nbsp;&nbsp;&nbsp;内敛却不失奔放，简单却饱含内容!</p>
         <p style="font-size:14px;"><b>我的信条:</b></p>
-        <p style="font-size:14px;">用技术与美的结合，创造出许多令人爱不释手的产品！</p>
+        <p style="font-size:14px;">&nbsp;&nbsp;&nbsp;&nbsp;用技术与美的结合，创造出许多令人爱不释手的产品！</p>
+
+        <p style="font-size:14px; border-bottom: 1px dashed rgb(163, 177, 209);padding-top: 20px;"><b>醍醐产品总监 / CPO</b></p>
+        <div style="font-size:13px"><img style="box-shadow: 2px 3px 2px #aaaaaa;width: 110px;height: 150px;" class="fl" src='/application/frontend/views/resources/images/version/tangqi.jpg'/>
+          <div class="fl" style="padding-left: 20px;">
+          <p style="font-size:18px"><b>唐淇</b></p>
+          <p>2012届</p>
+          <p>毕业于南工程</p>
+          </div>
+        </div>
+        <p style="font-size:14px;padding-top: 160px;"><b>自我评价:</b></p>
+        <p style="font-size:14px;">&nbsp;&nbsp;&nbsp;&nbsp;不后悔自己的选择，不挥霍自己的人生；</p>
+        <p style="font-size:14px;">&nbsp;&nbsp;&nbsp;&nbsp;坚持自我，破浪前行！</p>
+        <p style="font-size:14px;"><b>我的信条:</b></p>
+        <p style="font-size:15px;">&nbsp;&nbsp;&nbsp;&nbsp;Where there is a will, there is a way.</p>
 
       </div>
     </div>
