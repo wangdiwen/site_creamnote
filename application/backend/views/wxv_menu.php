@@ -74,6 +74,14 @@
             <li><a class="<?php echo ($menuParam=='account_withdraw_history')? 'current' :'';?>"  href="<?php echo base_url(); ?>cnadmin/withdraw/query_history_index">提现历史</a></li>
           </ul>
         </li>
+
+        <li> <a  href="#" class="<?php echo ($menuParam=='f_log'||$menuParam=='b_log'||$menuParam=='a_log')? 'current' :'';?> nav-top-item" >日志管理</a>
+          <ul>
+            <li><a class="<?php echo ($menuParam=='f_log')? 'current' :'';?>"  href="<?php echo base_url(); ?>cnadmin/share/frontend_log_page">前台日志</a></li>
+            <li><a class="<?php echo ($menuParam=='b_log')? 'current' :'';?>"  href="<?php echo base_url(); ?>cnadmin/share/backend_log_page">后台日志</a></li>
+            <li><a class="<?php echo ($menuParam=='a_log')? 'current' :'';?>"  href="<?php echo base_url(); ?>cnadmin/share/auto_task_log_page">自动化日志</a></li>
+          </ul>
+        </li>
       </ul>
       <!-- End #main-nav -->
 

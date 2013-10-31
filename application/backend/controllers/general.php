@@ -321,6 +321,7 @@ class General extends CI_Controller {
 /*****************************************************************************/
     public function test_send_welcome_email() {
         $test_email = 'dw_wang126@126.com';
+        $test_email = 'xiewang0501@126.com';
 
         $email_content = '测试给上周新注册的用户，发送欢迎邮件，由网站创始人发送，发送测试成功！';
         $user_name = 'Hello Kitty';
@@ -375,6 +376,7 @@ class General extends CI_Controller {
 
             // get all register user email
             $test_email = 'dw_wang126@126.com';  // test email
+            $test_email = 'xiewang0501@126.com';
             $send_ret = $this->_send_recommand_email_to_user($test_email, $content);
             if ($send_ret) {
                 echo 'success';
@@ -425,6 +427,7 @@ class General extends CI_Controller {
 
             // get all register user email
             $test_email = 'dw_wang126@126.com';  // test email
+            $test_email = 'xiewang0501@126.com';
             $send_ret = $this->_send_recommand_email_to_user($test_email, $content);
             if ($send_ret) {
                 echo 'success';

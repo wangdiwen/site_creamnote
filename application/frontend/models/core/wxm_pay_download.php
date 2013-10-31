@@ -80,8 +80,8 @@ class WXM_Pay_Download extends CI_Model
     public function get_all_history_by_userid($pay_user_id = 0) {
         if ($pay_user_id > 0) {
             $table = $this->wx_table;
-            $this->db->select('pay_id, pay_total_fee, pay_status, pay_way, pay_trade_no, pay_subject, pay_body, pay_show_url')
-                    ->from($table)->where('pay_user_id', $pay_user_id)->limit(20)->order_by('pay_trade_no', 'desc');
+            $this->db->select('pay_id, pay_total_fee, pay_status, pay_way, pay_trade_no, pay_subject, pay_body, pay_show_url, pay_timestamp')
+                    ->from($table)->where('pay_user_id', $pay_user_id)->limit(20)->order_by('pay_timestamp', 'desc');
             $query = $this->db->get();
             return $query->result_array();
         }

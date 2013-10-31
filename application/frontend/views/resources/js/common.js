@@ -843,6 +843,7 @@ var set_token_input = function(){
   $("#account_token").css("display","inline-block");
   $("#token_button").attr("onclick","account_set_token()");
   $("#token_button").attr("value","提交");
+  $("#account_token_tip").css("display","none");
 }
 function account_set_token(){
   var url = $("#baseUrl").val()+"core/wxc_user_account/require_withdraw_token";
@@ -898,6 +899,8 @@ function ver_token_frommail(){
     $("#token_button").attr("value","更改口令");
     $("#account_token").css("display","none");
     $("#token_button").attr("onclick","set_token_input()");
+    $("#account_token_tip").html("口令已设置");
+    $("#account_token_tip").css("display","inline-block");
     easyDialog.close();
   }else if(retData == "failed"){
     errorMes("验证失败");
@@ -1092,65 +1095,66 @@ var order_history = function(){
     str2 +="<div class='_card_total_common'>";
     str2 +="<div style='border-bottom: 1px dotted #000'>未完成订单</div>";
     var count=1;
-    for(i in retData){
-      count++;
-        if(retData == "no-record"){
+    if(retData == "no-record"){
           str+="";
         }else if(retData == "disconnected"){
           str+="";
         }else{
-          if(retData[i]['pay_status'] =="true"){
-            str+="<div id='buy_"+retData[i]['pay_id']+"'>";
-            str+="<div class='collect_section buy_section fl' style='margin-right: 20px;min-width: 300px;'>";
-            // str+="<div class='_buy_history'>";
-            // str+="<a href='"+$("#baseUrl").val()+"'>";
-            // str+="<img src='/application/frontend/views/resources/images/new_version/dy_card_hover_down.png'>";
-            // str+="</a>";
-            // str+="</div>";
-            str+="<div>";
-            str+="<a target='_blank' href='"+retData[i]['pay_show_url']+"'>"+retData[i]['pay_body']+"</a>";
-            str+="</div>";
-            str+="<div class='collect_detail'>";
-            str+="<span>价格：￥"+retData[i]['pay_total_fee']+"</span>|";
-            if(retData[i]['pay_way'] == 0){
-              str+="<span>余额支付</span>"
-            }else if(retData[i]['pay_way'] == 1){
-              str+="<span>支付宝全额支付</span>"
-            }else if(retData[i]['pay_way'] == 2){
-              str+="<span>余额支付+支付宝支付</span>"
+          for(i in retData){
+            count++;
+
+            if(retData[i]['pay_status'] =="true"){
+              str+="<div id='buy_"+retData[i]['pay_id']+"'>";
+              str+="<div class='collect_section buy_section fl' style='margin-right: 20px;min-width: 350px;'>";
+              // str+="<div class='_buy_history'>";
+              // str+="<a href='"+$("#baseUrl").val()+"'>";
+              // str+="<img src='/application/frontend/views/resources/images/new_version/dy_card_hover_down.png'>";
+              // str+="</a>";
+              // str+="</div>";
+              str+="<div>";
+              str+="<a target='_blank' href='"+retData[i]['pay_show_url']+"'>"+retData[i]['pay_body']+"</a>";
+              str+="</div>";
+              str+="<div class='collect_detail'>";
+              str+="<span>￥"+retData[i]['pay_total_fee']+"</span>|";
+              if(retData[i]['pay_way'] == 0){
+                str+="<span>余额支付</span>"
+              }else if(retData[i]['pay_way'] == 1){
+                str+="<span>支付宝全额支付</span>"
+              }else if(retData[i]['pay_way'] == 2){
+                str+="<span>余额+支付宝支付</span>"
+              }
+              str+="|<span>"+retData[i]['pay_timestamp']+"</span>";
+              str+="</div>";
+              str+="</div>";
+              str+="</div>";
+            }else{
+              str2+="<div id='collect_"+retData[i]['pay_id']+"'>";
+              str2+="<div class='collect_section buy_section fl' style='margin-right: 20px;min-width: 350px;'>";
+              // str2+="<div class='_buy_history'>";
+              // str2+="<a href='"+$("#baseUrl").val()+"'>";
+              // str2+="<img src='/application/frontend/views/resources/images/new_version/dy_card_hover_down.png'>";
+              // str2+="</a>";
+              // str2+="</div>";
+              str2+="<div>";
+              str2+="<a target='_blank' href='"+retData[i]['pay_show_url']+"'>"+retData[i]['pay_body']+"</a>";
+              str2+="</div>";
+              str2+="<div class='collect_detail'>";
+              str2+="<span>￥"+retData[i]['pay_total_fee']+"</span>|";
+              if(retData[i]['pay_way'] == 0){
+                str2+="<span>余额支付</span>"
+              }else if(retData[i]['pay_way'] == 1){
+                str2+="<span>支付宝全额支付</span>"
+              }else if(retData[i]['pay_way'] == 2){
+                str2+="<span>余额+支付宝支付</span>"
+              }
+              str2+="|<span>"+retData[i]['pay_timestamp']+"</span>";
+              str2+="</div>";
+              str2+="</div>";
+              str2+="</div>";
             }
-            str+="</div>";
-            str+="</div>";
-            str+="</div>";
-          }else{
-            str2+="<div id='collect_"+retData[i]['pay_id']+"'>";
-            str2+="<div class='collect_section buy_section fl' style='margin-right: 20px;min-width: 300px;'>";
-            // str2+="<div class='_buy_history'>";
-            // str2+="<a href='"+$("#baseUrl").val()+"'>";
-            // str2+="<img src='/application/frontend/views/resources/images/new_version/dy_card_hover_down.png'>";
-            // str2+="</a>";
-            // str2+="</div>";
-            str2+="<div>";
-            str2+="<a target='_blank' href='"+retData[i]['pay_show_url']+"'>"+retData[i]['pay_body']+"</a>";
-            str2+="</div>";
-            str2+="<div class='collect_detail'>";
-            str2+="<span>￥"+retData[i]['pay_total_fee']+"</span>|";
-            if(retData[i]['pay_way'] == 0){
-              str2+="<span>余额支付</span>"
-            }else if(retData[i]['pay_way'] == 1){
-              str2+="<span>支付宝全额支付</span>"
-            }else if(retData[i]['pay_way'] == 2){
-              str2+="<span>余额+支付宝支付</span>"
-            }
-            str2+="</div>";
-            str2+="</div>";
-            str2+="</div>";
+
           }
-        }
-
-
-
-    }
+      }
     str+="</div>";
     var collect_height = count*61/2+100;
     $("#buttons").animate({
@@ -1161,7 +1165,7 @@ var order_history = function(){
 }
 
 var free_history = function(){
-      var url = $("#baseUrl").val()+"core/wxc_download_note/free_download_history";
+    var url = $("#baseUrl").val()+"core/wxc_download_note/free_download_history";
     var params =({});
     var retData = ajax_common_json(url,params);
     var str = "";
@@ -1173,41 +1177,42 @@ var free_history = function(){
     str ="";
     str +="<div class='_card_total_common fl'>";
     var count=1;
-    for(i in retData){
-      count++;
-        if(retData == "no-record"){
+    if(retData == "no-record"){
           str+="";
         }else if(retData == "disconnected"){
           str+="";
         }else{
-          str+="<div id='free_"+retData[i]['data_id']+"'>";
-          str+="<div class='collect_section fl' style='margin-right: 20px;min-width: 300px;'>";
-          str+="<div>";
-          str+="<div class='_card_page fl' style='padding-right: 10px;'>";
-          if(retData[i]['data_type'] == "doc"||retData[i]['data_type'] == "docx"){
-              str += "<img src='/application/frontend/views/resources/images/version/doc_icon.png'>";
-            }else if(retData[i]['data_type'] == "ppt"||retData[i]['data_type'] == "pptx"){
-              str += "<img src='/application/frontend/views/resources/images/version/ppt_icon.png'>";
-            }else if(retData[i]['data_type'] == "xls"||retData[i]['data_type'] == "xlsx"){
-              str += "<img src='/application/frontend/views/resources/images/version/xls_icon.png'>";
-            }else if(retData[i]['data_type'] == "txt"){
-              str += "<img src='/application/frontend/views/resources/images/version/txt_icon.png'>";
-            }else if(retData[i]['data_type'] == "pdf"){
-              str += "<img src='/application/frontend/views/resources/images/version/pdf_icon.png'>";
-            }
-          str+="</div>";
-          str+="<div style='width: 260px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;'>";
-          str+="<a target='_blank' href='"+$("#baseUrl").val()+"data/wxc_data/data_view/"+retData[i]['data_id']+"'>"+retData[i]['data_name']+"</a>";
-          str+="</div>";
-          str+="</div>";
-          str+="<div class='collect_detail'>";
-          str+="<span style='padding:0'>上传时间："+retData[i]['data_uploadtime']+"</span>";
-          str+="</div>";
-          str+="</div>";
-          str+="</div>";
+           for(i in retData){
+            count++;
+
+            str+="<div id='free_"+retData[i]['data_id']+"'>";
+            str+="<div class='collect_section fl' style='margin-right: 20px;min-width: 266px;'>";
+            str+="<div>";
+            str+="<div class='_card_page fl' style='padding-right: 10px;'>";
+            if(retData[i]['data_type'] == "doc"||retData[i]['data_type'] == "docx"){
+                str += "<img src='/application/frontend/views/resources/images/version/doc_icon.png'>";
+              }else if(retData[i]['data_type'] == "ppt"||retData[i]['data_type'] == "pptx"){
+                str += "<img src='/application/frontend/views/resources/images/version/ppt_icon.png'>";
+              }else if(retData[i]['data_type'] == "xls"||retData[i]['data_type'] == "xlsx"){
+                str += "<img src='/application/frontend/views/resources/images/version/xls_icon.png'>";
+              }else if(retData[i]['data_type'] == "txt"){
+                str += "<img src='/application/frontend/views/resources/images/version/txt_icon.png'>";
+              }else if(retData[i]['data_type'] == "pdf"){
+                str += "<img src='/application/frontend/views/resources/images/version/pdf_icon.png'>";
+              }
+            str+="</div>";
+            str+="<div style='width: 260px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;'>";
+            str+="<a target='_blank' href='"+$("#baseUrl").val()+"data/wxc_data/data_view/"+retData[i]['data_id']+"'>"+retData[i]['data_name']+"</a>";
+            str+="</div>";
+            str+="</div>";
+            str+="<div class='collect_detail'>";
+            str+="<span style='padding:0'>上传时间："+retData[i]['data_uploadtime']+"</span>";
+            str+="</div>";
+            str+="</div>";
+            str+="</div>";
+          }
         }
 
-    }
     str+="</div>";
     var collect_height = count*61/2+100;
     $("#buttons").animate({
@@ -1230,46 +1235,47 @@ var buy_history = function(){
     str ="";
     str +="<div class='_card_total_common fl'>";
     var count=1;
-    for(i in retData){
-      count++;
-        if(retData == "no-record"){
+    if(retData == "no-record"){
           str+="";
         }else if(retData == "disconnected"){
           str+="";
         }else{
-          str+="<div id='free_"+retData[i]['data_id']+"'>";
-          str+="<div class='collect_section buy_section fl' style='margin-right: 20px;min-width: 300px;'>";
-          str+="<div class='_buy_history'>";
-          str+="<a href='"+$("#baseUrl").val()+"core/wxc_download_note/download_have_payed_note?note_id="+retData[i]['data_id']+"'>";
-          str+="<img src='/application/frontend/views/resources/images/new_version/dy_card_hover_down.png'>";
-          str+="</a>";
-          str+="</div>";
-          str+="<div>";
-          str+="<div class='_card_page fl' style='padding-right: 10px;'>";
-          if(retData[i]['data_type'] == "doc"||retData[i]['data_type'] == "docx"){
-              str += "<img src='/application/frontend/views/resources/images/version/doc_icon.png'>";
-            }else if(retData[i]['data_type'] == "ppt"||retData[i]['data_type'] == "pptx"){
-              str += "<img src='/application/frontend/views/resources/images/version/ppt_icon.png'>";
-            }else if(retData[i]['data_type'] == "xls"||retData[i]['data_type'] == "xlsx"){
-              str += "<img src='/application/frontend/views/resources/images/version/xls_icon.png'>";
-            }else if(retData[i]['data_type'] == "txt"){
-              str += "<img src='/application/frontend/views/resources/images/version/txt_icon.png'>";
-            }else if(retData[i]['data_type'] == "pdf"){
-              str += "<img src='/application/frontend/views/resources/images/version/pdf_icon.png'>";
-            }
-          str+="</div>";
-          str+="<div style='width: 260px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;'>";
-          str+="<a target='_blank' href='"+$("#baseUrl").val()+"data/wxc_data/data_view/"+retData[i]['data_id']+"'>"+retData[i]['data_name']+"</a>";
-          str+="</div>";
-          str+="</div>";
-          str+="<div class='collect_detail'>";
-          str+="<span style='padding:0'>上传时间："+retData[i]['data_uploadtime']+"</span>";
-          str+="</div>";
-          str+="</div>";
-          str+="</div>";
+           for(i in retData){
+            count++;
+
+            str+="<div id='free_"+retData[i]['data_id']+"'>";
+            str+="<div class='collect_section buy_section fl' style='margin-right: 20px;min-width: 266px;'>";
+            str+="<div class='_buy_history'>";
+            str+="<a href='"+$("#baseUrl").val()+"core/wxc_download_note/download_have_payed_note?note_id="+retData[i]['data_id']+"'>";
+            str+="<img src='/application/frontend/views/resources/images/new_version/dy_card_hover_down.png'>";
+            str+="</a>";
+            str+="</div>";
+            str+="<div>";
+            str+="<div class='_card_page fl' style='padding-right: 10px;'>";
+            if(retData[i]['data_type'] == "doc"||retData[i]['data_type'] == "docx"){
+                str += "<img src='/application/frontend/views/resources/images/version/doc_icon.png'>";
+              }else if(retData[i]['data_type'] == "ppt"||retData[i]['data_type'] == "pptx"){
+                str += "<img src='/application/frontend/views/resources/images/version/ppt_icon.png'>";
+              }else if(retData[i]['data_type'] == "xls"||retData[i]['data_type'] == "xlsx"){
+                str += "<img src='/application/frontend/views/resources/images/version/xls_icon.png'>";
+              }else if(retData[i]['data_type'] == "txt"){
+                str += "<img src='/application/frontend/views/resources/images/version/txt_icon.png'>";
+              }else if(retData[i]['data_type'] == "pdf"){
+                str += "<img src='/application/frontend/views/resources/images/version/pdf_icon.png'>";
+              }
+            str+="</div>";
+            str+="<div style='width: 260px;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;'>";
+            str+="<a target='_blank' href='"+$("#baseUrl").val()+"data/wxc_data/data_view/"+retData[i]['data_id']+"'>"+retData[i]['data_name']+"</a>";
+            str+="</div>";
+            str+="</div>";
+            str+="<div class='collect_detail'>";
+            str+="<span style='padding:0'>上传时间："+retData[i]['data_uploadtime']+"</span>";
+            str+="</div>";
+            str+="</div>";
+            str+="</div>";
+          }
         }
 
-    }
     str+="</div>";
     var collect_height = count*61/2+100;
     if(collect_height>180){

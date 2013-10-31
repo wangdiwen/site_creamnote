@@ -19,10 +19,10 @@
   <div class="body article_body" style="border-top: 8px solid #839acd;background-color: #EBEBEB!important">
 
     <div class="article_content" style="padding: 20px 20px;">
-      <div class="reg_frame article_frame" style="text-align: left;width:900px;padding-bottom: 60px;">
+      <div class="reg_frame article_frame" style="text-align: left;width:800px;padding-bottom: 60px;">
         <!-- <img src="/application/frontend/views/resources/images/version/article_bottom_l_t.jpg" style="width: 400px;position: absolute;margin-left: -30px;margin-top: -41px;"> -->
         <img src="/application/frontend/views/resources/images/version/tuding.png" style="width: 80px;;position: absolute;margin-left: -20px;margin-top: -70px;">
-        <img src="/application/frontend/views/resources/images/version/article_bottom_r_t.jpg" style="width: 400px;position: absolute;margin-left: 531px;margin-top: -42px;">
+        <img src="/application/frontend/views/resources/images/version/article_bottom_r_t.jpg" style="width: 400px;position: absolute;margin-left: 430px;margin-top: -42px;">
         <h2 style="line-height: 35px;color: #839acd;"><b><?php echo $article_title;?></b></h2>
         <div class="article_author" style="font-style: oblique;color:#000;">
           <p>作者:<?php echo $article_author;?></p>
@@ -38,7 +38,7 @@
           </div>
         </div>
         <img src="/application/frontend/views/resources/images/version/article_bottom_l.jpg" style="width: 400px;position: absolute;margin-left: -30px;margin-top: 22px;">
-        <img src="/application/frontend/views/resources/images/version/article_bottom_r.jpg" style="width: 400px;position: absolute;margin-left: 531px;margin-top: 26px;">
+        <img src="/application/frontend/views/resources/images/version/article_bottom_r.jpg" style="width: 400px;position: absolute;margin-left: 430px;margin-top: 26px;">
       </div>
     </div>
     <a  href="<?php echo site_url('primary/wxc_feedback/feedback_page'); ?>">

@@ -635,6 +635,14 @@ function send_welcome_email_ed(){
     editor.html(retData);
 }
 
+function send_welcome_email_ed_test(){
+    $("#eamil_send").css("display","block");
+    var url = $("#baseUrl").val()+"cnadmin/general/test_send_welcome_email";
+    var params = ({});
+    var retData = ajax_common(url,params);
+    editor.html(retData);
+}
+
 function save_welcome_email(){
     var url = $("#baseUrl").val()+"cnadmin/general/save_welcome_content";
     var params = ({'email_content':editor.html()});
@@ -703,6 +711,17 @@ function send_week_eamil(){
     }
 }
 
+function send_week_eamil_test(){
+    var url = $("#baseUrl").val()+"cnadmin/general/test_send_week_recommend";
+    var params = ({'data_id_list':week_list});
+    var retData = ajax_common(url,params);
+    if(retData == "success"){
+        show_dialog("发送周推荐邮件","操作成功");
+    }else{
+        show_dialog("发送周推荐邮件","操作失败");
+    }
+}
+
 //月推荐
 function month_send(){
     var url = $("#baseUrl").val()+"cnadmin/general/last_month_good_note";
@@ -747,6 +766,16 @@ function send_month_eamil(){
     }
 }
 
+function send_month_eamil_test(){
+    var url = $("#baseUrl").val()+"cnadmin/general/test_send_month_recommend";
+    var params = ({'data_id_list':month_list});
+    var retData = ajax_common(url,params);
+    if(retData == "success"){
+        show_dialog("发送月推荐邮件","操作成功");
+    }else{
+        show_dialog("发送月推荐邮件","操作失败");
+    }
+}
 //=========================================================用户反馈页面=========================================//
 function get_topic_detail(feedback_id,feedback_offset){
     var url = $("#baseUrl").val()+"cnadmin/feedback/get_topic_detail";
@@ -1114,3 +1143,45 @@ var get_withdraw_by_user = function(user_email){
     $("#query_by_user").html(str)
 }
 
+//=========================================================日志=========================================//
+var delete_front_log = function(log_name){
+    var url = $("#baseUrl").val()+"cnadmin/share/frontend_log_clear";
+    var params =({'log_name':log_name});
+    var retData = "";
+    retData = ajax_common(url,params);
+    if(retData == "success"){
+        location.reload();
+    }else if(retData == "failed"){
+        show_dialog("日志管理","操作失败");
+    }else if(retData == "not-exist"){
+        show_dialog("日志管理","文件不存在");
+    }
+}
+
+var delete_back_log = function(log_name){
+    var url = $("#baseUrl").val()+"cnadmin/share/backend_log_clear";
+    var params =({'log_name':log_name});
+    var retData = "";
+    retData = ajax_common(url,params);
+    if(retData == "success"){
+        location.reload();
+    }else if(retData == "failed"){
+        show_dialog("日志管理","操作失败");
+    }else if(retData == "not-exist"){
+        show_dialog("日志管理","文件不存在");
+    }
+}
+
+var delete_auto_log = function(log_name,tab_no){
+    var url = $("#baseUrl").val()+"cnadmin/share/auto_task_log_clear";
+    var params =({'log_name':log_name,'tab_no':tab_no});
+    var retData = "";
+    retData = ajax_common(url,params);
+    if(retData == "success"){
+        location.reload();
+    }else if(retData == "failed"){
+        show_dialog("日志管理","操作失败");
+    }else if(retData == "not-exist"){
+        show_dialog("日志管理","文件不存在");
+    }
+}

@@ -22,7 +22,7 @@
     <div class="article_content">
       <div class="reg_frame notice_frame" style="text-align: left;width:600px;" id="reg_frame">
         <img src="/application/frontend/views/resources/images/version/trumpet.jpg" style="width: 135px;position: absolute;margin-left: -29px;margin-top: -30px;">
-        <h2 style="padding: 0px 0 30px 45px;line-height: 35px;">
+        <h2 style="padding: 0px 0 30px 95px;line-height: 35px;">
           <b><?php echo $notice_title;?></b>
         </h2>
         <div style="color:#000;">

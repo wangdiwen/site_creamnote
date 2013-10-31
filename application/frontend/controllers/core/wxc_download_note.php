@@ -598,7 +598,7 @@ class WXC_Download_Note extends CI_Controller {
         $cur_user_id = $cur_user_info['user_id'];
 
         if (! $cur_user_id) {
-            echo 'disconnected';
+            echo json_encode('disconnected');
             return false;
         }
 
@@ -610,7 +610,8 @@ class WXC_Download_Note extends CI_Controller {
             return true;
         }
         else {
-            echo 'no-record';
+            // wx_loginfo(json_encode('no-record'));
+            echo json_encode('no-record');
             return false;
         }
     }
@@ -621,7 +622,7 @@ class WXC_Download_Note extends CI_Controller {
         $cur_user_id = $cur_user_info['user_id'];
 
         if (! $cur_user_id) {
-            echo 'disconnected';
+            echo json_encode('disconnected');
             return false;
         }
 
@@ -649,7 +650,7 @@ class WXC_Download_Note extends CI_Controller {
                 return true;
             }
         }
-        echo 'no-record';
+        echo json_encode('no-record');
         return false;
     }
 /*****************************************************************************/
@@ -659,7 +660,7 @@ class WXC_Download_Note extends CI_Controller {
         $cur_user_id = $cur_user_info['user_id'];
 
         if (! $cur_user_id) {
-            echo 'disconnected';
+            echo json_encode('disconnected');
             return false;
         }
 
@@ -688,7 +689,7 @@ class WXC_Download_Note extends CI_Controller {
             }
         }
 
-        echo 'no-record';
+        echo json_encode('no-record');
         return false;
     }
 /*****************************************************************************/
