@@ -73,6 +73,9 @@
         <p style="font-size:14px;"><b>我的信条:</b></p>
         <p style="font-size:15px;">&nbsp;&nbsp;&nbsp;&nbsp;Where there is a will, there is a way.</p>
 
+        <br />
+        <br />
+
       </div>
     </div>
     <a href="<?php echo site_url('primary/wxc_feedback/feedback_page'); ?>">
