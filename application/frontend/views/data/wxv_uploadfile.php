@@ -498,7 +498,7 @@ function makeCenter()
 
 		<div class="post" style="padding: 0 20px;width:781px;">
             <h2 class="_data_title _nomargin" id="info_title">
-                <div class="_grgh">上传一份您最得意的资料</div>
+                <div class="_grgh">分享你最得意的笔记资料</div>
             </h2>
 		<div class="entry">
 
@@ -662,6 +662,11 @@ function makeCenter()
                         </div>
                     </li>
             </ul>
+            <a target="_blank" href="<?php echo site_url('static/wxc_help/skills'); ?>#upload_notes">
+              <div class="help">
+                  使用帮助
+              </div>
+            </a>
     </div>
 	</div>
 

@@ -198,7 +198,8 @@
 
   <p style="font-size:14px">如用户发现任何违反本服务条款的事项，请及时通知醍醐。
   </p>
-
+  <br />
+  <br />
       </div>
     </div>
     <a href="<?php echo site_url('primary/wxc_feedback/feedback_page'); ?>">

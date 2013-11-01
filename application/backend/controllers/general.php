@@ -164,7 +164,7 @@ class General extends CI_Controller {
                 $user_email = $new_user['user_email'];
                 // $user_register_time = $new_user['user_register_time'];
 
-                $greet = "<html><head></head>你好 <b>".$user_name."</b> 同学：<p></p>";
+                $greet = "<html><head></head>你好 <b>".$user_name."</b>：<p></p>";
                 $content = $greet.$email_content.'</html>';
                 $send_ret = $this->_send_system_email_to_user($user_email, $content);
             }
@@ -288,7 +288,8 @@ class General extends CI_Controller {
                 $data_uploadtime = $data['data_uploadtime'];
                 $data_keyword = $data['data_keyword'];
 
-                $email_content .= '<tr><td colspan="2" align="left" bgcolor="#f3f2ce" style="color: #3399FF;font-size: 14px;"><a href="http://www.creamnote.com/data/wxc_data/data_view/'.$data_id.'" style="text-decoration: none;color:#3399FF" target="_blank">'.$data_name.'</a></td></tr><tr><td colspan="2" valign="top" bgcolor="#f3f2ce" style="font-size: 12px;"><div style="margin-top:-10px;margin-left:10px;">类型:'.$data_type.'&nbsp;&nbsp;&nbsp;&nbsp;页数:'.$data_pagecount.'&nbsp;&nbsp;&nbsp;&nbsp;价格:￥'.$data_price.'&nbsp;&nbsp;&nbsp;&nbsp;关键词:'.$data_keyword.'</div></td></tr>';
+                $email_content .= '<tr><td colspan="2" align="left" bgcolor="#f3f2ce" style="color: #3399FF;font-size: 14px;"><a href="http://www.creamnote.com/data/wxc_data/data_view/'.$data_id;
+                $email_content .= '" style="text-decoration: none;color:#3399FF" target="_blank">'.$data_name.'</a></td></tr><tr><td colspan="2" valign="top" bgcolor="#f3f2ce" style="font-size: 12px;"><div style="margin-top:-10px;margin-left:10px;">类型:'.$data_type.'&nbsp;&nbsp;&nbsp;&nbsp;页数:'.$data_pagecount.'&nbsp;&nbsp;&nbsp;&nbsp;价格:￥'.$data_price.'&nbsp;&nbsp;&nbsp;&nbsp;关键词:'.$data_keyword.'</div></td></tr>';
             }
             $content = $email_header.$email_content.$email_footer;
 
@@ -320,14 +321,15 @@ class General extends CI_Controller {
     }
 /*****************************************************************************/
     public function test_send_welcome_email() {
+        $email_content = $this->input->post('email_content');
+
         $test_email = 'dw_wang126@126.com';
-        $test_email = 'xiewang0501@126.com';
+        // $test_email = 'xiewang0501@126.com';
 
-        $email_content = '测试给上周新注册的用户，发送欢迎邮件，由网站创始人发送，发送测试成功！';
-        $user_name = 'Hello Kitty';
-
-        $greet = "<html><head></head>你好 <b>".$user_name."</b> 同学：<p></p>";
+        $user_name = 'Steven Wang';
+        $greet = "<html><head></head>你好 <b>".$user_name."</b>：<p></p>";
         $content = $greet.$email_content.'</html>';
+
         $send_ret = $this->_send_system_email_to_user($test_email, $content);
         if ($send_ret) {
             echo 'success';
@@ -339,7 +341,7 @@ class General extends CI_Controller {
 /*****************************************************************************/
     public function test_send_week_recommend() {
         $data_id_list = $this->input->post('data_id_list');
-        // $data_id_list = '41,42,43,47';
+        // $data_id_list = '1,2,3';
         $data_list = explode(',', $data_id_list);
         // wx_echoxml($data_list);
 
@@ -376,7 +378,7 @@ class General extends CI_Controller {
 
             // get all register user email
             $test_email = 'dw_wang126@126.com';  // test email
-            $test_email = 'xiewang0501@126.com';
+            // $test_email = 'xiewang0501@126.com';
             $send_ret = $this->_send_recommand_email_to_user($test_email, $content);
             if ($send_ret) {
                 echo 'success';
@@ -390,7 +392,7 @@ class General extends CI_Controller {
     public function test_send_month_recommend() {
         $data_id_list = $this->input->post('data_id_list');
 
-        // $data_id_list = '41,42,43,47';
+        // $data_id_list = '1,2,3';
         $data_list = explode(',', $data_id_list);
         // wx_echoxml($data_list);
 
@@ -427,7 +429,7 @@ class General extends CI_Controller {
 
             // get all register user email
             $test_email = 'dw_wang126@126.com';  // test email
-            $test_email = 'xiewang0501@126.com';
+            // $test_email = 'xiewang0501@126.com';
             $send_ret = $this->_send_recommand_email_to_user($test_email, $content);
             if ($send_ret) {
                 echo 'success';

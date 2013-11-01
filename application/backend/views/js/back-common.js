@@ -638,9 +638,13 @@ function send_welcome_email_ed(){
 function send_welcome_email_ed_test(){
     $("#eamil_send").css("display","block");
     var url = $("#baseUrl").val()+"cnadmin/general/test_send_welcome_email";
-    var params = ({});
+    var params = ({'email_content':editor.html()});
     var retData = ajax_common(url,params);
-    editor.html(retData);
+    if(retData == "success"){
+        show_dialog("发送欢迎邮件","测试操作成功");
+    }else{
+        show_dialog("发送欢迎邮件","测试操作失败");
+    }
 }
 
 function save_welcome_email(){
@@ -657,7 +661,6 @@ function send_welcome_email(){
     var url = $("#baseUrl").val()+"cnadmin/general/send_welcome_email";
     var params = ({'email_content':editor.html()});
     var retData = ajax_common(url,params);
-    alert(retData)
     if(retData == "success"){
         show_dialog("发送欢迎邮件","操作成功");
     }else{

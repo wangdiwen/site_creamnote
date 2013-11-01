@@ -60,9 +60,9 @@ $("div").hover(function(e){
         thumbnails: true,
         height: '430px',
         opacityOnGrid:true,
-        fx          : 'random',
+        fx          : 'simpleFade',
         pieDiameter     : 58,
-        time        : 4000,
+        time        : 7000,
         transPeriod     : 500,
         // onLoaded      : function() {  alert(1)},
 

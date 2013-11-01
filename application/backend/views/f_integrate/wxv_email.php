@@ -34,7 +34,7 @@
          <?php if(isset($current_week_tip)){
           echo $current_week_tip;?>
           <input type="button" class="button" value="发送邮件" onclick="send_welcome_email_ed()">
-          <input type="button" class="button" value="测试" onclick="send_welcome_email_ed_test()">
+
          <?php }else{?>
           你还不需要给用户发送邮件噢！
          <?php }?>
@@ -105,6 +105,7 @@
             <div>
               <input type="button" class="button" value="保存草稿" onclick="save_welcome_email()">
               <input type="button" class="button" value="发送" onclick="send_welcome_email()">
+              <input type="button" class="button" value="测试" onclick="send_welcome_email_ed_test()">
             </div>
           </div>
         </div>

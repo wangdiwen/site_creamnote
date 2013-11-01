@@ -73,8 +73,8 @@
   </br>
   <p style="font-size:14px"><b>七、问题和建议</b></p>
   <p style="font-size:13px">如果您有任何问题和建议，请随时通知我们。</p>
-
-
+  <br />
+  <br />
       </div>
     </div>
     <a href="<?php echo site_url('primary/wxc_feedback/feedback_page'); ?>">

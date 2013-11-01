@@ -31,14 +31,15 @@
         <p style="font-size:14px;">如果您对醍醐网有任何疑问，可以前往
           <a href="<?php echo site_url('static/wxc_help/faq'); ?>">【FAQ】</a>和
           <a href="<?php echo site_url('static/wxc_help/termsofservice'); ?>">【服务条款】</a>页面搜索、查看问题。</p>
-        <p style="font-size:14px;">如果您对醍醐网有意见或者建议，可以点击首页右侧的【咨询】，</p>
+        <p style="font-size:14px;">如果您对醍醐网有意见或者建议，可以点击首页右侧的【咨询&反馈】，</p>
         <p style="font-size:14px;"> 或者
           <a href="<?php echo site_url('primary/wxc_feedback/feedback_page'); ?>">【点击这里】</a>进入反馈提问页面，向我们提出自己的疑问和建议。</p>
-        </br>
-        </br>
-        <p style="font-size:14px;">醍醐支持邮箱：support@creamnote.com</p>
-        <p style="font-size:14px;">醍醐联合创始人邮箱：co-founder@creamnote.com</p>
+        <br />
+        <p style="font-size:14px;">醍醐服务&支持邮箱：support@creamnote.com</p>
         <p style="font-size:14px;">醍醐投诉&建议邮箱：report@creamnote.com</p>
+        <p style="font-size:14px;">醍醐联合创始人邮箱：co-founder@creamnote.com</p>
+        <br />
+        <p style="font-size:14px;">您的反馈和建议是我们不断提升技术和服务的动力，欢迎给我们来信 ^_^</p>
 
       </div>
     </div>

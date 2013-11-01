@@ -1089,10 +1089,10 @@ var order_history = function(){
     str2+="</div>";
     $("._data_title").html(str);
     str ="";
-    str +="<div class='_card_total_common'>";
+    str +="<div class='_card_total_common fl'>";
     str +="<div style='border-bottom: 1px dotted #000'>成功订单</div>";
     str2 ="";
-    str2 +="<div class='_card_total_common'>";
+    str2 +="<div class='_card_total_common fl'>";
     str2 +="<div style='border-bottom: 1px dotted #000'>未完成订单</div>";
     var count=1;
     if(retData == "no-record"){
@@ -1115,7 +1115,7 @@ var order_history = function(){
               str+="<a target='_blank' href='"+retData[i]['pay_show_url']+"'>"+retData[i]['pay_body']+"</a>";
               str+="</div>";
               str+="<div class='collect_detail'>";
-              str+="<span>￥"+retData[i]['pay_total_fee']+"</span>|";
+              str+="<span style='padding-left:0'>￥"+retData[i]['pay_total_fee']+"</span>|";
               if(retData[i]['pay_way'] == 0){
                 str+="<span>余额支付</span>"
               }else if(retData[i]['pay_way'] == 1){
@@ -1139,7 +1139,7 @@ var order_history = function(){
               str2+="<a target='_blank' href='"+retData[i]['pay_show_url']+"'>"+retData[i]['pay_body']+"</a>";
               str2+="</div>";
               str2+="<div class='collect_detail'>";
-              str2+="<span>￥"+retData[i]['pay_total_fee']+"</span>|";
+              str2+="<span style='padding-left:0'>￥"+retData[i]['pay_total_fee']+"</span>|";
               if(retData[i]['pay_way'] == 0){
                 str2+="<span>余额支付</span>"
               }else if(retData[i]['pay_way'] == 1){
@@ -1157,9 +1157,11 @@ var order_history = function(){
       }
     str+="</div>";
     var collect_height = count*61/2+100;
-    $("#buttons").animate({
+    if(collect_height>180){
+       $("#buttons").animate({
                     height: collect_height
                 });
+    }
     $("#buttons").html(str+str2);
 
 }
@@ -1186,7 +1188,7 @@ var free_history = function(){
             count++;
 
             str+="<div id='free_"+retData[i]['data_id']+"'>";
-            str+="<div class='collect_section fl' style='margin-right: 20px;min-width: 266px;'>";
+            str+="<div class='collect_section fl' style='margin-right: 20px;'>";
             str+="<div>";
             str+="<div class='_card_page fl' style='padding-right: 10px;'>";
             if(retData[i]['data_type'] == "doc"||retData[i]['data_type'] == "docx"){
@@ -1206,7 +1208,9 @@ var free_history = function(){
             str+="</div>";
             str+="</div>";
             str+="<div class='collect_detail'>";
-            str+="<span style='padding:0'>上传时间："+retData[i]['data_uploadtime']+"</span>";
+            str+="<span style='padding-left:0'>￥"+retData[i]['data_price']+"</span>|";
+            str+="<span >共"+retData[i]['data_pagecount']+"页</span>|";
+            str+="<span >"+retData[i]['data_uploadtime']+"</span>";
             str+="</div>";
             str+="</div>";
             str+="</div>";
@@ -1215,9 +1219,12 @@ var free_history = function(){
 
     str+="</div>";
     var collect_height = count*61/2+100;
-    $("#buttons").animate({
+    if(collect_height>180){
+       $("#buttons").animate({
                     height: collect_height
                 });
+    }
+
     $("#buttons").html(str);
 
 }
@@ -1244,7 +1251,7 @@ var buy_history = function(){
             count++;
 
             str+="<div id='free_"+retData[i]['data_id']+"'>";
-            str+="<div class='collect_section buy_section fl' style='margin-right: 20px;min-width: 266px;'>";
+            str+="<div class='collect_section buy_section fl' style='margin-right: 20px;'>";
             str+="<div class='_buy_history'>";
             str+="<a href='"+$("#baseUrl").val()+"core/wxc_download_note/download_have_payed_note?note_id="+retData[i]['data_id']+"'>";
             str+="<img src='/application/frontend/views/resources/images/new_version/dy_card_hover_down.png'>";
@@ -1269,7 +1276,9 @@ var buy_history = function(){
             str+="</div>";
             str+="</div>";
             str+="<div class='collect_detail'>";
-            str+="<span style='padding:0'>上传时间："+retData[i]['data_uploadtime']+"</span>";
+            str+="<span style='padding-left:0'>￥"+retData[i]['data_price']+"</span>|";
+            str+="<span >共"+retData[i]['data_pagecount']+"页</span>|";
+            str+="<span >"+retData[i]['data_uploadtime']+"</span>";
             str+="</div>";
             str+="</div>";
             str+="</div>";

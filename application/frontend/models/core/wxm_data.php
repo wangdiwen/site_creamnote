@@ -146,7 +146,7 @@ class WXM_Data extends CI_Model
     public function get_simple_info_by_id_list($data_id_list = array()) {
         if ($data_id_list) {
             $table = $this->wx_table;
-            $this->db->select('data_id, data_name, data_type, data_uploadtime')
+            $this->db->select('data_id, data_name, data_type, data_pagecount, data_price, data_uploadtime')
                     ->from($table)->where_in('data_id', $data_id_list)->order_by('data_uploadtime', 'desc');
             $query = $this->db->get();
             return $query->result_array();

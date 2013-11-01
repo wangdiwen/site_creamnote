@@ -15,8 +15,8 @@
             <div class="foot_list_one fl">
                 <p class="foot_title" style="margin-bottom: 18px;">关注</p>
                 <a target="_blank" href="http://www.renren.com/601784810"><p class="foot_content"><span class="foot_content_ren"></span>人人</p></a>
-                <p class="foot_content "><span class="foot_content_wei"></span>微博</p>
-                <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=799980421&site=qq&menu=yes"><p class="foot_content "><span class="foot_content_qq"></span>QQ</p></a>
+                <a target="_blank" href="http://weibo.com/u/3877403401"><p class="foot_content "><span class="foot_content_wei"></span>微博</p></a>
+                <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=799980421&site=qq&menu=yes"><p class="foot_content "><span class="foot_content_qq"></span>官方咨询QQ</p></a>
                 <!-- <p class="foot_content "><span class="foot_content_dou"></span>豆瓣</p> -->
             </div>
             <div class="foot_list_one fl">

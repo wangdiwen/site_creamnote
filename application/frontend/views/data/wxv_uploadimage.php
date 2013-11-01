@@ -24,7 +24,7 @@
 
         <div class="post" style="padding: 0 20px ;width:781px;">
           <h2 class="_data_title _nomargin" id="info_title">
-                <div class="_grgh">图片资料生成器</div>
+                <div class="_grgh">图片笔记生成器</div>
             </h2>
     		<div class="entry">
                 <input type="hidden" value="1215154" name="tmpdir" id="id_file">
@@ -105,6 +105,7 @@
 
                         <input type="hidden" name="dataid" id ="dataid">
                         <input type="hidden" name="dataobjectname" id ="dataobjectname">
+                        <div id="" style="margin-bottom: 12px;color:#AA7700;">*建议您输入不少于20字的笔记简介</div>
                     </fieldset>
                 </div>
     		</div>
@@ -140,7 +141,7 @@
                         </div>
                     </li>
             </ul>
-            <a href="<?php echo site_url('static/wxc_help/skills'); ?>#image_notes">
+            <a target="_blank" href="<?php echo site_url('static/wxc_help/skills'); ?>#image_notes">
               <div class="help">
                   使用帮助
               </div>

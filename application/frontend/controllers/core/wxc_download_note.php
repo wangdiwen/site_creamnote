@@ -203,7 +203,7 @@ class WXC_Download_Note extends CI_Controller {
                     else {                              // 未提现申请，收益账户余额可用
                         if ($data_price > $user_account_money
                             && $user_account_money >= 0.00) {
-                            $diff_money = $data_price - $user_account_money;
+                            $diff_money = number_format($data_price - $user_account_money, 2, '.', '');
                         }
                     }
 
@@ -255,9 +255,11 @@ class WXC_Download_Note extends CI_Controller {
         }
 
         $user_account_money = 0.00;
+        $user_account_status = '0';
         $user_account_money_info = $this->wxm_user->get_user_account_money($pay_user_id);
         if ($user_account_money_info) {
             $user_account_money = $user_account_money_info['user_account_money'];
+            $user_account_status = $user_account_money_info['user_account_status'];
         }
         if ($user_account_money <= 0.00) {
             echo 'not-enough-money';
@@ -265,8 +267,15 @@ class WXC_Download_Note extends CI_Controller {
         }
 
         $diff_money = 0.00;
-        if ($note_price > $user_account_money && $user_account_money >= 0.00) {
-            $diff_money = number_format($note_price - $user_account_money, 2, '.', '');
+        // 如果当前用户的收益账户处于提现状态，则使用支付宝全额支付
+        if ($user_account_status == '1') {  // 提现受理中，收益账户冻结
+            $diff_money = $note_price;
+        }
+        else {                              // 未提现申请，收益账户余额可用
+            if ($note_price > $user_account_money
+                && $user_account_money >= 0.00) {
+                $diff_money = $note_price - $user_account_money;
+            }
         }
 
         $pay_total_fee = $note_price;
@@ -404,7 +413,7 @@ class WXC_Download_Note extends CI_Controller {
             if ($pay_ret) {
                 $platform_ret = $this->wxm_pay_platform->create_order($order_platform);     // step 2
                 if ($platform_ret) {
-                    echo '您的订单已生效，即将进入 支付宝 官方收银台，请稍等 ...';
+                    echo '您的订单已生效，即将进入【支付宝】官方收银台，请不要走开 。。。';
                     // 记录一下此订单，CI session Cookie
                     $pay_order = array(
                         'pay_trade_no' => $pay_trade_no,
@@ -584,6 +593,7 @@ class WXC_Download_Note extends CI_Controller {
             return false;
         }
 
+        // echo '系统正在进入支付宝官方认证页面，请不要走开 。。。';
         $html_content = $this->wx_alipay_direct_api->alipay_submit($out_trade_no, $subject, $total_fee, $body, $show_url);
         echo $html_content;
     }

@@ -28,11 +28,11 @@
     <div class="foot_list_right">
       <h2><b>友情链接</b></h2>
       <div class="text_line">
+        <!-- <a href="#"><div class="fl _coop_img"><img src="/application/frontend/views/resources/images/coop/1.jpg"></div></a>
         <a href="#"><div class="fl _coop_img"><img src="/application/frontend/views/resources/images/coop/1.jpg"></div></a>
         <a href="#"><div class="fl _coop_img"><img src="/application/frontend/views/resources/images/coop/1.jpg"></div></a>
         <a href="#"><div class="fl _coop_img"><img src="/application/frontend/views/resources/images/coop/1.jpg"></div></a>
-        <a href="#"><div class="fl _coop_img"><img src="/application/frontend/views/resources/images/coop/1.jpg"></div></a>
-        <a href="#"><div class="fl _coop_img"><img src="/application/frontend/views/resources/images/coop/1.jpg"></div></a>
+        <a href="#"><div class="fl _coop_img"><img src="/application/frontend/views/resources/images/coop/1.jpg"></div></a> -->
       </div>
     </div>
   </div>

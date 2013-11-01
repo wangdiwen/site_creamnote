@@ -458,11 +458,11 @@ $.ajax({
     		var str="";
         	for(i in result){
             	if(result[i]['message_user_id']==<?php echo $_SESSION["wx_user_id"]?>){
-            		str+="<div id='wraper1'><div style='height:5px;' ></div><div style='text-align: left;padding-left:20px'><div class='bubble'><div class='content'>";
+            		str+="<div id='wraper2'><div style='height:5px;' ></div><div style='text-align: right;padding-right:20px'><div class='bubble'><div class='content'>";
             		str+=result[i]['message_content']+"("+result[i]['message_time']+")";
             		str+="</div></div><div>"+result[i]['user_name']+"</div></div></div>";
                	}else{
-               		str+="<div id='wraper2'><div style='height:20px;' ></div><div style='text-align: right;padding-right:20px'><div class='bubble'><div class='content'>";
+               		str+="<div id='wraper1'><div style='height:20px;' ></div><div style='text-align: left;padding-left:20px'><div class='bubble'><div class='content'>";
             		str+=result[i]['message_content']+"("+result[i]['message_time']+")";
             		str+="</div></div><div>"+result[i]['user_name']+"</div></div></div>";
                 }
@@ -983,9 +983,9 @@ function delete_data(dataid){
                                     <div onclick="show_follow(2)" class="_personal_view fl" title="粉丝"><span><?php echo $liked_count?></span></div>
                                     <div onclick="show_follow(1)" class="_personal_store fr" title="关注"><span id="like_count"><?php echo $like_count?></span></div>
                                 </div>
-                                <div class="_word_break"><a ><?php echo "邮箱: &nbsp;".$user_info->user_email; ?></a></div>
-                                <div class="_word_break"><a ><?php  echo "注册: &nbsp;".substr($user_info->user_register_time,0,strlen($user_info->user_register_time)-3);   ?></a></div>
-							    <div class="_word_break"><a ><?php echo $user_info->user_school; ?>/<?php echo $user_info->user_major; ?></a></div>
+                                <div class="_word_break gravatar"  title="<?php echo $user_info->user_email; ?>"><a ><?php echo "邮箱: &nbsp;".$user_info->user_email; ?></a></div>
+                                <div class="_word_break gravatar" title="<?php  echo substr($user_info->user_register_time,0,strlen($user_info->user_register_time)-3);   ?>"><a ><?php  echo "加入: &nbsp;".substr($user_info->user_register_time,0,strlen($user_info->user_register_time)-3);   ?></a></div>
+							    <div class="_word_break gravatar" title="<?php echo $user_info->user_school; ?>/<?php echo $user_info->user_major; ?>"><a ><?php echo $user_info->user_school; ?>/<?php echo $user_info->user_major; ?></a></div>
                             </li>
 						</div>
             <div>
