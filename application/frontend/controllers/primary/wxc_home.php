@@ -1015,6 +1015,7 @@ class WXC_Home extends CI_Controller
     public function find_password_third_step()
     {
         $new_password = $this->input->post('new_password');
+        $new_password = trim($new_password);
 
         if (isset($_SESSION['user_email']) && isset($_SESSION['auth_code']))
         {
