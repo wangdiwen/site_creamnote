@@ -453,7 +453,7 @@ class WXM_User extends CI_Model
 /*****************************************************************/
     public function check_password($user_id = 0, $password = '')
     {
-        $this->load->library('encrypt');
+        // $this->load->library('encrypt');
 
         if ($user_id > 0)
         {
@@ -464,11 +464,15 @@ class WXM_User extends CI_Model
             if ($row)
             {
                 $encrypt_passwd = $row['user_password'];
-                $old_password = $this->encrypt->decode($encrypt_passwd);
-                if ($old_password == $password)
-                {
+                $md5_passwd = md5($password);
+                if ($encrypt_passwd == $md5_passwd) {
                     return true;
                 }
+                // $old_password = $this->encrypt->decode($encrypt_passwd);
+                // if ($old_password == $password)
+                // {
+                //     return true;
+                // }
             }
         }
         return false;
@@ -476,11 +480,12 @@ class WXM_User extends CI_Model
 /*****************************************************************/
     public function update_passwd_by_email($user_email = '', $passwd = '')
     {
-        $this->load->library('encrypt');
+        // $this->load->library('encrypt');
 
         if ($user_email && $passwd)
         {
-            $encrypt_passwd = $this->encrypt->encode($passwd);
+            // $encrypt_passwd = $this->encrypt->encode($passwd);
+            $encrypt_passwd = md5($passwd);
             $data = array(
                 'user_password' => $encrypt_passwd
                 );
@@ -491,8 +496,9 @@ class WXM_User extends CI_Model
             $this->db->select('user_password')->from('wx_user')->where('user_email', $user_email);
             $query = $this->db->get();
             $row = $query->row();
-            $user_password = $this->encrypt->decode($row->user_password);
-            if ($user_password == $passwd)
+            // $user_password = $this->encrypt->decode($row->user_password);
+            $user_password = $row->user_password;
+            if ($user_password == md5($passwd))
             {
                 return true;
             }
@@ -507,11 +513,12 @@ class WXM_User extends CI_Model
     // Return: true/false
     public function update_passwd($id = 0, $passwd = '')
     {
-        $this->load->library('encrypt');
+        // $this->load->library('encrypt');
 
         if ($id && $passwd)
         {
-            $encrypt_passwd = $this->encrypt->encode($passwd);
+            // $encrypt_passwd = $this->encrypt->encode($passwd);
+            $encrypt_passwd = md5($passwd);
             $data = array('user_password' => $encrypt_passwd);
             $this->db->where('user_id', $id);
             $this->db->update('wx_user', $data);
@@ -520,8 +527,9 @@ class WXM_User extends CI_Model
             $this->db->select('user_password')->from('wx_user')->where('user_id', $id);
             $query = $this->db->get();
             $row = $query->row();
-            $user_password = $this->encrypt->decode($row->user_password);
-            if ($user_password == $passwd)
+            // $user_password = $this->encrypt->decode($row->user_password);
+            $user_password = $row->user_password;
+            if ($user_password == md5($passwd))
             {
                 return true;
             }
@@ -560,7 +568,7 @@ class WXM_User extends CI_Model
     public function login($email = '', $passwd = '')
     {
         // Encript lib, for md5 method
-        $this->load->library('encrypt');
+        // $this->load->library('encrypt');
 
         $has_user = $this->has_user($email);  // Check user e-mail account
         if ($has_user)
@@ -577,14 +585,15 @@ class WXM_User extends CI_Model
                 $user_password = $first->user_password;
                 $user_name = $first->user_name;
                 $user_status = $first->user_status;
-                $encrypt_passwd = $this->encrypt->decode($user_password);
+
+                // $encrypt_passwd = $this->encrypt->decode($user_password);
 
                 // 判断用户是否被封号
                 if ($user_status == 'false') {
                     return '3';
                 }
 
-                if ($encrypt_passwd == $passwd)
+                if ($user_password == md5($passwd))
                 {
                     return $user_name;  // Successed, return name
                 }
@@ -608,7 +617,7 @@ class WXM_User extends CI_Model
     public function register($name = '', $email = '', $passwd = '')
     {
         // Encript lib, for md5 method
-        $this->load->library('encrypt');
+        // $this->load->library('encrypt');
 
         $has_name = $this->has_name($name);
         $has_user = $this->has_user($email);  // Check if has e-mail account or not
@@ -622,7 +631,8 @@ class WXM_User extends CI_Model
         }
         else
         {
-            $encrypt_passwd = $this->encrypt->encode($passwd);
+            // $encrypt_passwd = $this->encrypt->encode($passwd);
+            $encrypt_passwd = md5($passwd);
             $register_time = date("Y-m-d H:i:s", time());
 
             // Insert cur account to database
