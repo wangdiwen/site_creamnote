@@ -11,12 +11,19 @@ class DB_Exception extends Exception {}
 
 class WX_DB
 {
-    var $db_service;           // oss server obj
-    var $db_database = 'CREAMNOTE';
-    var $db_server = 'localhost'; // 暂时为云服务器本地数据库：121.199.4.71
-    var $db_user_name = 'root';
-    var $db_passwd = 'wx@creamnote';
-
+/************************    本地数据库   *************************************/
+    // var $db_service;           // oss server obj
+    // var $db_database = 'CREAMNOTE';
+    // var $db_server = 'localhost'; // 云服务器本地数据库：121.199.4.71
+    // var $db_user_name = 'root';
+    // var $db_passwd = 'wx@creamnote';
+/************************      阿里RDS     ***********************************/
+    var $db_service;
+    var $db_database = 'creamnote';
+    var $db_server = 'rdsnyamvqnyamvq.mysql.rds.aliyuncs.com';  // 内网地址
+    var $db_user_name = 'wangdiwen';
+    var $db_passwd = 'wx2creamnote';
+/*****************************************************************************/
 /*****************************************************************************/
     public function __construct()
     {
