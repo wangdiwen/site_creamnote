@@ -24,10 +24,10 @@
         <img src="/application/frontend/views/resources/images/version/tuding.png" style="width: 80px;;position: absolute;margin-left: -20px;margin-top: -70px;">
         <img src="/application/frontend/views/resources/images/version/article_bottom_r_t.jpg" style="width: 400px;position: absolute;margin-left: 430px;margin-top: -42px;">
         <h2 style="line-height: 35px;color: #839acd;"><b><?php echo $article_title;?></b></h2>
-        <div class="article_author" style="font-style: oblique;color:#000;">
-          <p>作者:<?php echo $article_author;?></p>
-          <p>时间:<?php echo $article_time;?></p>
-          <p>分类:<?php echo $article_category;?></p>
+        <div class="article_author" style="color:#000;">
+          <p>作者：<?php echo $article_author;?></p>
+          <p>时间：<?php echo $article_time;?></p>
+          <p>分类：<?php echo $article_category;?></p>
         </div>
         <div style="color:#000;">
           <?php echo $article_content;?>

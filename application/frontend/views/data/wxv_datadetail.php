@@ -137,6 +137,7 @@ function slider_pic() {
 			var data_name = $("#data_name").attr("value");
 			var data_user_id = $("#data_user_id").attr("value");
 			var user_name = $("#user_name").attr("value");
+      var loginname = '<?php if (isset($_SESSION["wx_user_name"]) && $_SESSION["wx_user_name"] != "") echo $_SESSION["wx_user_name"]; else echo ""; ?>';
 			var url = '<?php echo site_url('core/wxc_data_statistic/insert_comment'); ?>';
             if(comment == ""){
                 warnMes("内容为空时不能提交的哦:)！");
@@ -161,7 +162,7 @@ function slider_pic() {
                               str += "<p style='margin-top: 0;height: 82px;word-break: break-all;overflow: hidden;'>"+comment+"</p>";
                               str += "<div class='_detail_card_footer' style='padding-top: 4px;height: 35px;'><p style='margin:0;'>";
                               str += "<img class='fl' width='25' height='25' src='"+head_url+"'>";
-                              str += "<span style='color:#4c76ac;'>"+user_name+"</span></br><span class='_detail_card_time'>--刚刚";
+                              str += "<span style='color:#4c76ac;'>"+loginname+"</span></br><span class='_detail_card_time'>--刚刚";
                               str += "</span></p></div>";
                               str += "</div>";
                               if($("#commnet_count").val() == 0){

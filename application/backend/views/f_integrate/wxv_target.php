@@ -102,7 +102,7 @@
 
               <tr>
                 <td>
-                  <input type="checkbox" value="<?=$info['site_id']?>"/>
+                  <input type="checkbox" value="<?=$site_month_info['site_id']?>"/>
                 </td>
                 <td ><?=$site_month_info['site_date']?></td>
                 <td ><?=$site_month_info['site_users']?></td>
