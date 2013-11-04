@@ -96,7 +96,7 @@ class WXC_Feedback extends CI_Controller
 
         $feedback_content = trim($feedback_content);
         if (mb_strlen($feedback_content, 'UTF-8') >= 100) {
-            $feedback_content = mb_substr($feedback_content, 0, 99, 'utf-8');
+            $feedback_content = mb_substr($feedback_content, 0, 140, 'utf-8');
         }
 
         $feedback_time = date('Y-m-d H:i:s');

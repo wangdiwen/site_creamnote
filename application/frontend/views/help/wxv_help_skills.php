@@ -18,7 +18,7 @@
 <body>
   <?php include  'application/frontend/views/share/header_home.php';?>
   <div class="body article_body">
-    <div class="foot_list_left" style="padding-bottom:0px!important;margin-bottom:0px!important;height: 12000px;">
+    <div class="foot_list_left" style="padding-bottom:0px!important;margin-bottom:0px!important;height: 14000px;">
       <h1><b>帮助</b></h1>
       <ul class="foot_list_ul">
         <li><a href="<?php echo site_url('static/wxc_help/faq'); ?>" title="常见问题">常见问题</a></li>
@@ -40,7 +40,8 @@
         <a href="#grade_comment"><p style="font-size:14px" class="pointer" ><b>7.笔记打分和评论</b></p></a>
         <a href="#collect_notes"><p style="font-size:14px" class="pointer" ><b>8.收藏笔记</b></p></a>
         <a href="#follow"><p style="font-size:14px" class="pointer" ><b>9.关注和粉丝</b></p></a>
-        <a href="#message"><p style="font-size:14px" class="pointer _help_tail" ><b>10.给笔记所有者留言</b></p></a>
+        <a href="#message"><p style="font-size:14px" class="pointer" ><b>10.给笔记所有者留言</b></p></a>
+        <a href="#change_avatar"><p style="font-size:14px" class="pointer _help_tail" ><b>11.修改头像</b></p></a>
         <!-- 目录 -->
 
         <!-- 分享干货 -->
@@ -386,6 +387,61 @@
           </div>
         <p class="_help_tail"></p>
         <!-- 给笔记所有者留言 -->
+
+        <!-- 修改头像 -->
+        <a name="change_avatar"><p style="font-size:14px" class="pointer" ><b>11.修改头像</b></p></a>
+          <div class="help_section">
+            Creamnote目前还没有提供本地化修改头像的功能，我们使用的是WordPress旗下的一个头像服务<a href="https://en.gravatar.com/" target="_blank">Gravatar</a>（全球通用头像，一个邮箱对应一个头像），你可以在这里注册修改你的头像，Creamnote会同步你修改的数据，过程很简单
+            <br/>
+            1、<a href="https://en.gravatar.com/" target="_blank">Gravatar首页</a>
+            <br/>
+            2、<a href="https://signup.wordpress.com/signup/?ref=oauth2&oauth2_redirect=99ae3fce4eee17cc905bee526f0ee1b1%40https%3A%2F%2Fpublic-api.wordpress.com%2Foauth2%2Fauthorize%2F%3Fclient_id%3D1854%26response_type%3Dcode%26blog_id%3D0%26state%3Dbf2512836bf5c3c532775bb3a8705ad991773ce32a605d4508715efa14969a2a%26redirect_uri%3Dhttps%253A%252F%252Fen.gravatar.com%252Fconnect%252F%253Faction%253Drequest_access_token%26jetpack-code%26jetpack-user-id%3D0%26action%3Doauth2-login&wpcom_connect=1" target="_blank">Gravatar注册地址</a>
+            <br/>
+            3、<a href="http://www.creamnote.com/core/wxc_util/download_over_wall_software">翻墙软件下载</a>
+          </div>
+          <div class="help_section">
+            <div class="fl help_stand_right">
+              跳转到<a href="https://en.gravatar.com/" target="_blank">Gravatar首页</a>，点击顶部导航栏的“sign in”按钮，如果你已经有WordPress账号，可以直接登录；如果没有需要在登录页点击“Need an account?”跳转到注册页面，注册一个账号(特别提示，WordPress官网可能在你的网络下无法访问（被墙掉了），我们推荐几个实用翻墙软件，使用很简单，基本打开点击运行就行)
+            </div>
+            <div class="help_stand_left">
+              <img style='width:500px;' src="/application/frontend/views/resources/images/help_image/35.jpg"></img>
+            </div>
+          </div>
+          <div class="help_section">
+            <div class="fl help_stand_right">
+              在这里注册你的账户，邮箱号为你注册Creamnote实用的邮箱号，其他信息自定义，提交后会给你邮箱发送激活链接，激活成功后你就可以修改你的头像啦！
+            </div>
+            <div class="help_stand_left">
+              <img style='width:500px;' src="/application/frontend/views/resources/images/help_image/36.jpg"></img>
+            </div>
+          </div>
+          <div class="help_section">
+            <div class="fl help_stand_right">
+              激活成功后，点击右侧图片中标出的两个图标任意一个，跳转到添加修改头像页面
+            </div>
+            <div class="help_stand_left">
+              <img style='width:500px;' src="/application/frontend/views/resources/images/help_image/37.jpg"></img>
+            </div>
+          </div>
+          <div class="help_section">
+            <div class="fl help_stand_right">
+              修改页面支持url图片和本地图片上传，过程和一般修改头像无太大差异</br>
+            </div>
+            <div class="help_stand_left">
+              <img style='width:500px;' src="/application/frontend/views/resources/images/help_image/38.jpg"></img>
+            </div>
+          </div>
+          <div class="help_section">
+            <div class="fl help_stand_right">
+              最后一步：选择图标等级，这里你需要选择“G”等级</br>
+              祝成功！
+            </div>
+            <div class="help_stand_left">
+              <img style='width:350px;' src="/application/frontend/views/resources/images/help_image/39.jpg"></img>
+            </div>
+          </div>
+        <p class="_help_tail"></p>
+        <!-- 修改头像 -->
 
         <!--滚动至顶部-->
         <div id="updown"><span class="up transition"></span></div>

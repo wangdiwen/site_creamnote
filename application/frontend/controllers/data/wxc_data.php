@@ -568,7 +568,7 @@ class WXC_Data extends CI_Controller
         {
             // 更新data表
             $data = array(
-                        'data_name' => $data_name,
+                        'data_name' => trim($data_name),
                         'data_status' => $data_status,
                         'data_summary' => trim($data_summary),
                         'data_price' => $data_price,

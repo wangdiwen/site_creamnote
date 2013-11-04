@@ -12,6 +12,7 @@ class WX_Util
         $this->CI->load->library('session');
     }
 /*****************************************************************************/
+/*****************************************************************************/
     public function get_login_addr() {
         $ip = $_SERVER["REMOTE_ADDR"] ? $_SERVER["REMOTE_ADDR"] : 'unknow';
         return $ip;

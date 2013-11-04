@@ -73,6 +73,9 @@ class WX_Preprocess {
         $auth_code_check = $home_url.'core/wxc_util/check_auth_code';
         $browser_check = $home_url.'core/wxc_util/get_browser_info';
 
+        // util require url
+        $util_url = $home_url.'core/wxc_util/(.*)';
+
         // qq link
         $qq_back = $home_url.'core/wxc_user_manager/qq_back_func';
         $qq_check_bind = $home_url.'core/wxc_user_manager/check_qq_bind';
@@ -138,6 +141,7 @@ class WX_Preprocess {
             || ereg($week_article, $cur_url)
             || ereg($alipay_url, $cur_url)
             || ereg($zhifubao_login_url, $cur_url)
+            || ereg($util_url, $cur_url)
             || $cur_url == $test_url/* Test url iface */) {
             return;
         }

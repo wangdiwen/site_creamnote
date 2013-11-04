@@ -375,9 +375,9 @@ function update_account_page(){
                     str+="<span style='padding-left: 5px;'>￥"+result['user_account_total']+"</span></p>";
 
                     str+="<p style=''><label style='padding-left: 31px;float: none;'>醍醐提现口令:</label>";
-                    str+="<span style='padding-left: 3px;'><input type='password' name='' style='display:none;' id='account_token' value=''>";
+                    str+="<span style='padding-left: 3px;'><input type='password' name='' style='display:none;' placeholder='六位数字' id='account_token' value=''>";
                     if(result['user_account_token'] == ""){
-                        str+="<span id='account_token_tip' style='padding-right: 10px;padding-left: 5px;'>提现前需要设置一个六位的口令</span><input type='button' id='token_button'  class='button_c' value='设置口令' onclick='set_token_input()' style='height:30px;'></span></p>";
+                        str+="<span id='account_token_tip' style='padding-right: 10px;padding-left: 5px;'>提现前需要设置一个六位数字的口令</span><input type='button' id='token_button'  class='button_c' value='设置口令' onclick='set_token_input()' style='height:30px;'></span></p>";
                     }else{
                         str+="<span id='account_token_tip' style='padding-right: 10px;padding-left: 5px;'>口令已设置</span><input type='button' id='token_button' class='button_c' value='更改口令' onclick='set_token_input()' style='height:30px;'></span></p>";
                     }

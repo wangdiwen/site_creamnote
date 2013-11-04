@@ -167,21 +167,24 @@ class WXC_Download_Note extends CI_Controller {
                     }
 
                     // prepare to download note
-                    $file_data = file_get_contents($file_url);
-                    $file_len = strlen($file_data)/1024;
                     $file_name = $data_name.'.'.$data_type;
-                    $this->output->set_header("Content-type: application/octet-stream");
-                    $this->output->set_header("Accept-Ranges: bytes");
-                    $this->output->set_header("Content-type: application/force-download; charset=utf-8");
-                    $this->output->set_header("Content-Length: ".$file_len);
-                    if ($file_name && $file_data) {
+                    if ($file_name && $file_url) {
+                        // $file_data = file_get_contents($file_url);
+                        // $file_len = strlen($file_data)/1024;
+                        $file_len = filesize($file_url);
+
+                        $this->output->set_header("Content-type: application/octet-stream");
+                        $this->output->set_header("Accept-Ranges: bytes");
+                        $this->output->set_header("Content-type: application/force-download; charset=utf-8");
+                        $this->output->set_header("Content-Length: ".$file_len);
+
                         // check user browser
                         $agent_info = $this->agent->agent_string();
                         if (strpos($agent_info, 'MSIE')) {   // solve chinese mess word
-                            force_download(urlencode($file_name), $file_data);
+                            force_download(urlencode($file_name), file_get_contents($file_url));
                         }
                         else {
-                            force_download($file_name, $file_data);
+                            force_download($file_name, file_get_contents($file_url));
                         }
                     }
                 }
@@ -261,7 +264,13 @@ class WXC_Download_Note extends CI_Controller {
             $user_account_money = $user_account_money_info['user_account_money'];
             $user_account_status = $user_account_money_info['user_account_status'];
         }
-        if ($user_account_money <= 0.00) {
+        if ($user_account_money < 0.00) {
+            // 发现账户余额为负数，则说明程序出现问题，正常余额大于等于0，对账户进行归零操作
+            $set_user_accout_zero = array(
+                'user_id' => $pay_user_id,
+                'user_account_money' => number_format(0.00, 2, '.', ''),
+                );
+            $set_user_account_zero_ret = $this->wxm_user->update_account_balance($set_user_accout_zero);
             echo 'not-enough-money';
             return false;
         }
@@ -552,21 +561,24 @@ class WXC_Download_Note extends CI_Controller {
         }
 
         // prepare to download note
-        $file_data = $file_url ? file_get_contents($file_url) : '';
-        $file_len = strlen($file_data) / 1024;
         $file_name = $data_name.'.'.$data_type;
-        $this->output->set_header("Content-type: application/octet-stream");
-        $this->output->set_header("Accept-Ranges: bytes");
-        $this->output->set_header("Content-type: application/force-download; charset=utf-8");
-        $this->output->set_header("Content-Length: ".$file_len);
-        if ($file_name && $file_data) {
+        if ($file_name && $file_url) {
+            // $file_data = $file_url ? file_get_contents($file_url) : '';
+            // $file_len = strlen($file_data) / 1024;
+            $file_len = filesize($file_url);
+
+            $this->output->set_header("Content-type: application/octet-stream");
+            $this->output->set_header("Accept-Ranges: bytes");
+            $this->output->set_header("Content-type: application/force-download; charset=utf-8");
+            $this->output->set_header("Content-Length: ".$file_len);
+
             // check user browser
             $agent_info = $this->agent->agent_string();
             if (strpos($agent_info, 'MSIE')) {   // solve chinese mess word
-                force_download(urlencode($file_name), $file_data);
+                force_download(urlencode($file_name), file_get_contents($file_url));
             }
             else {
-                force_download($file_name, $file_data);
+                force_download($file_name, file_get_contents($file_url));
             }
         }
         else {

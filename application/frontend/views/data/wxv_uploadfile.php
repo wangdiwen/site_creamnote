@@ -68,6 +68,10 @@ $(function() {
             $("#first_step span").html(".");
             step_one_success = 1;
             check_upload();
+
+            //更改上传图标
+            $("#file_upload").css("display","none");
+            $("#have_upload").css("display","block");
         }
         // Put your options here
     });
@@ -334,7 +338,7 @@ function step_two(){
 function step_three(){
     var d_summary = $("#datasummary").attr("value");
     var d_name = $("#dataname").val();
-    if(d_summary.length>20&&d_name!=""){
+    if(d_summary.length>10&&d_name!=""){
         $("#third_step").addClass("ca-menu_hover");
         $("#third_step span").addClass("ca-menu_hover_ca-icon");
         $("#third_step h2").addClass("ca-menu_hover_ca-main");
@@ -508,6 +512,11 @@ function makeCenter()
             <fieldset>
                 <le>第一步：上传资料 </le>
                 <p style="margin-top: 12px;">
+                    <div class="uploadify " id="have_upload" style="display:none;height: 30px; width: 120px;">
+                            <div class="common_show_login_win uploadify-button" style="height: 30px; line-height: 30px; width: 120px;cursor: pointer;">
+                                <span   class="common_show_login_win uploadify-button-text">笔记已上传</span>
+                            </div>
+                    </div>
                     <?php if (isset($_SESSION["wx_user_name"]) && $_SESSION["wx_user_name"] != ""){?>
                         <input type="file" name="file_upload" id="file_upload" />
                     <?php } else {?>
@@ -516,8 +525,8 @@ function makeCenter()
                                 <span   class="common_show_login_win uploadify-button-text">选择资料</span>
                             </div>
                         </div>
-
                     <?php }?>
+
                 </p>
                <!--  <p><a href="javascript:$('#file_upload').uploadify('settings', 'formData', {'typeCode':document.getElementById('id_file').value});$('#file_upload').uploadify('upload','*')">上传</a>
 				<a href="javascript:$('#file_upload').uploadify('cancel','*')">重置上传队列</a>
@@ -623,7 +632,7 @@ function makeCenter()
 
                 <input type="hidden" name="dataid" id ="dataid">
                 <input type="hidden" name="dataobjectname" id ="dataobjectname">
-                <div id="" style="margin-bottom: 12px;color:#AA7700;">*建议您输入不少于20字的简介，好让你的资料更受关注</div>
+                <div id="" style="margin-bottom: 12px;color:#AA7700;">*建议您输入不少于10字的简介，好让你的资料更受关注</div>
                 </fieldset>
             </div>
 		</div>

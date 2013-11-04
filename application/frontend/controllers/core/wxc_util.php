@@ -6,8 +6,11 @@ class WXC_Util extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->library('wx_util');
+
+        $this->load->helper('download');
+
         $this->load->library('user_agent');
+        $this->load->library('wx_util');
     }
 /*****************************************************************************/
     public function get_new_auth_code()
@@ -110,6 +113,34 @@ class WXC_Util extends CI_Controller
         $context = file_get_contents($auth_file);
         echo $context.'<br />';
     }
+/*****************************************************************************/
+    public function download_over_wall_software() {
+        $file_path = 'static/software/overwall_software.zip';
+        if (file_exists($file_path)) {
+            $file_size = filesize($file_path);
+            $file_name = basename($file_path);
+
+            // prepare to download note
+            $this->output->set_header("Content-type: application/octet-stream");
+            $this->output->set_header("Accept-Ranges: bytes");
+            $this->output->set_header("Content-type: application/force-download; charset=utf-8");
+            $this->output->set_header("Content-Length: ".$file_size);
+
+            // check user browser
+            $agent_info = $this->agent->agent_string();
+            if (strpos($agent_info, 'MSIE')) {   // solve chinese mess word
+                force_download(urlencode($file_name), file_get_contents($file_path));
+            }
+            else {
+                force_download($file_name, file_get_contents($file_path));
+            }
+        }
+        else {
+            echo 'Not find any overwall_software.zip file !';
+        }
+        die();
+    }
+/*****************************************************************************/
 /*****************************************************************************/
 }
 

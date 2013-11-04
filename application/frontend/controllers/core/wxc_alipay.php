@@ -170,11 +170,11 @@ class WXC_Alipay extends CI_Controller {
 
                 // 销毁本次支付请求的CI Session Cookie
                 $pay_order = array(
-                    'pay_trade_no' => $pay_trade_no,
-                    'pay_subject' => $pay_subject,
-                    'pay_body' => $pay_body,
-                    'pay_show_url' => $pay_show_url,
-                    'pay_diff_money' => $diff_money,
+                    'pay_trade_no' => '',
+                    'pay_subject' => '',
+                    'pay_body' => '',
+                    'pay_show_url' => '',
+                    'pay_diff_money' => '',
                     );
                 $this->session->unset_userdata($pay_order);
                 // 在本地记录一次支付成功后的笔记资料的 id，
@@ -324,21 +324,25 @@ class WXC_Alipay extends CI_Controller {
         }
 
         // prepare to download note
-        $file_data = $file_url ? file_get_contents($file_url) : '';
-        $file_len = strlen($file_data) / 1024;
+
         $file_name = $data_name.'.'.$data_type;
-        $this->output->set_header("Content-type: application/octet-stream");
-        $this->output->set_header("Accept-Ranges: bytes");
-        $this->output->set_header("Content-type: application/force-download; charset=utf-8");
-        $this->output->set_header("Content-Length: ".$file_len);
-        if ($file_name && $file_data) {
+        if ($file_name && $file_url) {
+            // $file_data = $file_url ? file_get_contents($file_url) : '';
+            // $file_len = strlen($file_data) / 1024;
+            $file_len = filesize($file_url);
+
+            $this->output->set_header("Content-type: application/octet-stream");
+            $this->output->set_header("Accept-Ranges: bytes");
+            $this->output->set_header("Content-type: application/force-download; charset=utf-8");
+            $this->output->set_header("Content-Length: ".$file_len);
+
             // check user browser
             $agent_info = $this->agent->agent_string();
             if (strpos($agent_info, 'MSIE')) {   // solve chinese mess word
-                force_download(urlencode($file_name), $file_data);
+                force_download(urlencode($file_name), file_get_contents($file_url));
             }
             else {
-                force_download($file_name, $file_data);
+                force_download($file_name, file_get_contents($file_url));
             }
         }
     }

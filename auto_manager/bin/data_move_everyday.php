@@ -47,8 +47,9 @@ require_once WX_BASE_PATH.WX_SEPARATOR.'model'.WX_SEPARATOR.'wx_database_api.php
 $log_name = 'data_move';
 $today_time = wx_get_today_time();
 $yesterday_time = wx_get_yesterday_time();
-// $today_time = '2013-05-28 00:01:00';
-// $yesterday_time = '2013-05-19 00:01:00';
+
+// $today_time = '2013-11-02 00:01:00';
+// $yesterday_time = '2013-11-01 00:01:00';
 
 // echo $today_time."\n";
 // echo $yesterday_time."\n";

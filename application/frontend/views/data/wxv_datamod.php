@@ -217,7 +217,7 @@ function step_two(){
 function step_three(){
     var d_summary = $("#datasummary").attr("value");
     var d_name = $("#dataname").val();
-    if(d_summary.length>20&&d_name!=""){
+    if(d_summary.length>10&&d_name!=""){
         $("#third_step").addClass("ca-menu_hover");
         $("#third_step span").addClass("ca-menu_hover_ca-icon");
         $("#third_step h2").addClass("ca-menu_hover_ca-main");
@@ -571,7 +571,7 @@ $(function(){
 
                     <input type="hidden" name="dataid" id ="dataid" value="">
                     <input type="hidden" name="dataobjectname" id ="dataobjectname">
-                    <div id="" style="margin-bottom: 12px;color:#AA7700;">*建议您输入不少于20字的简介，好让你的资料更受关注</div>
+                    <div id="" style="margin-bottom: 12px;color:#AA7700;">*建议您输入不少于10字的简介，好让你的资料更受关注</div>
                     </fieldset>
                 </div>
 		    </div>

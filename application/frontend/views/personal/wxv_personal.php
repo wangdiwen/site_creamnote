@@ -973,7 +973,7 @@ function delete_data(dataid){
 						// 	echo "<a href='#' style='padding-left:61px;'><img src='/application/frontend/views/resources/images/".$user_level."_avatar.jpg'/></a>";
 						// }
 					?>
-                    <a href="https://en.gravatar.com/site/signup/" class="gravatar" target="_blank" title="点击到Gravatar注册<br/>替换修改你的全球唯一头像"><img src="<?php echo $head_url;?>"/></a>
+              <a href="<?php echo site_url('static/wxc_help/skills'); ?>#change_avatar" class="gravatar" target="_blank" title="点击更换你的Gravatar头像"><img src="<?php echo $head_url;?>"/></a>
 					</div>
 					<ul>
 						<li class="_nick_personal1" style="text-align: center;font-size:16px; "><a style="padding: 0;" href="<?php echo site_url('primary/wxc_personal/update_userinfo_page'); ?>"><?php echo $user_info->user_name; ?></a></li>
