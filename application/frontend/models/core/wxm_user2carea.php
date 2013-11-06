@@ -73,6 +73,15 @@ class WXM_User2carea extends CI_Model
         }
     }
 /*****************************************************************************/
+    public function get_user_id_list_by_school_id_list($school_id_list = array()) {
+        if ($school_id_list) {
+            $table = $this->wx_table;
+            $this->db->select('user_id')->from($table)->where_in('carea_id_school', $school_id_list)->limit(10);
+            $query = $this->db->get();
+            return $query->result_array();
+        }
+        return false;
+    }
 /*****************************************************************************/
 }
 

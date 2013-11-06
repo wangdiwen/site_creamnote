@@ -148,7 +148,7 @@ wx_log("------------------------------------------------------------------------
 wx_log("---------------------------------------------------------------------------------", $log_name);
 
 
-foreach ($pend_data_list as $pend_data) {
+foreach ($pend_data_list as $pend_key => $pend_data) {
     $data_id = $pend_data['data_id'];
     $data_objectname = $pend_data['data_objectname'];
     $data_vpspath = $pend_data['data_vpspath'];
@@ -196,6 +196,7 @@ foreach ($pend_data_list as $pend_data) {
                     'data_id' => $data_id,
                     );
             $ret_update_data = $db_service->update('wx_data', $update_data, $update_data_where);
+            usleep(500000);  // 0.5s
             if ($ret_update_data) {
                 wx_log('Info: Clear Vps Path Record Success', $log_name);
             }
@@ -212,8 +213,8 @@ foreach ($pend_data_list as $pend_data) {
             wx_log('Info: Delete VPS Data File Success', $log_name);
 
             // delete the flash file if has
-            $ret_del_file = wx_delete_file($flash_file);
-            if ($ret_del_file) {
+            $ret_del_flash = wx_delete_file($flash_file);
+            if ($ret_del_flash) {
                 wx_log('Info: Delete VPS Flash File Success', $log_name);
             }
             else {
@@ -237,12 +238,14 @@ foreach ($pend_data_list as $pend_data) {
 
             // table: 'wx_data'
             $ret_update = $db_service->update($table_data, $update_data_table, $update_where);
+            usleep(500000);  // 0.5s
             if ($ret_update) {
                 wx_log('Info: Update Database(wx_data) Record Success', $log_name);
 
                 // table: 'wx_data_activity'
-                $ret_update = $db_service->update($table_activity, $update_data_activity, $update_where);
-                if ($ret_update) {
+                $ret_update_act = $db_service->update($table_activity, $update_data_activity, $update_where);
+                usleep(500000);  // 0.5s
+                if ($ret_update_act) {
                     wx_log('Info: Update Database(wx_data_activity) Record Success', $log_name);
                 }
                 else {

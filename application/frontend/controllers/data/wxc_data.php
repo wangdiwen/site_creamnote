@@ -710,7 +710,9 @@ class WXC_Data extends CI_Controller
                 // 使用POI接口误当成doc去读取页数信息了，这个地方要注意！
                 // 其他的情况，从PDF文件中，获取该资料文档的页数信息
                 if ($data_id > 0) {
-                    if (in_array($file_suffix, array('doc','docx')) && $data_type != 'wps') {  // not wps
+                    // 注意：word97-2003文档使用POI接口只能读取到概要信息中的页数，无法读取到完整的总页数
+                    // 所以，POI目前只适合word2007及以上文档
+                    if (in_array($file_suffix, array('docx')) && $data_type != 'wps') {  // not wps
                         $this->record_data_page_count_from_word($input_file, $file_suffix, $data_id);
                     }
                     else {  // is a wps real, not a doc file

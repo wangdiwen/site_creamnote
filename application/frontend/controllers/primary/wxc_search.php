@@ -666,14 +666,16 @@ class WXC_Search extends CI_Controller
     }
 /*****************************************************************************/
     public function test() {
-        $context = '清华大学2008媒体通信工程期末考试';
+        $context = '南京工程';
         if ($context) {
             echo 'Use word segment:'.'<br />';
             $ret = $this->_extract_keyword_user_word_segment($context);
             wx_echoxml($ret);
-            echo 'Not use word segment:'.'<br />';
-            $ret_0 = $this->_extract_keyword($context);
-            wx_echoxml($ret_0);
+            // echo 'Not use word segment:'.'<br />';
+            // $ret_0 = $this->_extract_keyword($context);
+            // wx_echoxml($ret_0);
+            $user_id_list = $this->wxm_user2carea->get_user_id_list_by_school_id_list($ret['doc-area']);
+            wx_echoxml($user_id_list);
         }
     }
 /*****************************************************************************/
