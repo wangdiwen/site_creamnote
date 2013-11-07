@@ -181,6 +181,7 @@ foreach ($pend_data_list as $pend_key => $pend_data) {
 
             // delete the flash file if has
             $ret_del_file = wx_delete_file($flash_file);
+            usleep(500000);  // 0.5s
             if ($ret_del_file) {
                 wx_log('Info: Delete VPS Flash File Success', $log_name);
             }
@@ -209,11 +210,13 @@ foreach ($pend_data_list as $pend_key => $pend_data) {
         }
 
         $ret_del_file = wx_delete_file($file_name);
+        usleep(500000);  // 0.5s
         if ($ret_del_file) {
             wx_log('Info: Delete VPS Data File Success', $log_name);
 
             // delete the flash file if has
             $ret_del_flash = wx_delete_file($flash_file);
+            usleep(500000);  // 0.5s
             if ($ret_del_flash) {
                 wx_log('Info: Delete VPS Flash File Success', $log_name);
             }

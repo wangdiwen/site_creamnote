@@ -15,6 +15,7 @@ if (! function_exists('wx_delete_file'))
             // $cmd = '/bin/sh /alidata/server/creamnote/bin/deletefile.sh '.$file.' >/dev/null 2>&1';
             $cmd = 'shred -zu  '.$file.' >/dev/null 2>&1';
             $ret = system($cmd, $status);
+            // echo 'return = '.$ret."\n";
             if ($status == 0) {
                 return true;
             }

@@ -536,7 +536,7 @@ class WXC_Download_Note extends CI_Controller {
 
         // free download file by browser
         $file_url = '';
-        if ($data_vpspath && file_exists($$data_vpspath.$data_objectname)) {
+        if ($data_vpspath && file_exists($data_vpspath.$data_objectname)) {
             $file_url = $data_vpspath.$data_objectname;
         }
         elseif ($data_osspath) {
