@@ -63,9 +63,9 @@ function comment(feedback_id,user_id_list){
 	        },
 
 	       error: function(XMLHttpRequest, textStatus, errorThrown) {
-	                    alert(XMLHttpRequest.status);
-	                    alert(XMLHttpRequest.readyState);
-	                    alert(textStatus);
+	                    // alert(XMLHttpRequest.status);
+	                    // alert(XMLHttpRequest.readyState);
+	                    // alert(textStatus);
 	                }
 	    });
 
@@ -113,9 +113,9 @@ $("#feed_back_form_submit_btn").click(function(){
         },
 
        error: function(XMLHttpRequest, textStatus, errorThrown) {
-                    alert(XMLHttpRequest.status);
-                    alert(XMLHttpRequest.readyState);
-                    alert(textStatus);
+                    // alert(XMLHttpRequest.status);
+                    // alert(XMLHttpRequest.readyState);
+                    // alert(textStatus);
                 }
     });
 });

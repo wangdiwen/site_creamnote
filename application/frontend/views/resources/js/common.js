@@ -16,9 +16,9 @@ function ajax_common_json(url,params){
                 retData = result;
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
-                alert(XMLHttpRequest.status);
-                alert(XMLHttpRequest.readyState);
-                alert(textStatus);
+                // alert(XMLHttpRequest.status);
+                // alert(XMLHttpRequest.readyState);
+                // alert(textStatus);
             }
         });
     return retData;
@@ -37,9 +37,9 @@ function ajax_common(url,params){
                 $("#ret_common_json").attr("value",result);
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
-                alert(XMLHttpRequest.status);
-                alert(XMLHttpRequest.readyState);
-                alert(textStatus);
+                // alert(XMLHttpRequest.status);
+                // alert(XMLHttpRequest.readyState);
+                // alert(textStatus);
             }
         });
     return retData;
@@ -235,9 +235,9 @@ $(".collect_data").poshytip({
 
                   },
                  error: function(XMLHttpRequest, textStatus, errorThrown) {
-                              alert(XMLHttpRequest.status);
-                              alert(XMLHttpRequest.readyState);
-                              alert(textStatus);
+                              // alert(XMLHttpRequest.status);
+                              // alert(XMLHttpRequest.readyState);
+                              // alert(textStatus);
                           }
               });
           window.setTimeout(function() {
@@ -386,9 +386,9 @@ function hover_user(){
 
                   },
                  error: function(XMLHttpRequest, textStatus, errorThrown) {
-                              alert(XMLHttpRequest.status);
-                              alert(XMLHttpRequest.readyState);
-                              alert(textStatus);
+                              // alert(XMLHttpRequest.status);
+                              // alert(XMLHttpRequest.readyState);
+                              // alert(textStatus);
                           }
               });
           window.setTimeout(function() {
@@ -580,9 +580,9 @@ function uncollect_p(data_id){
 
         },
        error: function(XMLHttpRequest, textStatus, errorThrown) {
-            alert(XMLHttpRequest.status);
-            alert(XMLHttpRequest.readyState);
-            alert(textStatus);
+            // alert(XMLHttpRequest.status);
+            // alert(XMLHttpRequest.readyState);
+            // alert(textStatus);
         }
     });
 
@@ -633,9 +633,9 @@ function collect(ser,data_id){
 
             },
            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                alert(XMLHttpRequest.status);
-                alert(XMLHttpRequest.readyState);
-                alert(textStatus);
+                // alert(XMLHttpRequest.status);
+                // alert(XMLHttpRequest.readyState);
+                // alert(textStatus);
             }
         });
     }
@@ -666,9 +666,9 @@ function uncollect(ser,data_id){
 
             },
            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                alert(XMLHttpRequest.status);
-                alert(XMLHttpRequest.readyState);
-                alert(textStatus);
+                // alert(XMLHttpRequest.status);
+                // alert(XMLHttpRequest.readyState);
+                // alert(textStatus);
             }
         });
     }

@@ -81,9 +81,9 @@ $('.hoveruser').poshytip({
 
                   },
                  error: function(XMLHttpRequest, textStatus, errorThrown) {
-                              alert(XMLHttpRequest.status);
-                              alert(XMLHttpRequest.readyState);
-                              alert(textStatus);
+                              // alert(XMLHttpRequest.status);
+                              // alert(XMLHttpRequest.readyState);
+                              // alert(textStatus);
                           }
               });
           window.setTimeout(function() {
@@ -183,9 +183,9 @@ function searchbynature(nature_id){
                 user_hover();
             },
            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                alert(XMLHttpRequest.status);
-                alert(XMLHttpRequest.readyState);
-                alert(textStatus);
+                // alert(XMLHttpRequest.status);
+                // alert(XMLHttpRequest.readyState);
+                // alert(textStatus);
             }
         });
 }
@@ -273,9 +273,9 @@ function searchbyarea(){
 
             },
            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                alert(XMLHttpRequest.status);
-                alert(XMLHttpRequest.readyState);
-                alert(textStatus);
+                // alert(XMLHttpRequest.status);
+                // alert(XMLHttpRequest.readyState);
+                // alert(textStatus);
             }
         });
 }
@@ -436,9 +436,9 @@ function searchall(nature_id,area_name,area_id){
 
             },
            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                alert(XMLHttpRequest.status);
-                alert(XMLHttpRequest.readyState);
-                alert(textStatus);
+                // alert(XMLHttpRequest.status);
+                // alert(XMLHttpRequest.readyState);
+                // alert(textStatus);
             }
         });
 }
@@ -535,9 +535,9 @@ function initSchool(provinceID)
                   $("#partment").chosen();
 		            },
 		             error: function(XMLHttpRequest, textStatus, errorThrown) {
-		                        alert(XMLHttpRequest.status);
-		                        alert(XMLHttpRequest.readyState);
-		                        alert(textStatus);
+		                        // alert(XMLHttpRequest.status);
+		                        // alert(XMLHttpRequest.readyState);
+		                        // alert(textStatus);
 		                    }
 		        });
 		    //form.submit();
@@ -598,9 +598,9 @@ function user_hover(){
 
                   },
                  error: function(XMLHttpRequest, textStatus, errorThrown) {
-                              alert(XMLHttpRequest.status);
-                              alert(XMLHttpRequest.readyState);
-                              alert(textStatus);
+                              // alert(XMLHttpRequest.status);
+                              // alert(XMLHttpRequest.readyState);
+                              // alert(textStatus);
                           }
               });
           window.setTimeout(function() {

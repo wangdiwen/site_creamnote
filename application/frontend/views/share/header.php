@@ -163,9 +163,9 @@ var loginname = '<?php if (isset($_SESSION["wx_user_name"]) && $_SESSION["wx_use
 
             },
            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                alert(XMLHttpRequest.status);
-                alert(XMLHttpRequest.readyState);
-                alert(textStatus);
+                // alert(XMLHttpRequest.status);
+                // alert(XMLHttpRequest.readyState);
+                // alert(textStatus);
               }
             });
         });
@@ -230,9 +230,9 @@ var loginname = '<?php if (isset($_SESSION["wx_user_name"]) && $_SESSION["wx_use
              },
 
             error: function(XMLHttpRequest, textStatus, errorThrown) {
-                         alert(XMLHttpRequest.status);
-                         alert(XMLHttpRequest.readyState);
-                         alert(textStatus);
+                         // alert(XMLHttpRequest.status);
+                         // alert(XMLHttpRequest.readyState);
+                         // alert(textStatus);
                      }
          });
 
@@ -279,9 +279,9 @@ var loginname = '<?php if (isset($_SESSION["wx_user_name"]) && $_SESSION["wx_use
             },
 
            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                        alert(XMLHttpRequest.status);
-                        alert(XMLHttpRequest.readyState);
-                        alert(textStatus);
+                        // alert(XMLHttpRequest.status);
+                        // alert(XMLHttpRequest.readyState);
+                        // alert(textStatus);
                     }
         });
     });
@@ -358,9 +358,9 @@ function myrefresh(){
             },
 
            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                alert(XMLHttpRequest.status);
-                alert(XMLHttpRequest.readyState);
-                alert(textStatus);
+                // alert(XMLHttpRequest.status);
+                // alert(XMLHttpRequest.readyState);
+                // alert(textStatus);
             }
         });
 }

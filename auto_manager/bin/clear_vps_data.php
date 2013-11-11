@@ -199,10 +199,10 @@ foreach ($pend_data_list as $pend_key => $pend_data) {
             $ret_update_data = $db_service->update('wx_data', $update_data, $update_data_where);
             usleep(500000);  // 0.5s
             if ($ret_update_data) {
-                wx_log('Info: Clear Vps Path Record Success', $log_name);
+                wx_log('Info: Clear Vps Path(wx_data) Record Success', $log_name);
             }
             else {
-                wx_log('Error: Clear Vps Path Record Failed', $log_name);
+                wx_log('Error: Clear Vps Path(wx_data) Record Failed', $log_name);
             }
 
             wx_log("---------------------------------------------------------------------------------", $log_name);
