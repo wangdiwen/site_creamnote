@@ -316,9 +316,9 @@ $(function() {
 
             },
            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                        alert(XMLHttpRequest.status);
-                        alert(XMLHttpRequest.readyState);
-                        alert(textStatus);
+                        // alert(XMLHttpRequest.status);
+                        // alert(XMLHttpRequest.readyState);
+                        // alert(textStatus);
                     }
         });
   });
@@ -436,9 +436,9 @@ $(document).ready(function(){
                   }
               },
              error: function(XMLHttpRequest, textStatus, errorThrown) {
-                          alert(XMLHttpRequest.status);
-                          alert(XMLHttpRequest.readyState);
-                          alert(textStatus);
+                          // alert(XMLHttpRequest.status);
+                          // alert(XMLHttpRequest.readyState);
+                          // alert(textStatus);
                       }
           });
 });
@@ -537,9 +537,9 @@ function delete_image(id){
                   }
               },
              error: function(XMLHttpRequest, textStatus, errorThrown) {
-                  alert(XMLHttpRequest.status);
-                  alert(XMLHttpRequest.readyState);
-                  alert(textStatus);
+                  // alert(XMLHttpRequest.status);
+                  // alert(XMLHttpRequest.readyState);
+                  // alert(textStatus);
               }
           });
 }

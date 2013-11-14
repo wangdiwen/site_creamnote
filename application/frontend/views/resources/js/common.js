@@ -498,6 +498,7 @@ function logout(){
 
 //=========================================================查询收藏=========================================//
 function show_all_collect(){
+    $('html,body').animate({scrollTop: '0px'}, 800);
     var url = $("#baseUrl").val()+"core/wxc_user_manager/show_collect_data";
     var params =({});
     var retData = ajax_common_json(url,params);
@@ -1074,6 +1075,7 @@ var pay_success = function(){
 }
 
 var order_history = function(){
+     $('html,body').animate({scrollTop: '0px'}, 800);
     var url = $("#baseUrl").val()+"core/wxc_download_note/pay_order_history";
     var params =({});
     var retData = ajax_common_json(url,params);
@@ -1167,6 +1169,7 @@ var order_history = function(){
 }
 
 var free_history = function(){
+   $('html,body').animate({scrollTop: '0px'}, 800);
     var url = $("#baseUrl").val()+"core/wxc_download_note/free_download_history";
     var params =({});
     var retData = ajax_common_json(url,params);
@@ -1230,6 +1233,7 @@ var free_history = function(){
 }
 
 var buy_history = function(){
+    $('html,body').animate({scrollTop: '0px'}, 800);
       var url = $("#baseUrl").val()+"core/wxc_download_note/pay_download_history";
     var params =({});
     var retData = ajax_common_json(url,params);

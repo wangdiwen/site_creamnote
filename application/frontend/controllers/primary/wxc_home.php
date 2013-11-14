@@ -81,7 +81,8 @@ class WXC_Home extends CI_Controller
 /*****************************************************************************/
     public function get_super_users()
     {
-        $super_users = $this->wxm_user_activity->get_super_users();
+        // $super_users = $this->wxm_user_activity->get_super_users();
+        $super_users = $this->wxm_user->get_super_users_by_new_user();
         if ($super_users) {
             foreach ($super_users as $key => $value) {
                 $user_id = $value['user_id'];

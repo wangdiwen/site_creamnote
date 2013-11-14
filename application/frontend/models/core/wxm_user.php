@@ -26,6 +26,20 @@ class WXM_User extends CI_Model
         return false;
     }
 /*****************************************************************************/
+    public function get_super_users_by_new_user() {
+        $table = $this->wx_table;
+        $join_table = 'wx_user_activity';
+        $join_where = $join_table.'.user_id = '.$table.'.user_id';
+
+        $this->db->select('wx_user.user_id, user_name, user_email, user_register_time,
+                           wx_user_activity.uactivity_datacount, wx_user_activity.uactivity_downloadcount,
+                           wx_user_activity.uactivity_logincount, wx_user_activity.uactivity_level')
+                        ->from($table)->join($join_table, $join_where, 'left')
+                        ->limit(10)->order_by('user_register_time', 'desc');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+/*****************************************************************************/
     public function add_account_balance($info = array()) {
         if ($info) {
             $user_id = $info['user_id'];

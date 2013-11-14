@@ -141,9 +141,9 @@ $(function() {
 
             },
            error: function(XMLHttpRequest, textStatus, errorThrown) {
-                        alert(XMLHttpRequest.status);
-                        alert(XMLHttpRequest.readyState);
-                        alert(textStatus);
+                        // alert(XMLHttpRequest.status);
+                        // alert(XMLHttpRequest.readyState);
+                        // alert(textStatus);
                     }
         });
   });
@@ -260,9 +260,9 @@ function cate_one(wx_nature){
                         $("#cate_two").addClass("display_block");
                     },
                      error: function(XMLHttpRequest, textStatus, errorThrown) {
-                        alert(XMLHttpRequest.status);
-                        alert(XMLHttpRequest.readyState);
-                        alert(textStatus);
+                        // alert(XMLHttpRequest.status);
+                        // alert(XMLHttpRequest.readyState);
+                        // alert(textStatus);
                     }
                 });
 }
@@ -279,6 +279,12 @@ function cate_two(wx_nature){
 
                 $("#cate_four").removeClass("display_none");
                 $("#cate_four").addClass("display_block");
+            }else if(wx_nature==21){
+                $("#cate_three").append("");
+                $("#cate_three").removeClass("display_block");
+                $("#cate_three").addClass("display_none");
+                $(".category_base").css("display","none");
+
             }else{
                   var url ="<?php echo site_url('data/wxc_data/get_third_nature'); ?>";
                     $.ajax({
@@ -305,9 +311,9 @@ function cate_two(wx_nature){
                                 $("#cate_three").addClass("display_block");
                             },
                         error: function(XMLHttpRequest, textStatus, errorThrown) {
-                                alert(XMLHttpRequest.status);
-                                alert(XMLHttpRequest.readyState);
-                                alert(textStatus);
+                                // alert(XMLHttpRequest.status);
+                                // alert(XMLHttpRequest.readyState);
+                                // alert(textStatus);
                             }
                         });
             }
@@ -466,9 +472,9 @@ function initSchool(provinceID)
 			            $("#cate_four").html(str);
 		            },
 		             error: function(XMLHttpRequest, textStatus, errorThrown) {
-		                        alert(XMLHttpRequest.status);
-		                        alert(XMLHttpRequest.readyState);
-		                        alert(textStatus);
+		                        // alert(XMLHttpRequest.status);
+		                        // alert(XMLHttpRequest.readyState);
+		                        // alert(textStatus);
 		                    }
 		        });
 
