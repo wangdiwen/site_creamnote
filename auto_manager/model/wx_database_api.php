@@ -18,12 +18,13 @@ class WX_DB
     // var $db_user_name = 'root';
     // var $db_passwd = 'wx@creamnote';
 /************************      阿里RDS     ***********************************/
-    var $db_service;
+    var $db_service = NULL;
     var $db_database = 'creamnote';
     var $db_server = 'rdsnyamvqnyamvq.mysql.rds.aliyuncs.com';  // 内网地址
     var $db_user_name = 'wangdiwen';
     var $db_passwd = 'wx2creamnote';
 /*****************************************************************************/
+    var $db_log_name = 'db_error';
 /*****************************************************************************/
     public function __construct()
     {
@@ -34,16 +35,41 @@ class WX_DB
         $this->db_service = mysql_connect($this->db_server, $this->db_user_name, $this->db_passwd);
         if (! $this->db_service)
         {
-            echo 'Could not connect: '.mysql_error()."\n\n";
+            // echo 'Could not connect: '.mysql_error()."\n\n";
+            wx_log('Error: Connect error: ' + mysql_error(), $this->db_log_name);
             throw new DB_Exception("create db service failed");
         }
+        wx_log('Info: Connect to Ali-RDS database', $this->db_log_name);
     }
 /*****************************************************************************/
     public function __destruct()
     {
         // echo '__destruct'."\n";
         // 断开与数据库的连接
+        wx_log('Info: Disconnect to Ali-RDS database', $this->db_log_name);
         mysql_close($this->db_service);
+    }
+/*****************************************************************************/
+/*****************************************************************************/
+    /**
+     * Note: 下面这个接口，目的是检测是否与RDS失去连接，如果发现失去连接，则重新连接
+     */
+    public function ping_rds_server() {
+        wx_log('Info: ping_rds_server(), ping RDS DB server ...', $this->db_log_name);
+        if (! mysql_ping($this->db_service)) {
+            wx_log('Warnning: ping_rds_server(), lost connection to RDS', $this->db_log_name);
+
+            mysql_close($this->db_service);  // close pre connect resource
+
+            wx_log('Warnning: ping_rds_server(), try to connect again ...', $this->db_log_name);
+            $this->db_service = mysql_connect($this->db_server, $this->db_user_name, $this->db_passwd);
+            if ($this->db_service) {
+                wx_log('Info: ping_rds_server(), connect again OK ...', $this->db_log_name);
+            }
+            else {
+                $this->ping_rds_server();  // try to connect again
+            }
+        }
     }
 /*****************************************************************************/
     /**
@@ -56,9 +82,13 @@ class WX_DB
 /*****************************************************************************/
     public function select($table = '', $select = array(), $where = array(), $limit = 0, $order_by = '', $join = array())
     {
+        // check db connection is ok ?
+        $this->ping_rds_server();
+
         if (! $this->db_service)
         {
-            echo 'database connection error'."\n\n";
+            // echo 'database connection error'."\n\n";
+            wx_log('Error: Lost connection !!! select() function', $this->db_log_name);
             throw new DB_Exception('lost database connection');
         }
         else
@@ -131,11 +161,16 @@ class WX_DB
                 return $result;
             }
         }
+        return false;
     }
 /*****************************************************************************/
     public function select_where_in($table = '', $select = array(), $where_field = '', $where_field_list = array()) {
+        // check db connection is ok ?
+        $this->ping_rds_server();
+
         if (! $this->db_service) {
-            echo 'database connection error'."\n\n";
+            // echo 'database connection error'."\n\n";
+            wx_log('Error: Lost connection !!! select_where_in() function', $this->db_log_name);
             throw new DB_Exception('lost database connection');
         }
         else {
@@ -178,12 +213,17 @@ class WX_DB
                 return $result;
             }
         }
+        return false;
     }
 /*****************************************************************************/
     public function insert($table = '', $data = array())
     {
+        // check db connection is ok ?
+        $this->ping_rds_server();
+
         if (! $this->db_service) {
-            echo 'database connection error'."\n\n";
+            // echo 'database connection error'."\n\n";
+            wx_log('Error: Lost connection !!! insert() function', $this->db_log_name);
             throw new DB_Exception('lost database connection');
         }
         else {
@@ -216,16 +256,22 @@ class WX_DB
                 return true;
             }
             else {
-                echo 'argument error: insert(table, data)'."\n";
+                // echo 'argument error: insert(table, data)'."\n";
+                wx_log('Error: argument error, insert(table, data) function', $this->db_log_name);
                 return false;
             }
         }
+        return false;
     }
 /*****************************************************************************/
     public function update($table = '', $data = array(), $where = array())
     {
+        // check db connection is ok ?
+        $this->ping_rds_server();
+
         if (! $this->db_service) {
-            echo 'database connection error'."\n\n";
+            // echo 'database connection error'."\n\n";
+            wx_log('Error: Lost connection !!! update() function', $this->db_log_name);
             throw new DB_Exception('lost database connection');
         }
         else {
@@ -256,16 +302,22 @@ class WX_DB
                 return true;
             }
             else {
-                echo 'argument error: update(table, data, where)'."\n";
+                // echo 'argument error: update(table, data, where)'."\n";
+                wx_log('Error: argument error, update(table, data, where) function', $this->db_log_name);
                 return false;
             }
         }
+        return false;
     }
 /*****************************************************************************/
     public function delete($table = '', $where = array())
     {
+        // check db connection is ok ?
+        $this->ping_rds_server();
+
         if (! $this->db_service) {
-            echo 'database connection error'."\n\n";
+            // echo 'database connection error'."\n\n";
+            wx_log('Error: Lost connection !!! delete() function', $this->db_log_name);
             throw new DB_Exception('lost database connection');
         }
         else {
@@ -290,12 +342,12 @@ class WX_DB
                 return true;
             }
             else {
-                echo 'argument error: delete(table, where)'."\n";
+                // echo 'argument error: delete(table, where)'."\n";
+                wx_log('Error: argument error, delete(table, where) function', $this->db_log_name);
                 return false;
             }
         }
+        return false;
     }
 /*****************************************************************************/
 }
-
-?>

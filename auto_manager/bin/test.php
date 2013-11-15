@@ -46,13 +46,36 @@ require_once WX_BASE_PATH.WX_SEPARATOR.'model'.WX_SEPARATOR.'wx_database_api.php
 //     echo 'here i= '.$i."\n";
 //     usleep(500000);  // 0.5s
 // }
-$del_ret = wx_delete_file('/alidata/www/creamnote/tmp/hi.txt');
-if ($del_ret) {
-    echo 'success';
-}
-else {
-    echo 'failed';
-}
+// $del_ret = wx_delete_file('/alidata/www/creamnote/tmp/hi.txt');
+// if ($del_ret) {
+//     echo 'success';
+// }
+// else {
+//     echo 'failed';
+// }
+
+$data_table = 'wx_data';
+$data_select = array(
+    'data_id',
+    'data_objectname',
+    'data_vpspath',
+    );
+$data_where = array(
+    'data_osspath !=' => '',
+    // 'data_vpspath !=' => '',
+    'data_status !=' => '0',
+    );
+$data_limit = 2;
+
+// get pending base data
+$db_service = new WX_DB();
+$pend_data_list = $db_service->select($data_table, $data_select, $data_where, $data_limit);
+print_r($pend_data_list);
+
+sleep(120);
+
+$pend_data_list = $db_service->select($data_table, $data_select, $data_where, $data_limit);
+print_r($pend_data_list);
 
 exit();
 
