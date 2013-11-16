@@ -388,9 +388,9 @@
 
             //Object编码为UTF-8
             if($this->is_gb2312($options[self::OSS_OBJECT])){
-                $options[self::OSS_OBJECT] = iconv('GB2312', "UTF-8",$options[self::OSS_OBJECT]);
+                $options[self::OSS_OBJECT] = iconv('GB2312', "UTF-8//IGNORE",$options[self::OSS_OBJECT]);
             }elseif($this->check_char($options[self::OSS_OBJECT],true)){
-                $options[self::OSS_OBJECT] = iconv('GBK', "UTF-8",$options[self::OSS_OBJECT]);
+                $options[self::OSS_OBJECT] = iconv('GBK', "UTF-8//IGNORE",$options[self::OSS_OBJECT]);
             }
 
 
@@ -939,7 +939,7 @@
             $this->is_empty($file, OSS_FILE_PATH_IS_NOT_ALLOWED_EMPTY);
 
             if($this->chk_chinese($file)){
-                $file = iconv('utf-8','gbk',$file);
+                $file = iconv('utf-8','gbk//IGNORE',$file);
             }
 
             $options[self::OSS_FILE_UPLOAD] = $file;
@@ -1152,7 +1152,7 @@
             $this->is_empty($object,OSS_OBJECT_IS_NOT_ALLOWED_EMPTY);
 
             if(isset($options[self::OSS_FILE_DOWNLOAD]) && $this->chk_chinese($options[self::OSS_FILE_DOWNLOAD])){
-                $options[self::OSS_FILE_DOWNLOAD] = iconv('utf-8','gbk',$options[self::OSS_FILE_DOWNLOAD]);
+                $options[self::OSS_FILE_DOWNLOAD] = iconv('utf-8','gbk//IGNORE',$options[self::OSS_FILE_DOWNLOAD]);
             }
 
             $options[self::OSS_BUCKET] = $bucket;
@@ -1635,7 +1635,7 @@
             $this->is_empty($bucket,OSS_BUCKET_IS_NOT_ALLOWED_EMPTY);
 
             if($this->chk_chinese($dir)){
-                $dir = iconv('utf-8','gbk',$dir);
+                $dir = iconv('utf-8','gbk//IGNORE',$dir);
             }
 
             //判断是否目录
@@ -1687,7 +1687,7 @@
 
             $directory = $options['directory']; unset($options['directory']);
             if($this->chk_chinese($directory)){
-                $directory = iconv('utf-8','gbk',$directory);
+                $directory = iconv('utf-8','gbk//IGNORE',$directory);
             }
 
             //判断是否目录

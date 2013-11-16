@@ -15,6 +15,7 @@
 <script type="text/javascript">
 <!-- Javascript functions -->
 var gol_password = "";
+
 $(function(){
     $("#register").click(function(){
       if(check_reg()){
@@ -45,7 +46,15 @@ $(function(){
                     }else{
                       //
                     }
-                    $("#reg_frame").html("<h2>请到您注册的邮箱进行验证！</h2>");
+                    var str="<h2>验证邮件已经发送您邮箱，请到您注册的邮箱进行验证！</h2>";
+                    str +="<p style='margin-top:50px;'></p>";
+                    str +="<h2>没有收到邮件？</h2>";
+                    str +="<p>1、到垃圾箱里看看有没有</p>";
+                    str +="<p>2、如果邮箱填写错了，那就<a href='<?php echo site_url('home/register_page'); ?>' style='color: black;TEXT-DECORATION:underline'>重新注册</a>吧</p>";
+                    str +="<p>3、稍等一会，如果还是没有收到验证邮件，点击<a href='javascript:void(0)' style='color: black;TEXT-DECORATION:underline'>重新发送</p></a>";
+                    $("#reg_frame").html(str);
+                    $("#reg_frame").css("width","600px");
+                    $("#reg_frame").css("text-align","left");
                 }
 
             },

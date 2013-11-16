@@ -170,7 +170,7 @@ function charsetEncode($input,$_output_charset ,$_input_charset) {
     } elseif (function_exists("mb_convert_encoding")) {
         $output = mb_convert_encoding($input,$_output_charset,$_input_charset);
     } elseif(function_exists("iconv")) {
-        $output = iconv($_input_charset,$_output_charset,$input);
+        $output = iconv($_input_charset,$_output_charset."//IGNORE",$input);
     } else die("sorry, you have no libs support for charset change.");
     return $output;
 }
@@ -189,7 +189,7 @@ function charsetDecode($input,$_input_charset ,$_output_charset) {
     } elseif (function_exists("mb_convert_encoding")) {
         $output = mb_convert_encoding($input,$_output_charset,$_input_charset);
     } elseif(function_exists("iconv")) {
-        $output = iconv($_input_charset,$_output_charset,$input);
+        $output = iconv($_input_charset,$_output_charset."//IGNORE",$input);
     } else die("sorry, you have no libs support for charset changes.");
     return $output;
 }
