@@ -30,6 +30,7 @@ class WX_Preprocess {
         $logout_url = $home_url . 'home/logout_page';
         $login_url = $home_url . 'home/login';
         $register_url = $home_url . 'home/register';
+        $send_register_link_again = $home_url.'home/register_active_link_again';
         $register_email_url = $home_url.'home/check_email';
 
         // 激活链接验证的url排除
@@ -107,6 +108,7 @@ class WX_Preprocess {
             || $cur_url == $default_home_url
             || $cur_url == $register_page_url
             || $cur_url == $register_url
+            || $cur_url == $send_register_link_again
             || $cur_url == $register_email_url
             || $cur_url == $logout_url
             || $cur_url == $active_url

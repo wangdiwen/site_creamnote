@@ -795,7 +795,30 @@ class WXC_Home extends CI_Controller
             echo '发送注册激活链接，失败！';
         }
     }
-/*****************************************************************/
+/*****************************************************************************/
+    public function register_active_link_again() {
+        $random_code = isset($_SESSION['random_code']) ? $_SESSION['random_code'] : '';
+        $name = isset($_SESSION['active_name']) ? $_SESSION['active_name'] : '';
+        $email = isset($_SESSION['active_email']) ? $_SESSION['active_email'] : '';
+        $passwd = isset($_SESSION['active_passwd']) ? $_SESSION['active_passwd'] : '';
+
+        if ($random_code && $name && $email && $passwd) {
+            $name_md5 = $this->encrypt->encode($name);
+            $email_md5 = $this->encrypt->encode($email);
+            $passwd_md5 = $this->encrypt->encode($passwd);
+
+            $url = 'http://www.creamnote.com/user_active';
+            $active_link = $url.'?id='.$random_code.'&user_name='.$name_md5.'&user_email='.$email_md5.'&user_passwd='.$passwd_md5;
+            $ret = $this->_send_activelink($email, $active_link);
+            if ($ret) {
+                echo 'success';
+                return true;
+            }
+        }
+        echo 'failed';
+        return false;
+    }
+/*****************************************************************************/
     // 验证从邮箱链接得到的数据
     public function check_active()
     {
@@ -1137,6 +1160,7 @@ public function wx_substr_by_length_test($str = '', $sub_length = 0, $indent = 8
     public function test()
     {
 
+        echo 'here ...';
         // $pdf = 'upload/tmp/2013100821433354.pdf';
         // $data = file_get_contents($pdf);
         // $this->output->set_header("Content-type: application/pdf");
