@@ -91,6 +91,16 @@ class WXM_Category_area extends CI_Model
         return false;
     }
 /*****************************************************************************/
+    public function get_name_by_flag($carea_flag = '') {
+        if ($carea_flag) {
+            $table = $this->wx_table;
+            $this->db->select('carea_name')->from($table)->where('carea_flag', $carea_flag)->limit(1);
+            $query = $this->db->get();
+            return $query->row_array();
+        }
+        return false;
+    }
+/*****************************************************************************/
     public function get_name_by_id($carea_id = 0)
     {
         if ($carea_id > 0) {

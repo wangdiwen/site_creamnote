@@ -326,6 +326,11 @@ class WX_General
                 if ($area_info_school)
                 {
                     $data['user_school'] = $area_info_school->carea_name;
+                    $carea_flag = $area_info_school->carea_flag;
+                    $province_info = $this->CI->wxm_category_area->get_name_by_flag(substr($carea_flag, 0, -3));
+                    if ($province_info) {
+                        $data['user_province'] = $province_info['carea_name'];
+                    }
                 }
 
                 $area_info_major = $this->CI->wxm_category_area->get_all_info($school_info['carea_id_major']);
