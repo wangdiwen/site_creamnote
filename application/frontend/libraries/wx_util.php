@@ -12,6 +12,24 @@ class WX_Util
         $this->CI->load->library('session');
     }
 /*****************************************************************************/
+/**********************   统计发放的用户奖励金额  ******************************/
+    public function statistic_award_money($type = '0', $money = 0.00) {
+        $statistic_award_file = 'application/site_data/award_statistic.data';
+        if (file_exists($statistic_award_file)) {
+            $json_text = file_get_contents($statistic_award_file);
+            if ($json_text) {
+
+            }
+            else {
+                $award_data = array(
+                    'new-user' => 0.00,
+                    'good-note' => 0.00,
+                    'user-invite' => 0.00,
+                    );
+                $context = json_encode($award_data);
+            }
+        }
+    }
 /*****************************************************************************/
     public function get_login_addr() {
         $ip = $_SERVER["REMOTE_ADDR"] ? $_SERVER["REMOTE_ADDR"] : 'unknow';

@@ -46,7 +46,7 @@
         <p style="font-size:14px;">&nbsp;&nbsp;&nbsp;&nbsp;喜欢Geek，是“一只特立独行的猪”；</p>
         <p style="font-size:15px;">&nbsp;&nbsp;&nbsp;&nbsp;You laugh at me because I'm different，I laugh at you because you're all the same.</p>
 
-        <p style="font-size:14px; border-bottom: 1px dashed rgb(163, 177, 209);padding-top: 20px;"><b>醍醐联合创始人 / 攻城狮 /Co-founder</b></p>
+        <p style="font-size:14px; border-bottom: 1px dashed rgb(163, 177, 209);padding-top: 20px;"><b>醍醐联合创始人 / 攻城狮 / Co-founder</b></p>
         <div style="font-size:13px"><img style="box-shadow: 2px 3px 2px #aaaaaa;width: 110px;height: 150px;" class="fl" src='/application/frontend/views/resources/images/version/xiewang.jpg'/>
           <div class="fl" style="padding-left: 20px;">
           <p style="font-size:18px"><b>谢旺</b></p>
@@ -73,6 +73,17 @@
         <p style="font-size:14px;"><b>我的信条:</b></p>
         <p style="font-size:15px;">&nbsp;&nbsp;&nbsp;&nbsp;Where there is a will, there is a way.</p>
 
+        <p style="font-size:14px; border-bottom: 1px dashed rgb(163, 177, 209);padding-top: 20px;"><b>醍醐笔记设计师 / UI Designer</b></p>
+        <div style="font-size:13px"><img style="box-shadow: 2px 3px 2px #aaaaaa;width: 110px;height: 150px;" class="fl" src='/application/frontend/views/resources/images/version/miaomiao.jpg'/>
+          <div class="fl" style="padding-left: 20px;">
+          <p style="font-size:18px"><b>苗苗（女生）</b></p>
+          <p>喜欢画画的自由职业者</p>
+          </div>
+        </div>
+        <p style="font-size:14px;padding-top: 160px;"><b>自我评价:</b></p>
+        <p style="font-size:14px;">&nbsp;&nbsp;&nbsp;&nbsp;一个喜欢画画的懒人 ^_^</p>
+        <p style="font-size:14px;"><b>我的信条:</b></p>
+        <p style="font-size:15px;">&nbsp;&nbsp;&nbsp;&nbsp;一辈子做好一件事就够了！</p>
         <br />
         <br />
 

@@ -352,12 +352,12 @@ function checkLogin(){
             <!-- </div> -->
           <div class="card_frame_section" style="border-bottom:0px;">
             <h6>明星用户</h6>
-            <div class="card_total" style="height: 168px;" id="card_total_user">
+            <div class="card_total" style="height: 173px;" id="card_total_user">
               <div class="card_items" id="card_items_user" style="margin: -34px 0px 0px -30px;">
                 <?php
                   if(isset($super_users)){
                     foreach ($super_users as $key => $note) {
-                      echo "<div class='_card_item _card_item_panel' style='min-height: 168px;margin: 22px 0 0 30px;'>";
+                      echo "<div class='_card_item _card_item_panel' style='margin: 22px 0 0 30px;'>";
                       // echo "<div class='card_delete'></div>";
                       echo "<div class='_item_actual'>";
                       echo "<div class='_card_content' style='padding: 10px 20px 5px 20px;'>";
@@ -369,7 +369,10 @@ function checkLogin(){
                       // echo "<div class='mail'>邮箱:</div><div class='content'>".$note['user_email']."</div>";
                       echo "</div>";
                       echo "<div class=' card_padding' style='padding-top: 8px;'>";
-                      echo "<div class='mail'><span>注册时间:</span><span>".$note['user_register_time']."</span></div>";
+                      echo "<div class=''><span>加入醍醐：</span><span>".$note['user_register_time']."</span></div>";
+                      echo "</div>";
+                      echo "<div style='color:rgb(76, 118, 172);' class=' user_sm'>";
+                      echo "来自：".$note['user_province'];
                       echo "</div>";
                       echo "<div style='color:rgb(76, 118, 172);' class=' user_sm' title='".$note['user_school']."'>";
                       echo "学校：".$note['user_school'];
@@ -382,8 +385,8 @@ function checkLogin(){
 
                       echo "</div>";
                       echo "</div>";
-                      echo "<div class='card_count' style='padding-top: 5px;margin-top: -39px;'>";
-                      echo "<span class='fl'>资料量:".$note['uactivity_datacount']."</span><span class='fr'>&nbsp&nbsp&nbsp下载量:".$note['uactivity_downloadcount']."</span>";
+                      echo "<div class='card_count' style='padding-top: 3px;margin-top: -39px;'>";
+                      echo "<span class='fl'>资料量：".$note['uactivity_datacount']."</span><span class='fr'>&nbsp&nbsp&nbsp下载量：".$note['uactivity_downloadcount']."</span>";
                       echo "</div>";
                       echo "</div>";
                     }

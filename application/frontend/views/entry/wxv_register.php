@@ -15,7 +15,17 @@
 <script type="text/javascript">
 <!-- Javascript functions -->
 var gol_password = "";
-
+var re_send_email = function(){
+  var url = $("#baseUrl").val()+"home/register_active_link_again";
+  var params =({});
+  var retData ="";
+  retData = ajax_common(url,params);
+  if(retData == "success"){
+    successMes("新的验证邮件已经发送")
+  }else{
+    errorMes("验证邮件发送失败");
+  }
+}
 $(function(){
     $("#register").click(function(){
       if(check_reg()){
@@ -51,7 +61,7 @@ $(function(){
                     str +="<h2>没有收到邮件？</h2>";
                     str +="<p>1、到垃圾箱里看看有没有</p>";
                     str +="<p>2、如果邮箱填写错了，那就<a href='<?php echo site_url('home/register_page'); ?>' style='color: black;TEXT-DECORATION:underline'>重新注册</a>吧</p>";
-                    str +="<p>3、稍等一会，如果还是没有收到验证邮件，点击<a href='javascript:void(0)' style='color: black;TEXT-DECORATION:underline'>重新发送</p></a>";
+                    str +="<p>3、稍等一会，如果还是没有收到验证邮件，点击<a href='javascript:void(0)' onclick='re_send_email()' style='color: black;TEXT-DECORATION:underline'>重新发送</p></a>";
                     $("#reg_frame").html(str);
                     $("#reg_frame").css("width","600px");
                     $("#reg_frame").css("text-align","left");
