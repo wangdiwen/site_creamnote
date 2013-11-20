@@ -18,17 +18,38 @@ class WX_Util
         if (file_exists($statistic_award_file)) {
             $json_text = file_get_contents($statistic_award_file);
             if ($json_text) {
-
+                $json_data = json_decode($json_text, true);
+                if ($type == '0') {  // 新注册用户，奖励
+                    $json_data['new-user'] = number_format($json_data['new-user'] + $money, 2, '.', '');
+                    $json_data['total'] = number_format($json_data['total'] + $money, 2, '.', '');
+                }
+                elseif ($type == '1') {  // 优质笔记资料，奖励
+                    $json_data['good-note'] = number_format($json_data['good-note'] + $money, 2, '.', '');
+                    $json_data['total'] = number_format($json_data['total'] + $money, 2, '.', '');
+                }
+                elseif ($type == '2') {  // 邀请好友加入醍醐，奖励
+                    $json_data['user-invite'] = number_format($json_data['user-invite'] + $money, 2, '.', '');
+                    $json_data['total'] = number_format($json_data['total'] + $money, 2, '.', '');
+                }
+                $ret = file_put_contents($statistic_award_file, json_encode($json_data));
+                if ($ret) {
+                    return true;
+                }
             }
             else {
                 $award_data = array(
-                    'new-user' => 0.00,
-                    'good-note' => 0.00,
-                    'user-invite' => 0.00,
+                    'new-user' => '0.00',
+                    'good-note' => '0.00',
+                    'user-invite' => '0.00',
+                    'total' => '0.00',
                     );
-                $context = json_encode($award_data);
+                $ret = file_put_contents($statistic_award_file, json_encode($award_data));
+                if ($ret) {
+                    return true;
+                }
             }
         }
+        return false;
     }
 /*****************************************************************************/
     public function get_login_addr() {

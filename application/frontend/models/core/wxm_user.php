@@ -656,7 +656,7 @@ class WXM_User extends CI_Model
                           'user_register_time' => $register_time,
                           'user_account_name' => '',
                           'user_account_type' => '支付宝',
-                          'user_account_money' => 0.00,
+                          'user_account_money' => 1.00,
                           'user_account_active' => 'false'
                           );
             $this->db->insert('wx_user', $data);

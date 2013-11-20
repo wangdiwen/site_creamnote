@@ -874,6 +874,7 @@ class WXC_Home extends CI_Controller
                     {
                         $user_id = $data->user_id;
                         $_SESSION['wx_user_id'] = $user_id;
+
                         $info = array(
                             'carea_id_major' => $session_area_id_major,
                             'carea_id_school' => $session_area_id_school,
@@ -909,6 +910,8 @@ class WXC_Home extends CI_Controller
 
                         // add new register user count, site manager db table
                         $this->wx_site_manager->add_new_register_user();
+                        // 记录并更新新注册用户赠送的奖励金额，每个新注册用户可以得到￥1.00的奖励
+                        $this->wx_util->statistic_award_money('0', 1.00);
                     }
                 }
                 elseif($ret == '1')     // Has e-mail
@@ -1161,9 +1164,16 @@ public function wx_substr_by_length_test($str = '', $sub_length = 0, $indent = 8
     public function test()
     {
 
-        echo 'here ...';
-        $super_users = $this->get_super_users();
-        wx_echoxml($super_users);
+        echo 'here ...'.'<br />';
+        $ret = $this->wx_util->statistic_award_money('0');
+        if ($ret) {
+            echo 'success';
+        }
+        else {
+            echo 'failed';
+        }
+        // $super_users = $this->get_super_users();
+        // wx_echoxml($super_users);
         // $pdf = 'upload/tmp/2013100821433354.pdf';
         // $data = file_get_contents($pdf);
         // $this->output->set_header("Content-type: application/pdf");
