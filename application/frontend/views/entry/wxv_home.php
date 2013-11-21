@@ -418,7 +418,7 @@ function checkLogin(){
             <ol class="rounded-list" style="overflow: inherit;margin-bottom: 16px;">
               <?php  foreach ($site_notice as $key => $notice){?>
                 <li>
-                  <a style="padding: 0.6em .3em .0em 1.8em;" target="_bank" href="<?php echo base_url()?>core/wxc_content/read_notice?notice_id=<?=$notice['notice_id']?>"><span style="width: 237px;"><?=$notice['notice_title']?></span></a>
+                  <a style="padding: 0.6em .3em .0em 1.8em;" target="_bank" href="<?php echo base_url()?>core/wxc_content/read_notice?notice_id=<?=$notice['notice_id']?>"><span style="width: 237px;" class='gravatar' title="<?=$notice['notice_title']?>"><?=$notice['notice_title']?></span></a>
                 </li>
               <?php }?>
             </ol>

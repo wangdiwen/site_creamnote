@@ -645,7 +645,7 @@ function del_count(count_type){
                         <li><a id="nav_baseinfo" href="<?php echo site_url('primary/wxc_personal/update_userinfo_page'); ?>">基本资料</a></li>
                         <li><a id="nav_pwd" href="javascript:void(0)" onclick="update_password_page()">密码修改</a></li>
                         <li><a id="nav_bind" href="javascript:void(0)" onclick="social_count_bind()">绑定账号</a></li>
-                        <li><a id="nav_account" href="javascript:void(0)" onclick="update_account_page()">个人账户</a></li>
+                        <li><a id="nav_account" href="javascript:void(0)" onclick="update_account_page()">收益账户</a></li>
                     </ul>
                 </div>
             </div>

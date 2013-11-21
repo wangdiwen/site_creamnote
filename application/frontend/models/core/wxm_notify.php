@@ -32,6 +32,23 @@ class WXM_Notify extends CI_Model
         }
     }
 /*****************************************************************************/
+    public function send_system_notify($user_id = 0, $title = '', $content = '') {
+        if ($user_id > 0 && $title && $content) {
+            $data = array(
+                'notify_type' => '4',
+                'notify_title' => $title,
+                'notify_content' => $content,
+                'user_id' => $user_id,
+                'notify_params' => '',
+                'notify_time' => date('Y-m-d H:i:s'),
+                );
+            $table = $this->wx_table;
+            $this->db->insert($table, $data);
+            return true;
+        }
+        return false;
+    }
+/*****************************************************************************/
     public function has_feedback_topic($user_id = 0, $notify_params = 0)
     {
         if ($user_id > 0)

@@ -22,6 +22,7 @@ class WXC_Home extends CI_Controller
         $this->load->model('core/wxm_user2carea');
         $this->load->model('core/wxm_week_article');
         $this->load->model('core/wxm_notice');
+        $this->load->model('core/wxm_notify');
 
         // below is test lib iface
         $this->load->library('wx_tcpdfapi');
@@ -912,6 +913,8 @@ class WXC_Home extends CI_Controller
                         $this->wx_site_manager->add_new_register_user();
                         // 记录并更新新注册用户赠送的奖励金额，每个新注册用户可以得到￥1.00的奖励
                         $this->wx_util->statistic_award_money('0', 1.00);
+                        // 发送奖励的系统通知给用户
+                        $ret_sys = $this->_send_sys_notify($user_id);
                     }
                 }
                 elseif($ret == '1')     // Has e-mail
@@ -947,6 +950,21 @@ class WXC_Home extends CI_Controller
         {
             echo '您的激活链接已经失效，请重新注册，然后激活！';
         }
+    }
+/*****************************************************************/
+    public function _send_sys_notify($user_id = 0) {
+        // system notify, type = 4
+        $notify_title = '系统通知：赢取注册奖金';
+        $notify_content = '亲爱的新用户：
+欢迎加入醍醐，赶紧来领取你在醍醐的第一桶金吧！
+【tips】请打开左上角昵称->账户设置页面，进入“收益账户”，在“当前收益余额”中，你可以看到醍醐赠送的￥1.00元。关于本次奖励活动详情，请查看首页公告，祝你在醍醐获得幸福和快乐！Good luck！ ^_^';
+        if ($user_id > 0 && $notify_title && $notify_content) {
+            $ret = $this->wxm_notify->send_system_notify($user_id, $notify_title, $notify_content);
+            if ($ret) {
+                return true;
+            }
+        }
+        return false;
     }
 /*****************************************************************/
     // 发送激活链接，私有方法
@@ -1163,15 +1181,6 @@ public function wx_substr_by_length_test($str = '', $sub_length = 0, $indent = 8
 /*****************************************************************/
     public function test()
     {
-
-        echo 'here ...'.'<br />';
-        $ret = $this->wx_util->statistic_award_money('0');
-        if ($ret) {
-            echo 'success';
-        }
-        else {
-            echo 'failed';
-        }
         // $super_users = $this->get_super_users();
         // wx_echoxml($super_users);
         // $pdf = 'upload/tmp/2013100821433354.pdf';

@@ -16,7 +16,7 @@
 
 $(document).ready(function(){
 //====================================================jquery-ui可拖动弹框=========================================//
-    $( "#box" ).draggable();
+    $( "#box" ).draggable({ handle: $(".message_title") });
 
 	//alert(1)
 	$('ol .children').css("display","none");

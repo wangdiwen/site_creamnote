@@ -28,9 +28,9 @@
     <div class="foot_list_right">
       <h2><b>友情链接</b></h2>
       <div class="text_line">
+        <a href="http://www.36kr.com/" target=="_blank"><div class="fl _coop_img"><img src="/application/frontend/views/resources/images/coop/36kr.jpg"></div></a>
+        <a href="http://huaban.com/" target=="_blank"><div class="fl _coop_img"><img src="/application/frontend/views/resources/images/coop/huaban.jpg"></div></a>
         <!-- <a href="#"><div class="fl _coop_img"><img src="/application/frontend/views/resources/images/coop/1.jpg"></div></a>
-        <a href="#"><div class="fl _coop_img"><img src="/application/frontend/views/resources/images/coop/1.jpg"></div></a>
-        <a href="#"><div class="fl _coop_img"><img src="/application/frontend/views/resources/images/coop/1.jpg"></div></a>
         <a href="#"><div class="fl _coop_img"><img src="/application/frontend/views/resources/images/coop/1.jpg"></div></a>
         <a href="#"><div class="fl _coop_img"><img src="/application/frontend/views/resources/images/coop/1.jpg"></div></a> -->
       </div>

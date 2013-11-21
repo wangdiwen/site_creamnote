@@ -28,7 +28,14 @@
     <div class="foot_list_right">
       <h2><b>媒体报道</b></h2>
       <div class="text_line">
-        <p style="font-size:14px" class="pointer" onclick="showcontent(1)"><b></b></p>
+        <a href="http://www.36kr.net/biji" target=="_blank">
+          <div class="fl _coop_img">
+            <img src="/application/frontend/views/resources/images/coop/36kr.jpg">
+            <div style="margin:3px 0;border-bottom: 5px double rgb(125 ,142 ,167)"></div>
+            <div class="common_bule_button" style="height: 180px;">36氪是中国最具影响力互联网创业服务提供商，专注为互联网创业者和从业者提供媒体资讯、投融资、人才招聘等服务。</div>
+            <div class="common_bule_button" style="height: 0px;width:150px;margin-top:8px;padding: 5px;"></div>
+          </div>
+        </a>
 
       </div>
     </div>

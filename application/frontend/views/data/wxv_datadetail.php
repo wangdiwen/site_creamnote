@@ -67,7 +67,10 @@ $(function() {
 	        }}
 	);
 //====================================================jquery-ui可拖动弹框=========================================//
-    $( "#box" ).draggable();
+    $( "#box" ).draggable({ handle: $(".message_title") });
+    $.extend($.ui.draggable, {
+
+    })
 //=========================================================评论滚动=========================================//
 var $slider = $('#card_items_data');
 var $slider_child_l = Math.round($("#commnet_count").val())/3+2;
