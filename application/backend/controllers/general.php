@@ -239,28 +239,35 @@ class General extends CI_Controller {
             }
             $content = $email_header.$email_content.$email_footer;
 
-            // init system email settings
-            $config['protocol'] = 'smtp';
-            $config['smtp_host'] = 'smtp.ym.163.com';
-            $config['smtp_port'] = 25;
-            $config['smtp_user'] = 'no-reply@creamnote.com';
-            $config['smtp_pass'] = 'wx@creamnote';
-            $config['mailtype'] = 'html';
-            $config['validate'] = true;
-            $config['crlf'] = '\r\n';
-            $config['charset'] = 'utf-8';
-            $this->email->initialize($config);
-
-            // get all register user email
-            $all_user_email_info = $this->wxm_user->get_all_user_email();
-            if ($content && $all_user_email_info) {
-                foreach ($all_user_email_info as $user_info) {
-                    $user_email = $user_info['user_email'];
-                    $send_ret = $this->_send_recommand_email_to_user($user_email, $content);
-                }
+            // use new send official email interface
+            $ret_send = $this->_send_official_email($content, '每周精品笔记推荐', false);
+            if ($ret_send) {
                 echo 'success';
                 return true;
             }
+
+            // init system email settings
+            // $config['protocol'] = 'smtp';
+            // $config['smtp_host'] = 'smtp.ym.163.com';
+            // $config['smtp_port'] = 25;
+            // $config['smtp_user'] = 'no-reply@creamnote.com';
+            // $config['smtp_pass'] = 'wx@creamnote';
+            // $config['mailtype'] = 'html';
+            // $config['validate'] = true;
+            // $config['crlf'] = '\r\n';
+            // $config['charset'] = 'utf-8';
+            // $this->email->initialize($config);
+
+            // // get all register user email
+            // $all_user_email_info = $this->wxm_user->get_all_user_email();
+            // if ($content && $all_user_email_info) {
+            //     foreach ($all_user_email_info as $user_info) {
+            //         $user_email = $user_info['user_email'];
+            //         $send_ret = $this->_send_recommand_email_to_user($user_email, $content);
+            //     }
+            //     echo 'success';
+            //     return true;
+            // }
         }
         echo 'failed';
         return false;
@@ -293,28 +300,35 @@ class General extends CI_Controller {
             }
             $content = $email_header.$email_content.$email_footer;
 
-            // init system email settings
-            $config['protocol'] = 'smtp';
-            $config['smtp_host'] = 'smtp.ym.163.com';
-            $config['smtp_port'] = 25;
-            $config['smtp_user'] = 'no-reply@creamnote.com';
-            $config['smtp_pass'] = 'wx@creamnote';
-            $config['mailtype'] = 'html';
-            $config['validate'] = true;
-            $config['crlf'] = '\r\n';
-            $config['charset'] = 'utf-8';
-            $this->email->initialize($config);
-
-            // get all register user email
-            $all_user_email_info = $this->wxm_user->get_all_user_email();
-            if ($content && $all_user_email_info) {
-                foreach ($all_user_email_info as $user_info) {
-                    $user_email = $user_info['user_email'];
-                    $send_ret = $this->_send_recommand_email_to_user($user_email, $content);
-                }
+            // use new send official email interface
+            $ret_send = $this->_send_official_email($content, '每月精品笔记推荐', false);
+            if ($ret_send) {
                 echo 'success';
                 return true;
             }
+
+            // init system email settings
+            // $config['protocol'] = 'smtp';
+            // $config['smtp_host'] = 'smtp.ym.163.com';
+            // $config['smtp_port'] = 25;
+            // $config['smtp_user'] = 'no-reply@creamnote.com';
+            // $config['smtp_pass'] = 'wx@creamnote';
+            // $config['mailtype'] = 'html';
+            // $config['validate'] = true;
+            // $config['crlf'] = '\r\n';
+            // $config['charset'] = 'utf-8';
+            // $this->email->initialize($config);
+
+            // // get all register user email
+            // $all_user_email_info = $this->wxm_user->get_all_user_email();
+            // if ($content && $all_user_email_info) {
+            //     foreach ($all_user_email_info as $user_info) {
+            //         $user_email = $user_info['user_email'];
+            //         $send_ret = $this->_send_recommand_email_to_user($user_email, $content);
+            //     }
+            //     echo 'success';
+            //     return true;
+            // }
         }
         echo 'failed';
         return false;
@@ -440,15 +454,100 @@ class General extends CI_Controller {
         return false;
     }
 /*****************************************************************************/
+    public function _send_official_email($email_content = '', $email_subject = '醍醐笔记官方邮件', $has_greet = false) {
+        // 设置PHP脚本超时，不限时
+        ini_set('max_execution_time', 0);
+
+        if ($email_content && $email_subject) {
+            // echo 'E-mail email_content: '.$email_content.'<br />';
+            // get user info by group of 10 user per group
+            $group_user_count = 20;
+            $group_offset = 0;
+            $all_user_count = $this->wxm_user->get_all_user_count();
+            $group_count = floor($all_user_count / $group_user_count);
+            $mod_val = $all_user_count % $group_user_count;
+            if ($mod_val > 0) {
+                $group_count = $group_count + 1;
+            }
+
+            // echo 'group count: '.$group_count.'<br />';
+            // echo 'mod value  : '.$mod_val.'<br />';
+
+            // init system email settings
+            $config = array();
+            $config['protocol'] = 'smtp';
+            $config['smtp_host'] = 'smtp.ym.163.com';
+            $config['smtp_port'] = 25;
+            $config['smtp_user'] = 'no-reply@creamnote.com';
+            $config['smtp_pass'] = 'wx@creamnote';
+            $config['mailtype'] = 'html';
+            $config['validate'] = true;
+            $config['crlf'] = '\r\n';
+            $config['charset'] = 'utf-8';
+            $this->email->initialize($config);
+
+            for ($i = 0; $i < $group_count; $i++) {
+                $user_group = $this->wxm_user->get_user_name_email_by_group($group_user_count, $group_offset);
+
+                // send official email
+                // echo '=================================<br />';
+                // echo 'group  '.$i.'<br />';
+                // echo 'offset '.$group_offset.'<br />';
+                if ($user_group) {
+                    foreach ($user_group as $key => $value) {
+                        // $user_id = $value['user_id'];
+                        $user_name = $value['user_name'];
+                        $user_email = $value['user_email'];
+                        // echo 'user id    = '.$user_id.'<br />';
+                        // echo 'user name  = '.$user_name.'<br />';
+                        // echo 'user email = '.$user_email.'<br />';
+
+                        // test ...
+                        // $user_name = 'Steven';
+                        // $user_email = 'dw_wang126@126.com';
+
+                        if ($user_name && $user_email && $email_content) {
+                            $content = '';
+                            if ($has_greet) {
+                                $content = "<html><head></head>你好 <b>".$user_name."</b>：<p></p>".$email_content.'</html>';
+                            }
+                            else {
+                                $content = $email_content;
+                            }
+
+                            $this->wx_email->clear();
+                            $this->wx_email->set_from_user('no-reply@creamnote.com', 'Creamnote 醍醐笔记网');
+                            $this->wx_email->set_to_user($user_email);
+                            $this->wx_email->set_subject($email_subject);
+                            $this->wx_email->set_message($content);
+
+                            $ret = $this->wx_email->send_email();
+                            // break;  // test ...
+                            if (! $ret) {  // 如果发现发送失败，则中断发送
+                                return false;
+                            }
+                        }
+                    }
+                }
+                $group_offset = $group_offset + $group_user_count;
+                // echo '=================================<br /><br />';
+            }
+        }
+        return true;
+    }
 /*****************************************************************************/
     public function test() {
+
+        // $this->_send_official_email('Test sending official email ...', '醍醐笔记主题', true);
+        // $this->_send_official_email('Test sending official email ...', '醍醐笔记主题', false);
+
         // $user_email = 'dw_wang126@126.com';
         // $content = '这是测试邮件，测试CEO邮箱是否可用';
         // $ret = $this->_send_system_email_to_user($user_email, $content);
         // if ($ret)
         //     echo 'CEO邮箱测试成功！';
-        $week = wx_cur_week();
-        echo '星期 '.$week;
+        // $week = wx_cur_week();
+        // echo '星期 '.$week;
         // if ($week == 3) {
         //     echo 'week = 3';
         // }

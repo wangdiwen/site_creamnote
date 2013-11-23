@@ -10,6 +10,21 @@ class WXM_User extends CI_Model
         $this->load->database();
     }
 /*****************************************************************************/
+    public function get_all_user_count() {
+        $table = $this->wx_table;
+        return $this->db->count_all($table);
+    }
+/*****************************************************************************/
+    public function get_user_name_email_by_group($per_page_limit = 10, $offset = 0) {
+        if ($per_page_limit > 0) {
+            $table = $this->wx_table;
+            $this->db->select('user_id, user_name, user_email');
+            $query = $this->db->get($table, $per_page_limit, $offset);
+            return $query->result_array();
+        }
+        return false;
+    }
+/*****************************************************************************/
     public function stat_register_count($start_time = '', $end_time = '')
     {
         if ($start_time && $end_time) {
