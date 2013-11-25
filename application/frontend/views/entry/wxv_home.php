@@ -402,7 +402,9 @@ function checkLogin(){
         <!-- creamnote card -->
         <div class="right_notice">
           <div class="right_notice_section">
-            <h6>精彩博文<a target="_bank" href="<?php echo base_url()?>core/wxc_content/more_article"><h6 style="float: right;font-size: 14px;margin-top: 5px;">更多>></h6></a></h6>
+            <h6>精彩博文<a target="_bank" href="<?php echo base_url()?>core/wxc_content/more_article">
+              <span style="float: right;font-size: 14px;margin-top: 5px;">更多>></span></a>
+            </h6>
             <ol class="rounded-list" style="overflow: inherit;margin-bottom: 16px;">
               <?php  foreach ($week_article as $key => $week){?>
                 <li>
@@ -413,7 +415,9 @@ function checkLogin(){
             </ol>
           </div>
           <div class="right_notice_section" style="margin-bottom: 0;border-bottom:0px;">
-            <h6>醍醐公告<a target="_bank" href="<?php echo base_url()?>core/wxc_content/more_site_notice"><h6 style="float: right;font-size: 14px;margin-top: 5px;">更多>></h6></a></h6>
+            <h6>醍醐公告<a target="_bank" href="<?php echo base_url()?>core/wxc_content/more_site_notice">
+              <span style="float: right;font-size: 14px;margin-top: 5px;">更多>></span></a>
+            </h6>
 
             <ol class="rounded-list" style="overflow: inherit;margin-bottom: 16px;">
               <?php  foreach ($site_notice as $key => $notice){?>
