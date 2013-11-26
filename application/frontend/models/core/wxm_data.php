@@ -318,6 +318,20 @@ class WXM_Data extends CI_Model
         return $query->result_array();
     }
 /*****************************************************************************/
+    public function get_base_info_by_user_id($user_id = 0) {
+        if ($user_id > 0) {
+            $where = array(
+                'user_id' => $user_id,
+                'data_status' => '3',
+                );
+            $this->db->select('data_id, data_name, data_type, data_pagecount, data_price, user_id, data_uploadtime, data_point')
+                 ->from('wx_data')->where($where)->order_by('data_point', 'desc');
+            $query = $this->db->get();
+            return $query->result_array();
+        }
+        return false;
+    }
+/*****************************************************************************/
     public function latest_top_ten()
     {
         $this->db->select('data_id, data_name, data_type, data_pagecount, data_price, user_id, data_uploadtime, data_point, data_keyword')

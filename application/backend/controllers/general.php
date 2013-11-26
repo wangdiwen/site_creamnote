@@ -109,9 +109,9 @@ class General extends CI_Controller {
         if ($user_email && $content) {
             $this->wx_email->clear();
 
-            $this->wx_email->set_from_user('co-founder@creamnote.com', '醍醐笔记');
+            $this->wx_email->set_from_user('co-founder@creamnote.com', '醍醐笔记官方');
             $this->wx_email->set_to_user($user_email);
-            $this->wx_email->set_subject('欢迎来到醍醐笔记网');
+            $this->wx_email->set_subject('欢迎加入醍醐笔记网');
             $this->wx_email->set_message($content);
 
             $ret = $this->wx_email->send_email();
@@ -126,9 +126,9 @@ class General extends CI_Controller {
         if ($user_email && $content) {
             $this->wx_email->clear();
 
-            $this->wx_email->set_from_user('no-reply@creamnote.com', '醍醐笔记');
+            $this->wx_email->set_from_user('no-reply@creamnote.com', '醍醐笔记官方');
             $this->wx_email->set_to_user($user_email);
-            $this->wx_email->set_subject('优秀笔记推荐');
+            $this->wx_email->set_subject('精品笔记推荐');
             $this->wx_email->set_message($content);
 
             $ret = $this->wx_email->send_email();

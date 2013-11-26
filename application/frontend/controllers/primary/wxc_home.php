@@ -93,6 +93,7 @@ class WXC_Home extends CI_Controller
                 $super_users[$key]['user_head_url'] = wx_get_gravatar_image($user_email, 32);
                 $school_info = $this->wx_general->add_user_school_major($user_id);
                 if ($school_info) {
+                    $super_users[$key]['user_school_id'] = $school_info['user_school_id'];
                     $super_users[$key]['user_school'] = $school_info['user_school'];
                     $super_users[$key]['user_major'] = $school_info['user_major'];
                     $super_users[$key]['user_province'] = $school_info['user_province'];
@@ -1181,8 +1182,8 @@ public function wx_substr_by_length_test($str = '', $sub_length = 0, $indent = 8
 /*****************************************************************/
     public function test()
     {
-        // $super_users = $this->get_super_users();
-        // wx_echoxml($super_users);
+        $super_users = $this->get_super_users();
+        wx_echoxml($super_users);
         // $pdf = 'upload/tmp/2013100821433354.pdf';
         // $data = file_get_contents($pdf);
         // $this->output->set_header("Content-type: application/pdf");

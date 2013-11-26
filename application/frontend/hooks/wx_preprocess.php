@@ -62,6 +62,9 @@ class WX_Preprocess {
         $public_gen_area_url_ereg = $home_url."primary/wxc_search/gen_search_by_area_id";
         $public_gen_nature_url_ereg = $home_url."primary/wxc_search/gen_search_by_nature_id";
         $public_data_list = $home_url."data/wxc_data/data_list";
+        // super user's search link
+        $public_search_super_user = $home_url.'primary/wxc_search/search_by_all_user/[0-9]+';
+        $public_search_super_user_area = $home_url.'primary/wxc_search/search_by_all_user/[0-9]+';
         // static public resources
         $static_url = $home_url.'static/(.*)';
         // 404页面
@@ -144,6 +147,8 @@ class WX_Preprocess {
             || ereg($alipay_url, $cur_url)
             || ereg($zhifubao_login_url, $cur_url)
             || ereg($util_url, $cur_url)
+            || ereg($public_search_super_user, $cur_url)
+            || ereg($public_search_super_user_area, $cur_url)
             || $cur_url == $test_url/* Test url iface */) {
             return;
         }

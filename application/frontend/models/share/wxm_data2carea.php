@@ -61,7 +61,7 @@ class WXM_Data2carea extends CI_Model
                 'carea_id_school' => $area_id_school,
                 // 'carea_id_major' => 0,  // just filter school, not major
                 );
-            $this->db->select('data_id')->from($table)->where($where)->limit(10);
+            $this->db->select('data_id')->from($table)->where($where)->limit(50);
             $query = $this->db->get();
             return $query->result_array();  // Object array
         }
@@ -73,7 +73,7 @@ class WXM_Data2carea extends CI_Model
         if ($area_id_major > 0)
         {
             $table = $this->wx_table;
-            $this->db->select('data_id')->from($table)->where('carea_id_major', $area_id_major)->limit(10);
+            $this->db->select('data_id')->from($table)->where('carea_id_major', $area_id_major)->limit(50);
             $query = $this->db->get();
             return $query->result();  // Object array
         }

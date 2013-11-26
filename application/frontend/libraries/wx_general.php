@@ -322,6 +322,7 @@ class WX_General
         if ($user_id > 0) {
             $school_info = $this->CI->wxm_user2carea->get_by_user_id($user_id);
             if ($school_info) {
+                $data['user_school_id'] = $school_info['carea_id_school'];
                 $area_info_school = $this->CI->wxm_category_area->get_all_info($school_info['carea_id_school']);
                 if ($area_info_school)
                 {
