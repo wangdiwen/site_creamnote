@@ -334,7 +334,15 @@ class WXM_Data extends CI_Model
 /*****************************************************************************/
     public function latest_top_ten()
     {
-        $this->db->select('data_id, data_name, data_type, data_pagecount, data_price, user_id, data_uploadtime, data_point, data_keyword')
+        $this->db->select('data_id, data_name, data_type, data_pagecount, data_price, user_id, data_uploadtime, data_point')
+                 ->from('wx_data')->where('data_status', '3')->limit(10)->order_by('data_uploadtime', 'desc');
+        $query = $this->db->get();
+        $data_info = $query->result_array();
+        return $data_info;
+    }
+/*****************************************************************************/
+    public function perfect_top_ten() {
+        $this->db->select('data_id, data_name, data_type, data_pagecount, data_price, user_id, data_uploadtime, data_point')
                  ->from('wx_data')->where('data_status', '3')->limit(10)->order_by('data_point', 'desc');
         $query = $this->db->get();
         $data_info = $query->result_array();

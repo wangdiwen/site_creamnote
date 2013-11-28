@@ -250,7 +250,8 @@ class WX_DB
                 mysql_select_db($this->db_database, $this->db_service);
                 $query = mysql_query($sql);
                 if (! $query) {
-                    echo 'insert error: '.mysql_error()."\n";
+                    // echo 'insert error: '.mysql_error()."\n";
+                    wx_log('Error: insert error, '.mysql_error(), $this->db_log_name);
                     return false;
                 }
                 return true;
@@ -296,7 +297,8 @@ class WX_DB
                 mysql_select_db($this->db_database, $this->db_service);
                 $query = mysql_query($sql);
                 if (! $query) {
-                    echo 'update error: '.mysql_error()."\n";
+                    // echo 'update error: '.mysql_error()."\n";
+                    wx_log('Error: update sql error, '.mysql_error(), $this->db_log_name);
                     return false;
                 }
                 return true;
@@ -336,7 +338,8 @@ class WX_DB
                 mysql_select_db($this->db_database, $this->db_service);
                 $query = mysql_query($sql);
                 if (! $query) {
-                    echo 'delete error: '.mysql_error()."\n";
+                    // echo 'delete error: '.mysql_error()."\n";
+                    wx_log('Error: delete sql error, '.mysql_error(), $this->db_log_name);
                     return false;
                 }
                 return true;

@@ -362,8 +362,8 @@ function checkLogin(){
                       echo "<div class='_item_actual'>";
                       echo "<div class='_card_content' style='padding: 10px 20px 5px 20px;'>";
                       echo "<div class='card_head' style='font-size: 18px;'>";
-                      echo "<a target='_blank' href=".base_url()."primary/wxc_search/search_by_area/111 ><img src='".$note['user_head_url']."'/></a>";
-                      echo "<a class='user_head' target='_blank' href=".base_url()."primary/wxc_search/search_by_area/111>".str_replace(array(" ","\r","\n"), array("","",""), $note['user_name'])."</a>";
+                      echo "<a target='_blank' href=".base_url()."primary/wxc_search/search_by_all_user/".$note['user_id']." ><img src='".$note['user_head_url']."'/></a>";
+                      echo "<a class='user_head' target='_blank' href=".base_url()."primary/wxc_search/search_by_all_user/".$note['user_id'].">".str_replace(array(" ","\r","\n"), array("","",""), $note['user_name'])."</a>";
                       echo "</div>";
                       echo "<div class='card_user card_padding'>";
                       // echo "<div class='mail'>邮箱:</div><div class='content'>".$note['user_email']."</div>";
@@ -372,13 +372,13 @@ function checkLogin(){
                       echo "<div class=''><span>加入醍醐：</span><span>".$note['user_register_time']."</span></div>";
                       echo "</div>";
                       echo "<div style='color:rgb(76, 118, 172);' class=' user_sm'>";
-                      echo "来自：<a target='_blank' href=".base_url()."primary/wxc_search/search_by_area/111 >".$note['user_province']."</a>";
+                      echo "来自：<a target='_blank' href=".base_url()."primary/wxc_search/search_by_area/".$note['user_school_id']." >".$note['user_province']."</a>";
                       echo "</div>";
                       echo "<div style='color:rgb(76, 118, 172);' class=' user_sm' title='".$note['user_school']."'>";
-                      echo "学校：<a target='_blank' href=".base_url()."primary/wxc_search/search_by_area/111 >".$note['user_school']."</a>";
+                      echo "学校：<a target='_blank' href=".base_url()."primary/wxc_search/search_by_area/".$note['user_school_id']." >".$note['user_school']."</a>";
                       echo "</div>";
                       echo "<div style='color:rgb(76, 118, 172);border-bottom:none;padding-bottom: 8px;' class='card_cate user_sm' title='".$note['user_major']."'>";
-                      echo "专业：<a target='_blank' href=".base_url()."primary/wxc_search/search_by_area/111 >".$note['user_major']."</a>";
+                      echo "专业：<a target='_blank' href=".base_url()."primary/wxc_search/search_by_area/".$note['user_school_id']." >".$note['user_major']."</a>";
                       echo "</div>";
 
 

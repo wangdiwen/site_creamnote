@@ -183,6 +183,13 @@ if (! function_exists('wx_move_file'))
     }
 }
 /*****************************************************************************/
+if (! function_exists('wx_cur_week')) {
+    function wx_cur_week() {
+        $today = date('Y-m-d');
+        return date('w',strtotime($today));
+    }
+}
+/*****************************************************************************/
 if (! function_exists('wx_get_today_time'))
 {
     function wx_get_today_time()

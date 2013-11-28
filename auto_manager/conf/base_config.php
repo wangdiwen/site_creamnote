@@ -32,7 +32,8 @@
      */
     define('WX_LOG', TRUE);
     define('WX_LOG_PATH', WX_BASE_PATH.WX_SEPARATOR.'log');
-    define('WX_DISPLAY_LOG', TRUE);
+    // define('WX_DISPLAY_LOG', TRUE);
+    define('WX_DISPLAY_LOG', FALSE);
 /*****************************************************************************/
     /**
      * 本地VPS文件存储路径

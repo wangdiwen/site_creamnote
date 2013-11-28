@@ -107,7 +107,17 @@ class WXC_Home extends CI_Controller
 /*****************************************************************************/
     public function get_recommend_notes()
     {
-        $recommend_notes = $this->wxm_data->latest_top_ten();
+        // 优秀笔记展示 top10
+        // 策略：星期 1,3,5 展示精品笔记，2，4,6展示最新上传笔记
+        $recommend_notes = array();
+        $cur_week = wx_cur_week();
+        if (in_array($cur_week, array('2', '4', '6'))) {
+            $recommend_notes = $this->wxm_data->latest_top_ten();
+        }
+        else {
+            $recommend_notes = $this->wxm_data->perfect_top_ten();
+        }
+
         $cur_time = date('Y-m-d H:i:s');
         $yesterday_time = wx_get_yesterday_time();
 
@@ -1182,8 +1192,12 @@ public function wx_substr_by_length_test($str = '', $sub_length = 0, $indent = 8
 /*****************************************************************/
     public function test()
     {
-        $super_users = $this->get_super_users();
-        wx_echoxml($super_users);
+        // $cur_week = wx_cur_week();
+        // echo $cur_week;
+
+        // $super_users = $this->get_super_users();
+        // wx_echoxml($super_users);
+
         // $pdf = 'upload/tmp/2013100821433354.pdf';
         // $data = file_get_contents($pdf);
         // $this->output->set_header("Content-type: application/pdf");

@@ -61,7 +61,7 @@ $before_yesterday_time = wx_get_before_yesterday_time();
 // echo $today_time."\n";
 // echo $yesterday_time."\n";
 // echo $before_yesterday_time."\n";
-echo 'Filter Time: '.$before_yesterday_time.' ~ '.$yesterday_time."\n";
+// echo 'Filter Time: '.$before_yesterday_time.' ~ '.$yesterday_time."\n";
 
 /***************************** 查询数据库 ************************************/
 /**
