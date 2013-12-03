@@ -897,12 +897,12 @@ class WXC_Data extends CI_Controller
         // 更新数据库
         $data = array(
             'data_id' => $data_id,
-            'data_name' => $data_name,
+            'data_name' => trim($data_name),
             'data_status' => $data_status,
-            'data_summary' => $data_summary,
+            'data_summary' => trim($data_summary),
             'data_price' => $data_price,
             'data_preview' => $data_preview,
-            'data_keyword' => $data_keyword,
+            'data_keyword' => trim($data_keyword),
             'data_osspath' => $data_osspath,
             'data_vpspath' => $data_vpspath
             );
@@ -1136,12 +1136,18 @@ class WXC_Data extends CI_Controller
         }
 
         $pdf_file = urldecode($pdf_file_encrypt);
-        $data = '';
+        // $data = '';
         if (file_exists($pdf_file)) {
-            $data = file_get_contents($pdf_file);
+            // $data = file_get_contents($pdf_file);
+            $this->output->set_header("Content-type: application/pdf");
+            $this->output->set_output(file_get_contents($pdf_file));
         }
-        $this->output->set_header("Content-type: application/pdf");
-        $this->output->set_output($data);
+    }
+/*****************************************************************************/
+    public function testing() {
+        // $data_id = 26;
+        // $data_info = $this->get_data_all_info($data_id);
+        // wx_echoxml($data_info);
     }
 /*****************************************************************************/
 }

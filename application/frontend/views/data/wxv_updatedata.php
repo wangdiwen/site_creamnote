@@ -1,15 +1,17 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>修改资料(<?php echo $data_info['data_base']['data_name'];?>)</title>
+    <title>修改笔记(<?php echo $data_info['data_base']['data_name'];?>)</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <link rel="stylesheet" href="/application/frontend/views/resources/css/wx_home.css" />
     <link rel="stylesheet" href="/application/frontend/views/resources/css/style.css" />
     <link rel="stylesheet" href="/application/frontend/views/resources/css/menu-css.css" />
+    <link rel="stylesheet" href="/application/frontend/views/resources/css/chosen.css" />
     <script type="text/javascript" src="/application/frontend/views/resources/js/jquery-1.8.3.js"></script>
     <script type="text/javascript" src="/application/frontend/views/resources/js/menu_min.js"></script>
     <script type="text/javascript" src="/application/frontend/views/resources/js/school.js"></script>
+    <script type="text/javascript" src="/application/frontend/views/resources/js/chosen.jquery.js"></script>
 <script type="text/javascript">
 <!-- Javascript functions -->
 var area_id;
@@ -18,6 +20,7 @@ var step_one_success = 1;
 var step_two_success = 1;
 var step_three_success = 1;
 $(document).ready(function(){
+    $("#select_price").chosen();
 
 	$("#first_step").addClass("ca-menu_hover");
     $("#first_step span").addClass("ca-menu_hover_ca-icon");
@@ -382,12 +385,19 @@ $(function(){
               }else{
            		 data_preview= '1';
               }
+        var data_price = '0.00';
+        var data_price_temp= $("#select_price").attr("value");
+        if(data_price_temp=="免费"){
+            data_price = '0.00';
+        }else{
+            data_price = data_price_temp.replace("￥","");
+        }
     	var data_name=$("#dataname").attr("value");
        // var data_type=$("#datatype").attr("value");
         var data_summary=$("#datasummary").attr("value");
         //var data_price=$("#password").attr("value");
         var data_keyword=$("#datakeyword").attr("value");
-        var data_price='0';
+        // var data_price='0';
         var data_id=$("#dataid").attr("value");
         var data_objectname=$("#dataobjectname").attr("value");
         var wx_category_area_school = $("#wx_category_area_school").attr("value");
@@ -456,20 +466,14 @@ $(function(){
             <h2 class="_data_title _nomargin" id="info_title">
                 <div class="_grgh">在下面完成修改工作</div>
             </h2>
-    		<div class="entry" style="display:none;">
+    		<div class="entry" style="">
                 <input type="hidden" value="1215154" name="tmpdir" id="id_file">
 
      		     <div  id="thisform" >
-                    <fieldset>
-                        <le>资料预览 </le>
-                        <a href="#" id="showpdf">打开</a>
-                        <!------ 弹出消息 ------>
-                	   <div class="overlay" id="overlay" style="display:none;"></div>
-                	   <div class="box" id="box"> <a class="boxclose" id="boxclose"></a>
-                  	     <h1>PDF预览</h1>
-                  	     <p id="messageshow"> <EMBED src="" height="450px" width="100%"/> </p>
-                	   </div>
-                	<!------ 弹出消息 ------>
+                    <fieldset style="padding-bottom: 10px;">
+                        <le>笔记名称 </le>
+                        <a style="font-weight: bold;" href="<?php echo site_url('data/wxc_data/data_view/').'/'.$data_info['data_base']['data_id'];?>" target="_blank"><?php echo $data_info['data_base']['data_name'];?></a>
+
                     </fieldset>
                 </div>
      		</div>
@@ -477,7 +481,7 @@ $(function(){
     		<div class="entry">
              	<div  id="thisform1" >
                     <fieldset>
-                        <le>第二步：填写资料类型 </le>
+                        <le>第二步：填写笔记类型 </le>
                         <p><label for="" accesskey="9">资料分类</label><br />
 
                         <!--   start of category      -->
@@ -596,9 +600,69 @@ $(function(){
     		<div class="entry">
         	   <div  id="thisform2" >
                     <fieldset>
-                        <le>第三步：添加资料描述 </le>
+                        <le>第三步：添加笔记描述 </le>
                         <p><label  accesskey="9">标题</label><br />
                         <input type="text" id="dataname" name="dataname" onblur="step_three()" value="<?php echo $data_info['data_base']['data_name'];?>"></p>
+                        <p><label for="data_price" accesskey="9">价格</label><br />
+                            <select id='select_price' name='select_price' style='width: 445px;' class="chosen">
+                            <?php if($data_info['data_base']['data_price']=='0.00'){?>
+                            <option selected>免费</option>
+                            <?php }else{?>
+                            <option>免费</option>
+                            <?php }?>
+                            <?php if($data_info['data_base']['data_price']=='0.99'){?>
+                            <option selected>￥0.99</option>
+                            <?php }else{?>
+                            <option>￥0.99</option>
+                            <?php }?>
+                            <?php if($data_info['data_base']['data_price']=='1.99'){?>
+                            <option selected>￥1.99</option>
+                            <?php }else{?>
+                            <option>￥1.99</option>
+                            <?php }?>
+                            <?php if($data_info['data_base']['data_price']=='2.99'){?>
+                            <option selected>￥2.99</option>
+                            <?php }else{?>
+                            <option>￥2.99</option>
+                            <?php }?>
+                            <?php if($data_info['data_base']['data_price']=='3.99'){?>
+                            <option selected>￥3.99</option>
+                            <?php }else{?>
+                            <option>￥3.99</option>
+                            <?php }?>
+                            <?php if($data_info['data_base']['data_price']=='4.99'){?>
+                            <option selected>￥4.99</option>
+                            <?php }else{?>
+                            <option>￥4.99</option>
+                            <?php }?>
+                            <?php if($data_info['data_base']['data_price']=='5.99'){?>
+                            <option selected>￥5.99</option>
+                            <?php }else{?>
+                            <option>￥5.99</option>
+                            <?php }?>
+                            <?php if($data_info['data_base']['data_price']=='6.99'){?>
+                            <option selected>￥6.99</option>
+                            <?php }else{?>
+                            <option>￥6.99</option>
+                            <?php }?>
+                            <?php if($data_info['data_base']['data_price']=='7.99'){?>
+                            <option selected>￥7.99</option>
+                            <?php }else{?>
+                            <option>￥7.99</option>
+                            <?php }?>
+                            <?php if($data_info['data_base']['data_price']=='8.99'){?>
+                            <option selected>￥8.99</option>
+                            <?php }else{?>
+                            <option>￥8.99</option>
+                            <?php }?>
+                            <?php if($data_info['data_base']['data_price']=='9.99'){?>
+                            <option selected>￥9.99</option>
+                            <?php }else{?>
+                            <option>￥9.99</option>
+                            <?php }?>
+
+
+                        </select></p>
                         <p><label for="name" accesskey="9">简介</label><br />
                         <textarea id="datasummary" name="" onblur="step_three()"><?php echo $data_info['data_base']['data_summary'];?></textarea></p>
 
@@ -610,7 +674,7 @@ $(function(){
     		</div>
 
 
-        <input type="button" name="filecontent" id="filecontent" value="完成上传" onclick="" style="height:32px;width:100px;" class="button_c">
+        <input type="button" name="filecontent" id="filecontent" value="提交修改" onclick="" style="height:32px;width:100px;" class="button_c">
 
     	</div>
     </div>

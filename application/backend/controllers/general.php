@@ -524,7 +524,8 @@ class General extends CI_Controller {
                             $ret = $this->wx_email->send_email();
                             // break;  // test ...
                             if (! $ret) {  // 如果发现发送失败，则中断发送
-                                return false;
+								wx_loginfo('send offical email exception, user email: '.$user_email);
+                                // return false;
                             }
                         }
                     }

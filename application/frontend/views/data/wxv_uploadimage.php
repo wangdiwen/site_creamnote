@@ -30,7 +30,7 @@
                 <input type="hidden" value="1215154" name="tmpdir" id="id_file">
          		<div  id="thisform" >
               <fieldset>
-                <le>第一步：上传资料 </le>
+                <le>第一步：上传笔记图片 </le>
                 <div  style="margin-top: 12px;">
 
                   <div id="batch_upload" class="fl">
@@ -414,7 +414,7 @@ $(document).ready(function(){
                             step_two_success = 1;
                             check_upload();
                         }else{
-                            $("#module_list").html("<div style='padding-top:10px;padding-bottom:10px;color: #AA7700;'>上传后的图片根据需要排列顺序，以便按序完成资料的生成！</div>");
+                            $("#module_list").html("<div style='padding-top:10px;padding-bottom:10px;color: #AA7700;'>上传后的图片根据需要排列顺序，以便按序完成笔记的生成！</div>");
                         }
                         $("#module_list").css("display","block");
                         var num1 = Math.round(i);
@@ -511,7 +511,7 @@ function delete_image(id){
                           step_two_success = 1;
                           check_upload();
                         }else{
-                          $("#module_list").html("<div style='padding-top:10px;padding-bottom:10px;color: #AA7700;'>上传后的图片根据需要排列顺序，以便按序完成资料的生成！</div>");
+                          $("#module_list").html("<div style='padding-top:10px;padding-bottom:10px;color: #AA7700;'>上传后的图片根据需要排列顺序，以便按序完成笔记的生成！</div>");
                           $("#first_step").removeClass("ca-menu_hover");
                           $("#first_step span").removeClass("ca-menu_hover_ca-icon");
                           $("#first_step h2").removeClass("ca-menu_hover_ca-main");

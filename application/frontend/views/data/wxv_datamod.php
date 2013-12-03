@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>完善资料(<?php echo $data_name;?>)</title>
+    <title>完善笔记(<?php echo $data_name;?>)</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
     <link rel="stylesheet" href="/application/frontend/views/resources/css/wx_home.css" />
@@ -360,7 +360,7 @@ function makeCenter()
 }
 $(function(){
 	$("#filecontent").click(function(){
-        showLoading("资料卡片正在生成当中请稍等。。。");
+        showLoading("笔记卡片正在生成当中请稍等。。。");
     	var data_status;
     	var data_preview;
         if($("#datastatus").attr("checked")){
@@ -457,7 +457,7 @@ $(function(){
 
         <div class="post" style="padding: 0 20px;width:781px;">
             <h2 class="_data_title _nomargin" id="info_title">
-                <div class="_grgh">完善后的资料才有价值哦！</div>
+                <div class="_grgh">完善后的笔记才有价值哦！</div>
             </h2>
             <?php  if(!$pdf_file){ }
                     else{
@@ -467,7 +467,7 @@ $(function(){
 
                  <div  id="thisform" >
                     <fieldset>
-                    <le>资料预览 </le>
+                    <le>笔记预览 </le>
                     <p style="margin: 12px 0;"><a href="#" id="showpdf"><span class="common_bule_button"><b>点击预览笔记</b></span></a></p>
                     <!------ 弹出消息 ------>
                     <div class="overlay" id="overlay" style="display:none;"></div>
@@ -485,8 +485,8 @@ $(function(){
 		    <div class="entry">
              	<div  id="thisform1" >
                 <fieldset>
-                    <le>第二步：填写资料类型 </le>
-                        <p style="margin-bottom: 0px;"><label for="" accesskey="9">资料分类</label><br /></p>
+                    <le>第二步：填写笔记类型 </le>
+                        <p style="margin-bottom: 0px;"><label for="" accesskey="9">笔记分类</label><br /></p>
                         <!--   start of category      -->
                         <div class="category_selected" id="category_selected">
                             <div class="category_collect">
@@ -505,8 +505,8 @@ $(function(){
                                 </li>
                                 <li id="cate_two" class="display_none">
                                     <p>学习笔记</p>
-                                    <p class="selected">考研资料</p>
-                                    <p>考试资料</p>
+                                    <p class="selected">考研笔记</p>
+                                    <p>考试笔记</p>
                                 </li>
                                 <li id="cate_three" class="display_none">
                                     <?php
@@ -553,7 +553,7 @@ $(function(){
 		    <div class="entry">
             	 <div  id="thisform2" >
                     <fieldset>
-                    <le>第三步：添加资料描述 </le>
+                    <le>第三步：添加笔记描述 </le>
                     <p><label  accesskey="9">标题</label><br />
                     <input type="text" id="dataname" name="dataname" value="<?php echo $data_name;?>" onblur="step_three()"></p>
                     <p><label for="data_price" accesskey="9">价格</label><br />
@@ -576,7 +576,7 @@ $(function(){
 
                     <input type="hidden" name="dataid" id ="dataid" value="">
                     <input type="hidden" name="dataobjectname" id ="dataobjectname">
-                    <div id="" style="margin-bottom: 12px;color:#AA7700;">*建议您输入不少于10字的简介，好让你的资料更受关注</div>
+                    <div id="" style="margin-bottom: 12px;color:#AA7700;">*建议您输入不少于10字的简介，好让你的笔记更受关注</div>
                     </fieldset>
                 </div>
 		    </div>

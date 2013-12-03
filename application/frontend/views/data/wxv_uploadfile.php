@@ -32,7 +32,7 @@ $(function() {
         'uploader' : '<?php echo site_url('data/wxc_data/upload_file'); ?>/<?php echo session_id();?>',
         'formData': { '<?php echo session_name();?>': '<?php echo session_id();?>'},
         'method'   : 'post',//方法，服务端可以用$_POST数组获取数据
-		'buttonText' : '选择资料',//设置按钮文本
+		'buttonText' : '选择笔记',//设置按钮文本
         'multi'    : false,//允许同时上传多张图片
         'uploadLimit' : 10,//一次最多只允许上传10张图片
         //'fileTypeDesc' : 'Image Files',//只允许上传图像
@@ -49,7 +49,7 @@ $(function() {
         },
         'onUploadSuccess' : function(file, data, response) {//每次成功上传后执行的回调函数，从服务端返回数据到前端
                if(data == "file-size-overflow"){
-                 errorMes("您上传的资料超过最大限制4M!");
+                 errorMes("您上传的笔记超过最大限制4M!");
                }
                img_id_upload[i]=data;
                i++;
@@ -60,7 +60,7 @@ $(function() {
         'onQueueComplete' : function(queueData) {//上传队列全部完成后执行的回调函数
            // if(img_id_upload.length>0)
            // alert('成功上传的文件有：'+encodeURIComponent(img_id_upload));
-            //$("#uploadsuccess").html("<p style='color: red;padding-left: 30px;'>资料已上传</p>");
+            //$("#uploadsuccess").html("<p style='color: red;padding-left: 30px;'>笔记已上传</p>");
             //上传第一步
             $("#first_step").addClass("ca-menu_hover");
             $("#first_step span").addClass("ca-menu_hover_ca-icon");
@@ -81,7 +81,7 @@ $(function() {
             warnMes("表单填写完整才能提交！");
             return;
         }
-        showLoading("资料卡片正在生成当中请稍等。。。");
+        showLoading("笔记卡片正在生成当中请稍等。。。");
     	var data_status;
     	var data_preview;
         if($("#datastatus").attr("checked")){
@@ -508,7 +508,7 @@ function makeCenter()
 
 		<div class="post" style="padding: 0 20px;width:781px;">
             <h2 class="_data_title _nomargin" id="info_title">
-                <div class="_grgh">分享你最得意的笔记资料</div>
+                <div class="_grgh">分享你最得意的笔记笔记</div>
             </h2>
 		<div class="entry">
 
@@ -516,7 +516,7 @@ function makeCenter()
 
  		     <div  id="thisform" >
             <fieldset>
-                <le>第一步：上传资料 </le>
+                <le>第一步：上传笔记 </le>
                 <p style="margin-top: 12px;">
                     <div class="uploadify " id="have_upload" style="display:none;height: 30px; width: 120px;">
                             <div class="common_show_login_win uploadify-button" style="height: 30px; line-height: 30px; width: 120px;cursor: pointer;">
@@ -528,7 +528,7 @@ function makeCenter()
                     <?php } else {?>
                         <div class="uploadify common_show_login_win" style="height: 30px; width: 120px;">
                             <div onclick="show_login_win()" class="common_show_login_win uploadify-button" style="height: 30px; line-height: 30px; width: 120px;cursor: pointer;">
-                                <span   class="common_show_login_win uploadify-button-text">选择资料</span>
+                                <span   class="common_show_login_win uploadify-button-text">选择笔记</span>
                             </div>
                         </div>
                     <?php }?>
@@ -537,7 +537,7 @@ function makeCenter()
                <!--  <p><a href="javascript:$('#file_upload').uploadify('settings', 'formData', {'typeCode':document.getElementById('id_file').value});$('#file_upload').uploadify('upload','*')">上传</a>
 				<a href="javascript:$('#file_upload').uploadify('cancel','*')">重置上传队列</a>
 				</p>  -->
-				<div id="uploadsuccess" style="margin-bottom:12px;color:#AA7700;">支持的资料格式(*.pdf;*.docx;*.doc;*.wps;*.ppt;*.pptx),最大（4M）</div>
+				<div id="uploadsuccess" style="margin-bottom:12px;color:#AA7700;">支持的笔记格式(*.pdf;*.docx;*.doc;*.wps;*.ppt;*.pptx),最大（4M）</div>
             </fieldset>
             </div>
  		</div>
@@ -545,8 +545,8 @@ function makeCenter()
 		<div class="entry">
      	<div  id="thisform1" >
         <fieldset>
-            <le>第二步：填写资料类型 </le>
-            <p style="margin-bottom: 0px;"><label for="" accesskey="9">资料分类</label><br />
+            <le>第二步：填写笔记类型 </le>
+            <p style="margin-bottom: 0px;"><label for="" accesskey="9">笔记分类</label><br />
 
                 <!--   start of category      -->
                 <div class="category_selected" id="category_selected">
@@ -566,8 +566,8 @@ function makeCenter()
                         </li>
                         <li id="cate_two" class="display_none">
                             <p>学习笔记</p>
-                            <p class="selected">考研资料</p>
-                            <p>考试资料</p>
+                            <p class="selected">考研笔记</p>
+                            <p>考试笔记</p>
                         </li>
                         <li id="cate_three" class="display_none">
                             <?php
@@ -615,7 +615,7 @@ function makeCenter()
 
         	<div  id="thisform2" >
                 <fieldset>
-                <le>第三步：添加资料描述 </le>
+                <le>第三步：添加笔记描述 </le>
                 <p><label  accesskey="9">标题</label><br />
                 <input type="text" id="dataname" name="dataname" value="" data-placeholder="选择几个默认的价格" onblur="step_three()"></p>
                 <p><label for="data_price" accesskey="9">价格</label><br />
@@ -638,7 +638,7 @@ function makeCenter()
 
                 <input type="hidden" name="dataid" id ="dataid">
                 <input type="hidden" name="dataobjectname" id ="dataobjectname">
-                <div id="" style="margin-bottom: 12px;color:#AA7700;">*建议您输入不少于10字的简介，好让你的资料更受关注</div>
+                <div id="" style="margin-bottom: 12px;color:#AA7700;">*建议您输入不少于10字的简介，好让你的笔记更受关注</div>
                 </fieldset>
             </div>
 		</div>

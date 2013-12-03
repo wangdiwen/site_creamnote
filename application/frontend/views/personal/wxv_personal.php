@@ -307,7 +307,7 @@ $(function() {
 		                    }
 		        });
 		});
-//=========================================================删除资料=========================================//
+//=========================================================删除笔记=========================================//
     $("._card_delete").click(function(){
         var str = "";
         str += "<a style='padding-right: 20px;' href='javascript:void(0)' onclick='delete_data("+this.id+")'>是</a>";
@@ -509,7 +509,7 @@ function stoptimer() {
     }
 }
 
-//=========================================================删除资料=========================================//
+//=========================================================删除笔记=========================================//
 
 function delete_display(){
     $(".tipforfix").css("display","none");
@@ -550,7 +550,7 @@ function delete_data(dataid){
         <div class="tip_card" style="width:120px;">
           <div class="tip_content">
              <div class=" fl">
-              <div class="co fl">是否要删除资料?</div>
+              <div class="co fl">是否要删除笔记?</div>
             </div>
             <div class="tip_center">
               <a style='padding-right: 20px;' href="">是</a>
@@ -727,7 +727,7 @@ function delete_data(dataid){
 
                       echo "<div class='_card_footer'>";
                       echo "<a href=".base_url()."core/wxc_download_note/download_file/".$note['data_id']."><img src='/application/frontend/views/resources/images/new_version/dy_card_hover_down.png' class='_foot_content_down fl'></a>";
-                      echo "<a href=".base_url()."data/wxc_data/complete_data_page/".$note['data_id']."><img src='/application/frontend/views/resources/images/new_version/creamnote_card_edit.png' class='_card_edit fl' title='修改资料'></a>";
+                      echo "<a href=".base_url()."data/wxc_data/complete_data_page/".$note['data_id']."><img src='/application/frontend/views/resources/images/new_version/creamnote_card_edit.png' class='_card_edit fl' title='修改笔记'></a>";
                       echo "<span class='_foot_content_price fr'>".$note['data_price']."</span>";
                       //echo "<a href='#' ><span class='foot_content_heart'></span></a>";
                       echo "</div></div>";
@@ -752,7 +752,7 @@ function delete_data(dataid){
                   if(isset($data_info['data_waiting'])){
                     foreach ($data_info['data_waiting'] as $key => $note) {
                       echo "<div class='_card_item _card_item_panel' ><div class='_item_actual'>";
-                      //echo "<a href=".base_url()."data/wxc_data/complete_data_page/".$note['data_id']."><div class='card_edit' title='修改资料'></div></a>";
+                      //echo "<a href=".base_url()."data/wxc_data/complete_data_page/".$note['data_id']."><div class='card_edit' title='修改笔记'></div></a>";
                       echo "<div class='_card_delete' id='".$note['data_id']."'><img src='/application/frontend/views/resources/images/new_version/dy_delete.png'></div>";
                       echo "<div class='_card_content'>";
                       echo "<div class='card_head'>";
@@ -797,7 +797,7 @@ function delete_data(dataid){
 
                       echo "<div class='_card_footer'>";
                       echo "<a href=".base_url()."core/wxc_download_note/download_file/".$note['data_id']."><img src='/application/frontend/views/resources/images/new_version/dy_card_hover_down.png' class='_foot_content_down fl'></a>";
-                      echo "<a href=".base_url()."data/wxc_data/complete_data_page/".$note['data_id']."><img src='/application/frontend/views/resources/images/new_version/creamnote_card_edit.png' class='_card_edit fl' title='修改资料'></a>";
+                      echo "<a href=".base_url()."data/wxc_data/complete_data_page/".$note['data_id']."><img src='/application/frontend/views/resources/images/new_version/creamnote_card_edit.png' class='_card_edit fl' title='修改笔记'></a>";
                       echo "<span class='_foot_content_price fr'>".$note['data_price']."</span>";
                       echo "</div></div>";
                       echo "<div class='_card_bottom'>";
@@ -820,7 +820,7 @@ function delete_data(dataid){
                   if(isset($data_info['data_undefine'])){
                     foreach ($data_info['data_undefine'] as $key => $note) {
                       echo "<div class='_card_item _card_item_panel' ><div class='_item_actual'>";
-                      //echo "<a href=".base_url()."data/wxc_data/data_modify/".$note['data_id']."><div class='card_edit' title='完善资料'></div></a>";
+                      //echo "<a href=".base_url()."data/wxc_data/data_modify/".$note['data_id']."><div class='card_edit' title='完善笔记'></div></a>";
                       echo "<div class='_card_delete' id='".$note['data_id']."'><img src='/application/frontend/views/resources/images/new_version/dy_delete.png'></div>";
                       echo "<div class='_card_content'>";
                       echo "<div class='card_head'>";
@@ -865,7 +865,7 @@ function delete_data(dataid){
 
                       echo "<div class='_card_footer'>";
                       echo "<a href=".base_url()."core/wxc_download_note/download_file/".$note['data_id']."><img src='/application/frontend/views/resources/images/new_version/dy_card_hover_down.png' class='_foot_content_down fl'></a>";
-                      echo "<a href=".base_url()."data/wxc_data/data_modify/".$note['data_id']."><img src='/application/frontend/views/resources/images/new_version/creamnote_card_edit.png' class='_card_edit fl' title='完善资料'></a>";
+                      echo "<a href=".base_url()."data/wxc_data/data_modify/".$note['data_id']."><img src='/application/frontend/views/resources/images/new_version/creamnote_card_edit.png' class='_card_edit fl' title='完善笔记'></a>";
                       echo "<span class='_foot_content_price fr'>".$note['data_price']."</span>";
                       echo "</div></div>";
                       echo "<div class='_card_bottom'>";
@@ -889,7 +889,7 @@ function delete_data(dataid){
                   if(isset($data_info['data_unpass'])){
                     foreach ($data_info['data_unpass'] as $key => $note) {
                       echo "<div class='_card_item _card_item_panel' ><div class='_item_actual'>";
-                      //echo "<a href=".base_url()."data/wxc_data/data_modify/".$note['data_id']."><div class='card_edit' title='完善资料'></div></a>";
+                      //echo "<a href=".base_url()."data/wxc_data/data_modify/".$note['data_id']."><div class='card_edit' title='完善笔记'></div></a>";
                       echo "<div class='_card_delete' id='".$note['data_id']."'><img src='/application/frontend/views/resources/images/new_version/dy_delete.png'></div>";
                       echo "<div class='_card_content'>";
                       echo "<div class='card_head'>";
@@ -934,7 +934,7 @@ function delete_data(dataid){
 
                       echo "<div class='_card_footer'>";
                       echo "<a href=".base_url()."core/wxc_download_note/download_file/".$note['data_id']."><img src='/application/frontend/views/resources/images/new_version/dy_card_hover_down.png' class='_foot_content_down fl'></a>";
-                      echo "<a href=".base_url()."data/wxc_data/complete_data_page/".$note['data_id']."><img src='/application/frontend/views/resources/images/new_version/creamnote_card_edit.png' class='_card_edit fl' title='修改资料'></a>";
+                      echo "<a href=".base_url()."data/wxc_data/complete_data_page/".$note['data_id']."><img src='/application/frontend/views/resources/images/new_version/creamnote_card_edit.png' class='_card_edit fl' title='修改笔记'></a>";
                       echo "<span class='_foot_content_price fr'>".$note['data_price']."</span>";
                       echo "</div></div>";
                       echo "<div class='_card_bottom'>";
