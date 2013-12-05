@@ -124,22 +124,22 @@ if (!defined('K_TCPDF_EXTERNAL_CONFIG')) {
 	/**
 	 * document creator
 	 */
-	define ('PDF_CREATOR', 'TCPDF');
+	define ('PDF_CREATOR', 'Creamnote.com');
 
 	/**
 	 * document author
 	 */
-	define ('PDF_AUTHOR', 'TCPDF');
+	define ('PDF_AUTHOR', 'Creamnote.com');
 
 	/**
 	 * header title
 	 */
-	define ('PDF_HEADER_TITLE', 'TCPDF Example');
+	define ('PDF_HEADER_TITLE', 'Creamnote.com');
 
 	/**
 	 * header description string
 	 */
-	define ('PDF_HEADER_STRING', "by Nicola Asuni - Tecnick.com\nwww.tcpdf.org");
+	define ('PDF_HEADER_STRING', "醍醐笔记网\nCreamnote.com");
 
 	/**
 	 * image logo

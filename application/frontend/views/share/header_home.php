@@ -9,6 +9,9 @@
 <script type="text/javascript" src="/application/frontend/views/resources/js/jquery.blockUI.js"></script>
 <script src="/application/frontend/views/resources/js/easydialog.js" type="text/javascript"></script>
 <script type="text/javascript" src="/application/frontend/views/resources/js/jquery.showLoading.js"></script>
+<!--[if lt IE 7]>
+<script src="http://ie7-js.googlecode.com/svn/version/2.0(beta)/IE7.js" type="text/javascript"></script>
+<![endif]-->
 <div class="_head">
     <div class="_head_center">
         <a href="<?php echo site_url('home/index'); ?>">
@@ -60,6 +63,16 @@
     </div>
 </div>
 <input type="hidden" id="baseUrl" value="<?php echo base_url();?>">
+<script  defer="defer">
+  // //后台判断浏览器
+  // var url = $("#baseUrl").val()+"core/wxc_util/get_browser_info";
+  // var params =({});
+  // var retData = ajax_common_get(url,params);
+  // // alert(retData)
+  if(navigator.userAgent.indexOf("MSIE 7.0")>0){
+      alert("如果你在使用搜狗浏览器，需要切换到高速模式！");
+    }
+</script>
 <script type="text/javascript">
 <!-- Javascript functions -->
 //=========================================================临时=========================================//

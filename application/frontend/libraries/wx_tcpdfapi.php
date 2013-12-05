@@ -228,7 +228,7 @@ class WX_Tcpdfapi
     public function test()
     {
         $this->init_pdf();
-        $this->set_header('header_logo.png', 40, '我的笔记');
+        $this->set_header('new_header_logo.jpg', 28, '我的笔记');
         // $this->set_font();
 
         // $this->add_page();

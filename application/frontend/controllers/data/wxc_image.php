@@ -404,7 +404,8 @@ class WXC_Image extends CI_Controller
             $pdf_header = mb_substr($pdf_header, 0, 30, 'UTF-8');
 
             $this->wx_tcpdfapi->init_pdf();
-            $this->wx_tcpdfapi->set_header('header_logo.png', 40, $pdf_header);
+            // $this->wx_tcpdfapi->set_header('header_logo.png', 40, $pdf_header);  // old header logo
+            $this->wx_tcpdfapi->set_header('new_header_logo.jpg', 28, $pdf_header);     // new header logo
             $this->wx_tcpdfapi->set_font('droidsansfallback');
             // $this->wx_tcpdfapi->set_font('times');
             // 制作pdf封面
@@ -673,6 +674,7 @@ class WXC_Image extends CI_Controller
 /*****************************************************************************/
     public function test()
     {
+        $this->wx_tcpdfapi->test();
         // $this->image_rotate();
         // $data = array(
         //     array('image' => 'upload/image/1/1_avatar.jpg'),
