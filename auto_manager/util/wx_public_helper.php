@@ -4,7 +4,44 @@
  * 公共的一些辅助函数
  */
 /*****************************************************************************/
-
+if (! function_exists('wx_tips')) {
+    function wx_tips($msg = '', $new_line = true) {
+        if ($msg) {
+            if ($new_line) {
+                echo "\033[01;32m".$msg."\033[0m\n";  // green color, 34m is blue
+            }
+            else {
+                echo "\033[01;32m".$msg."\033[0m";  // green color, 34m is blue
+            }
+        }
+    }
+}
+/*****************************************************************************/
+if (! function_exists('wx_warnning')) {
+    function wx_warnning($msg = '', $new_line = true) {
+        if ($msg) {
+            if ($new_line) {
+                echo "\033[01;33m".$msg."\033[0m\n";  // yellow color
+            }
+            else {
+                echo "\033[01;33m".$msg."\033[0m";  // yellow color
+            }
+        }
+    }
+}
+/*****************************************************************************/
+if (! function_exists('wx_error')) {
+    function wx_error($msg = '', $new_line = true) {
+        if ($msg) {
+            if ($new_line) {
+                echo "\033[01;31m".$msg."\033[0m\n";  // red color
+            }
+            else {
+                echo "\033[01;31m".$msg."\033[0m";  // red color
+            }
+        }
+    }
+}
 /*****************************************************************************/
 if (! function_exists('wx_delete_file'))
 {

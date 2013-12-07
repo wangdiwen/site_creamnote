@@ -21,7 +21,7 @@ class Audit extends CI_Controller
         $config = array(
             'base_url' => base_url().'cnadmin/audit/audit_index',
             'total_rows' => $note_count,
-            'per_page' => 5,
+            'per_page' => 10,
             'num_links' => 3,
             'uri_segment' => 4,
             'full_tag_open' => '<p>',
