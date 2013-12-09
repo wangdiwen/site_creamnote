@@ -332,7 +332,7 @@ function searchbefore(the,type,val){
     searchall(nature_id,area_name,"");
   }
 }
-//按地方搜索
+//搜索
 function searchall(nature_id,area_name,area_id){
   // area_name = $("#hiddenschool").attr("value");
   // area_id = $("#partment").attr("value");
@@ -356,8 +356,9 @@ function searchall(nature_id,area_name,area_id){
                   var base_search_url = "<?php echo site_url('data/wxc_data/data_view/'); ?>";
                   var dataview = base_search_url + "/" + result[i]['data_id'];
                   var downloadfile = "<?php echo site_url('core/wxc_download_note/download_file/'); ?>" + "/" + result[i]['data_id'];
-                  var search_by_nature = "<?php echo site_url('primary/wxc_search/search_by_nature/'); ?>" + "/" + result[i]['data_nature_id_school'];
-                  var search_by_area = "<?php echo site_url('primary/wxc_search/search_by_area/'); ?>" + "/" + result[i]['data_area_id_major'];
+                  var search_by_nature = "<?php echo site_url('primary/wxc_search/search_by_nature/'); ?>" + "/" + result[i]['data_nature_id'];
+                  var search_by_area_school = "<?php echo site_url('primary/wxc_search/search_by_area/'); ?>" + "/" + result[i]['data_area_id_school'];
+                  var search_by_area_major = "<?php echo site_url('primary/wxc_search/search_by_area/'); ?>" + "/" + result[i]['data_area_id_major'];
                   str += "<div class='_card_item _card_item_panel' ><div class='_item_actual'>";
                   str += "<div class='_card_content'>";
                   str += "<div class='card_head'>";
@@ -369,9 +370,9 @@ function searchall(nature_id,area_name,area_id){
                   str += "<div class='card_cate _card_cate card_padding'>";
                   str += "分类：<a href="+search_by_nature+" >"+result[i]['data_nature_name']+"</a>";
                   if(result[i]['data_area_name_school']!=""){str+="|";}
-                  str += "<a href="+search_by_area+" >"+result[i]['data_area_name_school']+"</a>";
+                  str += "<a href="+search_by_area_school+" >"+result[i]['data_area_name_school']+"</a>";
                   if(result[i]['data_area_name_major']!=""){str+="|";}
-                  str += "<a href="+search_by_area+" >"+result[i]['data_area_name_major']+"</a>";
+                  str += "<a href="+search_by_area_school+" >"+result[i]['data_area_name_major']+"</a>";
                   str += "</div>";
                   str += "<div class='card_normal '>";
                   str += "<div class='_card_page'>";
@@ -686,7 +687,8 @@ function user_hover(){
                                   echo $note['data_area_name_school']!=""?"|":"";
                                   echo "<a href=".base_url()."primary/wxc_search/search_by_area/".$note['data_area_id_school']." >".$note['data_area_name_school']."</a>";
                                   echo $note['data_area_name_major']!=""?"|":"";
-                                  echo "<a href=".base_url()."primary/wxc_search/search_by_area/".$note['data_area_id_major']." >".$note['data_area_name_major']."</a>";
+                                  // echo "<a href=".base_url()."primary/wxc_search/search_by_area/".$note['data_area_id_major']." >".$note['data_area_name_major']."</a>";
+                                  echo "<a href=".base_url()."primary/wxc_search/search_by_area/".$note['data_area_id_school']." >".$note['data_area_name_major']."</a>";
                                   echo "</div>";
                                   echo "<div class='card_normal '>";
                                   echo "<div class='_card_page'>";
@@ -759,7 +761,8 @@ function user_hover(){
                                   echo $note['data_area_name_school']!=""?"|":"";
                                   echo "<a href=".base_url()."primary/wxc_search/search_by_area/".$note['data_area_id_school']." >".$note['data_area_name_school']."</a>";
                                   echo $note['data_area_name_major']!=""?"|":"";
-                                  echo "<a href=".base_url()."primary/wxc_search/search_by_area/".$note['data_area_id_major']." >".$note['data_area_name_major']."</a>";
+                                  // echo "<a href=".base_url()."primary/wxc_search/search_by_area/".$note['data_area_id_major']." >".$note['data_area_name_major']."</a>";
+                                  echo "<a href=".base_url()."primary/wxc_search/search_by_area/".$note['data_area_id_school']." >".$note['data_area_name_major']."</a>";
                                   echo "</div>";
                                   echo "<div class='card_normal '>";
                                   echo "<div class='_card_page'>";
@@ -834,7 +837,8 @@ function user_hover(){
                                   echo $note['data_area_name_school']!=""?"|":"";
                                   echo "<a href=".base_url()."primary/wxc_search/search_by_area/".$note['data_area_id_school']." >".$note['data_area_name_school']."</a>";
                                   echo $note['data_area_name_major']!=""?"|":"";
-                                  echo "<a href=".base_url()."primary/wxc_search/search_by_area/".$note['data_area_id_major']." >".$note['data_area_name_major']."</a>";
+                                  // echo "<a href=".base_url()."primary/wxc_search/search_by_area/".$note['data_area_id_major']." >".$note['data_area_name_major']."</a>";
+                                  echo "<a href=".base_url()."primary/wxc_search/search_by_area/".$note['data_area_id_school']." >".$note['data_area_name_major']."</a>";
                                   echo "</div>";
                                   echo "<div class='card_normal '>";
                                   echo "<div class='_card_page'>";

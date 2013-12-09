@@ -696,7 +696,8 @@ function delete_data(dataid){
                       echo $note['data_area_name_school']!=""?"|":"";
                       echo "<a href=".base_url()."primary/wxc_search/search_by_area/".$note['data_area_id_school']." >".$note['data_area_name_school']."</a>";
                       echo $note['data_area_name_major']!=""?"|":"";
-                      echo "<a href=".base_url()."primary/wxc_search/search_by_area/".$note['data_area_id_major']." >".$note['data_area_name_major']."</a>";
+                      // echo "<a href=".base_url()."primary/wxc_search/search_by_area/".$note['data_area_id_major']." >".$note['data_area_name_major']."</a>";
+                                  echo "<a href=".base_url()."primary/wxc_search/search_by_area/".$note['data_area_id_school']." >".$note['data_area_name_major']."</a>";
                       echo "</div>";
                       echo "<div class='card_normal '>";
                       echo "<div class='_card_page'>";
@@ -766,7 +767,8 @@ function delete_data(dataid){
                       echo $note['data_area_name_school']!=""?"|":"";
                       echo "<a href=".base_url()."primary/wxc_search/search_by_area/".$note['data_area_id_school']." >".$note['data_area_name_school']."</a>";
                       echo $note['data_area_name_major']!=""?"|":"";
-                      echo "<a href=".base_url()."primary/wxc_search/search_by_area/".$note['data_area_id_major']." >".$note['data_area_name_major']."</a>";
+                      // echo "<a href=".base_url()."primary/wxc_search/search_by_area/".$note['data_area_id_major']." >".$note['data_area_name_major']."</a>";
+                                  echo "<a href=".base_url()."primary/wxc_search/search_by_area/".$note['data_area_id_school']." >".$note['data_area_name_major']."</a>";
                       echo "</div>";
                       echo "<div class='card_normal '>";
                       echo "<div class='_card_page'>";
@@ -834,7 +836,8 @@ function delete_data(dataid){
                       echo $note['data_area_name_school']!=""?"|":"";
                       echo "<a href=".base_url()."primary/wxc_search/search_by_area/".$note['data_area_id_school']." >".$note['data_area_name_school']."</a>";
                       echo $note['data_area_name_major']!=""?"|":"";
-                      echo "<a href=".base_url()."primary/wxc_search/search_by_area/".$note['data_area_id_major']." >".$note['data_area_name_major']."</a>";
+                      // echo "<a href=".base_url()."primary/wxc_search/search_by_area/".$note['data_area_id_major']." >".$note['data_area_name_major']."</a>";
+                                  echo "<a href=".base_url()."primary/wxc_search/search_by_area/".$note['data_area_id_school']." >".$note['data_area_name_major']."</a>";
                       echo "</div>";
                       echo "<div class='card_normal '>";
                       echo "<div class='_card_page'>";
@@ -903,7 +906,8 @@ function delete_data(dataid){
                       echo $note['data_area_name_school']!=""?"|":"";
                       echo "<a href=".base_url()."primary/wxc_search/search_by_area/".$note['data_area_id_school']." >".$note['data_area_name_school']."</a>";
                       echo $note['data_area_name_major']!=""?"|":"";
-                      echo "<a href=".base_url()."primary/wxc_search/search_by_area/".$note['data_area_id_major']." >".$note['data_area_name_major']."</a>";
+                      // echo "<a href=".base_url()."primary/wxc_search/search_by_area/".$note['data_area_id_major']." >".$note['data_area_name_major']."</a>";
+                                  echo "<a href=".base_url()."primary/wxc_search/search_by_area/".$note['data_area_id_school']." >".$note['data_area_name_major']."</a>";
                       echo "</div>";
                       echo "<div class='card_normal '>";
                       echo "<div class='_card_page'>";

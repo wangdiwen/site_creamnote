@@ -1295,6 +1295,7 @@ ul.nav li a:hover {
 	border: solid 1px #a3a3a3;
 }
 .category_base li p{
+	white-space: nowrap;
 	padding: 0 5px;
 	height: 24px;
 	line-height: 24px;

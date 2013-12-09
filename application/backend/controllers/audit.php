@@ -114,6 +114,48 @@ class Audit extends CI_Controller
         }
     }
 /*****************************************************************************/
+    public function auto_audit_note() {
+        // echo '========== 自动审核笔记（ 批次处理 10 份）==========<br />';
+        // 自动审核通过要求：1，页数 >= 5；2，笔记免费；3，笔记所有者分享笔记 >= 5；
+        // 批处理 10 份，与 CMS 分页数量保持一致；第（3）点暂时不加；
+
+        // get 10 notes for handle
+        $note_page = $this->wxm_data->get_note_page(10, 0);
+        if ($note_page) {
+            foreach ($note_page as $key => $value) {
+                $data_id = $value['data_id'];
+                $data_page_count = $value['data_pagecount'];
+                $data_price = $value['data_price'];
+                $user_id = $value['user_id'];  // 3 point, not support
+
+                // filter conditions
+                if ($data_page_count >= 5 && $data_price == 0.00) {
+                    // 将资料状态打为开放搜索
+                    $ret = $this->wxm_data->pass_audit($data_id);
+                    // 审核通过的资料，将审核得分置为50点
+                    $ret_exam = $this->wxm_data_activity->update_examine_point($data_id, 50);
+                    // if ($ret && $ret_exam) {
+                    //     echo '========== 序号：'.$key.' ==> Data ID : '.$data_id.' 审核【 通过 】<br />';
+                    // }
+                    // else {
+                    //     echo '========== 序号：'.$key.' ==> Data ID : '.$data_id.' 审核【 失败 】<br />';
+                    // }
+                }
+                else {
+                    // echo '========== 序号：'.$key.' ==> Data ID : '.$data_id.' 审核【 不满足条件 】<br />';
+                }
+            }
+        }
+        else {
+            // echo '========== 没有笔记需要审核 。。。<br />';
+            echo 'failed';  // no note to handle
+            return false;
+        }
+
+        echo 'success';  // audit ok
+        return true;
+    }
+/*****************************************************************************/
     public function mark_goog_note() {
         $data_id = $this->input->post('data_id');
 

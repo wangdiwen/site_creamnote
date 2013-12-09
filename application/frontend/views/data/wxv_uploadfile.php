@@ -195,7 +195,10 @@ $(function() {
         if ($("#wx_category_nature").attr("value")!="4"||$("#wx_category_nature").attr("value")!="10") {
             $("#wx_category_area_school").attr("value","");
             $("#wx_category_area_major").attr("value","");
-        };
+        }
+        if(wx_nature=="4"||wx_nature=="11"){
+            $("#cate_three p").removeClass("selected");
+        }
     });
     //点击三级分类
     $("#cate_three p").live('click',function(){
@@ -209,13 +212,45 @@ $(function() {
             step_two();
         }
         var cate = $("#category_collect_value").text().split(">")
-        if(cate.length==2){
+        if($(this).text() != "其他学校.."){
+            if(cate.length==2){
             $("#category_collect_value").append(">"+$(this).text());
-        }else{
-            $("#category_collect_value").html(cate[0]+">"+cate[1]+">"+$(this).text());
+            }else{
+                $("#category_collect_value").html(cate[0]+">"+cate[1]+">"+$(this).text());
+            }
+            $("#cate_three p").removeClass("selected");
+            $(this).addClass("selected");
         }
-        $("#cate_three p").removeClass("selected");
-        $(this).addClass("selected");
+
+        if (($("#wx_category_nature").attr("value")=="4"||$("#wx_category_nature").attr("value")=="10")&&$(this).text() != "其他学校.."){
+            $("#cate_four").removeClass("display_none");
+            $("#cate_four").addClass("display_block");
+            $("#cate_four p").removeClass("selected");
+            $("#wx_category_area_major").attr("value","");
+        }
+
+        var url ="<?php echo site_url('data/wxc_data/get_depart_by_school'); ?>";
+            $.ajax({
+                type:"post",
+                data:({'wx_school': "<?php echo $base_user_info['user_school'];?>"}),
+                url:url,
+                dataType:"json",
+                success: function(result)
+                    {
+                        var str="";
+                        var i ;
+                        for(i in result){
+                            str +="<p data-id="+result[i]['carea_id']+">"+result[i]['carea_name']+"</p>"    ;
+                            };
+                        $("#cate_four").html(str);
+                    },
+                     error: function(XMLHttpRequest, textStatus, errorThrown) {
+                                // alert(XMLHttpRequest.status);
+                                // alert(XMLHttpRequest.readyState);
+                                // alert(textStatus);
+                            }
+                });
+
 
     });
     //点击四级分类（院系）
@@ -228,7 +263,7 @@ $(function() {
         if(cate.length==3){
             $("#category_collect_value").append(">"+$(this).text());
         }else{
-            $("#category_collect_value").html(cate[0]+">"+cate[1]+">"+cate[1]+">"+$(this).text());
+            $("#category_collect_value").html(cate[0]+">"+cate[1]+">"+cate[2]+">"+$(this).text());
         }
         $(".category_base").css("display","none");
         step_two();
@@ -277,8 +312,8 @@ function cate_two(wx_nature){
                 $("#cate_three").addClass("display_block");
                 $("#cate_three p").remove("p[filter!=c_school]");
 
-                $("#cate_four").removeClass("display_none");
-                $("#cate_four").addClass("display_block");
+                // $("#cate_four").removeClass("display_none");
+                // $("#cate_four").addClass("display_block");
             }else if(wx_nature==21){
                 $("#cate_three").append("");
                 $("#cate_three").removeClass("display_block");
@@ -410,7 +445,11 @@ function hide()
 {
 	$('#choose-box-wrapper').css("display","none");
 }
-
+//隐藏窗口(未选)
+function hide_b()
+{
+    $('#choose-box-wrapper').css("display","none");
+}
 function initProvince()
 {
 	//原先的省份列表清空
@@ -470,6 +509,11 @@ function initSchool(provinceID)
 		            		str +="<p data-id="+result[i]['carea_id']+">"+result[i]['carea_name']+"</p>"	;
 			            	};
 			            $("#cate_four").html(str);
+
+                        $("#cate_four").removeClass("display_none");
+                        $("#cate_four").addClass("display_block");
+                        $("#cate_four p").removeClass("selected");
+                        $("#wx_category_area_major").attr("value","");
 		            },
 		             error: function(XMLHttpRequest, textStatus, errorThrown) {
 		                        // alert(XMLHttpRequest.status);
@@ -597,7 +641,7 @@ function makeCenter()
                 		<div id="choose-a-school">
                 		</div>
                 		<div id="choose-box-bottom">
-                			<input type="button" onclick="hide()" value="关闭" />
+                			<input type="button" onclick="hide_b()" value="关闭" />
                 		</div>
                 	  </div>
                 	</div>
