@@ -151,6 +151,9 @@ class General extends CI_Controller {
     public function send_welcome_email() {
         $email_content = $this->input->post('email_content');
 
+        // 设置PHP脚本超时，不限时
+        ini_set('max_execution_time', 0);
+
         $email_content = preg_replace(array('<html>','</html>'), array('',''), $email_content);
 
         $last_week_today = wx_get_any_before_today('7');
@@ -167,6 +170,9 @@ class General extends CI_Controller {
                 $greet = "<html><head></head>你好 <b>".$user_name."</b>：<p></p>";
                 $content = $greet.$email_content.'</html>';
                 $send_ret = $this->_send_system_email_to_user($user_email, $content);
+
+                // set delay, 2 seconds
+                sleep(2);
             }
             echo 'success';
             return true;
@@ -377,6 +383,7 @@ class General extends CI_Controller {
                 $email_content .= '<tr><td colspan="2" align="left" bgcolor="#f3f2ce" style="color: #3399FF;font-size: 14px;"><a href="http://www.creamnote.com/data/wxc_data/data_view/'.$data_id.'" style="text-decoration: none;color:#3399FF" target="_blank">'.$data_name.'</a></td></tr><tr><td colspan="2" valign="top" bgcolor="#f3f2ce" style="font-size: 12px;"><div style="margin-top:-10px;margin-left:10px;">类型:'.$data_type.'&nbsp;&nbsp;&nbsp;&nbsp;页数:'.$data_pagecount.'&nbsp;&nbsp;&nbsp;&nbsp;价格￥:'.$data_price.'&nbsp;&nbsp;&nbsp;&nbsp;关键词:'.$data_keyword.'</div></td></tr>';
             }
             $content = $email_header.$email_content.$email_footer;
+            // wx_loginfo('content ==> '.$content);
 
             // init system email settings
             $config['protocol'] = 'smtp';
@@ -524,10 +531,15 @@ class General extends CI_Controller {
                             $ret = $this->wx_email->send_email();
                             // break;  // test ...
                             if (! $ret) {  // 如果发现发送失败，则中断发送
+                                $debug = $this->wx_email->debugger();
 								wx_loginfo('send offical email exception, user email: '.$user_email);
+                                wx_loginfo(trim($debug));
                                 // return false;
                             }
                         }
+
+                        // add send email delay, 2 seconds
+                        sleep(2);
                     }
                 }
                 $group_offset = $group_offset + $group_user_count;
