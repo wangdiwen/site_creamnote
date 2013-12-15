@@ -58,9 +58,8 @@ class WXM_Data extends CI_Model
                 'user_id' => $user_id,
                 'data_status' => '3'
                 );
-            $this->db->select('data_id, data_name, data_objectname, data_type, data_pagecount, data_price,
-                               data_point, data_status, user_id, data_uploadtime, data_osspath, data_vpspath, data_preview, data_keyword')
-                     ->from('wx_data')->where($where);
+            $this->db->select('data_id, data_name, data_type, data_pagecount, user_id, data_uploadtime')
+                     ->from('wx_data')->where($where)->order_by('data_uploadtime', 'desc');
             $query = $this->db->get();
             return $query->result();  // Object array
         }

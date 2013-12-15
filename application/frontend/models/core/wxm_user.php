@@ -9,6 +9,48 @@ class WXM_User extends CI_Model
         $this->load->database();
     }
 /*****************************************************************************/
+    public function reject_week_digest_by_email($user_email = '') {
+        if ($user_email) {
+            $has_user = $this->has_such_user($user_email);
+            if ($has_user) {
+                $table = $this->wx_table;
+                $data = array(
+                    'user_is_digest' => '0',
+                    );
+                $this->db->where('user_email', $user_email);
+                $this->db->update($table, $data);
+                return true;
+            }
+        }
+        return false;
+    }
+/*****************************************************************************/
+    public function accept_week_digest_by_email($user_email = '') {
+        if ($user_email) {
+            $has_user = $this->has_such_user($user_email);
+            if ($has_user) {
+                $table = $this->wx_table;
+                $data = array(
+                    'user_is_digest' => '1',
+                    );
+                $this->db->where('user_email', $user_email);
+                $this->db->update($table, $data);
+                return true;
+            }
+        }
+        return false;
+    }
+/*****************************************************************************/
+    public function get_user_digest_info($user_id = 0) {
+        if ($user_id > 0) {
+            $table = $this->wx_table;
+            $this->db->select('user_is_digest')->from($table)->where('user_id', $user_id)->limit(1);
+            $query = $this->db->get();
+            return $query->row_array();
+        }
+        return false;
+    }
+/*****************************************************************************/
     public function update_account_balance($info = array()) {
         if ($info) {
             $user_id = $info['user_id'];

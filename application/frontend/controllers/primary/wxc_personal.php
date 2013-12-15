@@ -26,6 +26,41 @@ class WXC_personal extends CI_Controller
         $this->load->library('wx_data');
     }
 /*****************************************************************************/
+/*****************************************************************************/
+    public function user_digest_info() {
+        if (isset($_SESSION['wx_user_id']) && $_SESSION['wx_user_id']) {
+            $info = '';
+            $user_id = $_SESSION['wx_user_id'];
+            $digest_info = $this->wxm_user->get_user_digest_info($user_id);
+            if ($digest_info) {
+                $info = $digest_info['user_is_digest'];     // '0' or '1';
+            }
+            echo json_encode($info);
+        }
+    }
+/*****************************************************************************/
+    public function update_user_digest() {
+        $digest_val = $this->input->post('is_digest');  // '0' or '1'
+
+        $digest_val = trim($digest_val);    // filter str val
+        $user_email = isset($_SESSION['wx_user_email']) ? $_SESSION['wx_user_email'] : '';
+        if (in_array($digest_val, array('1', '0'))
+            && $user_email) {
+            if ($digest_val == '1') {       // accept week digest
+                $ret = $this->wxm_user->accept_week_digest_by_email($user_email);
+            }
+            else {                          // reject week digest
+                $ret = $this->wxm_user->reject_week_digest_by_email($user_email);
+            }
+
+            echo 'success';
+            return true;
+        }
+        echo 'failed';
+        return false;
+    }
+/*****************************************************************************/
+/*****************************************************************************/
     public function personal_base_tips()
     {
         $user_id = $this->input->post('user_id');  // ajax post require

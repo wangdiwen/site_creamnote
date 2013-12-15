@@ -10,6 +10,38 @@ class WXM_User extends CI_Model
         $this->load->database();
     }
 /*****************************************************************************/
+    public function reject_week_digest_by_email($user_email = '') {
+        if ($user_email) {
+            $has_user = $this->has_such_user($user_email);
+            if ($has_user) {
+                $table = $this->wx_table;
+                $data = array(
+                    'user_is_digest' => '0',
+                    );
+                $this->db->where('user_email', $user_email);
+                $this->db->update($table, $data);
+                return true;
+            }
+        }
+        return false;
+    }
+/*****************************************************************************/
+    public function accept_week_digest_by_email($user_email = '') {
+        if ($user_email) {
+            $has_user = $this->has_such_user($user_email);
+            if ($has_user) {
+                $table = $this->wx_table;
+                $data = array(
+                    'user_is_digest' => '1',
+                    );
+                $this->db->where('user_email', $user_email);
+                $this->db->update($table, $data);
+                return true;
+            }
+        }
+        return false;
+    }
+/*****************************************************************************/
     public function get_all_user_count() {
         $table = $this->wx_table;
         return $this->db->count_all($table);
@@ -18,7 +50,7 @@ class WXM_User extends CI_Model
     public function get_user_name_email_by_group($per_page_limit = 10, $offset = 0) {
         if ($per_page_limit > 0) {
             $table = $this->wx_table;
-            $this->db->select('user_id, user_name, user_email');
+            $this->db->select('user_id, user_name, user_email, user_is_digest');
             $query = $this->db->get($table, $per_page_limit, $offset);
             return $query->result_array();
         }

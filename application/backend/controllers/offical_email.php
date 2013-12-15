@@ -240,6 +240,7 @@ class Offical_Email extends CI_Controller {
                         // $user_id = $value['user_id'];
                         $user_name = $value['user_name'];
                         $user_email = $value['user_email'];
+                        $user_is_digest = $value['user_is_digest'];     // '0'-> 退订，'1'-> 接受订阅；
                         // echo 'user id    = '.$user_id.'<br />';
                         // echo 'user name  = '.$user_name.'<br />';
                         // echo 'user email = '.$user_email.'<br />';
@@ -248,7 +249,7 @@ class Offical_Email extends CI_Controller {
                         $user_name = 'Steven';
                         $user_email = 'dw_wang126@126.com';
 
-                        if ($user_name && $user_email && $email_content) {
+                        if ($user_name && $user_email && $email_content && $user_is_digest) {
                             $content = '';
                             if ($has_greet) {
                                 $content = "<html><head></head>你好 <b>".$user_name."</b>：<p></p>".$email_content.'</html>';
