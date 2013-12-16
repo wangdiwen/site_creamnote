@@ -51,6 +51,19 @@ class WXM_User extends CI_Model
         return false;
     }
 /*****************************************************************************/
+    public function has_such_user($user_email = '')
+    {
+        if ($user_email) {
+            $table = $this->wx_table;
+            $this->db->select('user_id')->from($table)->where('user_email', $user_email)->limit(1);
+            $query = $this->db->get();
+            $count = $query->num_rows();
+            if ($count)
+                return true;
+        }
+        return false;
+    }
+/*****************************************************************************/
     public function update_account_balance($info = array()) {
         if ($info) {
             $user_id = $info['user_id'];

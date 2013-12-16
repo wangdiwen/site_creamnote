@@ -637,7 +637,8 @@ function send_welcome_email_ed(){
 
 function send_welcome_email_ed_test(){
     $("#eamil_send").css("display","block");
-    var url = $("#baseUrl").val()+"cnadmin/general/test_send_welcome_email";
+    // var url = $("#baseUrl").val()+"cnadmin/general/test_send_welcome_email";
+    var url = $("#baseUrl").val()+"cnadmin/offical/test_send_welcome_email";
     var params = ({'email_content':editor.html()});
     var retData = ajax_common(url,params);
     if(retData == "success"){
@@ -658,7 +659,8 @@ function save_welcome_email(){
     }
 }
 function send_welcome_email(){
-    var url = $("#baseUrl").val()+"cnadmin/general/send_welcome_email";
+    // var url = $("#baseUrl").val()+"cnadmin/general/send_welcome_email";
+    var url = $("#baseUrl").val()+"cnadmin/offical/send_welcome_email";
     var params = ({'email_content':editor.html()});
     var retData = ajax_common(url,params);
     if(retData == "success"){
@@ -704,7 +706,8 @@ function add_to_week(the,data_id){
 }
 
 function send_week_eamil(){
-    var url = $("#baseUrl").val()+"cnadmin/general/send_week_recommend";
+    // var url = $("#baseUrl").val()+"cnadmin/general/send_week_recommend";
+    var url = $("#baseUrl").val()+"cnadmin/offical/send_week_recommend";
     var params = ({'data_id_list':week_list});
     var retData = ajax_common(url,params);
     if(retData == "success"){
@@ -715,7 +718,8 @@ function send_week_eamil(){
 }
 
 function send_week_eamil_test(){
-    var url = $("#baseUrl").val()+"cnadmin/general/test_send_week_recommend";
+    // var url = $("#baseUrl").val()+"cnadmin/general/test_send_week_recommend";
+    var url = $("#baseUrl").val()+"cnadmin/offical/test_send_week_recommend";
     var params = ({'data_id_list':week_list});
     var retData = ajax_common(url,params);
     if(retData == "success"){
@@ -759,7 +763,8 @@ function add_to_month(the,data_id){
 }
 
 function send_month_eamil(){
-    var url = $("#baseUrl").val()+"cnadmin/general/send_month_recommend";
+    // var url = $("#baseUrl").val()+"cnadmin/general/send_month_recommend";
+    var url = $("#baseUrl").val()+"cnadmin/offical/send_month_recommend";
     var params = ({'data_id_list':month_list});
     var retData = ajax_common(url,params);
     if(retData == "success"){
@@ -770,7 +775,8 @@ function send_month_eamil(){
 }
 
 function send_month_eamil_test(){
-    var url = $("#baseUrl").val()+"cnadmin/general/test_send_month_recommend";
+    // var url = $("#baseUrl").val()+"cnadmin/general/test_send_month_recommend";
+    var url = $("#baseUrl").val()+"cnadmin/offical/test_send_month_recommend";
     var params = ({'data_id_list':month_list});
     var retData = ajax_common(url,params);
     if(retData == "success"){

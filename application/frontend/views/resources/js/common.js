@@ -1330,3 +1330,42 @@ var com_check_eamil = function(strEmail){
     return false;
   }
 }
+
+//=========================================================订阅邮件=========================================//
+var update_email_page = function(){
+    var url = $("#baseUrl").val()+"primary/wxc_personal/user_digest_info";
+    var params =({});
+    var retData = ajax_common_json(url,params);
+    var str="";
+    str+="<div  id='thisform' ><fieldset><le id='le_title' style='margin-top: -52px;'>账户设置</le><p style='font-size:15px;color: rgb(76, 118, 172);'>我们会定期将订阅邮件发送到您的注册邮箱中</p>";
+    if(retData == "1"){
+        str+="<p style='padding-top: 15px;font-size: 15px;'><input id='is_digest' type='checkbox' checked />";
+    }else if(retData == "0"){
+        str+="<p style='padding-top: 15px;font-size: 15px;'><input id='is_digest' type='checkbox'>";
+    }
+
+    str+="<span style='padding-left:5px;'>订阅醍醐精品笔记推荐</span></p>";
+    str+="<p style='margin-top: 15px;'><input type='button' class='button_c' id='update_subscription_email' name='update_password' value='保存' onclick='update_subscription_email()'></p></fieldset></div>";
+
+    $("#change_form").html(str);
+    $("a").removeClass("navhover");
+    $("#nav_email").addClass("navhover");
+}
+
+var update_subscription_email = function(){
+    var url = $("#baseUrl").val()+"primary/wxc_personal/update_user_digest";
+    var is_digest = "1";
+    if($("#is_digest").attr("checked")){
+        is_digest = "1"
+    }else{
+        is_digest = "0";
+    }
+    var params =({'is_digest':is_digest});
+    var retData = ajax_common(url,params);
+    // alert(retData)
+    if(retData ==  "success"){
+        successMes("保存成功！");
+    }else{
+        errorMes("保存失败!");
+    }
+}

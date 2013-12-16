@@ -13,9 +13,9 @@ class Offical_Email extends CI_Controller {
     }
 /*****************************************************************************/
 /*****************************************************************************/
-    public function send_week_recommend() {     // testing
+    public function send_week_recommend() {
         $data_id_list = $this->input->post('data_id_list');
-        $data_id_list = '41,42,43,47';                   // testing
+        // $data_id_list = '41,42,43,47';                   // testing
 
         // 设置PHP脚本超时，不限时
         ini_set('max_execution_time', 0);
@@ -35,7 +35,7 @@ class Offical_Email extends CI_Controller {
                 $data_uploadtime = $data['data_uploadtime'];
                 $data_keyword = $data['data_keyword'];
 
-                $email_content .= '<tr><td colspan="2" align="left" bgcolor="#f3f2ce" style="color: #3399FF;font-size: 14px;"><a href="http://www.creamnote.com/data/wxc_data/data_view/'.$data_id.'" style="text-decoration: none;color:#3399FF" target="_blank">'.$data_name.'</a></td></tr><tr><td colspan="2" valign="top" bgcolor="#f3f2ce" style="font-size: 12px;"><div style="margin-top:-10px;margin-left:10px;">类型： '.$data_type.'&nbsp;&nbsp;&nbsp;&nbsp;页数：'.$data_pagecount.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;￥ '.$data_price.'&nbsp;&nbsp;&nbsp;&nbsp;关键词：'.$data_keyword.'</div></td></tr>';
+                $email_content .= '<tr><td colspan="2" align="left" bgcolor="#f3f2ce" style="color: #3399FF;font-size: 14px;"><a href="http://www.creamnote.com/data/wxc_data/data_view/'.$data_id.'" style="text-decoration: none;color:#3399FF" target="_blank">'.$data_name.'</a></td></tr><tr><td colspan="2" valign="top" bgcolor="#f3f2ce" style="font-size: 12px;"><div style="margin-top:-10px;margin-left:10px;">类型：'.$data_type.'&nbsp;&nbsp;&nbsp;&nbsp;页数：'.$data_pagecount.'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;￥'.$data_price.'&nbsp;&nbsp;&nbsp;&nbsp;关键词：'.$data_keyword.'</div></td></tr>';
             }
             $content = $email_header.$email_content.$email_footer;
 
@@ -50,9 +50,9 @@ class Offical_Email extends CI_Controller {
         return false;
     }
 /*****************************************************************************/
-    public function send_month_recommend() {        // testing
+    public function send_month_recommend() {
         $data_id_list = $this->input->post('data_id_list');
-        $data_id_list = '41,42,43,47';       // testing
+        // $data_id_list = '41,42,43,47';       // testing
 
         // 设置PHP脚本超时，不限时
         ini_set('max_execution_time', 0);
@@ -73,7 +73,7 @@ class Offical_Email extends CI_Controller {
                 $data_keyword = $data['data_keyword'];
 
                 $email_content .= '<tr><td colspan="2" align="left" bgcolor="#f3f2ce" style="color: #3399FF;font-size: 14px;"><a href="http://www.creamnote.com/data/wxc_data/data_view/'.$data_id;
-                $email_content .= '" style="text-decoration: none;color:#3399FF" target="_blank">'.$data_name.'</a></td></tr><tr><td colspan="2" valign="top" bgcolor="#f3f2ce" style="font-size: 12px;"><div style="margin-top:-10px;margin-left:10px;">类型： '.$data_type.'&nbsp;&nbsp;&nbsp;&nbsp;页数： '.$data_pagecount.'&nbsp;&nbsp;&nbsp;&nbsp;￥ '.$data_price.'&nbsp;&nbsp;&nbsp;&nbsp;关键词： '.$data_keyword.'</div></td></tr>';
+                $email_content .= '" style="text-decoration: none;color:#3399FF" target="_blank">'.$data_name.'</a></td></tr><tr><td colspan="2" valign="top" bgcolor="#f3f2ce" style="font-size: 12px;"><div style="margin-top:-10px;margin-left:10px;">类型：'.$data_type.'&nbsp;&nbsp;&nbsp;&nbsp;页数：'.$data_pagecount.'&nbsp;&nbsp;&nbsp;&nbsp;￥'.$data_price.'&nbsp;&nbsp;&nbsp;&nbsp;关键词：'.$data_keyword.'</div></td></tr>';
             }
             $content = $email_header.$email_content.$email_footer;
 
@@ -88,9 +88,9 @@ class Offical_Email extends CI_Controller {
         return false;
     }
 /*****************************************************************************/
-    public function send_welcome_email() {      // testing
+    public function send_welcome_email() {
         $email_content = $this->input->post('email_content');
-        $email_content = '欢迎加入 Creamnote-醍醐笔记网！';  // testing
+        // $email_content = '欢迎加入 Creamnote-醍醐笔记网！';  // testing
 
         // 设置PHP脚本超时，不限时
         ini_set('max_execution_time', 0);
@@ -109,14 +109,14 @@ class Offical_Email extends CI_Controller {
                 // $user_register_time = $new_user['user_register_time'];
 
                 // testing
-                $user_name = 'Steven';
-                $user_email = 'dw_wang126@126.com';
+                // $user_name = 'Steven';
+                // $user_email = 'dw_wang126@126.com';
 
                 $greet = "<html><head></head>你好 <b>".$user_name."</b>：<p></p>";
                 $content = $greet.$email_content.'</html>';
                 $send_ret = $this->_send_ceo_email($user_email, '欢迎加入 Creamnote-醍醐笔记网', $content);
 
-                break;          // testing
+                // break;          // testing
             }
             echo 'success';
             return true;
@@ -130,8 +130,8 @@ class Offical_Email extends CI_Controller {
         $email_content = $this->input->post('email_content');
 
         $test_email = 'dw_wang126@126.com';  // my 126 email for testing
-
         $user_name = 'Steven Wang';
+
         $greet = "<html><head></head>你好 <b>".$user_name."</b>：<p></p>";
         $content = $greet.$email_content.'</html>';
 
@@ -163,7 +163,7 @@ class Offical_Email extends CI_Controller {
                 $data_uploadtime = $data['data_uploadtime'];
                 $data_keyword = $data['data_keyword'];
 
-                $email_content .= '<tr><td colspan="2" align="left" bgcolor="#f3f2ce" style="color: #3399FF;font-size: 14px;"><a href="http://www.creamnote.com/data/wxc_data/data_view/'.$data_id.'" style="text-decoration: none;color:#3399FF" target="_blank">'.$data_name.'</a></td></tr><tr><td colspan="2" valign="top" bgcolor="#f3f2ce" style="font-size: 12px;"><div style="margin-top:-10px;margin-left:10px;">类型:'.$data_type.'&nbsp;&nbsp;&nbsp;&nbsp;页数:'.$data_pagecount.'&nbsp;&nbsp;&nbsp;&nbsp;价格￥:'.$data_price.'&nbsp;&nbsp;&nbsp;&nbsp;关键词:'.$data_keyword.'</div></td></tr>';
+                $email_content .= '<tr><td colspan="2" align="left" bgcolor="#f3f2ce" style="color: #3399FF;font-size: 14px;"><a href="http://www.creamnote.com/data/wxc_data/data_view/'.$data_id.'" style="text-decoration: none;color:#3399FF" target="_blank">'.$data_name.'</a></td></tr><tr><td colspan="2" valign="top" bgcolor="#f3f2ce" style="font-size: 12px;"><div style="margin-top:-10px;margin-left:10px;">类型：'.$data_type.'&nbsp;&nbsp;&nbsp;&nbsp;页数：'.$data_pagecount.'&nbsp;&nbsp;&nbsp;&nbsp;￥'.$data_price.'&nbsp;&nbsp;&nbsp;&nbsp;关键词：'.$data_keyword.'</div></td></tr>';
             }
             $content = $email_header.$email_content.$email_footer;
             // wx_loginfo('content ==> '.$content);
@@ -199,7 +199,7 @@ class Offical_Email extends CI_Controller {
                 $data_uploadtime = $data['data_uploadtime'];
                 $data_keyword = $data['data_keyword'];
 
-                $email_content .= '<tr><td colspan="2" align="left" bgcolor="#f3f2ce" style="color: #3399FF;font-size: 14px;"><a href="http://www.creamnote.com/data/wxc_data/data_view/'.$data_id.'" style="text-decoration: none;color:#3399FF" target="_blank">'.$data_name.'</a></td></tr><tr><td colspan="2" valign="top" bgcolor="#f3f2ce" style="font-size: 12px;"><div style="margin-top:-10px;margin-left:10px;">类型:'.$data_type.'&nbsp;&nbsp;&nbsp;&nbsp;页数:'.$data_pagecount.'&nbsp;&nbsp;&nbsp;&nbsp;价格:￥'.$data_price.'&nbsp;&nbsp;&nbsp;&nbsp;关键词:'.$data_keyword.'</div></td></tr>';
+                $email_content .= '<tr><td colspan="2" align="left" bgcolor="#f3f2ce" style="color: #3399FF;font-size: 14px;"><a href="http://www.creamnote.com/data/wxc_data/data_view/'.$data_id.'" style="text-decoration: none;color:#3399FF" target="_blank">'.$data_name.'</a></td></tr><tr><td colspan="2" valign="top" bgcolor="#f3f2ce" style="font-size: 12px;"><div style="margin-top:-10px;margin-left:10px;">类型：'.$data_type.'&nbsp;&nbsp;&nbsp;&nbsp;页数：'.$data_pagecount.'&nbsp;&nbsp;&nbsp;&nbsp;￥'.$data_price.'&nbsp;&nbsp;&nbsp;&nbsp;关键词：'.$data_keyword.'</div></td></tr>';
             }
             $content = $email_header.$email_content.$email_footer;
 
@@ -246,8 +246,8 @@ class Offical_Email extends CI_Controller {
                         // echo 'user email = '.$user_email.'<br />';
 
                         // testing ...
-                        $user_name = 'Steven';
-                        $user_email = 'dw_wang126@126.com';
+                        // $user_name = 'Steven';
+                        // $user_email = 'dw_wang126@126.com';
 
                         if ($user_name && $user_email && $email_content && $user_is_digest) {
                             $content = '';
@@ -267,10 +267,11 @@ class Offical_Email extends CI_Controller {
                                 $success_send_count++;
                             }
                         }
-                        break;  // testing
+                        // break;  // testing
                     }
                 }
                 $group_offset = $group_offset + $group_user_count;
+                // break;  // testing
             }
 
             // record offical email send statistic
@@ -329,7 +330,7 @@ class Offical_Email extends CI_Controller {
 /*****************************************************************************/
     public function testing() {
 
-        echo 'testing offical email new iface ...';
+        // echo 'testing offical email new iface ...';
 
         // test send send_welcome_email
         // $ret_wel = $this->send_welcome_email();

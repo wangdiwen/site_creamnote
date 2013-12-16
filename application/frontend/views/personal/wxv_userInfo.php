@@ -48,7 +48,10 @@ $(function(){
             // errorMes("");
          // }
      }
-
+     var is_digest_roll_back = '<?php if (isset($is_digest_roll_back) && $is_digest_roll_back != "") echo $is_digest_roll_back; else echo ""; ?>';
+     if(is_digest_roll_back != ""){
+        update_email_page();
+     }
 
     $("#update_user").click(function(){
         var booleans = check_name($("#user_name").val());
@@ -90,7 +93,10 @@ $(function(){
 
     });
 
-    $("#nav_baseinfo").addClass("navhover");
+    if(is_digest_roll_back == ""){
+        $("#nav_baseinfo").addClass("navhover");
+    }
+
 
 });
 
@@ -646,6 +652,7 @@ function del_count(count_type){
                         <li><a id="nav_pwd" href="javascript:void(0)" onclick="update_password_page()">密码修改</a></li>
                         <li><a id="nav_bind" href="javascript:void(0)" onclick="social_count_bind()">绑定账号</a></li>
                         <li><a id="nav_account" href="javascript:void(0)" onclick="update_account_page()">收益账户</a></li>
+                        <li><a id="nav_email" href="javascript:void(0)" onclick="update_email_page()">邮件订阅</a></li>
                     </ul>
                 </div>
             </div>
