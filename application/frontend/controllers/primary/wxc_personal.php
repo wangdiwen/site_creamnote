@@ -27,17 +27,30 @@ class WXC_personal extends CI_Controller
     }
 /*****************************************************************************/
 /*****************************************************************************/
-
+    // 由邮件退订接口，实现自动登录后，使用此接口进入 "订阅子页面"
     public function digest_email_reject() {
-        // 判断用户是否已登录网站？如果登录，则跳转到 个人账户》邮件订阅 子菜单页面，
-        // 没有登录，或者 email 地址错误，或者没有此 email 用户，则跳转到首页，打开登录框；
+        $open_email_digest = 'true';        // 跳转邮件子页面, 'true', 'false'
 
-        $redirect_url = 'home/index';
+        // checking login or not
+        $user_login_id = isset($_SESSION['wx_user_id']) ? $_SESSION['wx_user_id'] : 0;
+        $user_login_name = isset($_SESSION['wx_user_name']) ? $_SESSION['wx_user_name'] : '';
 
-        if ($user_email) {
-            $redirect_url = 'primary/wxc_personal/update_userinfo_page_digest';
+        if ($user_login_id > 0 && $user_login_name) {
+            $base_info = $this->get_base_info();
+            $data = array();
+            $data['base_info'] = $base_info;
+            if ($open_email_digest == 'true') {
+                $data['is_digest_roll_back'] = '1';
+            }
+            else {
+                $data['is_digest_roll_back'] = '';  // 前端只判断是否为空
+            }
+
+            $this->load->view('personal/wxv_userInfo', $data);
         }
-        redirect($redirect_url);
+        else {              // invalid user
+            redirect('home/index');
+        }
     }
 /*****************************************************************************/
 /*****************************************************************************/
@@ -45,6 +58,8 @@ class WXC_personal extends CI_Controller
     // 特殊的打开个人设置页面接口，只是为了跳转到 邮件订阅子页面
     public function update_userinfo_page_digest($user_email_url_encrypt = '')
     {
+        $auth_pass = false;
+
         if ($user_email_url_encrypt) {
             // decode the url encrypt
             $digest_user_email = urldecode($user_email_url_encrypt);
@@ -65,25 +80,23 @@ class WXC_personal extends CI_Controller
                         $_SESSION['wx_user_id'] = $user_id;
                         $_SESSION['wx_user_name'] = $user_name;
                         $_SESSION['wx_user_email'] = $digest_user_email;
+
+                        // auto login, auth ok
+                        $auth_pass = true;
                     }
                 }
             }
         }
 
-        // 'open_email_digest'-》跳转邮件子页面, 'true', 'false'
-        $open_email_digest = 'true';
+        // delay 2 seconds
+        sleep(2);
 
-        $base_info = $this->get_base_info();
-        $data = array();
-        $data['base_info'] = $base_info;
-        if ($open_email_digest == 'true') {
-            $data['is_digest_roll_back'] = '1';
+        if ($auth_pass) {
+            redirect('primary/wxc_personal/digest_email_reject');
         }
         else {
-            $data['is_digest_roll_back'] = '';  // 前端只判断是否为空
+            redirect('home/index');
         }
-
-        $this->load->view('personal/wxv_userInfo', $data);
     }
 /*****************************************************************************/
     public function user_digest_info() {
