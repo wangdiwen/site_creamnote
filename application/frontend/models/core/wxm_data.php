@@ -40,7 +40,7 @@ class WXM_Data extends CI_Model
         {
             $this->db->select('data_id, data_name, data_type, data_pagecount, data_summary, data_price,
                                 data_status, user_id, data_uploadtime, data_point, data_keyword')
-                     ->from('wx_data')->where('user_id', $user_id)->order_by('data_uploadtime', 'desc');
+                     ->from('wx_data')->where('user_id', $user_id)->order_by('data_uploadtime', 'desc')->limit(40);
             $query = $this->db->get();
             return $query->result_array();  // Object array
         }

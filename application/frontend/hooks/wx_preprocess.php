@@ -100,7 +100,7 @@ class WX_Preprocess {
         // 支付宝账户验证登录接口
         $zhifubao_login_url = $home_url.'core/wxc_zhifubao_login/(.*)';
         // 邮件订阅退订接口，开放
-        $reject_digest_email_url = $home_url.'primary/wxc_personal/digest_email_reject/(.*)';
+        $reject_digest_email_url = $home_url.'primary/wxc_personal/update_userinfo_page_digest/(.*)';
 
         // 此URL为测试接口，开发阶段验证一些东西，待到项目部署阶段删除
         $test_url = $home_url.'home/test';

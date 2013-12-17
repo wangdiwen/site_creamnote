@@ -16,6 +16,7 @@ class Offical_Email extends CI_Controller {
     public function send_week_recommend() {
         $data_id_list = $this->input->post('data_id_list');
         // $data_id_list = '41,42,43,47';                   // testing
+        // wx_loginfo('week data_id_list ==> ['.$data_id_list.']');
 
         // 设置PHP脚本超时，不限时
         ini_set('max_execution_time', 0);
@@ -25,7 +26,9 @@ class Offical_Email extends CI_Controller {
         if ($data_list_info) {
             $email_header = file_get_contents('application/backend/site_file/recommand_note_header.html');
             $email_content = '';
-            $email_footer = file_get_contents('application/backend/site_file/recommand_note_footer.html');
+            // $email_footer = file_get_contents('application/backend/site_file/recommand_note_footer.html');
+            $email_footer = '';  // new func, add digest user email reject iface
+
             foreach ($data_list_info as $data) {
                 $data_id = $data['data_id'];
                 $data_name = $data['data_name'];
@@ -53,6 +56,7 @@ class Offical_Email extends CI_Controller {
     public function send_month_recommend() {
         $data_id_list = $this->input->post('data_id_list');
         // $data_id_list = '41,42,43,47';       // testing
+        // wx_loginfo('month data_id_list ==> ['.$data_id_list.']');
 
         // 设置PHP脚本超时，不限时
         ini_set('max_execution_time', 0);
@@ -62,7 +66,9 @@ class Offical_Email extends CI_Controller {
         if ($data_list_info) {
             $email_header = file_get_contents('application/backend/site_file/recommand_note_month_header.html');
             $email_content = '';
-            $email_footer = file_get_contents('application/backend/site_file/recommand_note_footer.html');
+            // $email_footer = file_get_contents('application/backend/site_file/recommand_note_footer.html');
+            $email_footer = '';  // new func, add digest user email
+
             foreach ($data_list_info as $data) {
                 $data_id = $data['data_id'];
                 $data_name = $data['data_name'];
@@ -147,13 +153,16 @@ class Offical_Email extends CI_Controller {
     public function test_send_week_recommend() {
         $data_id_list = $this->input->post('data_id_list');
         // $data_id_list = '1,2,3';     // testing
+        // wx_loginfo('data_id_list = ['.$data_id_list.']');
 
         $data_list = explode(',', $data_id_list);
         $data_list_info = $this->wxm_data->filter_note_by_id_list($data_list);
         if ($data_list_info) {
             $email_header = file_get_contents('application/backend/site_file/recommand_note_header.html');
             $email_content = '';
-            $email_footer = file_get_contents('application/backend/site_file/recommand_note_footer.html');
+            // $email_footer = file_get_contents('application/backend/site_file/recommand_note_footer.html');
+            $email_footer = '';  // testing
+
             foreach ($data_list_info as $data) {
                 $data_id = $data['data_id'];
                 $data_name = $data['data_name'];
@@ -166,10 +175,17 @@ class Offical_Email extends CI_Controller {
                 $email_content .= '<tr><td colspan="2" align="left" bgcolor="#f3f2ce" style="color: #3399FF;font-size: 14px;"><a href="http://www.creamnote.com/data/wxc_data/data_view/'.$data_id.'" style="text-decoration: none;color:#3399FF" target="_blank">'.$data_name.'</a></td></tr><tr><td colspan="2" valign="top" bgcolor="#f3f2ce" style="font-size: 12px;"><div style="margin-top:-10px;margin-left:10px;">类型：'.$data_type.'&nbsp;&nbsp;&nbsp;&nbsp;页数：'.$data_pagecount.'&nbsp;&nbsp;&nbsp;&nbsp;￥'.$data_price.'&nbsp;&nbsp;&nbsp;&nbsp;关键词：'.$data_keyword.'</div></td></tr>';
             }
             $content = $email_header.$email_content.$email_footer;
-            // wx_loginfo('content ==> '.$content);
 
             // use my test email to send
             $test_email = 'dw_wang126@126.com';  // my test email
+
+            // 订阅邮件尾，退订接口 加入用户的 email，邮箱地址进行 url 加密
+            $email_url_encrypt = urlencode($test_email);
+            $email_footer_digest = '<tr><td height="30" colspan="2" align="center"  valign="middle" style="font-size:14px;" >如果您不想订阅醍醐精品推荐，点击这里<a href="http://www.creamnote.com/primary/wxc_personal/update_userinfo_page_digest/';
+            $email_footer_digest .= $email_url_encrypt.'" target="_blank">退订</a></td><tr></table></td></tr></table>';
+
+            $content = $content.$email_footer_digest;
+
             $send_ret = $this->_send_digest_email($test_email, '每周精品笔记推荐', $content);
             if ($send_ret) {
                 echo 'success';
@@ -189,7 +205,9 @@ class Offical_Email extends CI_Controller {
         if ($data_list_info) {
             $email_header = file_get_contents('application/backend/site_file/recommand_note_month_header.html');
             $email_content = '';
-            $email_footer = file_get_contents('application/backend/site_file/recommand_note_footer.html');
+            // $email_footer = file_get_contents('application/backend/site_file/recommand_note_footer.html');
+            $email_footer = '';
+
             foreach ($data_list_info as $data) {
                 $data_id = $data['data_id'];
                 $data_name = $data['data_name'];
@@ -205,6 +223,14 @@ class Offical_Email extends CI_Controller {
 
             // use my email to send
             $test_email = 'dw_wang126@126.com';  // test email
+
+            // 订阅邮件尾，退订接口 加入用户的 email，邮箱地址进行 url 加密
+            $email_url_encrypt = urlencode($test_email);
+            $email_footer_digest = '<tr><td height="30" colspan="2" align="center"  valign="middle" style="font-size:14px;" >如果您不想订阅醍醐精品推荐，点击这里<a href="http://www.creamnote.com/primary/wxc_personal/update_userinfo_page_digest/';
+            $email_footer_digest .= $email_url_encrypt.'" target="_blank">退订</a></td><tr></table></td></tr></table>';
+
+            $content = $content.$email_footer_digest;
+
             $send_ret = $this->_send_digest_email($test_email, '每月精品笔记推荐', $content);
             if ($send_ret) {
                 echo 'success';
@@ -251,11 +277,18 @@ class Offical_Email extends CI_Controller {
 
                         if ($user_name && $user_email && $email_content && $user_is_digest) {
                             $content = '';
-                            if ($has_greet) {
+                            if ($has_greet) {  // ceo email
                                 $content = "<html><head></head>你好 <b>".$user_name."</b>：<p></p>".$email_content.'</html>';
                             }
-                            else {
+                            else {              // digest email
                                 $content = $email_content;
+
+                                // 订阅邮件尾，退订接口 加入用户的 email，邮箱地址进行 url 加密
+                                $email_url_encrypt = urlencode($user_email);
+                                $email_footer_digest = '<tr><td height="30" colspan="2" align="center"  valign="middle" style="font-size:14px;" >如果您不想订阅醍醐精品推荐，点击这里<a href="http://www.creamnote.com/primary/wxc_personal/update_userinfo_page_digest/';
+                                $email_footer_digest .= $email_url_encrypt.'" target="_blank">退订</a></td><tr></table></td></tr></table>';
+
+                                $content = $content.$email_footer_digest;
                             }
 
                             // send offical email via sendcloud digest interface

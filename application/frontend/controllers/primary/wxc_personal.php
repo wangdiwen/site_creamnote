@@ -27,13 +27,13 @@ class WXC_personal extends CI_Controller
     }
 /*****************************************************************************/
 /*****************************************************************************/
-    // 醍醐订阅邮件尾部的“退订”接口
-    public function digest_email_reject($sign_name = '', $open_email_digest = 'false') {
+
+    public function digest_email_reject() {
         // 判断用户是否已登录网站？如果登录，则跳转到 个人账户》邮件订阅 子菜单页面，
         // 没有登录，或者 email 地址错误，或者没有此 email 用户，则跳转到首页，打开登录框；
 
         $redirect_url = 'home/index';
-        $user_email = isset($_SESSION['wx_user_email']) ? $_SESSION['wx_user_email'] : '';
+
         if ($user_email) {
             $redirect_url = 'primary/wxc_personal/update_userinfo_page_digest';
         }
@@ -41,9 +41,35 @@ class WXC_personal extends CI_Controller
     }
 /*****************************************************************************/
 /*****************************************************************************/
+    // 醍醐订阅邮件尾部的“退订”接口
     // 特殊的打开个人设置页面接口，只是为了跳转到 邮件订阅子页面
-    public function update_userinfo_page_digest()
+    public function update_userinfo_page_digest($user_email_url_encrypt = '')
     {
+        if ($user_email_url_encrypt) {
+            // decode the url encrypt
+            $digest_user_email = urldecode($user_email_url_encrypt);
+
+            // check has login or not ?
+            $user_login_email = isset($_SESSION['wx_user_email']) ? $_SESSION['wx_user_email'] : '';
+            if (! $user_login_email) {      // not login
+                // check has this user or not
+                $has_such_user = $this->wxm_user->has_such_user($digest_user_email);
+                if ($has_such_user) {
+                    // set auto login site, and get id, name, email info to session data
+                    $user_info = $this->wxm_user->get_id_name($digest_user_email);
+                    if ($user_info) {
+                        $user_id = $user_info->user_id;
+                        $user_name = $user_info->user_name;
+
+                        // record the login data to session
+                        $_SESSION['wx_user_id'] = $user_id;
+                        $_SESSION['wx_user_name'] = $user_name;
+                        $_SESSION['wx_user_email'] = $digest_user_email;
+                    }
+                }
+            }
+        }
+
         // 'open_email_digest'-》跳转邮件子页面, 'true', 'false'
         $open_email_digest = 'true';
 
