@@ -552,7 +552,7 @@ function makeCenter()
 
 		<div class="post" style="padding: 0 20px;width:781px;">
             <h2 class="_data_title _nomargin" id="info_title">
-                <div class="_grgh">分享你最得意的笔记笔记</div>
+                <div class="_grgh">分享你最得意的笔记</div>
             </h2>
 		<div class="entry">
 
