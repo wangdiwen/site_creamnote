@@ -1,0 +1,10 @@
+# ignore log path
+
+auto_manager/log
+application/frontend/logs
+application/backend/logs
+application/weixin/logs
+application/site_data
+phpmyadmin/
+tmp/
+upload/
