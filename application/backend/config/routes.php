@@ -58,7 +58,7 @@ $route['cnadmin/database/(:any)'] = 'database/$1';
 $route['cnadmin/alipay/(:any)'] = 'alipay/$1';
 $route['cnadmin/share/(:any)'] = 'share/$1';
 $route['cnadmin/offical/(:any)'] = 'offical_email/$1';
-$route['anadmin/(:any)'] = 'share/page_404';
+$route['cnadmin/(:any)'] = 'share/page_404';
 
 
 /* End of file routes.php */
