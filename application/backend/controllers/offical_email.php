@@ -10,6 +10,7 @@ class Offical_Email extends CI_Controller {
         $this->load->model('wxm_data_activity');
 
         $this->load->library('wx_sendcloud_email');
+        $this->load->library('wx_phpmailer_api');
     }
 /*****************************************************************************/
 /*****************************************************************************/
@@ -42,12 +43,16 @@ class Offical_Email extends CI_Controller {
             }
             $content = $email_header.$email_content.$email_footer;
 
+            echo 'success';
+            // 前端返回，后台进程会持续处理
+            fastcgi_finish_request();
+
             // use new send official email interface
             $ret_send = $this->_send_official_email('每周精品笔记推荐', $content, false);
-            if ($ret_send) {
-                echo 'success';
-                return true;
-            }
+            // if ($ret_send) {
+            //     echo 'success';
+            //     return true;
+            // }
         }
         echo 'failed';
         return false;
@@ -83,12 +88,16 @@ class Offical_Email extends CI_Controller {
             }
             $content = $email_header.$email_content.$email_footer;
 
+            echo 'success';
+            // 前端返回，后台进程会持续处理
+            fastcgi_finish_request();
+
             // use new send official email interface
             $ret_send = $this->_send_official_email('每月精品笔记推荐', $content, false);
-            if ($ret_send) {
-                echo 'success';
-                return true;
-            }
+            // if ($ret_send) {
+            //     echo 'success';
+            //     return true;
+            // }
         }
         echo 'failed';
         return false;
@@ -186,7 +195,8 @@ class Offical_Email extends CI_Controller {
 
             $content = $content.$email_footer_digest;
 
-            $send_ret = $this->_send_digest_email($test_email, '每周精品笔记推荐', $content);
+            // $send_ret = $this->_send_digest_email($test_email, '每周精品笔记推荐', $content);
+            $send_ret = $this->_send_phpmailer_email($test_email, '每周精品笔记推荐', $content);
             if ($send_ret) {
                 echo 'success';
                 return true;
@@ -231,7 +241,8 @@ class Offical_Email extends CI_Controller {
 
             $content = $content.$email_footer_digest;
 
-            $send_ret = $this->_send_digest_email($test_email, '每月精品笔记推荐', $content);
+            // $send_ret = $this->_send_digest_email($test_email, '每月精品笔记推荐', $content);
+            $send_ret = $this->_send_phpmailer_email($test_email, '每月精品笔记推荐', $content);
             if ($send_ret) {
                 echo 'success';
                 return true;
@@ -291,8 +302,10 @@ class Offical_Email extends CI_Controller {
                                 $content = $content.$email_footer_digest;
                             }
 
+                            // use PHPMailer to send email or use sendcloud iface
+                            $ret = $this->_send_phpmailer_email($user_email, $email_subject, $content);
                             // send offical email via sendcloud digest interface
-                            $ret = $this->_send_digest_email($user_email, $email_subject, $content);
+                            // $ret = $this->_send_digest_email($user_email, $email_subject, $content);
                             if (! $ret) {       // 如果发现发送失败，记录日志，继续发送
                                 wx_loginfo('send offical email exception, user email: '.$user_email);
                             }
@@ -301,6 +314,7 @@ class Offical_Email extends CI_Controller {
                             }
                         }
                         // break;  // testing
+                        sleep(2);  // cache time for our local email
                     }
                 }
                 $group_offset = $group_offset + $group_user_count;
@@ -360,8 +374,32 @@ class Offical_Email extends CI_Controller {
         return false;
     }
 /*****************************************************************************/
+    public function _send_phpmailer_email($user_email = '', $subject = '', $content = '') {
+        if ($user_email && $subject && $content) {
+            $this->wx_phpmailer_api->set_from_user('no-reply@creamnote.com', 'Creamnote.com-醍醐笔记网');
+            $result = $this->wx_phpmailer_api->send($user_email, $subject, $content);
+            if ($result) {
+                return true;
+            }
+        }
+        return false;
+    }
 /*****************************************************************************/
     public function testing() {
+
+        $user_email_list = array(
+            'dw_wang126@126.com',
+            'dw_wang126@163.com');
+        $subject = '测试每周推荐';
+        $content = '测试每周推荐。。。';
+        foreach ($user_email_list as $key => $user_email) {
+            $ret = $this->_send_phpmailer_email($user_email, $subject, $content);
+            if ($ret) {
+                echo $key.' 测试每周推荐。。。成功！';
+            }
+            sleep(2);
+        }
+
 
         // echo 'testing offical email new iface ...';
 
