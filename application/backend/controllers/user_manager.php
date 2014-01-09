@@ -273,12 +273,18 @@ class User_Manager extends CI_Controller
 /*****************************************************************************/
     public function get_user_simple()
     {
-        $user_email_or_name = $this->input->post('user_email_or_name');
+        $user_email_or_name = $this->input->post('user_email_or_name');  // new add, user_id
         // $user_email_or_name = 'dw_wang126@126.com';  // test
         $user_email_or_name = trim($user_email_or_name);
 
         if ($user_email_or_name) {
-            $base_info = $this->wxm_user->base_info($user_email_or_name);
+            $base_info = array();
+            if (is_numeric($user_email_or_name)) {
+                $base_info = $this->wxm_user->base_info_by_id($user_email_or_name);
+            }
+            else {
+                $base_info = $this->wxm_user->base_info($user_email_or_name);
+            }
             if ($base_info) {
                 // wx_echoxml($base_info);
                 echo json_encode($base_info);

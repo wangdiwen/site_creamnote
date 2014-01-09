@@ -141,7 +141,7 @@ class WXM_User extends CI_Model
         return $count;
     }
 /*****************************************************************************/
-    public function base_info($user_email_or_name = '')
+    public function base_info($user_email_or_name = '')  // new add, user_id
     {
         if ($user_email_or_name) {
             $table = $this->wx_table;
@@ -155,6 +155,22 @@ class WXM_User extends CI_Model
                 return $data;
             }
         }
+    }
+/*****************************************************************************/
+    public function base_info_by_id($user_id = 0)  // new add, user_id
+    {
+        if ($user_id > 0) {
+            $table = $this->wx_table;
+            $this->db->select('user_id, user_name, user_email, user_hobby, user_period, user_register_time,
+                                user_status')
+                        ->from($table)->where('user_id', $user_id)->limit(1);
+            $query = $this->db->get();
+            $data = $query->row_array();
+            if ($data) {
+                return $data;
+            }
+        }
+        return false;
     }
 /*****************************************************************************/
     public function get_id_by_email_or_name($email_or_name = '') {
