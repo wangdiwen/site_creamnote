@@ -192,7 +192,7 @@ $(function() {
         $(this).addClass("selected");
 
         //如果不是考研公共和期末考试，清除地区分类
-        if ($("#wx_category_nature").attr("value")!="4"||$("#wx_category_nature").attr("value")!="10") {
+        if ($("#wx_category_nature").attr("value")=="50"||$("#wx_category_nature").attr("value")=="49"||$("#wx_category_nature").attr("value")=="48"||$("#wx_category_nature").attr("value")=="21"||$("#wx_category_nature").attr("value")!="4"||$("#wx_category_nature").attr("value")!="10") {
             $("#wx_category_area_school").attr("value","");
             $("#wx_category_area_major").attr("value","");
         }
@@ -222,7 +222,7 @@ $(function() {
             $(this).addClass("selected");
         }
 
-        if (($("#wx_category_nature").attr("value")=="4"||$("#wx_category_nature").attr("value")=="10")&&$(this).text() != "其他学校.."){
+        if (($("#wx_category_nature").attr("value")=="50"||$("#wx_category_nature").attr("value")=="49"||$("#wx_category_nature").attr("value")=="48"||$("#wx_category_nature").attr("value")=="21"||$("#wx_category_nature").attr("value")=="4"||$("#wx_category_nature").attr("value")=="10")&&$(this).text() != "其他学校.."){
             $("#cate_four").removeClass("display_none");
             $("#cate_four").addClass("display_block");
             $("#cate_four p").removeClass("selected");
@@ -304,7 +304,7 @@ function cate_one(wx_nature){
 
 function cate_two(wx_nature){
     $("#wx_category_nature").attr("value",wx_nature);
-          if(wx_nature==4||wx_nature==10){
+          if(wx_nature==4||wx_nature==10||wx_nature==21||wx_nature==48||wx_nature==49||wx_nature==50){
              // alert(this.value)
              //pop();
                 $("#cate_three p").removeClass("display_none");
@@ -314,7 +314,7 @@ function cate_two(wx_nature){
 
                 // $("#cate_four").removeClass("display_none");
                 // $("#cate_four").addClass("display_block");
-            }else if(wx_nature==21){
+            }else if(wx_nature==46||wx_nature==11){
                 $("#cate_three").append("");
                 $("#cate_three").removeClass("display_block");
                 $("#cate_three").addClass("display_none");

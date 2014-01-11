@@ -920,7 +920,9 @@ function user_hover(){
         	<li><a href="javascript:void(0)">考试</a>
         		<ul>
         			<li><a href="javascript:void(0)" onclick="searchbefore(this,1,10)">期末考试</a></li>
-        			<li><a href="javascript:void(0)" onclick="searchbefore(this,1,11)">其他考试</a>
+              <li><a href="javascript:void(0)" onclick="searchbefore(this,1,11)">英语六级</a></li>
+              <li><a href="javascript:void(0)" onclick="searchbefore(this,1,46)">英语四级</a></li>
+        			<li><a href="javascript:void(0)" onclick="searchbefore(this,1,47)">其他考试</a>
         				<ul>
         					<li><a href="javascript:void(0)" onclick="searchbefore(this,1,12)">IT认证</a></li>
         					<li><a href="javascript:void(0)" onclick="searchbefore(this,1,13)">公务员</a></li>
@@ -976,7 +978,10 @@ function user_hover(){
         					<li><a href="javascript:void(0)" onclick="searchbefore(this,1,45)">其他（医药）</a></li>
         				</ul>
         			</li>
-        			<li><a href="javascript:void(0)" onclick="searchbefore(this,1,21)">其他（学习笔记）</a></li>
+        			<li><a href="javascript:void(0)" onclick="searchbefore(this,1,21)">科技创新项目</a></li>
+              <li><a href="javascript:void(0)" onclick="searchbefore(this,1,48)">课程设计</a></li>
+              <li><a href="javascript:void(0)" onclick="searchbefore(this,1,49)">毕业设计</a></li>
+              <li><a href="javascript:void(0)" onclick="searchbefore(this,1,50)">社会实践报告</a></li>
         		</ul>
         	</li>
         </ul>
