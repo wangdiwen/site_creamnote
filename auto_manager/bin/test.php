@@ -40,52 +40,35 @@ require_once WX_BASE_PATH.WX_SEPARATOR.'model'.WX_SEPARATOR.'wx_database_api.php
 /*****************************************************************************/
 
 /*****************************************************************************/
-/**************************** 测试PHP的延迟函数 *******************************/
+/**************************** 获取笔记分类数据  *******************************/
 
-// for ($i = 0; $i < 10; $i++) {
-//     echo 'here i= '.$i."\n";
-//     usleep(500000);  // 0.5s
-// }
-// $del_ret = wx_delete_file('/alidata/www/creamnote/tmp/hi.txt');
-// if ($del_ret) {
-//     echo 'success';
-// }
-// else {
-//     echo 'failed';
-// }
+// DB service obj
+$db_service = new WX_DB();
 
-$data_table = 'wx_data';
+// get grade 1
+$data_table = 'wx_category_nature';
 $data_select = array(
-    'data_id',
-    'data_objectname',
-    'data_vpspath',
+    'cnature_name',
+    'cnature_grade',
+    'cnature_flag',
     );
 $data_where = array(
-    'data_osspath !=' => '',
-    // 'data_vpspath !=' => '',
-    'data_status !=' => '0',
+    'cnature_grade' => '1',
     );
-$data_limit = 2;
 
-// get pending base data
-$db_service = new WX_DB();
-$pend_data_list = $db_service->select($data_table, $data_select, $data_where, $data_limit);
-print_r($pend_data_list);
+$grade_one_data = $db_service->select($data_table, $data_select, $data_where);
+$json_str = json_encode($grade_one_data);
+// print_r($grade_one_data);
+echo $json_str;
 
-sleep(120);
-
-$pend_data_list = $db_service->select($data_table, $data_select, $data_where, $data_limit);
-print_r($pend_data_list);
 
 exit();
-
-
 
 /*****************************************************************************/
 
 /***************************** 设定时间戳 ************************************/
 $today_time = wx_get_today_time();
-$log_name = 'clear_vps_data';
+$log_name = 'test_task';
 
 // echo 'Filter Time: '.$today_time."\n";
 
