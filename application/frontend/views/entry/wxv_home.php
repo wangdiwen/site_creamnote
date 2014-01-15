@@ -7,7 +7,7 @@ PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
 <!--[if IE 9 ]><html class="ie9"><![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!--><html class=""><!--<![endif]-->
 <head>
-    <title>Creamnote醍醐笔记网:分享你珍贵的资料</title>
+    <title>醍醐笔记网 - 分享你的学霸资料</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta property="qc:admins" content="145042776163251567456375" />
     <meta property="wb:webmaster" content="6aba2630b40f0fd8" />
