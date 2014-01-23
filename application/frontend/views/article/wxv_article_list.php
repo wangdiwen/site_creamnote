@@ -24,7 +24,7 @@
         <?php
           $num = 1;
           foreach ($site_article as $key => $week){?>
-          <div class="article_list">
+          <div class="article_list lh25">
             <?php if($num>3){?>
               <div class="article_icon"></div>
             <?php }else{?>

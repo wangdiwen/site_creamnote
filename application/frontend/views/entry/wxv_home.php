@@ -78,6 +78,9 @@ $("div").hover(function(e){
     className:'tip-darkgray',
   })
 //=========================================================资料滚动=========================================//
+var picTimer;
+var picTimerL;
+
 var $slider = $('#card_items_data');
 var $slider_child_l = 9;
 var $slider_width = 223*2;
@@ -90,24 +93,48 @@ if ($slider_child_l < 5) {
 }
 
 $('#btn-right').click(function() {
+  slideright();
+  clearInterval(picTimerR);
+  clearInterval(picTimerL);
+});
+function slideright(){
   if ($slider_child_l < 5 || slider_count >= $slider_child_l - 5) {
+    picTimerL = setInterval(slideleft,4000);
+    clearInterval(picTimerR);
     return false;
   }
 
   slider_count++;
   $slider.animate({left: '-=' + $slider_width + 'px'}, 'slow');
   slider_pic();
-});
+}
 
 $('#btn-left').click(function() {
+  slideleft();
+  clearInterval(picTimerR);
+  clearInterval(picTimerL);
+});
+function slideleft(){
   if (slider_count <= 0) {
+    picTimerR = setInterval(slideright,4000);
+    clearInterval(picTimerL);
     return false;
   }
 
   slider_count--;
   $slider.animate({left: '+=' + $slider_width + 'px'}, 'slow');
   slider_pic();
+}
+
+$(function(){
+  picTimerR = setInterval(slideright,4000);
+  // picTimerL = setInterval(slideleft,4000);
+  // $("#card_total_data ._item_actual").mouseout(function() {
+  //     setInterval(slideright,4000);
+  // });
 });
+
+
 
 function slider_pic() {
   if (slider_count >= $slider_child_l - 5) {

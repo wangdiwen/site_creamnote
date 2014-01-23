@@ -5,6 +5,7 @@ application/frontend/logs
 application/backend/logs
 application/weixin/logs
 application/site_data
+application/sell/logs
 phpmyadmin/
 tmp/
 upload/

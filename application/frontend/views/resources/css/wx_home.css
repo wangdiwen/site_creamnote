@@ -1,3 +1,6 @@
+.lh25{
+	line-height: 25px;
+}
 p {
 margin: 5px 0;
 }
@@ -1258,14 +1261,14 @@ a.current{
 	padding-top: 8px;
 }
 .article_icon{
-	background: url(../images/version/article_icon.png) no-repeat;
+	background: url(../images/version/article_icon.png) no-repeat  0 5px ;
 	width: 24px;
-	height: 24px;
+	height: 35px;
 	float: left;
 	margin-top: -7px
 }
 .article_icon_fire{
-	background: url(../images/version/fire_icon.png) no-repeat !important;
+	background: url(../images/version/fire_icon.png) no-repeat  0 5px  !important;
 }
 
 ._feedback_textarea_frame{
