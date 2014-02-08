@@ -465,6 +465,15 @@ class WXC_Data extends CI_Controller
                 // 记录信息到数据库：资料id、资料name、资料objectname、资料用户id、时间戳、状态
                 $random_code = rand(10, 99);
                 $data_objectname = $time_stamp.$random_code;
+                if (! in_array($suffix, array('doc', 'docx',
+                                                'pdf',
+                                                'wps',
+                                                'ppt', 'pptx'))) {
+                    echo "file-format-error";
+                    // wx_loginfo('file-format-error');
+                    die('文件格式错误');
+                    return false;
+                }
                 if ($suffix == 'wps') {  // here, support wps file
                     $data_objectname .= '.doc';
                 }

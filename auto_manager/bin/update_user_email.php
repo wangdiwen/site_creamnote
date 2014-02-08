@@ -27,7 +27,7 @@ require_once WX_BASE_PATH.WX_SEPARATOR.'model'.WX_SEPARATOR.'wx_local_email_api.
 // 加载阿里云存储OSS的API类接口模块
 // require_once WX_BASE_PATH.WX_SEPARATOR.'model'.WX_SEPARATOR.'wx_alioss_api.php';
 // 加载数据库接口类模块
-// require_once WX_BASE_PATH.WX_SEPARATOR.'model'.WX_SEPARATOR.'wx_database_api.php';
+require_once WX_BASE_PATH.WX_SEPARATOR.'model'.WX_SEPARATOR.'wx_database_api.php';
 
 /*****************************************************************************/
 /**-----------------------  逻辑代码   --------------------------------------*/
@@ -48,7 +48,38 @@ wx_tips('===============  Update All User Email ==============================')
 wx_tips('===============  Executive Time : '.$today_time." ===============\n");
 
 // $Mail_Server = new WX_Local_Email();
+// 查询网站用户的昵称和邮箱
+$table = 'wx_user';
+$select = array(
+    'user_name',
+    'user_email',
+    );
+$where = array(
+    'user_id >' => '0',
+    );
+$db_service = new WX_DB();
+$pend_data_list = $db_service->select($table, $select, $where);
+// print_r($pend_data_list);
 
+$content = '';
+$file_name = '/alidata/www/creamnote/auto_manager/bin/Creamnote-users.txt';
+
+if ($pend_data_list) {
+    foreach ($pend_data_list as $key => $value) {
+        # code...
+        $line = sprintf("%d#%s#%s\n", $key, $value['user_name'], $value['user_email']);
+        echo $line;
+        $content .= $line;
+    }
+}
+
+
+if ($content) {
+    $ret = file_put_contents($file_name, $content);
+    if ($ret) {
+        wx_tips('Save to '.$file_name);
+    }
+}
 
 wx_tips('=====================================================================');
 exit();

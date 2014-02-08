@@ -52,7 +52,7 @@ class WX_Local_Email {
 /*****************************************************************************/
     public function __construct() {
         $this->PHPMailer = new PHPMailer();
-        $this->_init();
+        // $this->_init();
         // echo "init ok\n";
     }
     public function __destruct() {
@@ -78,14 +78,23 @@ class WX_Local_Email {
         $this->PHPMailer->isHTML(true);
     }
 /*****************************************************************************/
+    public function set_send_account($smtp_user = '', $smtp_pass = '', $from_name = '') {
+        if ($smtp_user && $smtp_pass && $from_name) {
+            $this->from_user_email = $smtp_user;
+            $this->smtp_pass = $smtp_pass;
+            $this->smtp_user = $smtp_user;
+            $this->from_user_name = $from_name;
+
+            $this->_init();
+        }
+    }
 /*****************************************************************************/
     public function set_from_user($from_user_email = '', $from_user_name = '') {
         if ($from_user_email && $from_user_name) {
-            if ($this->PHPMailer) {
-                $this->PHPMailer->Username = $from_user_email;
-            }
             $this->from_user_email = $from_user_email;
             $this->from_user_name = $from_user_name;
+
+            $this->_init();
         }
     }
 /*****************************************************************************/

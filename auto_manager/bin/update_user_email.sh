@@ -10,4 +10,4 @@ user=`whoami`
 [ ! "$user" = "root" ] && { echo "Permission deny, use root to exec it! ..."; exit 1; }
 
 # switch to www to use php program
-su - www -c "/alidata/server/php/bin/php -f /alidata/www/creamnote/auto_manager/bin/update_user_email.php"
+su - diwen -c "/alidata/server/php/bin/php -f /alidata/www/creamnote/auto_manager/bin/update_user_email.php"
