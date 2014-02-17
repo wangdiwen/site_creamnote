@@ -14,7 +14,7 @@ class WXM_Data extends CI_Model
         if ($data_id_list)
         {
             $table = $this->wx_table;
-            $this->db->select('data_id, data_name, data_type')->from('wx_data')->where_in('data_id', $data_id_list);
+            $this->db->select('data_id, data_name, data_type')->from('wx_data')->where_in('data_id', $data_id_list)->order_by('data_uploadtime', 'desc');
             $query = $this->db->get();
             return $query->result_array();
         }

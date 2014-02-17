@@ -459,6 +459,7 @@ class WXC_Data extends CI_Controller
                 // 得到源文件的名称和后缀
                 $name = wx_get_filename($file_name);
                 $suffix = wx_get_suffix($file_name);
+                // $suffix = strtolower($suffix);          // to lower char
                 // Time stamp
                 $time_stamp = date("YmdHis", time());
 
@@ -471,7 +472,7 @@ class WXC_Data extends CI_Controller
                                                 'ppt', 'pptx'))) {
                     echo "file-format-error";
                     // wx_loginfo('file-format-error');
-                    die('文件格式错误');
+                    // die('文件格式错误');
                     return false;
                 }
                 if ($suffix == 'wps') {  // here, support wps file

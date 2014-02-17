@@ -45,33 +45,51 @@ $(function() {
 			for(i=0;i<name.length-1;i++){
 				fileName+=name[i]+".";
 				}
-			$('#dataname').val(fileName.substr(0, fileName.length-1));
+			
         },
         'onUploadSuccess' : function(file, data, response) {//每次成功上传后执行的回调函数，从服务端返回数据到前端
                if(data == "file-size-overflow"){
                  errorMes("您上传的笔记超过最大限制4M!");
+               }else if(data == "file-format-error"){
+                 errorMes("您上传的笔记格式不正确!");
+               }else{
+                   img_id_upload[i]=data;
+                   i++;
+                   $("#dataid").attr("value",data.split(",")[0]);
+                   $("#dataobjectname").attr("value",data.split(",")[1]);
+                   data_type = data.split(",")[2];
+
+                   $('#dataname').val(fileName.substr(0, fileName.length-1));
+
+                   //上传第一步
+                    $("#first_step").addClass("ca-menu_hover");
+                    $("#first_step span").addClass("ca-menu_hover_ca-icon");
+                    $("#first_step h2").addClass("ca-menu_hover_ca-main");
+                    $("#first_step span").html(".");
+                    step_one_success = 1;
+                    check_upload();
+
+                    //更改上传图标
+                    $("#file_upload").css("display","none");
+                    $("#have_upload").css("display","block");
                }
-               img_id_upload[i]=data;
-               i++;
-               $("#dataid").attr("value",data.split(",")[0]);
-               $("#dataobjectname").attr("value",data.split(",")[1]);
-               data_type = data.split(",")[2];
+               
         },
         'onQueueComplete' : function(queueData) {//上传队列全部完成后执行的回调函数
            // if(img_id_upload.length>0)
            // alert('成功上传的文件有：'+encodeURIComponent(img_id_upload));
             //$("#uploadsuccess").html("<p style='color: red;padding-left: 30px;'>笔记已上传</p>");
-            //上传第一步
-            $("#first_step").addClass("ca-menu_hover");
-            $("#first_step span").addClass("ca-menu_hover_ca-icon");
-            $("#first_step h2").addClass("ca-menu_hover_ca-main");
-            $("#first_step span").html(".");
-            step_one_success = 1;
-            check_upload();
+            // //上传第一步
+            // $("#first_step").addClass("ca-menu_hover");
+            // $("#first_step span").addClass("ca-menu_hover_ca-icon");
+            // $("#first_step h2").addClass("ca-menu_hover_ca-main");
+            // $("#first_step span").html(".");
+            // step_one_success = 1;
+            // check_upload();
 
-            //更改上传图标
-            $("#file_upload").css("display","none");
-            $("#have_upload").css("display","block");
+            // //更改上传图标
+            // $("#file_upload").css("display","none");
+            // $("#have_upload").css("display","block");
         }
         // Put your options here
     });
@@ -660,7 +678,7 @@ function makeCenter()
         	<div  id="thisform2" >
                 <fieldset>
                 <le>第三步：添加笔记描述 </le>
-                <p><label  accesskey="9">标题</label><br />
+                <p><label  accesskey="9">笔记名称</label><br />
                 <input type="text" id="dataname" name="dataname" value="" data-placeholder="选择几个默认的价格" onblur="step_three()"></p>
                 <p><label for="data_price" accesskey="9">价格</label><br />
                 <select id='select_price' name='select_price' style='width: 445px;' class="chosen">
