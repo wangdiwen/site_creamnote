@@ -102,6 +102,9 @@ class WX_Preprocess {
         // 邮件订阅退订接口，开放
         $reject_digest_email_url = $home_url.'primary/wxc_personal/update_userinfo_page_digest/(.*)';
 
+        // open api
+        $open_api_url = $home_url.'openapi/(.*)';
+
         // 此URL为测试接口，开发阶段验证一些东西，待到项目部署阶段删除
         $test_url = $home_url.'home/test';
 
@@ -120,6 +123,7 @@ class WX_Preprocess {
             || $cur_url == $school_url
             || $cur_url == $school_id_url
             || ereg($feedback_url, $cur_url)
+            || ereg($open_api_url, $cur_url)
             || $cur_url == $feedback_create_url
             || $cur_url == $feedback_follow_url
             || ereg($report_url, $cur_url)

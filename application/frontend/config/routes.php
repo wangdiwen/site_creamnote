@@ -49,6 +49,7 @@ $route['data/wxc_(data|image){1,1}/(:any)'] = 'data/wxc_$1/$2';
 $route['primary/wxc_(feedback|home|message|personal|search){1,1}/(:any)'] = 'primary/wxc_$1/$2';
 $route['static/wxc_(about|help|direct|cooperation){1,1}/(:any)'] = 'static/wxc_$1/$2';
 $route['experiment/wxc_(home){1,1}/(:any)'] = 'experiment/wxc_$1/$2';
+$route['openapi/(:any)'] = 'api/$1';
 $route['^(:any)$'] = 'primary/wxc_home/page_404';
 
 
