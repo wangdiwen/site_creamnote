@@ -22,6 +22,7 @@ class WXC_Data extends CI_Controller
         $this->load->model('share/wxm_data_activity');
         $this->load->model('core/wxm_comment');
         $this->load->model('core/wxm_follow');
+        $this->load->model('share/wxm_data_tag');
 
         $this->load->library('wx_general');
         $this->load->library('wx_aliossapi');
@@ -542,9 +543,10 @@ class WXC_Data extends CI_Controller
     {
         $data_name = $this->input->post('data_name');
         $data_status = $this->input->post('data_status');           // 是否公开？
-        $data_summary = $this->input->post('data_summary');
+        // $data_summary = $this->input->post('data_summary');      // cancel
         $data_price = $this->input->post('data_price');
-        $data_keyword = $this->input->post('data_keyword');
+        $data_tag = $this->input->post('data_tag');                 // new added, like:'12,13,14'
+        // $data_keyword = $this->input->post('data_keyword');      // cancel
         $data_preview = $this->input->post('data_preview');
         $data_category_area_school = $this->input->post('data_category_area_school');
         $data_category_area_major = $this->input->post('data_category_area_major');
@@ -580,14 +582,15 @@ class WXC_Data extends CI_Controller
             $data = array(
                         'data_name' => trim($data_name),
                         'data_status' => $data_status,
-                        'data_summary' => trim($data_summary),
+                        // 'data_summary' => trim($data_summary),
                         'data_price' => $data_price,
                         'data_point' => 0,
                         'data_vpspath' => $to_path_file,
-                        'data_keyword' => trim($data_keyword),
+                        // 'data_keyword' => trim($data_keyword),
                         'data_preview' => $data_preview,
                         'data_id' => $data_id,
                         'data_uploadtime' => date('Y-m-d H:i:s'),
+                        'data_tag' => trim($data_tag),
                         );
             $this->wxm_data->update_data_info($data);
             // 更新data2cnature表
@@ -607,6 +610,18 @@ class WXC_Data extends CI_Controller
                     'grade_bad_count' => 0,
                     );
                 $this->wxm_grade->insert($grade_info);
+            }
+
+            // checking 'wx_data_tag' table, has such tag
+            $user_tag_list = explode(',', $data_tag);
+            foreach ($user_tag_list as $key => $tag) {
+                if ($tag) {
+                    $has_tag = $this->wxm_data_tag->has_such_tag(trim($tag));
+                    if (! $has_tag) {
+                        // record a new tag
+                        $ret = $this->wxm_data_tag->add_new_tag(trim($tag));
+                    }
+                }
             }
 
             // 根据post数据是否有data_category_area字段，更新data2carea表

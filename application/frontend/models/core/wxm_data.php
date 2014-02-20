@@ -232,10 +232,11 @@ class WXM_Data extends CI_Model
             $new_data = array(
                             'data_name' => $data['data_name'],
                             'data_status' => $data['data_status'],
-                            'data_summary' => $data['data_summary'],
+                            // 'data_summary' => $data['data_summary'],
                             'data_price' => $data['data_price'],
                             'data_point' => $data['data_point'],
-                            'data_keyword' => $data['data_keyword'],
+                            // 'data_keyword' => $data['data_keyword'],
+                            'data_tag' => $data['data_tag'],            // new added
                             'data_preview' => $data['data_preview'],
                             'data_uploadtime' => $data['data_uploadtime'],
                             'data_vpspath' => $data['data_vpspath'],

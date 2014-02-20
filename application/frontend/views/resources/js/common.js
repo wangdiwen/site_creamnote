@@ -55,7 +55,26 @@ function ajax_common_get(url,params){
             success: function(result)
             {
                 retData = result;
-                $("#ret_common_json").attr("value",result);
+            },
+            error: function(XMLHttpRequest, textStatus, errorThrown) {
+                // alert(XMLHttpRequest.status);
+                // alert(XMLHttpRequest.readyState);
+                // alert(textStatus);
+            }
+        });
+    return retData;
+}
+function ajax_common_json_get(url,params){
+    var retData;
+    $.ajax({
+            type:"get",
+            data:params,
+            url:url,
+            dataType:"json",
+            async: false,//同步
+            success: function(result)
+            {
+                retData = result;
             },
             error: function(XMLHttpRequest, textStatus, errorThrown) {
                 // alert(XMLHttpRequest.status);
