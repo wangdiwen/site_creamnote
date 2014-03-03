@@ -11,7 +11,7 @@
     <script type="text/javascript" src="/application/frontend/views/resources/js/jquery-1.8.3.js"></script>
     <script type="text/javascript" src="/application/frontend/views/resources/js/school.js"></script>
     <script type='text/javascript' src='/application/frontend/views/resources/js/common.js'></script>
-
+    <script type='text/javascript' src='http://cdn.craig.is/js/mousetrap/mousetrap.min.js?9d308'></script>
 <script type="text/javascript">
 <!-- Javascript functions -->
 var gol_password = "";
@@ -29,15 +29,15 @@ var re_send_email = function(){
 $(function(){
     $("#register").click(function(){
       if(check_reg()){
-        var school_id = $('#hiddenschool').attr("value");
+        // var school_id = $('#hiddenschool').attr("value");
         var wx_email=$("#email").attr("value");
         var wx_password=gol_password;
-        var wx_name=$("#name").attr("value");
-        var wx_carea=$("#partment").attr("value");
+        // var wx_name=$("#name").attr("value");
+        // var wx_carea=$("#partment").attr("value");
         var url ="<?php echo site_url('home/register'); ?>";
         $.ajax({
         type:"post",
-        data:({'wx_email': wx_email, 'wx_password': wx_password,'wx_name':wx_name,'wx_area_id_major':wx_carea,'wx_area_id_school':school_id}),
+        data:({'wx_email': wx_email, 'wx_password': wx_password}),
         url:url,
         success: function(result)
             {
@@ -323,6 +323,7 @@ function checkPwd(pwd){
 }
 //=========================================================check验证码=========================================//
 function checkCode(auth_code){
+
   var url ="<?php echo site_url('core/wxc_util/check_auth_code'); ?>";
   $.ajax({
         type:"post",
@@ -334,7 +335,7 @@ function checkCode(auth_code){
                $("#auth_code_su").html("'");
                $("#auth_code_su").css("display","inline-block");
                $("#auth_code_su").css("color","red");
-               $("#auth_code").attr("value","");
+               // $("#auth_code").attr("value","");
                $("#auth_code_c").attr("value","false");
               }else{
                 $("#auth_code_su").css("display","inline-block");
@@ -350,7 +351,9 @@ function checkCode(auth_code){
             }
         });
   return $("#auth_code_c").attr("value");
+  
 }
+Mousetrap.bind('* a', function() { alert('keyboard shortcuts') } ,'keyup');
 //=========================================================check是否同意协议=========================================//
 function checkTerms(){
   if($("#check_te").attr("checked")!="checked"){
@@ -365,15 +368,15 @@ function checkTerms(){
 //=========================================================check是否可以注册=========================================//
 function check_reg(){
   isEmail($("#email").val());
-  checkName($("#name").val());
-  checkSchool($("#school-name").val());
+  // checkName($("#name").val());
+  // checkSchool($("#school-name").val());
   checkPwd(gol_password);
   checkCode($("#auth_code").val());
   checkTerms();
 
   if(isEmail($("#email").val())&&
-  checkName($("#name").val())&&
-  checkSchool($("#school-name").val())&&
+  // checkName($("#name").val())&&
+  // checkSchool($("#school-name").val())&&
   checkPwd(gol_password)&&
   checkCode($("auth_code").val())&&
   checkTerms()){
@@ -424,14 +427,14 @@ function get_new_code(){
           <div class="reg_error" id="error_mail" style="display:none;"></div>
         </div>
 
-        <div class="reg_put">
+        <!-- <div class="reg_put">
           <span>昵称</span><br/>
           <input type="text" name="name" id="name" onblur="checkName(this.value)" placeholder="一个个性的昵称">
           <input type="hidden" id="name_c">
           <div class="reg_error" id="error_name" style="display:none;"></div>
-        </div>
+        </div> -->
 
-        <div class="reg_put">
+        <!-- <div class="reg_put">
           <span>学校</span><br/>
           <input type="text" name="school" id="school-name" onblur="checkSchool(this.value)" onclick="pop()" onfocus="pop()" data-id="" value="" placeholder="你就读的学校">
           <input type="hidden" id="hiddenschool" name="wx_school">
@@ -457,7 +460,7 @@ function get_new_code(){
           <select id='partment' name='partment' style='width: 422px;' placeholder="你所在的专业">
           </select>
           <div class="reg_error" id="error_partment" style="display:none;"></div>
-        </div>
+        </div> -->
 
         <div class="reg_put">
           <span>密码</span><br/>
@@ -473,7 +476,7 @@ function get_new_code(){
         <div class="reg_put">
           <span>验证</span><br/>
           <span id="auth_code_display"><?php echo $auth_code;?>=?</span>
-          <input type="text" name="auth_code" id="auth_code" style="width: 50px;" onblur="checkCode(this.value)">
+          <input type="text" name="auth_code" id="auth_code" style="width: 50px;" class="mousetrap" onkeyup="checkCode(this.value)">
           <input type="hidden" name="auth_code_c" id="auth_code_c">
           <span id="auth_code_su" class="Webfonts reg_code" style="display:none;">.</span>
           <div class="reg_error" id="auth_code_error" style="display:none;"></div>

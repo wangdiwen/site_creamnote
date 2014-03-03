@@ -678,8 +678,19 @@ if(if_login!=""){
           <?php }?>
 
 
-          <li style="max-height: 100px;overflow: hidden;overflow-y: auto;">
-              <span class="datadetailLi">简介：<?php if (isset($data_summary) && $data_summary!= "") echo $data_summary; else echo "作者比较懒，什么简介都没有！"; ?></span>
+          <li style="overflow-y: auto;">
+              <span class="datadetailLi systag detail "><d class="fl"></d>
+                <?php 
+                if (isset($data_tag) && $data_tag!= ""){
+                  $data_tags = split(",", $data_tag); 
+                  for($i=0;$i<count($data_tags);$i++){
+                      echo "<span>".$data_tags[$i]."</span>";
+                  }
+                }else{
+                  // echo "作者比较懒，还未贴上标签";
+                }
+                      
+                ?></span>
           </li>
 
 				</ul>

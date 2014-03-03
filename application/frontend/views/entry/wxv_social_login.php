@@ -17,15 +17,15 @@ var gol_password = "";
 $(function(){
     $("#register").click(function(){
       if(check_reg()){
-        var school_id = $('#hiddenschool').attr("value");
+        // var school_id = $('#hiddenschool').attr("value");
         var wx_email=$("#email").attr("value");
         var wx_password=gol_password;
-        var wx_name=$("#name").attr("value");
-        var wx_carea=$("#partment").attr("value");
+        // var wx_name=$("#name").attr("value");
+        // var wx_carea=$("#partment").attr("value");
         var url ="<?php echo site_url('home/register'); ?>";
         $.ajax({
         type:"post",
-        data:({'wx_email': wx_email, 'wx_password': wx_password,'wx_name':wx_name,'wx_area_id_major':wx_carea,'wx_area_id_school':school_id}),
+        data:({'wx_email': wx_email, 'wx_password': wx_password}),
         url:url,
         success: function(result)
             {
@@ -41,7 +41,15 @@ $(function(){
                     }else{
                       //
                     }
-                    $("#reg_frame").html("<h2>请到您注册的邮箱进行验证！(请在该浏览器中验证，谢谢！)</h2>");
+                    var str="<h2>验证邮件已经发送您邮箱，请到您注册的邮箱进行验证！</h2>";
+                    str +="<p style='margin-top:50px;'></p>";
+                    str +="<h2>没有收到邮件？</h2>";
+                    str +="<p>1、到垃圾箱里看看有没有</p>";
+                    str +="<p>2、如果邮箱填写错了，那就<a href='<?php echo site_url('home/register_page'); ?>' style='color: black;TEXT-DECORATION:underline'>重新注册</a>吧</p>";
+                    str +="<p>3、稍等一会，如果还是没有收到验证邮件，点击<a href='javascript:void(0)' onclick='re_send_email()' style='color: black;TEXT-DECORATION:underline'>重新发送</p></a>";
+                    $("#reg_frame").html(str);
+                    $("#reg_frame").css("width","600px");
+                    $("#reg_frame").css("text-align","left");
                 }
 
             },
@@ -393,8 +401,8 @@ function checkTerms(){
 //=========================================================check是否可以注册=========================================//
 function check_reg(){
   isEmail($("#email").val());
-  checkName($("#name").val());
-  checkSchool($("#school-name").val());
+  // checkName($("#name").val());
+  // checkSchool($("#school-name").val());
   checkPwd(gol_password);
   checkTerms();
   // alert(isEmail($("#email").val()))
@@ -405,8 +413,8 @@ function check_reg(){
   // alert()
 
   if(isEmail($("#email").val())&&
-  checkName($("#name").val())&&
-  checkSchool($("#school-name").val())&&
+  // checkName($("#name").val())&&
+  // checkSchool($("#school-name").val())&&
   checkPwd(gol_password)&&
   checkTerms()){
     return true;
@@ -468,7 +476,7 @@ function checkReg_no(){
             <div class="reg_error" id="error_mail" style="display:none;"></div>
           </div>
 
-          <div class="reg_put">
+         <!--  <div class="reg_put">
             <span>昵称</span><br/>
             <input type="text" name="name" id="name" onblur="checkName(this.value)" placeholder="一个个性的昵称">
             <input type="hidden" id="name_c">
@@ -494,7 +502,7 @@ function checkReg_no(){
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
 
           <div class="reg_put">
             <span>院系</span><br/>

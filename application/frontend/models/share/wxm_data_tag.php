@@ -8,14 +8,12 @@ class WXM_Data_Tag extends CI_Model
         $this->load->database();
     }
 /*****************************************************************************/
-    public function fetch_data_tag($tag_keyword = '') {
-        if ($tag_keyword) {
-            $table = $this->wx_table;
-            $this->db->select('tag_id, tag_name')->from($table)->like('tag_name', $tag_keyword)->limit(5);
-            $query = $this->db->get();
-            return $query->result_array();
-        }
-        return false;
+    public function fetch_data_tag() {
+        $table = $this->wx_table;
+        $this->db->select('tag_id, tag_name')->from($table);
+        $query = $this->db->get();
+        return $query->result_array();
+
     }
 /*****************************************************************************/
     public function has_such_tag($tag_name = '') {

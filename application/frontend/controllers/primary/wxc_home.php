@@ -387,8 +387,14 @@ class WXC_Home extends CI_Controller
             $this->set_browser_cookie($user_id, $session_id);
             $this->wxm_user_activity->update_login($info);
 
-            // Login successed
-            $output = 'success';
+            // check has complete person info
+            if (! $user_name) {
+                $output = 'not-complete';
+            }
+            else {
+                $output = 'success';    // Login successed
+            }
+
             echo $output;
 
             // 后台处理
@@ -766,13 +772,13 @@ class WXC_Home extends CI_Controller
     public function register()
     {
         // 取得注册页面提交的数据
-        $name = $this->input->post('wx_name');
+        // $name = $this->input->post('wx_name');
         $email = $this->input->post('wx_email');
         $passwd = $this->input->post('wx_password');
-        $area_id_major = $this->input->post('wx_area_id_major');
-        $area_id_school = $this->input->post('wx_area_id_school');
+        // $area_id_major = $this->input->post('wx_area_id_major');
+        // $area_id_school = $this->input->post('wx_area_id_school');
 
-        if (!$name || !$email || !$passwd || !$area_id_major || !$area_id_school)
+        if (!$email || !$passwd)
         {
             redirect('home/page_404');
             return;
@@ -781,47 +787,47 @@ class WXC_Home extends CI_Controller
         // 邮箱验证和激活功能
         // 激活链接为：1）随机码；2）昵称md5；3）用户邮箱md5；
         $random_code = rand(1024, 2048);
-        $name_md5 = $this->encrypt->encode($name);
+        // $name_md5 = $this->encrypt->encode($name);
         $email_md5 = $this->encrypt->encode($email);
         $passwd_md5 = $this->encrypt->encode($passwd);
 
         // Active link like:
         // http://www.xxx.com/user_active?id=xxx&user_name=xxx&user_email=xxx&user_passwd=xxx
         $url = 'http://www.creamnote.com/user_active';
-        $active_link = $url.'?id='.$random_code.'&user_name='.$name_md5.'&user_email='.$email_md5.'&user_passwd='.$passwd_md5;
+        $active_link = $url.'?id='.$random_code.'&user_email='.$email_md5.'&user_passwd='.$passwd_md5;
 
         // 保存激活链接的3个字段到本地的session
         $_SESSION['random_code'] = $random_code;
-        $_SESSION['active_name'] = $name;
+        // $_SESSION['active_name'] = $name;
         $_SESSION['active_email'] = $email;
         $_SESSION['active_passwd'] = $passwd;
-        $_SESSION['area_id_major'] = $area_id_major;
-        $_SESSION['area_id_school'] = $area_id_school;
+        // $_SESSION['area_id_major'] = $area_id_major;
+        // $_SESSION['area_id_school'] = $area_id_school;
 
         $ret = $this->_send_activelink($email, $active_link);
         if ($ret)
         {
-            echo '发送注册邮箱的激活链接，成功！';
+            echo 'success';
         }
         else
         {
-            echo '发送注册激活链接，失败！';
+            echo 'failed';
         }
     }
 /*****************************************************************************/
     public function register_active_link_again() {
         $random_code = isset($_SESSION['random_code']) ? $_SESSION['random_code'] : '';
-        $name = isset($_SESSION['active_name']) ? $_SESSION['active_name'] : '';
+        // $name = isset($_SESSION['active_name']) ? $_SESSION['active_name'] : '';
         $email = isset($_SESSION['active_email']) ? $_SESSION['active_email'] : '';
         $passwd = isset($_SESSION['active_passwd']) ? $_SESSION['active_passwd'] : '';
 
-        if ($random_code && $name && $email && $passwd) {
-            $name_md5 = $this->encrypt->encode($name);
+        if ($random_code && $email && $passwd) {
+            // $name_md5 = $this->encrypt->encode($name);
             $email_md5 = $this->encrypt->encode($email);
             $passwd_md5 = $this->encrypt->encode($passwd);
 
             $url = 'http://www.creamnote.com/user_active';
-            $active_link = $url.'?id='.$random_code.'&user_name='.$name_md5.'&user_email='.$email_md5.'&user_passwd='.$passwd_md5;
+            $active_link = $url.'?id='.$random_code.'&user_email='.$email_md5.'&user_passwd='.$passwd_md5;
             $ret = $this->_send_activelink($email, $active_link);
             if ($ret) {
                 echo 'success';
@@ -837,17 +843,17 @@ class WXC_Home extends CI_Controller
     {
         // 从激活链接中得到3个字段：1）随机码；2）昵称md5；3）用户邮箱md5；
         $random_code = $this->input->get('id');
-        $name_md5 = rawurldecode(URLencode($this->input->get('user_name')));
+        // $name_md5 = rawurldecode(URLencode($this->input->get('user_name')));
         $email_md5 = rawurldecode(URLencode($this->input->get('user_email')));
         $passwd_md5 = rawurldecode(URLencode($this->input->get('user_passwd')));
 
         // 取得第一次注册生成的激活字段
         $session_randomcode = isset($_SESSION['random_code']) ? $_SESSION['random_code'] : '';
-        $session_name = isset($_SESSION['active_name']) ? $_SESSION['active_name'] : '';
+        // $session_name = isset($_SESSION['active_name']) ? $_SESSION['active_name'] : '';
         $session_email = isset($_SESSION['active_email']) ? $_SESSION['active_email'] : '';
         $session_passwd = isset($_SESSION['active_passwd']) ? $_SESSION['active_passwd'] : '';
-        $session_area_id_major = isset($_SESSION['area_id_major']) ? $_SESSION['area_id_major'] : '';
-        $session_area_id_school = isset($_SESSION['area_id_school']) ? $_SESSION['area_id_school'] : '';
+        // $session_area_id_major = isset($_SESSION['area_id_major']) ? $_SESSION['area_id_major'] : '';
+        // $session_area_id_school = isset($_SESSION['area_id_school']) ? $_SESSION['area_id_school'] : '';
 
         // third party social account
         $qq_open_id = isset($_SESSION['qq_open_id']) ? $_SESSION['qq_open_id'] : '';
@@ -861,23 +867,23 @@ class WXC_Home extends CI_Controller
         if ($session_randomcode)
         {
             // 比较URL字段中的Get数据
-            $decode_name = $this->encrypt->decode($name_md5);
+            // $decode_name = $this->encrypt->decode($name_md5);
             $decode_email = $this->encrypt->decode($email_md5);
             $decode_passwd = $this->encrypt->decode($passwd_md5);
 
             if ($random_code == $session_randomcode
-                && $decode_name == $session_name
+                // && $decode_name == $session_name
                 && $decode_email == $session_email)
             {
                 // 说明，激活字段和本地session激活字段符合
                 // 正式将用户注册信息写入数据表
-                $ret = $this->wxm_user->register($session_name, $session_email, $decode_passwd);
+                $ret = $this->wxm_user->register($session_email, $decode_passwd);
                 if ($ret == '0')        // Registe successed
                 {
                     // $output = 'success';
                     // echo $output;
                     // 记录登录PHP SESSION用户数据
-                    $_SESSION['wx_user_name'] = $session_name;
+                    // $_SESSION['wx_user_name'] = $session_name;
                     $_SESSION['wx_user_email'] = $session_email;
 
                     // 查找刚才注册的email的用户的id，然后插入user2area表
@@ -887,18 +893,19 @@ class WXC_Home extends CI_Controller
                         $user_id = $data->user_id;
                         $_SESSION['wx_user_id'] = $user_id;
 
-                        $info = array(
-                            'carea_id_major' => $session_area_id_major,
-                            'carea_id_school' => $session_area_id_school,
-                            'user_id' => $user_id
-                            );
-                        $this->wxm_user2carea->insert($info);
+                        // $info = array(
+                        //     'carea_id_major' => $session_area_id_major,
+                        //     'carea_id_school' => $session_area_id_school,
+                        //     'user_id' => $user_id
+                        //     );
+                        // $this->wxm_user2carea->insert($info);
 
                         // 同步插入 wx_user_activity表
                         $user_active = array(
                             'user_id' => $user_id,
                             'uactivity_datacount' => 0,
                             'uactivity_downloadcount' => 0,
+                            'uactivity_day_downcount' => 0,
                             'uactivity_loginip' => '',
                             'uactivity_logintime' => '',
                             'uactivity_logouttime' => '',
@@ -928,24 +935,14 @@ class WXC_Home extends CI_Controller
                         $ret_sys = $this->_send_sys_notify($user_id);
                     }
                 }
-                elseif($ret == '1')     // Has e-mail
-                {
-                    $output = 'has email';
-                    echo $output;
-                }
-                elseif ($ret == '2')    // Has the nice name
-                {
-                    $output = 'has nice name';
-                    echo $output;
-                }
 
                 // 删除用户激活字段
                 session_unregister('random_code');
-                session_unregister('active_name');
+                // session_unregister('active_name');
                 session_unregister('active_email');
                 session_unregister('active_passwd');
-                session_unregister('area_id_major');
-                session_unregister('area_id_school');
+                // session_unregister('area_id_major');
+                // session_unregister('area_id_school');
                 // social account
                 session_unregister('qq_open_id');
                 session_unregister('qq_nice_name');
@@ -954,7 +951,8 @@ class WXC_Home extends CI_Controller
                 session_unregister('renren_open_id');
                 session_unregister('renren_nice_name');
 
-                redirect('/home/index');
+                // redirect('/home/index');
+                redirect('home/complete_register_other_page');
             }
         }
         else
@@ -962,7 +960,11 @@ class WXC_Home extends CI_Controller
             echo '您的激活链接已经失效，请重新注册，然后激活！';
         }
     }
-/*****************************************************************/
+/*****************************************************************************/
+    public function complete_register_other_page() {
+        $this->load->view('entry/wxv_complete_account');
+    }
+/*****************************************************************************/
     public function _send_sys_notify($user_id = 0) {
         // system notify, type = 4
         $notify_title = '系统通知：赢取注册奖金';

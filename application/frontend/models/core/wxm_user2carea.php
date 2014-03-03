@@ -42,6 +42,16 @@ class WXM_User2carea extends CI_Model
         }
     }
 /*****************************************************************************/
+    public function has_user_area_info($user_id = 0) {
+        $table = $this->wx_table;
+        $this->db->select('carea_id_school')->from($table)->where('user_id', $user_id)->limit(1);
+        $query = $this->db->get();
+        if ($query->num_rows() > 0) {
+            return true;
+        }
+        return false;
+    }
+/*****************************************************************************/
     public function get_by_user_id($user_id = 0)
     {
         if ($user_id > 0)

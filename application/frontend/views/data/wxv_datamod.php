@@ -12,6 +12,7 @@
     <script type="text/javascript" src="/application/frontend/views/resources/js/menu_min.js"></script>
     <script type="text/javascript" src="/application/frontend/views/resources/js/school.js"></script>
     <script type="text/javascript" src="/application/frontend/views/resources/js/chosen.jquery.js"></script>
+    <script type="text/javascript" src="/application/frontend/views/resources/js/jquery.autocomplete.min.js"></script>
 
 <script type="text/javascript">
 <!-- Javascript functions -->
@@ -52,6 +53,8 @@ $(document).ready(function(){
         $("#category_collect_value").html($(this).text());
         $("#cate_one p").removeClass("selected");
         $(this).addClass("selected");
+        step_two();
+        sysTag(wx_nature);
     });
     //点击二级分类
     $("#cate_two p").live('click',function(){
@@ -78,6 +81,8 @@ $(document).ready(function(){
         if(wx_nature=="4"||wx_nature=="11"){
             $("#cate_three p").removeClass("selected");
         }
+        step_two();
+        sysTag(wx_nature);
     });
     //点击三级分类
     $("#cate_three p").live('click',function(){
@@ -89,6 +94,7 @@ $(document).ready(function(){
             $("#wx_category_nature").attr("value",wx_nature);
             $(".category_base").css("display","none");
             step_two();
+            sysTag(wx_nature);
         }
         var cate = $("#category_collect_value").text().split(">")
         if($(this).text() != "其他学校.."){
@@ -148,7 +154,69 @@ $(document).ready(function(){
         step_two();
     });
 
+      $("#systag >span").live('click',function() {
+        var str = "";
+        var data_tag = "";
+        str = "<span>"+$(this).text()+"<b>X</b></span>";
+        var hasenter = false;
+        var data_tag_list = $(".usertag").text().split("X");
+        for (var i = 0; i < data_tag_list.length; i++) {
+            if(data_tag_list[i].replace(/(^\s*)|(\s*$)/g, "") == $(this).text())
+            hasenter = true;
+        }
+        if($(".usertag").children().length>=5){
+            errorMes("您最多能输入五个标签");
+        }else if(hasenter == true){
+            errorMes("不能重复输入标签");
+        }else{
+            $(".usertag").append(str);
+            data_tag_list = $(".usertag").text().split("X");
+            for (var i = 0; i < data_tag_list.length; i++) {
+                data_tag += data_tag_list[i].replace(/(^\s*)|(\s*$)/g, "") ;
+            }
+            if(data_tag.length >= 25){
+                $(".tagform").css("height","61px");
+            }
+        }
+        step_three();
+
+    });
+
+    $(".usertag  >span b").live('click',function() {
+        var data_tag = "";
+        $(this).parents('span').remove();
+        var data_tag_list = $(".usertag").text().split("X");
+        for (var i = 0; i < data_tag_list.length; i++) {
+            data_tag += data_tag_list[i].replace(/(^\s*)|(\s*$)/g, "") ;
+        }
+        if(data_tag.length < 25){
+            $(".tagform").css("height","31px");
+        }
+        step_three();
+    });
+    $(".tagform").click(function(){
+        $("#tag").focus();
+    });
+
 });
+
+//点击分类生成系统默认tag
+function sysTag(cnature_id){
+    var url = "<?php echo site_url('openapi/category/category_tag'); ?>";
+    var params = ({'category_id':cnature_id});
+    var retData;
+    retData = ajax_common_json_get(url,params);
+    var str = "推荐标签："
+    for(i in retData){
+        if(retData[0] == ""){
+            str = "";
+        }else{
+            str += "<span>"+retData[i]+"</span>";
+        }
+
+    }
+    $("#systag").html(str);
+}
 //=========================================================分类选择辅助函数=========================================//
 function cate_one(wx_nature){
     var url ="<?php echo site_url('data/wxc_data/get_second_nature'); ?>";
@@ -237,8 +305,8 @@ function cate_two(wx_nature){
 //上传第二步
 function step_two(){
     var c_nature = $("#wx_category_nature").attr("value");
-    var d_keyword = $("#datakeyword").attr("value");
-    if(c_nature!=""&&c_nature!=null&&d_keyword!=""&&d_keyword!=null){
+    // var d_keyword = $("#datakeyword").attr("value");
+    if(c_nature!=""&&c_nature!=null){
         $("#second_step").addClass("ca-menu_hover");
         $("#second_step span").addClass("ca-menu_hover_ca-icon");
         $("#second_step h2").addClass("ca-menu_hover_ca-main");
@@ -256,9 +324,11 @@ function step_two(){
 
 //上传第三步
 function step_three(){
-    var d_summary = $("#datasummary").attr("value");
+    // var d_summary = $("#datasummary").attr("value");
+    var tag = $(".usertag").text().split("X");
     var d_name = $("#dataname").val();
-    if(d_summary.length>10&&d_name!=""){
+    console.log(tag.length)
+    if(tag.length>1&&d_name!=""){
         $("#third_step").addClass("ca-menu_hover");
         $("#third_step span").addClass("ca-menu_hover_ca-icon");
         $("#third_step h2").addClass("ca-menu_hover_ca-main");
@@ -423,30 +493,39 @@ $(function(){
         }
     	var data_name=$("#dataname").attr("value");
        // var data_type=$("#datatype").attr("value");
-        var data_summary=$("#datasummary").attr("value");
+        // var data_summary=$("#datasummary").attr("value");
         //var data_price=$("#password").attr("value");
-        var data_keyword=$("#datakeyword").attr("value");
+        // var data_keyword=$("#datakeyword").attr("value");
         var data_id='<?php echo $data_id;?>';
         var data_objectname='<?php echo $data_objectname;?>';
         var wx_category_area_school = $("#wx_category_area_school").attr("value");
         var wx_category_area_major = $("#wx_category_area_major").attr("value");
         var wx_category_nature = $("#wx_category_nature").attr("value");
-        // alert(data_id);
+        var data_tag = "";
+        var data_tag_list = $(".usertag").text().split("X");
+        for (var i = 0; i < data_tag_list.length; i++) {
+            if(data_tag_list.length-i>2){
+                data_tag += data_tag_list[i].replace(/(^\s*)|(\s*$)/g, "") + ",";
+            }else{
+                data_tag += data_tag_list[i].replace(/(^\s*)|(\s*$)/g, "");
+            }
+        }
         var url ='<?php echo site_url('data/wxc_data/upload_file_info'); ?>';
         $.ajax({
         type:"post",
         url:url,
         data:({'data_name':data_name,
         	'data_status':data_status,
-        	'data_summary':data_summary,
+        	// 'data_summary':data_summary,
         	'data_objectname':data_objectname,
         	'data_id':data_id,
         	'data_price':data_price,
-        	'data_keyword':data_keyword,
+        	// 'data_keyword':data_keyword,
         	'data_preview':data_preview,
         	'data_category_nature':wx_category_nature,
         	'data_category_area_school':wx_category_area_school,
-            'data_category_area_major':wx_category_area_major
+            'data_category_area_major':wx_category_area_major,
+            'data_tag':data_tag
             }),
         success: function(result)
             {
@@ -481,6 +560,68 @@ $(function(){
 	       });
 	   });
 
+});
+
+var enter = function(obj,e) {
+    var key = window.event ? e.keyCode : e.which;
+    var data_tag_list = $(".usertag").text().split("X");
+    var data_tag = "";
+
+    if (key == 13) {
+        var str = "";
+        var hasenter = false;
+        for (var i = 0; i < data_tag_list.length; i++) {
+            if(data_tag_list[i].replace(/(^\s*)|(\s*$)/g, "") == $(obj).val())
+            hasenter = true;
+        }
+        str = "<span>"+$(obj).val()+"<b>X</b></span>";
+         if($(".usertag").children().length>=5){
+            errorMes("您最多能输入五个标签");
+        }else if(hasenter == true){
+            errorMes("不能重复输入标签");
+        }else{
+            $(".usertag").append(str);
+            $(obj).val("");
+        }
+        $(obj).css("width","80px");
+        data_tag_list = $(".usertag").text().split("X");
+        for (var i = 0; i < data_tag_list.length; i++) {
+            data_tag += data_tag_list[i].replace(/(^\s*)|(\s*$)/g, "") ;
+        }
+        if(data_tag.length >= 25){
+            $(".tagform").css("height","61px");
+        }
+    }
+    if(key == 8){//删除
+        if($(obj).val() == "")
+        $(".usertag span:last-child").remove();
+        data_tag_list = $(".usertag").text().split("X");
+        for (var i = 0; i < data_tag_list.length; i++) {
+            data_tag += data_tag_list[i].replace(/(^\s*)|(\s*$)/g, "") ;
+        }
+        if(data_tag.length < 25){
+            $(".tagform").css("height","31px");
+        }
+    }
+
+    if($(obj).val().length>5&&$(obj).css("width").replace(/[^0-9]/ig,"")<=125){
+        var overlength = $(obj).val().length - 5 ;
+        var width = 80 + 15 * overlength;
+        $(obj).css("width",width+"px")
+    }
+    step_three();
+
+    return false;
+}
+
+$(function(){
+    //=========================================================自动填充=========================================//
+    var url = "<?php echo site_url('openapi/category/fetch_tag'); ?>";
+    var params = "";
+    var retData;
+    params = ({});
+    retData = ajax_common_json_get(url,params);
+    $("#tag").focus().autocomplete(retData);
 });
 </script>
 
@@ -581,8 +722,8 @@ $(function(){
                     		</div>
                     	</div>
         	       </div>
-                    <p><label for="name" accesskey="9">关键词</label><br />
-                    <input type="text" id="datakeyword" name="name" value="" onblur="step_two()"></p>
+                    <!-- <p><label for="name" accesskey="9">关键词</label><br />
+                    <input type="text" id="datakeyword" name="name" value="" onblur="step_two()"></p> -->
                     <!-- <p><label for="" accesskey="9">是否公开:</label>
                     <input type="checkbox" id="datastatus" name="datastatus" ></p>
                      <p><label for="" accesskey="9">是否提供预览:</label>
@@ -612,12 +753,29 @@ $(function(){
                     <option>￥9.99</option>
 
                 </select></p>
-                    <p><label for="name" accesskey="9">简介</label><br />
-                    <textarea id="datasummary" name="" onblur="step_three()"></textarea></p>
+                    <p><label accesskey="9">标签</label><br />
+                        <div class="tagform">
+                            <div id="tag_input">
+                                <div class="usertag">
+                                    <!-- <span>笔记笔记笔记笔记<b>X</b></span>
+                                    <span>笔记笔记笔记笔记<b>X</b></span>
+                                    <span>笔记笔记笔记笔记<b>X</b></span>
+                                    <span>笔记笔记笔记笔记<b>X</b></span>
+                                    <span>笔记笔记笔记笔记<b>X</b></span> -->
+                                </div>
+                                <input type="text" id="tag" class="taginput fl" name="" maxlength="8" onkeydown="enter(this,event)" onblur="step_three()" autocomplete="off" style="width:80px;">
+                            </div>
+                            <div id="enter"></div>
+                        </div>
+                    </p>
 
                     <input type="hidden" name="dataid" id ="dataid" value="">
                     <input type="hidden" name="dataobjectname" id ="dataobjectname">
-                    <div id="" style="margin-bottom: 12px;color:#AA7700;">*建议您输入不少于10字的简介，好让你的笔记更受关注</div>
+                    <div id="systag" class="mb12 systag mt12">
+                            <!-- 推荐标签：
+                            <span>笔记</span>
+                            <span>内部资料</span> -->
+                    </div>
                     </fieldset>
                 </div>
 		    </div>

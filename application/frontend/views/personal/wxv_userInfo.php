@@ -79,7 +79,7 @@ $(function(){
                 if(result = "success"){
                     successMes("修改成功");
                 }else{
-                    successMes("修改失败");
+                    errorMes("修改失败");
                 }
 
 

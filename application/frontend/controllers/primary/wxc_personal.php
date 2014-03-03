@@ -272,7 +272,7 @@ class WXC_personal extends CI_Controller
         if (isset($_SESSION['wx_user_id']) && $_SESSION['wx_user_id'] != '')
         {
             $user_id = $_SESSION['wx_user_id'];
-            $user_name = $_SESSION['wx_user_name'];
+            $user_name = isset($_SESSION['wx_user_name']) ? $_SESSION['wx_user_name'] : '你还木有设定昵称哦';
             $data_info = $this->wxm_data->user_data_info($user_id);
 
             foreach ($data_info as $key => $obj) {
@@ -762,6 +762,44 @@ class WXC_personal extends CI_Controller
                 return $info;
             }
         }
+    }
+/*****************************************************************************/
+    public function complete_register_other() {
+        $name = $this->input->post('nice_name');
+        $area_id_school = $this->input->post('school_id');
+        $area_id_major = $this->input->post('major_id');
+
+        $name = trim($name);
+        $user_id = isset($_SESSION['wx_user_id']) ? $_SESSION['wx_user_id'] : 0;
+        if ($user_id > 0 && $name && is_numeric($area_id_school) && is_numeric($area_id_major)) {
+            // update user's nick name
+            $ret = $this->wxm_user->update_user_nickname($user_id, $name);
+            if ($ret) {
+                $_SESSION['wx_user_name'] = $name;
+            }
+
+            // update user's area info, school and major info
+            $info = array(
+                'carea_id_school' => $area_id_school,
+                'carea_id_major' => $area_id_major,
+                'user_id' => $user_id,
+            );
+            $has_user_record = $this->wxm_user2carea->has_user_area_info($user_id);
+            if ($has_user_record) {
+                // update it
+                $this->wxm_user2carea->update_school_major($info);
+            }
+            else {
+                // add a new record
+                $this->wxm_user2carea->insert($info);
+            }
+
+            // redirect('home/index');
+            echo 'success';
+            return true;
+        }
+        echo 'failed';
+        return false;
     }
 /*****************************************************************************/
     public function update_base_info()

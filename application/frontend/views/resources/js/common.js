@@ -630,15 +630,24 @@ function uncollect_p(data_id){
 }
 //=========================================================跳到资料上传页面=========================================//
 function jump_to_uploadfile(){
-    if(loginname!=""){
-        location.href = $("#baseUrl").val()+"home/data_upload_page";
+    if(loginemail!=""){
+        if(loginname == ""){
+            location.href = $("#baseUrl").val()+"home/complete_register_other_page";
+        }else{
+            location.href = $("#baseUrl").val()+"home/data_upload_page";
+        }
+
     }else{
         show_login_win();
     }
 }
 function jump_to_uploadimage(){
-    if(loginname!=""){
-        location.href = $("#baseUrl").val()+"home/image_upload_page";
+    if(loginemail!=""){
+        if(loginname == ""){
+            location.href = $("#baseUrl").val()+"home/complete_register_other_page";
+        }else{
+            location.href = $("#baseUrl").val()+"home/image_upload_page";
+        }
     }else{
         show_login_win();
     }
@@ -646,7 +655,7 @@ function jump_to_uploadimage(){
 
 //=========================================================收藏=========================================//
 function collect(ser,data_id){
-  if(loginname == ""){
+  if(loginemail == ""){
       $("#login_win").css("display","block");
       $('html,body').animate({scrollTop: '0px'}, 800);
     }else{
@@ -684,7 +693,7 @@ function collect(ser,data_id){
 
 //=========================================================取消收藏=========================================//
 function uncollect(ser,data_id){
-  if(loginname == ""){
+  if(loginemail == ""){
       $("#login_win").css("display","block");
       $('html,body').animate({scrollTop: '0px'}, 800);
     }else{
@@ -716,7 +725,7 @@ function uncollect(ser,data_id){
 }
 //=========================================================下载资料=========================================//
 function download_notes(data_id){
-  if(loginname == ""){
+  if(loginemail == ""){
       $("#login_win").css("display","block");
       $('html,body').animate({scrollTop: '0px'}, 800);
       warnMes("亲，要先登录哦！");

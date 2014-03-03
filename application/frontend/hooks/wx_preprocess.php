@@ -8,6 +8,7 @@ class WX_Preprocess {
     public function __construct() {
         $this->CI =& get_instance();
         $this->CI->load->helper('url');
+        $this->CI->load->library('wx_session');
     }
 
 /*****************************************************************/
@@ -16,7 +17,20 @@ class WX_Preprocess {
         // 及判断当前用户是否登录？是否离开？
         // session_start();
 
-        if (isset($_SESSION['wx_user_name']) && $_SESSION['wx_user_name'] != '') {
+        if (isset($_SESSION['wx_user_id']) && $_SESSION['wx_user_id'] > 0) {
+            // 目前CI Session过期时间为10分钟，600s，一般当前时间总是大于等于
+            // 最后一次记录的CI Session时间，差值即是CI Session过期的时间秒数
+            $last_activity_time = $this->CI->session->userdata('last_activity');  // seconds
+            $now_time = time();
+            $diff_time = $now_time - $last_activity_time;
+            // wx_loginfo('Diff time = '.$diff_time);
+            if ($diff_time >= 300) {  // update user's CI session id
+                $ci_session = $this->CI->session->userdata('session_id');
+                $cur_user_id = $_SESSION['wx_user_id'];
+                if ($ci_session && $cur_user_id) {
+                    $ret = $this->CI->wx_session->record_user_ci_session($cur_user_id, $ci_session);
+                }
+            }
             return;
         }
 
@@ -109,6 +123,7 @@ class WX_Preprocess {
         $test_url = $home_url.'home/test';
 
         if ($cur_url == $home_url
+            || $cur_url == $login_url
             || $cur_url == $find_password_url
             || $cur_url == $find_first_url
             || $cur_url == $find_second_url
@@ -156,20 +171,14 @@ class WX_Preprocess {
             || ereg($public_search_super_user, $cur_url)
             || ereg($public_search_super_user_area, $cur_url)
             || ereg($reject_digest_email_url, $cur_url)
+            || ereg($public_view_url_ereg, $cur_url)
+            || ereg($public_search_nature_url_ereg, $cur_url)
+            || ereg($public_search_area_url_ereg, $cur_url)
             || $cur_url == $test_url/* Test url iface */) {
             return;
         }
         else
         {
-            if ($cur_url == $login_url
-                || ereg($public_view_url_ereg, $cur_url) // 正则匹配通用搜索取得资料详细
-                || ereg($public_search_nature_url_ereg, $cur_url)
-                || ereg($public_search_area_url_ereg, $cur_url)
-                )
-            {
-                return;
-            }
-
             redirect('home/index');  // 重定向到首页
         }
     }

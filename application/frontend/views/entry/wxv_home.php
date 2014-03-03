@@ -384,6 +384,7 @@ function checkLogin(){
                 <?php
                   if(isset($super_users)){
                     foreach ($super_users as $key => $note) {
+                      if(isset($note['user_school_id'])):
                       echo "<div class='_card_item _card_item_panel' style='margin: 22px 0 0 30px;'>";
                       // echo "<div class='card_delete'></div>";
                       echo "<div class='_item_actual'>";
@@ -416,6 +417,7 @@ function checkLogin(){
                       echo "<span class='fl'>资料量：".$note['uactivity_datacount']."</span><span class='fr'>&nbsp&nbsp&nbsp下载量：".$note['uactivity_downloadcount']."</span>";
                       echo "</div>";
                       echo "</div>";
+                      endif;
                     }
                   }
                 ?>

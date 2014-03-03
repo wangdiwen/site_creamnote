@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Creamnote - <?php if (isset($_SESSION["wx_user_name"]) && $_SESSION["wx_user_name"] != "") echo $_SESSION["wx_user_name"]; else echo ""; ?></title>
+    <title>Creamnote - <?php if (isset($_SESSION["wx_user_name"]) && $_SESSION["wx_user_name"] != "") echo $_SESSION["wx_user_name"]; else echo "个人中心"; ?></title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" href="/application/frontend/views/resources/css/reset.css" />
     <link rel="stylesheet" href="/application/frontend/views/resources/css/wx_home.css" />
@@ -989,8 +989,10 @@ function delete_data(dataid){
                                 </div>
                                 <div class="_word_break gravatar"  title="<?php echo $user_info->user_email; ?>"><a ><?php echo "邮箱: &nbsp;".$user_info->user_email; ?></a></div>
                                 <div class="_word_break gravatar" title="<?php  echo substr($user_info->user_register_time,0,strlen($user_info->user_register_time)-3);   ?>"><a ><?php  echo "加入: &nbsp;".substr($user_info->user_register_time,0,strlen($user_info->user_register_time)-3);   ?></a></div>
-							    <div class="_word_break gravatar" title="<?php echo $user_info->user_school; ?>/<?php echo $user_info->user_major; ?>"><a ><?php echo $user_info->user_school; ?>/<?php echo $user_info->user_major; ?></a></div>
-                            </li>
+							    <?php if(isset($user_info->user_school)):?>
+                  <div class="_word_break gravatar" title="<?php echo $user_info->user_school; ?>/<?php echo $user_info->user_major; ?>"><a ><?php echo $user_info->user_school; ?>/<?php echo $user_info->user_major; ?></a></div>
+                  <?php endif;?>
+              </li>
 						</div>
             <div>
               <span onclick="show_all_collect()" class="common_bule_button" style="position: absolute;margin-top: 10px;cursor: pointer;">收藏夹</span>

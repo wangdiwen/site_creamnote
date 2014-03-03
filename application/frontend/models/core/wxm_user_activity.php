@@ -16,12 +16,14 @@ class WXM_User_activity extends CI_Model
             $user_id = $info['user_id'];
             $uactivity_datacount = $info['uactivity_datacount'];
             $uactivity_downloadcount = $info['uactivity_downloadcount'];
+            $uactivity_day_downcount = $info['uactivity_day_downcount'];
             $uactivity_loginip = $info['uactivity_loginip'];
             $uactivity_logintime = $info['uactivity_logintime'];
             $uactivity_logouttime = $info['uactivity_logouttime'];
             $uactivity_status = $info['uactivity_status'];
             $uactivity_recent_view = $info['uactivity_recent_view'];
             $uactivity_logincount = $info['uactivity_logincount'];
+            $uactivity_level = $info['uactivity_level'];
 
             if ($user_id > 0)
             {
@@ -29,12 +31,14 @@ class WXM_User_activity extends CI_Model
                     'user_id' => $user_id,
                     'uactivity_datacount' => $uactivity_datacount,
                     'uactivity_downloadcount' => $uactivity_downloadcount,
+                    'uactivity_day_downcount' => $uactivity_day_downcount,
                     'uactivity_loginip' => $uactivity_loginip,
                     'uactivity_logintime' => $uactivity_logintime,
                     'uactivity_logouttime' => $uactivity_logouttime,
                     'uactivity_status' => $uactivity_status,
                     'uactivity_recent_view' => $uactivity_recent_view,
-                    'uactivity_logincount' => $uactivity_logincount
+                    'uactivity_logincount' => $uactivity_logincount,
+                    'uactivity_level' => $uactivity_level,
                     );
                 $table = $this->wx_table;
                 $this->db->insert($table, $data);

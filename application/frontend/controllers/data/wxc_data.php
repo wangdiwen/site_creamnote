@@ -193,7 +193,7 @@ class WXC_Data extends CI_Controller
         if ($data_info) {
         	$data['data_id'] = $data_id;
             $data['data_name'] = $data_info->data_name;
-            $data['data_summary'] = $data_info->data_summary;
+            // $data['data_summary'] = $data_info->data_summary;       // cancel
             $data['data_price'] = $data_info->data_price;
             $data['data_objectname'] = $data_info->data_objectname;
             $data['data_type'] = $data_info->data_type;
@@ -203,6 +203,7 @@ class WXC_Data extends CI_Controller
             $data['user_id'] = $data_info->user_id;
             $data['data_uploadtime'] = $data_info->data_uploadtime;
             $data['data_vpspath'] = $data_info->data_vpspath;
+            $data['data_tag'] = $data_info->data_tag;
 
             // 检测此份笔记资料的状态，如果正在审核、或者未审核通过，则不可以显示，到404
             // 但是，如果这份笔记是当前用户本人的话，还是可以浏览的
@@ -590,7 +591,7 @@ class WXC_Data extends CI_Controller
                         'data_preview' => $data_preview,
                         'data_id' => $data_id,
                         'data_uploadtime' => date('Y-m-d H:i:s'),
-                        'data_tag' => trim($data_tag),
+                        'data_tag' => wx_trim_all($data_tag),
                         );
             $this->wxm_data->update_data_info($data);
             // 更新data2cnature表
@@ -612,7 +613,7 @@ class WXC_Data extends CI_Controller
                 $this->wxm_grade->insert($grade_info);
             }
 
-            // checking 'wx_data_tag' table, has such tag
+            // checking 'wx_data_tag' table, has such tag, if no, add a new record
             $user_tag_list = explode(',', $data_tag);
             foreach ($user_tag_list as $key => $tag) {
                 if ($tag) {
@@ -837,11 +838,12 @@ class WXC_Data extends CI_Controller
     {
         $data_id = $this->input->post('data_id');
         $data_name = $this->input->post('data_name');
-        $data_status = $this->input->post('data_status');  // 是否公开
-        $data_summary = $this->input->post('data_summary');
+        $data_status = $this->input->post('data_status');           // 是否公开
+        // $data_summary = $this->input->post('data_summary');      // cancel
         $data_price = $this->input->post('data_price');
-        $data_preview = $this->input->post('data_preview');  // 是否支持在线预览, 统一为支持=1
-        $data_keyword = $this->input->post('data_keyword');
+        $data_preview = $this->input->post('data_preview');         // 是否支持在线预览, 统一为支持=1
+        // $data_keyword = $this->input->post('data_keyword');      // cancel
+        $data_tag = $this->input->post('data_tag');                 // new added
         $data_category_nature = $this->input->post('data_category_nature');
         $data_category_area_school = $this->input->post('data_category_area_school');
         $data_category_area_major = $this->input->post('data_category_area_major');
@@ -916,6 +918,18 @@ class WXC_Data extends CI_Controller
             }
         }
 
+        // checking 'wx_data_tag' table, has such tag, if no, add a new record
+        $user_tag_list = explode(',', $data_tag);
+        foreach ($user_tag_list as $key => $tag) {
+            if ($tag) {
+                $has_tag = $this->wxm_data_tag->has_such_tag(trim($tag));
+                if (! $has_tag) {
+                    // record a new tag
+                    $ret = $this->wxm_data_tag->add_new_tag(trim($tag));
+                }
+            }
+        }
+
         echo 'success';  // ajax value
         fastcgi_finish_request();
 
@@ -924,10 +938,11 @@ class WXC_Data extends CI_Controller
             'data_id' => $data_id,
             'data_name' => trim($data_name),
             'data_status' => $data_status,
-            'data_summary' => trim($data_summary),
+            // 'data_summary' => trim($data_summary),
             'data_price' => $data_price,
             'data_preview' => $data_preview,
-            'data_keyword' => trim($data_keyword),
+            // 'data_keyword' => trim($data_keyword),
+            'data_tag' => wx_trim_all($data_tag),
             'data_osspath' => $data_osspath,
             'data_vpspath' => $data_vpspath
             );

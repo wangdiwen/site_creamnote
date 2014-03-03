@@ -38,8 +38,8 @@ class WXM_Data extends CI_Model
         }
         else
         {
-            $this->db->select('data_id, data_name, data_type, data_pagecount, data_summary, data_price,
-                                data_status, user_id, data_uploadtime, data_point, data_keyword')
+            $this->db->select('data_id, data_name, data_type, data_pagecount, data_price,
+                                data_status, user_id, data_uploadtime, data_point')
                      ->from('wx_data')->where('user_id', $user_id)->order_by('data_uploadtime', 'desc')->limit(40);
             $query = $this->db->get();
             return $query->result_array();  // Object array
@@ -107,9 +107,9 @@ class WXM_Data extends CI_Model
             {
                 return false;
             }
-            $this->db->select('data_id, data_name, data_objectname, data_type, data_pagecount, data_summary,
+            $this->db->select('data_id, data_name, data_objectname, data_type, data_pagecount,
                 data_price, data_point, data_status, user_id, data_uploadtime,
-                data_osspath, data_vpspath, data_preview, data_keyword')
+                data_osspath, data_vpspath, data_preview, data_tag')
                 ->from('wx_data')->where('data_id', $data_id);
             $query = $this->db->get();
             $rows = $query->num_rows();
@@ -169,7 +169,7 @@ class WXM_Data extends CI_Model
             $where = array(
                 'data_status' => '3'
                 );
-            $this->db->select('data_id, data_name, data_type, data_pagecount, data_price, user_id, data_uploadtime, data_point, data_keyword')
+            $this->db->select('data_id, data_name, data_type, data_pagecount, data_price, user_id, data_uploadtime, data_point')
                     ->from('wx_data')->where($where)->where_in('data_id', $data_id_list)->order_by('data_uploadtime');
             $query = $this->db->get();
             return $query->result_array();
@@ -192,7 +192,7 @@ class WXM_Data extends CI_Model
                 'data_id' => $data_id,
                 'data_status' => '3'
                 );
-            $this->db->select('data_id, data_name, data_type, data_pagecount, data_price, user_id, data_uploadtime, data_point, data_keyword')->from('wx_data')->where($where);
+            $this->db->select('data_id, data_name, data_type, data_pagecount, data_price, user_id, data_uploadtime, data_point')->from('wx_data')->where($where);
             $query = $this->db->get();
 
             $rows = $query->num_rows();
@@ -295,14 +295,14 @@ class WXM_Data extends CI_Model
             $len = count($keyword_list);
             if ($len == 1)
             {
-                $this->db->like('data_keyword', $keyword_list[0], 'both');
+                $this->db->like('data_tag', $keyword_list[0], 'both');
             }
             else
             {
-                $this->db->like('data_keyword', $keyword_list[0], 'both');
+                $this->db->like('data_tag', $keyword_list[0], 'both');
                 for ($i = 1; $i < $len; $i++)
                 {
-                    $this->db->or_like('data_keyword', $keyword_list[$i], 'both');
+                    $this->db->or_like('data_tag', $keyword_list[$i], 'both');
                 }
             }
         }
@@ -350,7 +350,7 @@ class WXM_Data extends CI_Model
     }
 /*****************************************************************************/
     public function hot_top_100() {
-        $this->db->select('data_id, data_name, data_type, data_pagecount, data_price, user_id, data_uploadtime, data_point, data_keyword')
+        $this->db->select('data_id, data_name, data_type, data_pagecount, data_price, user_id, data_uploadtime, data_point')
                  ->from('wx_data')->where('data_status', '3')->limit(100)->order_by('data_point', 'desc');
         $query = $this->db->get();
         $data_info = $query->result_array();
@@ -359,7 +359,7 @@ class WXM_Data extends CI_Model
 /*****************************************************************************/
     public function latest_upload()
     {
-        $this->db->select('data_id, data_name, data_type, data_pagecount, data_price, user_id, data_uploadtime, data_point, data_keyword')
+        $this->db->select('data_id, data_name, data_type, data_pagecount, data_price, user_id, data_uploadtime, data_point')
                  ->from('wx_data')->where('data_status', '3')->limit(10)->order_by('data_uploadtime', 'desc');
         $query = $this->db->get();
         return $query->result_array();
@@ -387,19 +387,21 @@ class WXM_Data extends CI_Model
             $data_id = $info['data_id'];
             $data_name = $info['data_name'];
             $data_status = $info['data_status'];
-            $data_summary = $info['data_summary'];
+            // $data_summary = $info['data_summary'];
             $data_price = $info['data_price'];
             $data_preview = $info['data_preview'];
-            $data_keyword = $info['data_keyword'];
+            // $data_keyword = $info['data_keyword'];
+            $data_tag = $info['data_tag'];
             $data_vpspath = $info['data_vpspath'];
             $data_osspath = $info['data_osspath'];
             $data = array(
                 'data_name' => $data_name,
                 'data_status' => $data_status,
-                'data_summary' => $data_summary,
+                // 'data_summary' => $data_summary,
                 'data_price' => $data_price,
                 'data_preview' => $data_preview,
-                'data_keyword' => $data_keyword,
+                // 'data_keyword' => $data_keyword,
+                'data_tag' => $data_tag,
                 'data_osspath' => $data_osspath,
                 'data_vpspath' => $data_vpspath
                 );
@@ -417,7 +419,10 @@ class WXM_Data extends CI_Model
         if ($data_id > 0)
         {
             $table = $this->wx_table;
-            $this->db->select('data_id, data_name, data_objectname, data_type, data_pagecount, data_summary, data_price, data_point, data_status, user_id, data_uploadtime, data_osspath, data_vpspath, data_preview, data_keyword')->from($table)->where('data_id', $data_id)->limit(1);
+            $this->db->select('data_id, data_name, data_objectname, data_type, data_pagecount,
+                data_price, data_point, data_status, user_id,
+                data_uploadtime, data_osspath, data_vpspath, data_preview, data_tag')
+                ->from($table)->where('data_id', $data_id)->limit(1);
             $query = $this->db->get();
             $data_info = $query->row_array();
             return $data_info;

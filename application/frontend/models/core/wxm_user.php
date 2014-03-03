@@ -450,7 +450,18 @@ class WXM_User extends CI_Model
         return false;
     }
 /*****************************************************************************/
-
+    public function update_user_nickname($user_id = 0, $nick_name = '') {
+        if ($user_id > 0 && $nick_name) {
+            $data = array(
+                'user_name' => $nick_name,
+                );
+            $table = $this->wx_table;
+            $this->db->where('user_id', $user_id);
+            $this->db->update($table, $data);
+            return true;
+        }
+        return false;
+    }
 /*****************************************************************************/
     // 用户的所有信息
     public function user_info($user_id = 0)
@@ -683,20 +694,16 @@ class WXM_User extends CI_Model
     }
 /*****************************************************************/
     // Return: '0'/'1'
-    public function register($name = '', $email = '', $passwd = '')
+    public function register($email = '', $passwd = '')
     {
         // Encript lib, for md5 method
         // $this->load->library('encrypt');
 
-        $has_name = $this->has_name($name);
+        // $has_name = $this->has_name($name);
         $has_user = $this->has_user($email);  // Check if has e-mail account or not
         if ($has_user)
         {
             return '1';     // Already has e-mail account
-        }
-        elseif ($has_name)
-        {
-            return '2';     // Already has the nice name
         }
         else
         {
@@ -705,15 +712,15 @@ class WXM_User extends CI_Model
             $register_time = date("Y-m-d H:i:s", time());
 
             // Insert cur account to database
-            $data = array('user_name' => $name,
-                          'user_password' => $encrypt_passwd,
-                          'user_email' => $email,
-                          'user_register_time' => $register_time,
-                          'user_account_name' => '',
-                          'user_account_type' => '支付宝',
-                          'user_account_money' => 1.00,
-                          'user_account_active' => 'false'
-                          );
+            $data = array(/*'user_name' => $name,*/
+                'user_email' => $email,
+                'user_password' => $encrypt_passwd,
+                'user_register_time' => $register_time,
+                'user_account_name' => '',
+                'user_account_type' => '支付宝',
+                'user_account_money' => 1.00,
+                'user_account_active' => 'false'
+                );
             $this->db->insert('wx_user', $data);
 
             return '0';  // Insert successfully

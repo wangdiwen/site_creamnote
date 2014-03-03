@@ -95,6 +95,7 @@ class WXC_Image extends CI_Controller
 
                 // 将上传的临时文件，写入vps
 				$image_name = date('YmdHis').rand(100, 999);
+                wx_loginfo('here => image_name = ['.$image_name.']');
 				$image_suffix = wx_get_suffix($file_name);
                 $save_file_name = $user_dir.'/'.$image_name.'.'.$image_suffix;
                 if (move_uploaded_file($tmp_file_name, $save_file_name))

@@ -168,7 +168,7 @@ class WX_Tcpdfapi
         {
             $this->new_line();
         }
-        $this->write('题目： '.$title, 'C');
+        $this->write($title, 'C');
         for ($i = 0; $i < 10; $i++)
         {
             $this->new_line();
@@ -183,7 +183,7 @@ class WX_Tcpdfapi
         }
 
         if ($summary) {
-            $this->write('笔记内容简介', 'C');
+            $this->write('内容简介', 'C');
             // 辅助函数，以28个汉字为长度分割字符串，添加第一行缩进2个汉字，补偿8个空格
             $str_list = wx_substr_by_length($summary, 28, 8);
             $len = count($str_list);

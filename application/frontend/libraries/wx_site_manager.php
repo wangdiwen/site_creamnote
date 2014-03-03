@@ -3,7 +3,6 @@
 class WX_Site_Manager {
 /*****************************************************************************/
     var $CI;
-    var $wx_table = 'wx_site_manager';
 /*****************************************************************************/
     public function __construct() {
         $this->CI =& get_instance();

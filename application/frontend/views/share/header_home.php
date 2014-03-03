@@ -107,7 +107,8 @@
   }
 //=========================================================登录登出=========================================//
 var loginname = '<?php if (isset($_SESSION["wx_user_name"]) && $_SESSION["wx_user_name"] != "") echo $_SESSION["wx_user_name"]; else echo ""; ?>';
-    $(function(){
+var loginemail = '<?php if (isset($_SESSION["wx_user_email"]) && $_SESSION["wx_user_email"] != "") echo $_SESSION["wx_user_email"]; else echo ""; ?>';
+     $(function(){
       var UA = navigator.userAgent.toLowerCase();
       if(UA.indexOf("msie 7.0")>=0||UA.indexOf("msie 8.0")>=0){
         warnMes("IE版本较低，建议您升级到ie9或者更高版本，以获得更好体验！\r推荐使用chrome、火狐浏览器")
@@ -124,11 +125,16 @@ var loginname = '<?php if (isset($_SESSION["wx_user_name"]) && $_SESSION["wx_use
             }
         });
 
-        if(loginname!=""){
+        if(loginname!=""||loginemail!=""){
            $("#check_login").html("");
             //var str ="<div class='fr logout transition' style='cursor:pointer' id='logout'><div class='logout_icon'>注销</div></div>";
             //str +="<a href='<?php echo site_url('home/personal'); ?>'><div class='fr login_user transition'><div class='login_user_icon'>"+loginname+"</div></div></a>";
-            var str = "<div class='fr _show_count'><span class='fl _login_name' style='padding-left:10px;'>"+loginname+"</span><span class='fr _user_name'></span>";
+             var str = "";
+            if(loginname==""){
+              str += "<div class='fr _show_count'><span class='fl _login_name' style='padding-left:10px;'>"+loginemail+"</span><span class='fr _user_name'></span>";
+            }else{
+              str += "<div class='fr _show_count'><span class='fl _login_name' style='padding-left:10px;'>"+loginname+"</span><span class='fr _user_name'></span>";
+            }
             str += "<div class='_al_login'>";
             str += "<a id='_al_user' href='javascript:void(0)'><div class='_al_user fl'>个人中心</div></a>";
             str += "<a id='_al_count' href='javascript:void(0)'><div class='_al_count fl'>账户设置</div></a>";
@@ -221,9 +227,12 @@ var loginname = '<?php if (isset($_SESSION["wx_user_name"]) && $_SESSION["wx_use
                      errorMes("没有该用户");
                  }else if (result=='passwd-wrong'){
                      errorMes("密码错误");
-                 }
-                 else if (result=='database-wrong'){
+                 }else if (result=='database-wrong'){
                     errorMes("数据库连接失败");
+                 }else if (result=='user-close'){
+                    errorMes("您的账号已经被封号，如有疑义请联系我们！");
+                 }else if(result=='not-complete'){
+                    location.href='<?php echo site_url('home/complete_register_other_page'); ?>';
                  }
 
              },
@@ -266,15 +275,17 @@ var loginname = '<?php if (isset($_SESSION["wx_user_name"]) && $_SESSION["wx_use
             {
                 if(result=='success'){
                     location.href='<?php echo site_url('home/personal'); ?>';
-                }else if(result=='no-user'){
-                    errorMes("没有该用户");
-                }else if (result=='passwd-wrong'){
-                    errorMes("密码错误");
-                }else if (result=='database-wrong'){
+                 }else if(result=='no-user'){
+                     errorMes("没有该用户");
+                 }else if (result=='passwd-wrong'){
+                     errorMes("密码错误");
+                 }else if (result=='database-wrong'){
                     errorMes("数据库连接失败");
-                }else if (result=='user-close'){
+                 }else if (result=='user-close'){
                     errorMes("您的账号已经被封号，如有疑义请联系我们！");
-                }
+                 }else if(result=='not-complete'){
+                    location.href='<?php echo site_url('home/complete_register_other_page'); ?>';
+                 }
 
             },
 

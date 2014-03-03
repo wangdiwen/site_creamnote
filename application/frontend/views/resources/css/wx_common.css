@@ -483,6 +483,11 @@ padding-left: 10px;
     color: #fff;
     margin-right: 5px;
 }
+.systag.detail>span{
+    display: block;
+    float: left;
+    margin-bottom: 5px;
+}
 .systag>span:hover{
     background: #7490B1;
 }
@@ -517,14 +522,18 @@ padding-left: 10px;
     outline: none;
 }
 .usertag{
-    margin: 7px;
+    margin: 2px;
+    max-width: 550px;
 }
 .usertag>span{
-    padding: 5px 10px;
+    padding: 2px 8px;
     background: #A1B9D6;
     cursor: pointer;
-    color: #fff;
+    color: #FFF;
     margin-right: 5px;
+    display: block;
+    float: left;
+    margin-bottom: 3px;
 }
 .usertag>span:hover{
     background: #7490B1;
@@ -534,10 +543,66 @@ padding-left: 10px;
     padding: 3px 4px;
     margin-right: -6px;
     margin-left: 7px;
+    display: inline-block;
 }
+.usertag>span b:hover{
+    background: #D60000;
+}
+
 #enter{
     margin: 8px 0 0 580px;
 }
 #enter:after{
     content: "点击Enter键生成标签";
+}
+#tag_input{
+    max-width: 580px;
+}
+
+/*自动填充*/
+.ac_results {
+    padding: 0px;
+    border: 1px solid black;
+    background-color: white;
+    overflow: hidden;
+    z-index: 99999;
+}
+.ac_results ul {
+    width: 100%;
+    list-style-position: outside;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.ac_results li {
+    margin: 0px;
+    padding: 2px 5px;
+    cursor: default;
+    display: block;
+    /*
+    if width will be 100% horizontal scrollbar will apear
+    when scroll mode will be used
+    */
+    /*width: 100%;*/
+    font: menu;
+    font-size: 12px;
+    /*
+    it is very important, if line-height not setted or setted
+    in relative units scroll will be broken in firefox
+    */
+    line-height: 16px;
+    overflow: hidden;
+}
+
+.ac_loading {
+    background: white url('indicator.gif') right center no-repeat;
+}
+
+.ac_odd {
+    background-color: #eee;
+}
+
+.ac_over {
+    background-color: #0A246A;
+    color: white;
 }

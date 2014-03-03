@@ -350,6 +350,8 @@ class WX_General
         $cur_user_id = $cur_user_info['user_id'];
         if ($cur_user_id > 0) {                     // aleady login
             // filter user's school and major notes
+            $school_id = 0;
+            $major_id = 0;
             $user_school_info = $this->CI->wxm_user2carea->get_by_user_id($cur_user_id);
             if ($user_school_info) {
                 $major_id = $user_school_info['carea_id_major'];
@@ -363,30 +365,32 @@ class WX_General
 
             $collect_data_list = $this->get_user_collect_list();
 
-            $school_notes_50 = $this->CI->wxm_data2carea->get_by_school_50($school_id);
-            if ($school_notes_50) {
-                foreach ($school_notes_50 as $value) {
-                    $data_id_list[] = $value['data_id'];
+            if ($school_id && $major_id) {
+                $school_notes_50 = $this->CI->wxm_data2carea->get_by_school_50($school_id);
+                if ($school_notes_50) {
+                    foreach ($school_notes_50 as $value) {
+                        $data_id_list[] = $value['data_id'];
+                    }
                 }
-            }
 
-            if ($data_id_list) {
-                foreach ($data_id_list as $data_id) {
-                    $data_info = $this->get_data_card($data_id);
-                    if ($data_info) {
-                        // flag user collect note
-                        if ($collect_data_list && in_array($data_id, $collect_data_list)) {
-                            $data_info['collect'] = 'true';
-                        }
-                        else {
-                            $data_info['collect'] = 'false';
-                        }
-                        // major notes order forword
-                        if ($data_info['data_area_id_major'] == $major_id) {
-                            $major_relate[] = $data_info;
-                        }
-                        else {
-                            $school_relate[] = $data_info;
+                if ($data_id_list) {
+                    foreach ($data_id_list as $data_id) {
+                        $data_info = $this->get_data_card($data_id);
+                        if ($data_info) {
+                            // flag user collect note
+                            if ($collect_data_list && in_array($data_id, $collect_data_list)) {
+                                $data_info['collect'] = 'true';
+                            }
+                            else {
+                                $data_info['collect'] = 'false';
+                            }
+                            // major notes order forword
+                            if ($data_info['data_area_id_major'] == $major_id) {
+                                $major_relate[] = $data_info;
+                            }
+                            else {
+                                $school_relate[] = $data_info;
+                            }
                         }
                     }
                 }

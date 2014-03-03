@@ -587,11 +587,16 @@ class WXC_Download_Note extends CI_Controller {
         }
     }
 /*****************************************************************************/
-    public function _alipay_submit( $out_trade_no = '',          // 商户订单号, 商户网站订单系统中唯一订单号，必填
-                                    $subject = '购买醍醐笔记',    // 订单名称
-                                    $total_fee = 0.01,           // 付款金额
-                                    $body = '醍醐笔记',           // 订单描述
-                                    $show_url = '') {            // 商品展示地址, 需以http://开头的完整路径
+    public function _alipay_submit( $out_trade_no = '',
+                                    $subject = '购买醍醐笔记',
+                                    $total_fee = 0.01,
+                                    $body = '醍醐笔记',
+                                    $show_url = '') {
+        // out_trade_no: 商户订单号, 商户网站订单系统中唯一订单号，必填
+        // subject: 订单名称
+                                    // total_fee: 付款金额
+        // body: 订单描述
+        // show_url: 商品展示地址, 需以http://开头的完整路径
         // 测试数据，
         // 接口链接为：www.creamnote.com/core/wxc_alipay/alipay_submit
         // $out_trade_no = '201310122249123456';
