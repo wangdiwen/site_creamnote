@@ -20,10 +20,8 @@ class WXC_Image extends CI_Controller
 	}
 /*****************************************************************************/
     // 图片转换的第一步
-    public function upload_image()
-    {
-        if (!(isset($_SESSION['wx_user_id']) && $_SESSION['wx_user_id']))
-        {
+    public function upload_image() {
+        if (!(isset($_SESSION['wx_user_id']) && $_SESSION['wx_user_id'])) {
             redirect('static/wxc_direct/sys_error');
             return false;
         }
@@ -31,8 +29,7 @@ class WXC_Image extends CI_Controller
     	//在image路径下建立私有目录
         $user_id = isset($_SESSION['wx_user_id']) ? $_SESSION['wx_user_id'] : 0;
         $user_dir = 'upload/image/'.$user_id;
-        if (! is_dir($user_dir))
-        {
+        if (! is_dir($user_dir)) {
             if (! mkdir($user_dir, 0777))
             {
                 die('创建用户的临时图片目录失败！');
@@ -41,16 +38,13 @@ class WXC_Image extends CI_Controller
         }
 
         // 图片文件上传操作
-        if (! empty($_FILES))
-        {
+        if (! empty($_FILES)) {
 
-            if ($_FILES['Filedata']['error'] > 0)   // 错误
-            {
+            if ($_FILES['Filedata']['error'] > 0) {  // 错误
                 die('上传文件有错误！');
                 return false;
             }
-            else                                    // 正常
-            {
+            else {                                  // 正常
                 $tmp_file_name = $_FILES['Filedata']['tmp_name'];       // 临时文件名称
                 $file_name = wx_trim_all($_FILES['Filedata']['name']);  // 文件原名
                 $file_type = $_FILES['Filedata']['type'];               // 文件类型
@@ -72,8 +66,7 @@ class WXC_Image extends CI_Controller
 
                 $image_type = $image_info[2];
                 $type = 'JPG';
-                switch ($image_type)
-                {
+                switch ($image_type) {
                     case 1:                     // gif
                         $type = 'GIF';
                         break;
@@ -87,23 +80,26 @@ class WXC_Image extends CI_Controller
                         $type = 'UNKNOWN';
                         break;
                 }
-                if ($type == 'UNKNOWN')
-                {
+
+                if ($type == 'UNKNOWN') {
                     echo 'UNKNOWN';
                     return false;
                 }
 
                 // 将上传的临时文件，写入vps
-				$image_name = date('YmdHis').rand(100, 999);
-                wx_loginfo('here => image_name = ['.$image_name.']');
+                $tmp_name = str_replace('/', '', $tmp_file_name);
+				$image_name = date('YmdHis').$tmp_name;
 				$image_suffix = wx_get_suffix($file_name);
                 $save_file_name = $user_dir.'/'.$image_name.'.'.$image_suffix;
-                if (move_uploaded_file($tmp_file_name, $save_file_name))
-                {
+
+                // wx_loginfo('here => image_name = ['.$image_name.']');
+                // wx_loginfo('tmp file name  = ['.$tmp_file_name.']');
+                // wx_loginfo('save_file_name = ['.$save_file_name.']');
+
+                if (move_uploaded_file($tmp_file_name, $save_file_name)) {
                     // 生成缩略图
                     $ret = $this->wx_imageapi->thumb_image($save_file_name);
-                    if ($ret)  // 上传缩略图成功
-                    {
+                    if ($ret) {                 // 上传缩略图成功
                         $thumb_image = $user_dir.'/'.$image_name.'_thumb.'.$image_suffix;
 
                         $json_info = $this->add_image($user_id, $save_file_name, $thumb_image, $image_width, $image_height);
@@ -115,8 +111,7 @@ class WXC_Image extends CI_Controller
                         }
                     }
                 }
-                else
-                {
+                else {
                     die($file_name." 上传失败！");
                 }
             }

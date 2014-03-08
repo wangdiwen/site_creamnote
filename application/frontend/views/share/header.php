@@ -223,7 +223,8 @@ var loginemail = '<?php if (isset($_SESSION["wx_user_email"]) && $_SESSION["wx_u
          success: function(result)
              {
                 if(result=='success'){
-                    location.href='<?php echo site_url('home/personal'); ?>';
+                    // location.href='<?php echo site_url('home/personal'); ?>';
+                    location.reload() ;
                  }else if(result=='no-user'){
                      errorMes("没有该用户");
                  }else if (result=='passwd-wrong'){
@@ -275,7 +276,8 @@ var loginemail = '<?php if (isset($_SESSION["wx_user_email"]) && $_SESSION["wx_u
         success: function(result)
             {
                 if(result=='success'){
-                    location.href='<?php echo site_url('home/personal'); ?>';
+                    // location.href='<?php echo site_url('home/personal'); ?>';
+                    location.reload() ;
                  }else if(result=='no-user'){
                      errorMes("没有该用户");
                  }else if (result=='passwd-wrong'){

@@ -504,12 +504,12 @@ function checkReg_no(){
             </div>
           </div> -->
 
-          <div class="reg_put">
+        <!--   <div class="reg_put">
             <span>院系</span><br/>
             <select id='partment' name='partment' style='width: 422px;' placeholder="你所在的专业">
             </select>
             <div class="reg_error" id="error_partment" style="display:none;"></div>
-          </div>
+          </div> -->
 
           <div class="reg_put">
             <span>密码</span><br/>
