@@ -136,6 +136,10 @@ class Offical_Email extends CI_Controller {
             echo 'success';
             return true;
         }
+        else {
+            echo 'success';
+            return true;
+        }
         echo 'failed';
         return false;
     }
