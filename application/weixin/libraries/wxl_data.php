@@ -23,17 +23,27 @@ class WXL_Data
             if ($name_like) {
                 // convert the data
                 foreach ($name_like as $key => $obj) {
+                    $data_id = $obj['data_id'];
                     $data_name = $obj['data_name'];
-                    $data_summary = $obj['data_summary'];
+                    $data_type = $obj['data_type'];
+                    $data_pagecount = $obj['data_pagecount'];
                     $data_price = $obj['data_price'];
-                    // $data_keyword = $obj['data_keyword'];
                     // $data_uploadtime = $obj['data_uploadtime'];
+                    $data_tag = $obj['data_tag'];
 
                     if ($data_price == 0.00) {
                         $data_price = '免费';
                     }
 
-                    $per_content = "《".$data_name."》\n"."￥：".$data_price."\n"."简介：".trim($data_summary);
+                    $data_tag_msg = "\n主题：";
+                    if (! $data_tag) {
+                        $data_tag_msg = '';
+                    }
+                    else {
+                        $data_tag_msg .= $data_tag;
+                    }
+
+                    $per_content = "《".$data_name."》\n".$data_type." ".$data_pagecount."页 ￥".$data_price.$data_tag_msg;
                     $result[] = $per_content;
                 }
                 return $result;

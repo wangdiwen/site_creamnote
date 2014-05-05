@@ -121,6 +121,7 @@ class WX_Preprocess {
 
         // 此URL为测试接口，开发阶段验证一些东西，待到项目部署阶段删除
         $test_url = $home_url.'home/test';
+        $experiment_url = $home_url.'experiment/(.*)';
 
         if ($cur_url == $home_url
             || $cur_url == $login_url
@@ -174,6 +175,7 @@ class WX_Preprocess {
             || ereg($public_view_url_ereg, $cur_url)
             || ereg($public_search_nature_url_ereg, $cur_url)
             || ereg($public_search_area_url_ereg, $cur_url)
+            || ereg($experiment_url, $cur_url)
             || $cur_url == $test_url/* Test url iface */) {
             return;
         }

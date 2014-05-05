@@ -28,7 +28,7 @@
     <div class="foot_list_right">
       <h2><b>媒体报道</b></h2>
       <div class="text_line">
-        <a href="http://www.36kr.net/biji" target=="_blank">
+        <a href="http://www.36kr.net/krkrbijiwang1" target=="_blank">
           <div class="fl _coop_img">
             <img src="/application/frontend/views/resources/images/coop/36kr.jpg">
             <div style="margin:3px 0;border-bottom: 5px double rgb(125 ,142 ,167)"></div>

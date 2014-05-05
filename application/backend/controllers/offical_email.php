@@ -127,6 +127,14 @@ class Offical_Email extends CI_Controller {
                 // $user_name = 'Steven';
                 // $user_email = 'dw_wang126@126.com';
 
+                // check name is null
+                if (! $user_name) {
+                    $tmp_list = explode('@', $user_email);
+                    if (count($tmp_list) == 2) {
+                        $user_name = $tmp_list[0];
+                    }
+                }
+
                 $greet = "<html><head></head>你好 <b>".$user_name."</b>：<p></p>";
                 $content = $greet.$email_content.'</html>';
                 $send_ret = $this->_send_ceo_email($user_email, '欢迎加入 Creamnote-醍醐笔记网', $content);
@@ -150,6 +158,14 @@ class Offical_Email extends CI_Controller {
 
         $test_email = 'dw_wang126@126.com';  // my 126 email for testing
         $user_name = 'Steven Wang';
+
+        // check name is null
+        if (! $user_name) {
+            $tmp_list = explode('@', $user_email);
+            if (count($tmp_list) == 2) {
+                $user_name = $tmp_list[0];
+            }
+        }
 
         $greet = "<html><head></head>你好 <b>".$user_name."</b>：<p></p>";
         $content = $greet.$email_content.'</html>';
@@ -289,6 +305,14 @@ class Offical_Email extends CI_Controller {
                         // testing ...
                         // $user_name = 'Steven';
                         // $user_email = 'dw_wang126@126.com';
+
+                        // check name is null
+                        if (! $user_name) {
+                            $tmp_list = explode('@', $user_email);
+                            if (count($tmp_list) == 2) {
+                                $user_name = $tmp_list[0];
+                            }
+                        }
 
                         if ($user_name && $user_email && $email_content && $user_is_digest) {
                             $content = '';

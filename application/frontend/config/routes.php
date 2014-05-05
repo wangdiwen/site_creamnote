@@ -38,7 +38,8 @@
 |
 */
 
-$route['default_controller'] = 'primary/wxc_home/index';
+// $route['default_controller'] = 'primary/wxc_home/index';
+$route['default_controller'] = 'static/wxc_cover/cover';
 $route['404_override'] = 'primary/wxc_home/page_404';
 
 $route['home/personal'] = 'primary/wxc_personal/personal';
@@ -47,7 +48,7 @@ $route['user_active'] = 'primary/wxc_home/check_active';
 $route['core/wxc_(alioss|alipay|content|data_statistic|download_note|user_manager|util|zhifubao_login|user_account){1,1}/(:any)'] = 'core/wxc_$1/$2';
 $route['data/wxc_(data|image){1,1}/(:any)'] = 'data/wxc_$1/$2';
 $route['primary/wxc_(feedback|home|message|personal|search){1,1}/(:any)'] = 'primary/wxc_$1/$2';
-$route['static/wxc_(about|help|direct|cooperation){1,1}/(:any)'] = 'static/wxc_$1/$2';
+$route['static/wxc_(about|help|direct|cooperation|cover){1,1}/(:any)'] = 'static/wxc_$1/$2';
 $route['experiment/wxc_(home){1,1}/(:any)'] = 'experiment/wxc_$1/$2';
 $route['openapi/(:any)'] = 'api/$1';
 $route['^(:any)$'] = 'primary/wxc_home/page_404';

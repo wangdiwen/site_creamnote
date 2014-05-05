@@ -431,6 +431,10 @@ a{
 	position: absolute;
 	font-size: 11px;
 }
+.filing{
+	color:black;
+	cursor:pointer;
+}
 .login_user{
 	background-image: url(../images/version/creamnote_user.png);
 	background-repeat: no-repeat;
@@ -577,9 +581,14 @@ a{
 	padding: 0;
 	background-color: rgb(131,154,205);
 	color: rgb(255, 255, 255);
-	box-shadow: 0px 5px 0px 0px rgb(101, 117, 182), 0px 7px 0px 2px rgba(0, 0, 0, 0.1);
+	box-shadow: 2px 3px 0px 0px #455F96, 2px 3px 0px 2px rgba(0, 0, 0, 0.1);
 	cursor: pointer;
 	background: #39d url('../images/login/bg-btn-blue.png') repeat-x scroll 0 0;
+}
+.login_win_sub .button:active {
+	-webkit-transform: translate(2px, 2px);
+	-moz-transform: translate(2px, 2px);
+	transform: translate(2px, 2px);
 }
 #signin_submit:hover, #signin_submit:focus {
 	background-position:0 -5px;

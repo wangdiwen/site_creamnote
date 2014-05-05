@@ -16,6 +16,7 @@
     <script type='text/javascript' src='/application/frontend/views/resources/js/common.js'></script>
 
 
+
 </head>
 <body>
 
@@ -127,10 +128,10 @@
           <p>关注我们的微信</p>
         </div>
         <div class="re">
-            <input  name="email" id="email" class="ad" type="text" placeholder="常用邮箱">
+            <input  name="email" id="email" class="ad" type="text" placeholder="常用邮箱" required="required">
             <input type="hidden" id="email_c">
             <div class="reg_error" id="error_mail" style="display:none;"></div>
-            <input  name="repassword" id="repassword" class="ad" type="password" placeholder="密码">
+            <input  name="repassword" id="repassword" class="ad" type="password" placeholder="密码" required="required">
             <div class="reg_error" id="error_pwd" style="display:none;"></div>
             <button id="register" class="ad">免费注册</button>
             <div  class="fl clause fs18">点击注册表明你同意我们的<span><a target="_blank" href="<?php echo site_url('static/wxc_help/termsofservice'); ?>">[使用条款]</a></span></div>
@@ -176,16 +177,16 @@
 $(function(){
     $("#creamnote_login").click(function(){
         var display_var = $("#login_win").css("display");
-        var login = event.target.id;
-        var target = event.target;
-        var i = 0 ;
-        while (target.className != "login_win_box") {
-            if(target.parentNode!=null){
-                target = target.parentNode;
-            }else{
-                break;
-            }
-        }
+        // var login = event.target.id;
+        // var target = event.target;
+        // var i = 0 ;
+        // while (target.className != "login_win_box") {
+        //     if(target.parentNode!=null){
+        //         target = target.parentNode;
+        //     }else{
+        //         break;
+        //     }
+        // }
         if(display_var == "none"||target.className == "login_win_box"){
             $("#login_win").css("display","block");
         }else{
@@ -351,7 +352,7 @@ var loginname = '<?php if (isset($_SESSION["wx_user_name"]) && $_SESSION["wx_use
                     // $("#reg_frame").html(str);
                     // $("#reg_frame").css("width","600px");
                     // $("#reg_frame").css("text-align","left");
-                    location.href='<?php echo site_url('home/index'); ?>';
+                    location.href='<?php echo site_url(''); ?>';
                 }
 
             },

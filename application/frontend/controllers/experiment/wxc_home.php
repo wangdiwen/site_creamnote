@@ -52,7 +52,10 @@ class WXC_Home extends CI_Controller
         wx_echoxml($all_data);
     }
 /*****************************************************************************/
-
+    public function test() {
+        $data = array();
+        $this->load->view('share/test', $data);
+    }
 /*****************************************************************************/
 }
 

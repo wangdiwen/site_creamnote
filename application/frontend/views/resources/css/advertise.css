@@ -1,0 +1,258 @@
+.fs18{
+    font-size: 18px;
+}
+#cover1{
+    background: #0791dd;
+    width: 100%;
+    height:500px;
+    color: #fff;
+}
+.grid{
+    width: 75%;
+    margin:0 auto;
+    height: 400px;
+}
+body {
+    background: #3C424C url(../images/new_version/dy_foot_bg.png);
+}
+.footer{
+    width: 100%
+}
+.footer_center{
+    width: 80%;
+}
+.top.grid{
+    height: 85px;
+    background: #0791dd;
+}
+.f_top{
+    position: fixed;
+    left: 0;
+    right: 0;
+    background: #0791dd;
+}
+.scrolledshadow{
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    z-index: 100;
+}
+.top.grid .bu{
+    margin: 0 25px 20px 25px;
+    padding-top: 30px;
+    cursor: pointer;
+}
+.top.grid a{
+    color: #fff;
+}
+.top.grid .bu:hover{
+    border-top: 1px solid #fff;
+    color: #dadada;
+}
+.top.grid .logo{
+    background: url(../images/new_version/dy_head_logo.png) center bottom no-repeat;
+    width: 188px;
+    height: 30px;
+    margin: 0 25px 20px 25px;
+    padding-top: 30px;
+    cursor: pointer;
+}
+.login_win_base{
+    position: fixed;
+    margin-left: -82px;
+}
+.grid.center .tihu,.mynote,.small{
+    margin: 0 auto;
+    text-align: center;
+}
+.grid.center .tihu{
+    background:  url(../images/cover/tihu.png) center no-repeat;
+    width: 243px;
+    height: 58px;
+    padding: 170px;
+}
+.grid.center .mynote{
+    margin-top: -160px;
+}
+.grid.center{
+    font-size: 48px;
+    color: #fff;
+}
+.grid.center .mynote span:nth-child(1){
+    color: #1ce0a8;
+}
+.grid.center .small{
+    font-size: 18px;
+    letter-spacing: 5px;
+    margin-top: 20px;
+}
+.grid.center .small span:nth-child(1),.grid.center .small span:nth-child(3){
+    color: #1ce0a8;
+    letter-spacing: 0px;
+}
+#cover2{
+    height: 160px;
+    background: #fff;
+    color: #000;
+    text-align: center;
+    position: relative;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3),0px -2px 4px rgba(0, 0, 0, 0.3);
+}
+#cover2 .title{
+    padding-top: 20px;
+}
+.colleges{
+    /*margin-top: -18px;*/
+    margin-top: 10px;
+}
+.colleges img{
+    width: 90px;
+    margin: 0 16px;
+
+}
+
+
+
+#cover3{
+    height: 1604px;
+    background: #e4e7ec;
+}
+.slogan{
+    border-bottom: 1px solid #aaa;
+    border-top: 2px solid #EEE;
+    color: #000;
+}
+.slogan.grid .one{
+    font-weight: bold;
+    font-size: 28px;
+}
+.detail{
+    width: 50%;
+    margin-top: 260px;
+}
+.slogan.grid.sright .detail{
+    float: right;
+    text-align: left;
+}
+.slogan.grid.sleft .detail{
+    float: left;
+    text-align: right;
+}
+.detail .two{
+    margin-top: 16px;
+}
+.pic{
+    width: 46%;
+    height: 350px;
+    margin: 20px auto;
+}
+.pic1{
+    background: url(../images/cover/pic1.png) center center no-repeat;
+}
+.pic2{
+    background: url(../images/cover/pic2.png) center 108px no-repeat;
+}
+.pic3{
+    background: url(../images/cover/pic3.png) center 80px no-repeat;
+}
+.pic4{
+    background: url(../images/cover/pic4.png) center center no-repeat;
+}
+/*.sleft .detail .two{
+    text-align: left;
+}*/
+
+#cover4{
+    min-height: 380px;
+    background: #0791dd;
+}
+#cover4 .re{
+    width: 36%;
+    float: right;
+    margin-top: 60px;
+}
+input.ad{
+    float: left;
+    width: 360px;
+    height: 32px;
+    border-radius: 8px;
+    margin-top: 28px;
+    font-size: 18px;
+}
+button.ad{
+    float: left;
+    width: 380px;
+    height: 50px;
+    border-radius: 8px;
+    margin-top: 28px;
+    background: #1CD8A2;
+    border: #1CD8A2 1px solid;
+    box-shadow: 0px 2px 2px #50DF9A;
+    font-size: 24px;
+    color: #fff;
+    letter-spacing: 6px;
+    cursor: pointer;
+}
+button.ad:active{
+    -webkit-transform: translate(0px, 4px);
+    -moz-transform: translate(0px, 4px);
+    transform: translate(0px, 4px);
+}
+button.ad:hover{
+    background: #20C596;
+}
+.clause{
+    width: 425px;
+    margin-top: 20px;
+    text-align: center;
+    color: #fff;
+}
+.clause span,.clause a{
+    color: #29c5ac;
+}
+.footer,.footer_center{
+    background: #494949;
+}
+.footer_center{
+
+}
+.foot_brand{
+    width: 22%;
+    margin-left:8%;
+}
+.foot_list{
+    width:70%;
+    font-size: 18px;
+}
+.foot_list_one{
+    width: 20%;
+}
+.foot_content{
+    font-size: 17px;
+}
+.weixin{
+    width: 46%;
+    float: left;
+    margin: 30px auto;
+    text-align: center;
+}
+.cover4 .grid{
+    height: 380px;
+}
+.weixin p{
+    color: #FFF;
+    font-size: 20px;
+    margin-top: 10px;
+}
+
+@media  (max-width: 839px) {
+    .slogan {
+        color: #D14343;
+    }
+}
+.creamnote_cnzz{
+    width: 70%;
+    text-align: center;
+    color: #fff;
+}
+.filing{
+    color:#fff;
+}

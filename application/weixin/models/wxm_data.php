@@ -27,7 +27,7 @@ class WXM_Data extends CI_Model
     public function search_by_name_like_list($name_list = array()) {
         if ($name_list) {
             $table = $this->wx_table;
-            $this->db->select('data_id, data_name, data_summary, data_price, data_keyword, data_uploadtime');
+            $this->db->select('data_id, data_name, data_type, data_pagecount, data_price, data_uploadtime, data_tag');  # data_tag use ',' split
             $len = count($name_list);
             if ($len == 1) {
                 $this->db->like('data_name', $name_list[0], 'both');

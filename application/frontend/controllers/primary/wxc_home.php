@@ -1194,6 +1194,7 @@ public function wx_substr_by_length_test($str = '', $sub_length = 0, $indent = 8
 /*****************************************************************/
     public function test()
     {
+        echo 'upgrade ...';
         // $cur_week = wx_cur_week();
         // echo $cur_week;
 

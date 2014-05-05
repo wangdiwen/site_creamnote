@@ -90,7 +90,7 @@ class Home extends CI_Controller {
                 $msg_user = implode("\n\n", $new_result);
             }
             else {
-                $msg_user = "Oh，天呐 @@\n对于您的资料，学神也无能无力哎 ~~";
+                $msg_user = "^_^ 抱歉，要不换个关键词试试 ...";
             }
             return sprintf($respose_text, $user_name, $my_name, $msg_time, $msg_type, $msg_user);
         }
